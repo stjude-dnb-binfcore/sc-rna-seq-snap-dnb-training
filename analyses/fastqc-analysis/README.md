@@ -9,7 +9,7 @@ Parameters according to the project and analysis strategy will need to be specif
 
 ### Run module on an interactive session on HPC
 
-To run the script in this module from the command line sequentially, use:
+To run the script on an interactive session on HPC, please run the following command from an interactive compute node:
 
 ```
 bash run-fastqc-analysis.sh

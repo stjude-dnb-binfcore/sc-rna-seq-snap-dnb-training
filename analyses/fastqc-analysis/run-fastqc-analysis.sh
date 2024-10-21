@@ -17,7 +17,7 @@ mkdir results/01-fastqc-reports
 ################################################################################################################
 # Run FastQC per library
 
-fastqc -o results/01-fastqc-reports /research/dept/hart/PI_data_distribution/zakhagrp/GSF/zakhagrp_321555_10XsNucRNAseq-1/*/*R2*.fastq.gz
+fastqc -o results/01-fastqc-reports <filepath>/*/*R2*.fastq.gz
 
 ################################################################################################################
 # Run multiqc for all samples in the `results` dir

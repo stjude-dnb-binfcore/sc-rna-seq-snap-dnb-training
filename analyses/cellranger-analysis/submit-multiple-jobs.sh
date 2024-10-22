@@ -53,7 +53,7 @@ for ((i=1; i<=2; i++)); do
 done
 
 # Submit job 1 - note no dependencies!
-bsub -P run_CellRanger -q standard -n 1 -R "rusage[mem=2GB]" -R "span[hosts=1]" -J j1 -o j1.out -e j1.err "bash ${prefix}/j1.bsub"
+bsub -P run_CellRanger -q standard -n 1 -R "rusage[mem=2GB]" -R "span[hosts=1]" -J j1 -o ${prefix}/j1.out -e ${prefix}/j1.err "bash ${prefix}/j1.bsub"
 
 # Job 2 depend on the successful completion of job 1
 

@@ -17,12 +17,14 @@ run_miQC <- function(sce) {
       head(posterior(model))
       print(plotModel(sce, model)) # Plot
       print(plotFiltering(sce, model))
-
+      
       # Convert sce back to seurat object 
       filtered_sce <- as.Seurat(filterCells(sce, model), 
                                 counts = "counts",
-                                data = "logcounts")}
-  return (filtered_sce)}
+                                data = "logcounts")
+  }
+  return(filtered_sce)
+}
 
 
 ###########################################################################
@@ -34,13 +36,14 @@ run_miQC <- function(sce) {
 #'
 #' @examples
 run_QC_default <- function(sce) {
-  if (use_only_step1 == "YES"){
+  if (use_only_step1 == "YES") {
     print("Use only step 1 with default parameters for filtering!")
     # Step 1
     cat("Step 1 data filter", sample_name[i], "\n")
-    filtered_sce <- subset(seurat_obj, subset = nFeature_RNA >= min_genes &
-                                                nCount_RNA >= min_count &
-                                                percent.mito <= mtDNA_pct_default)
+    filtered_sce <- subset(seurat_obj, 
+                           subset = nFeature_RNA >= min_genes &
+                                    nCount_RNA >= min_count &
+                                    percent.mito <= mtDNA_pct_default)
     } else {        
       print("Use step 1 with default parameters for filtering and then use the `Find_Outlier_Thershold` function!")
       # Step 1
@@ -53,9 +56,11 @@ run_QC_default <- function(sce) {
       nFeature_RNA_rm_outlier <- Find_Outlier_Thershold(seurat_obj@meta.data$nFeature_RNA)
       nCount_RNA_rm_outlier <- Find_Outlier_Thershold(seurat_obj@meta.data$nCount_RNA)
       mtDNA_pct_rm_outlier <- Find_Outlier_Thershold(seurat_obj@meta.data$percent.mito)
-      filtered_sce <- subset(seurat_obj, subset = nFeature_RNA >= nFeature_RNA_rm_outlier &
-                                                  nCount_RNA >= nCount_RNA_rm_outlier &
-                                                  percent.mito <= mtDNA_pct_rm_outlier)}
-  
-  return (filtered_sce)}
+      filtered_sce <- subset(seurat_obj, 
+                             subset = nFeature_RNA >= nFeature_RNA_rm_outlier &
+                                      nCount_RNA >= nCount_RNA_rm_outlier &
+                                      percent.mito <= mtDNA_pct_rm_outlier)
+  }
+  return(filtered_sce)
+}
 

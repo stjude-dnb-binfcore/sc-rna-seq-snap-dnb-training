@@ -16,7 +16,8 @@ Find_Outlier_Thershold <- function(metadata) {
   high_outlier_thershold <- median(metadata) + 3 * mad(metadata)
   
   # Return list of low and high thresholds
-  return(list(low_outlier_thershold, high_outlier_thershold))}
+  return(list(low_outlier_thershold, high_outlier_thershold))
+}
 
 
 ####################################################################################################
@@ -92,7 +93,8 @@ create_vln_plot <- function(seurat_obj, grouping, min_genes, min_count, title_na
   
   plot <- plot_grid(title_name_grid, plot_row, ncol = 1, rel_heights = c(0.1, 1))
   
-  return(plot)}
+  return(plot)
+}
 
 ###############################################################################################################
 #' Function to make QC plots a the given Seurat object
@@ -148,7 +150,8 @@ Generate_QC_Plots_1 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
   ggsave(file = fname, width = 14, height = 8, device = "png")
   #dev.off()
   
-  return(plot_row)}
+  return(plot_row)
+}
   
 
 ############################################################################################################
@@ -196,7 +199,8 @@ Generate_QC_Plots_2 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
   ggsave(file = fname, width = 6, height = 5, device = "png")
   #dev.off()
   
-  return(plot_row)}
+  return(plot_row)
+}
 
 
 ############################################################################################################
@@ -252,7 +256,8 @@ Generate_QC_Plots_3 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
   ggsave(file = fname, width = 14, height = 8, device = "png")
   #dev.off()
   
-  return(plot_row)}
+  return(plot_row)
+}
   
 
 ############################################################################################################
@@ -305,7 +310,8 @@ Generate_QC_Plots_4 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
   ggsave(file = fname, width = 14, height = 8, device = "png")
   #dev.off()
   
-  return(plot_row)} 
+  return(plot_row)
+} 
   
   
 ############################################################################################################
@@ -358,7 +364,8 @@ Generate_QC_Plots_5 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
   ggsave(file = fname, width = 14, height = 8, device = "png")
   #dev.off()
   
-  return(plot_row)} 
+  return(plot_row)
+} 
 
 
 ############################################################################################################
@@ -393,5 +400,6 @@ Generate_QC_Plots_6 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
   ggsave(file = fname, width = 6, height = 5, device = "png")
   #dev.off()
   
-  return(plot_row)}
+  return(plot_row)
+}
 

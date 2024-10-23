@@ -48,7 +48,7 @@ function print_job {
 # Generate the LSF job files
 for ((i=1; i<=2; i++)); do
     jobname="j${i}"
-    print_job "${output_file}" 10 > "${prefix}/${jobname}.bsub"
+    print_job "${prefix}/${output_file}" 10 > "${prefix}/${jobname}.bsub"
     echo "bash ${prefix}/${jobname}.sh" >> "${prefix}/${jobname}.bsub"
 done
 

@@ -24,7 +24,7 @@ Default memory for running the alignment is set up to 16GB. In case more memory 
 
 - `j2.sh`: No modifications are needed by the user, unless the user modifies the `--output_dir` path in the `j1.sh`, then they will need to adjust accordingly the `--dir` flag. 
 
-- `submit-multiple-jobs.sh`: Here, the user will need to set up the absolute path for the directory in `#BSUB -cwd` and `prefix` parameters.
+- `submit-multiple-jobs.sh`: Here, the user will need to set up the absolute path for the directory in `#BSUB -cwd` and `prefix` parameters. If different alignment strategies are used, user should rename `${prefix}/results/02_cellranger_count/DefaultParameters` accordingly, e.g. `${prefix}/results/02_cellranger_count/ForcedCells8000Parameters`.
 
 - `waiter.sh`: Here, the user will need to set up the absolute path for the directory in `#BSUB -cwd` and `prefix` parameters. Also, user needs to replace `DST` with the Sample ID used for the samples of the project. This requires that all of the Sample IDs are the same, e.g., DST800, DST802, DST811 and so on.
 

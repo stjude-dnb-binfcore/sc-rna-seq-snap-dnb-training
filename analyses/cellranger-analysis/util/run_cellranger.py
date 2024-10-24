@@ -18,7 +18,7 @@ parser = argparse.ArgumentParser(description="This is a wrapper script that will
 parser.add_argument('--id', help='(Required). A unique run ID string: e.g. DYE3755', type=str)
 parser.add_argument('--output_dir', help='Optional. Path to a custom output directory for storing the results of the run. When this argument is specified, the outputs are placed in the user designated directory, following the format: /path/to/<custom name>/outs/. If excluded, the outputs are directed to the default path: /path/to/ID/outs/.', type=str)
 #--description Optional. Sample description to embed in output files. We are not going to add this parameter just yet as we don't request description information from collaborators at this time
-parser.add_argument('--transcriptome', help='(Required). Path to the Cell Ranger compatible transcriptome reference or you can use pre-existing reference genomes such as \"GRCh38\", \"mm10\" or \"GRCh38ANDmm10\".', type=str)
+parser.add_argument('--transcriptome', help='(Required). Path to the Cell Ranger compatible transcriptome reference or you can use pre-existing reference genomes such as \"GRCh38\", \"GRCm39\" or \"GRCh38ANDGRCm39\".', type=str)
 parser.add_argument('--fastqs', help='(Required). The full path to the corresponding fafstq file.', type=str)
 #--project Optional. Name of the project folder within a mkfastq, bcl2fastq, or bcl-convert-generated folder from which to pick FASTQs. We are not going to add this parameter just yet as we don't request project information from collaborators at this time.
 parser.add_argument('--sample', help='(Required). Allowable characters in sample names are letters, numbers, hyphens and underscores.', type=str)

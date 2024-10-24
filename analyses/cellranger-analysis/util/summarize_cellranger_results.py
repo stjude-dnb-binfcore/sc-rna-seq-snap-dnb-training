@@ -58,7 +58,7 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
             Warnings = Warnings + "GRCh38 Estimated Number of Cell Partitions < 500, "
             TotalWarnings += 1
     elif args.genome == "GRCm39":
-        if df.iloc[0]["mm10 Estimated Number of Cell Partitions"] < 500:
+        if df.iloc[0]["GRCm39 Estimated Number of Cell Partitions"] < 500:
             Warnings = Warnings + "mm10 Estimated Number of Cell Partitions < 500, "
             TotalWarnings += 1
 

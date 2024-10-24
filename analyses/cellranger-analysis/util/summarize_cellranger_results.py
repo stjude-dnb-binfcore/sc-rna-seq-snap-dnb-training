@@ -73,7 +73,7 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
             TotalWarnings += 1
     elif args.genome == "GRCm39":
         if df.iloc[0]["GRCm39 Estimated Number of Cell Partitions"] < 100:
-            MajorWarnings = MajorWarnings + "mm10 Estimated Number of Cell Partitions < 100, "
+            MajorWarnings = MajorWarnings + "GRCm39 Estimated Number of Cell Partitions < 100, "
             TotalWarnings += 1
     
 

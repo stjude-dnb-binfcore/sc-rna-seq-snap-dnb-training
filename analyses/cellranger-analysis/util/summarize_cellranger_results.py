@@ -211,7 +211,7 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
             MajorWarnings = MajorWarnings + "GRCh38 Fraction Reads in Cells < 70%, "
             TotalWarnings += 1
     elif args.genome == "mm10":
-        if df.iloc[0]["mm10 Fraction Reads in Cells"] < 70:
+        if df.iloc[0]["GRCm39 Fraction Reads in Cells"] < 70:
             MajorWarnings = MajorWarnings + "GRCm39 Fraction Reads in Cells < 70%, "
             TotalWarnings += 1
     

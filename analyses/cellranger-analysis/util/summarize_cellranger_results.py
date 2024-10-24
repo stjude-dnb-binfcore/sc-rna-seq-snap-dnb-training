@@ -122,7 +122,7 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
             Warnings = Warnings + "GRCh38 Reads Mapped to Genome < 85%, "
             TotalWarnings += 1
     elif args.genome == "mm10":
-        if df.iloc[0]["mm19 Reads Mapped to Genome"] < 85:
+        if df.iloc[0]["GRCm39 Reads Mapped to Genome"] < 85:
             Warnings = Warnings + "mm10 Reads Mapped to Genome < 85%, "
             TotalWarnings += 1
     

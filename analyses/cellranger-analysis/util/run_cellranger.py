@@ -42,15 +42,14 @@ parser.add_argument('--file', help='Optional. Tsv file containing the following	
 args = parser.parse_args()
 
 #Accessing reference genome based on requested short name of reference genome
-#Accessing reference genome based on requested short name of reference genome
 if args.transcriptome == "GRCh38":
-	args.transcriptome = "/research/dept/dnb/core_operations/Bioinformatics/common/ReferenceGenomes/homo_sapiens/GRCh38/downloads/refdata-gex-GRCh38-2024-A/"
+	args.transcriptome = "./ReferenceGenomes/homo_sapiens/GRCh38/downloads/refdata-gex-GRCh38-2024-A/"
 elif args.transcriptome == "GRCm39":
-	args.transcriptome = "/research/dept/dnb/core_operations/Bioinformatics/common/ReferenceGenomes/mus_musculus/GRCm39/downloads/refdata-gex-GRCm39-2024-A/"
+	args.transcriptome = "./ReferenceGenomes/mus_musculus/GRCm39/downloads/refdata-gex-GRCm39-2024-A/"
 elif args.transcriptome == "GRCh38ANDGRCm39":
-	args.transcriptome = "/research/dept/dnb/core_operations/Bioinformatics/common/ReferenceGenomes/homo_sapiens_mus_musculus/GRCh38_GRCm39/downloads/refdata-gex-GRCh38_and_GRCm39-2024-A/"
+	args.transcriptome = "./ReferenceGenomes/homo_sapiens_mus_musculus/GRCh38_GRCm39/downloads/refdata-gex-GRCh38_and_GRCm39-2024-A/"
 elif args.transcriptome == "GRCh38_GFP_tdTomato":
-	args.transcriptome = "/research/rgs01/applications/hpcf/authorized_apps/cab/Automation/REF/Homo_sapiens/Gencode_GFP/r31/CellRanger-index/7.0.1/"
+	args.transcriptome = "./cab/Automation/REF/Homo_sapiens/Gencode_GFP/r31/CellRanger-index/7.0.1/"
 
 
 #If all info for a single sample command are enter, then submit a single cellranger count command to the HPC

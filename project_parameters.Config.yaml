@@ -19,7 +19,7 @@ COMPLETION_DATE: "ONGOING"
 # (1) ./upstream-analysis/01B_run_seurat_qc_multiple_samples.R that is to run ./upstream-analysis/01A_run_seurat_qc.Rmd, and
 # (2) ./upstream-analysis/04_run_filter_object.Rmd 
 grouping: "orig.ident" # define grouping to use 
-genome_name: "mm10" # define genome reference
+genome_name: "GRCm39" # define genome reference
 Regress_Cell_Cycle_value: "NO" # Indicates whether or not to regress for cell cycle and, if so, which method to use and scale data; acceptable values: "YES", "NO" and "DIFF"
 assay: "RNA" # define assay
 min_genes: 300 # define minimum number of genes for filtering

@@ -7,11 +7,11 @@
 #BSUB -R "rusage[mem=2500]"
 #BSUB -o waiter.out
 #BSUB -e waiter.err
-#BSUB -cwd "/research/dept/dnb/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/analyses/cellranger-analysis"
+#BSUB -cwd "./GitHub/sc-rna-seq-snap/analyses/cellranger-analysis"
 
 
 queue="standard"
-prefix="/research/dept/dnb/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/analyses/cellranger-analysis"
+prefix="./GitHub/sc-rna-seq-snap/analyses/cellranger-analysis"
 
 # Function to check if there are any running jobs with the title pattern `ID.DST<some number here>`
 check_jobs() {

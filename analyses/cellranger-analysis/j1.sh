@@ -14,7 +14,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 # If your `project_metadata` is not in `*.txt` file format
 # use the following code line to convert it
-cat /research/dept/dnb/core_operations/Bioinformatics/zakhagrp/snRNASeq_of_DS_in_Df1_mice/project_metadata.tsv | sed 's/,/\t/g' > ./input/project_metadata.txt
+cat ./mouse-test-dataset/project_metadata.tsv | sed 's/,/\t/g' > ./input/project_metadata.txt
 
 
 ########################################################################

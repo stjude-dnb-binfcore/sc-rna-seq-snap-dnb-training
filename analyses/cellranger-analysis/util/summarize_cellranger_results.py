@@ -136,7 +136,7 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
             MajorWarnings = MajorWarnings + "GRCh38 Reads Mapped Confidently to Genome < 80%, "
             TotalWarnings += 1
     elif args.genome == "GRCm39":
-        if df.iloc[0]["mm10 Reads Mapped Confidently to Genome"] < 80:
+        if df.iloc[0]["GRCm39 Reads Mapped Confidently to Genome"] < 80:
             MajorWarnings = MajorWarnings + "GRCm39 Reads Mapped Confidently to Genome < 80%, "
             TotalWarnings += 1
     
@@ -149,8 +149,8 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCh38 Reads Mapped Confidently to Intergenic Regions"] > 10:
             Warnings = Warnings + "GRCh38 Reads Mapped Confidently to Intergenic Regions > 10%, "
             TotalWarnings += 1
-    elif args.genome == "mm10":
-        if df.iloc[0]["mm10 Reads Mapped Confidently to Intergenic Regions"] > 10:
+    elif args.genome == "GRCm39":
+        if df.iloc[0]["GRCm39 Reads Mapped Confidently to Intergenic Regions"] > 10:
             Warnings = Warnings + "GRCm39 Reads Mapped Confidently to Intergenic Regions > 10%, "
             TotalWarnings += 1
     
@@ -163,9 +163,9 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCh38 Reads Mapped Confidently to Intronic Regions"] > 30:
             Warnings = Warnings + "GRCh38 Reads Mapped Confidently to Intronic Regions > 30%, "
             TotalWarnings += 1
-    elif args.genome == "mm10":
-        if df.iloc[0]["mm10 Reads Mapped Confidently to Intronic Regions"] > 30:
-            Warnings = Warnings + "mm10 Reads Mapped Confidently to Intronic Regions > 30%, "
+    elif args.genome == "GRCm39":
+        if df.iloc[0]["GRCm39 Reads Mapped Confidently to Intronic Regions"] > 30:
+            Warnings = Warnings + "GRCm39 Reads Mapped Confidently to Intronic Regions > 30%, "
             TotalWarnings += 1
     
 
@@ -177,9 +177,9 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCh38 Reads Mapped Confidently to Exonic Regions"] < 30:
             MajorWarnings = MajorWarnings + "GRCh38 Reads Mapped Confidently to Exonic Regions < 30%, "
             TotalWarnings += 1
-    elif args.genome == "mm10":
-        if df.iloc[0]["mm10 Reads Mapped Confidently to Exonic Regions"] < 30:
-            MajorWarnings = MajorWarnings + "mm10 Reads Mapped Confidently to Exonic Regions < 30%, "
+    elif args.genome == "GRCm39":
+        if df.iloc[0]["GRCm39 Reads Mapped Confidently to Exonic Regions"] < 30:
+            MajorWarnings = MajorWarnings + "GRCm39 Reads Mapped Confidently to Exonic Regions < 30%, "
             TotalWarnings += 1
 
     

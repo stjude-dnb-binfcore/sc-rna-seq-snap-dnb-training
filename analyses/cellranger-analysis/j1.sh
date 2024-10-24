@@ -20,7 +20,7 @@ cat /research/dept/dnb/core_operations/Bioinformatics/zakhagrp/snRNASeq_of_DS_in
 ########################################################################
 # Run CellRanger for all libraries
 python ./util/run_cellranger.py --file=./input/project_metadata.txt \
-                                --transcriptome=mm10 \
+                                --transcriptome=GRCm39 \
                                 --create_bam=true \
                                 --output_dir=./results/02_cellranger_count/DefaultParameters/
                                 # --force_cells=8000 \

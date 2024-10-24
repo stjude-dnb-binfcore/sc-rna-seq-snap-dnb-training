@@ -192,7 +192,7 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
             MajorWarnings = MajorWarnings + "GRCh38 Reads Mapped Confidently to Transcriptome < 30%, "
             TotalWarnings += 1
     elif args.genome == "mm10":
-        if df.iloc[0]["mm10 Reads Mapped Confidently to Transcriptome"] < 30:
+        if df.iloc[0]["GRCm39 Reads Mapped Confidently to Transcriptome"] < 30:
             MajorWarnings = MajorWarnings + "GRCm39 Reads Mapped Confidently to Transcriptome < 30%, "
             TotalWarnings += 1
     

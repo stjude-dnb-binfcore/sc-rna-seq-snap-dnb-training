@@ -92,7 +92,7 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
             TotalWarnings += 1
     elif args.genome == "GRCm39":
         if df.iloc[0]["GRCm39 Median Genes per Cell"] < 1000:
-            MajorWarnings = MajorWarnings + "mm10 Median Genes per Cell < 1000, "
+            MajorWarnings = MajorWarnings + "GRCm39 Median Genes per Cell < 1000, "
             TotalWarnings += 1
     
 

@@ -45,7 +45,7 @@ args = parser.parse_args()
 #Accessing reference genome based on requested short name of reference genome
 if args.transcriptome == "GRCh38":
 	args.transcriptome = "/research/dept/dnb/core_operations/Bioinformatics/common/ReferenceGenomes/homo_sapiens/GRCh38/downloads/refdata-gex-GRCh38-2024-A/"
-elif args.transcriptome == "mm10":
+elif args.transcriptome == "GRCm39":
 	args.transcriptome = "/research/dept/dnb/core_operations/Bioinformatics/common/ReferenceGenomes/mus_musculus/GRCm39/downloads/refdata-gex-GRCm39-2024-A/"
 elif args.transcriptome == "GRCh38ANDmm10":
 	args.transcriptome = "/research/dept/dnb/core_operations/Bioinformatics/common/ReferenceGenomes/homo_sapiens_mus_musculus/GRCh38_GRCm39/downloads/refdata-gex-GRCh38_and_GRCm39-2024-A/"

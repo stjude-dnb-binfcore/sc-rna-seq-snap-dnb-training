@@ -45,7 +45,7 @@ The `run-container.sh` is running at `IP_ADDR:PORT`. When RStudio launches, plea
 If the user does not have access to the `sc-rna-seq-snap-container.sif`, they can build their own. 
 User can rename the `.sif` file, if they want to (not needed).
 ```
-singularity build sc-rna-seq-snap-container.sif rstudio-v4.4.0-seurat-v4.4.0.def bash run-container.sh
+singularity build sc-rna-seq-snap-container.sif rstudio-v4.4.0-seurat-v4.4.0.def
 ```
 
 Then, the user can start the container as explained in the step (3).

@@ -5,15 +5,13 @@ This is an example startup sequence:
 ```
 ssh hpc.stjude.org
 hpcf_interactive -n 4
-cd ./rstudio_containers/
-bash run.sh
+cd ./sc-rna-seq-snap/run-container/working_dir/
+bash run-container.sh
 ```
 
 When RStudio launches, please click "Session" -> "Restart R".
 
-
-
-
+The sif file is required and needs to be added in the same directory where `run-container.sh` lives. Please submit an [issue](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/issues) to request the file maintained by our team at the Bioinformatics core at DNB. 
 
 
 

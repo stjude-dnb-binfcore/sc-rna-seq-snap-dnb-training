@@ -38,7 +38,7 @@ cat 1>&2 <<END
 "Running RStudio at $ADD:$PORT"
 END
 
-singularity exec --cleanenv -c -W ${workdir}/${version} --bind ${HOME}:/home/$USER,/research:/research,/hpcf:/hpcf,${workdir}/${version}/run:/run,${workdir}/${version}/tmp:/tmp,${workdir}/database.conf:/etc/rstudio/database.conf,${workdir}/${version}/rsession.sh:/etc/rstudio/rsession.sh,${workdir}/${version}/var/lib/rstudio-server:/var/lib/rstudio-server --env R_ENVRION_USER=${workdir}/${version}/Renviron rstudio_full_4.4.0.sif \
+singularity exec --cleanenv -c -W ${workdir}/${version} --bind ${HOME}:/home/$USER,/research:/research,/hpcf:/hpcf,${workdir}/${version}/run:/run,${workdir}/${version}/tmp:/tmp,${workdir}/database.conf:/etc/rstudio/database.conf,${workdir}/${version}/rsession.sh:/etc/rstudio/rsession.sh,${workdir}/${version}/var/lib/rstudio-server:/var/lib/rstudio-server --env R_ENVRION_USER=${workdir}/${version}/Renviron sc-rna-seq-snap-container.sif \
     rserver --www-port ${PORT} \
             --rsession-path="/etc/rstudio/rsession.sh" \
             --secure-cookie-key-file "/tmp/rstudio-server/secure-cookie-key" \

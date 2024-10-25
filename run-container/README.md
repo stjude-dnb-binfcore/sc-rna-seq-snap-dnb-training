@@ -5,39 +5,54 @@ We have generated definition and singularity files that contain all tools, packa
 
 ## To use the container in an R interactive session on HPC:
 
+From an interactive node on HPC, the user can open an R interactive session. Please modify memory and resources as needed for the analysis module to run.
+```
+bsub -P hpcf_interactive -J hpcf_interactive -n 1 -q standard -R "rusage[mem=4G]" -Is "bash"
+```
+
+```
+module load singularity/4.1.1
+```
+
+
 1. Clone the repository
 ```
 git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
 ```
 
-2. Pull the singularity container and start the singularity container, from the `sc-rna-seq-snap` folder
+and navigate to the directory with the files needed to run the container:
+```
+cd run-container
+```
 
-From an interactive node on HPC, user can open an R interactive session and run:
-```
-module load singularity/4.1.1
-```
+
+2. Pull the singularity container
 
 🚧🚧🚧
 ```
-singularity pull library://sc-rna-seq-snap-container.sif bash ./run-container/run-container.shRStudio
+singularity pull library://sc-rna-seq-snap-container.sif
 ```
 🚧🚧🚧
 
-When RStudio launches, please click "Session" -> "Restart R".
 
-
-If the user does not have access to the `sc-rna-seq-snap-container.sif`, they can build their own. User can rename the `.sif` file, if they want to (not needed).
+3. Start the singularity container
 
 ```
-singularity build ./run-container/sc-rna-seq-snap-container.sif ./run-container/rstudio-v4.4.0-seurat-v4.4.0.def
+bash run-container.sh
 ```
 
-```
-build ./run-container/sc-rna-seq-snap-container.sif ./run-container/rstudio-v4.4.0-seurat-v4.4.0.def bash ./run-container/run-container.shRStudio
-```
+The `run-container.sh` is running at `IP_ADDR:PORT`. When RStudio launches, please click "Session" -> "Restart R".
 
 
-`run-container.shRStudio` is running at `IP_ADDR:PORT`.
+4. Build container (if needed)
+
+If the user does not have access to the `sc-rna-seq-snap-container.sif`, they can build their own. 
+User can rename the `.sif` file, if they want to (not needed).
+```
+singularity build sc-rna-seq-snap-container.sif rstudio-v4.4.0-seurat-v4.4.0.def bash run-container.sh
+```
+
+Then, the user can start the container as explained in the step (3).
 
 
 ## To use the container from the command line on HPC:

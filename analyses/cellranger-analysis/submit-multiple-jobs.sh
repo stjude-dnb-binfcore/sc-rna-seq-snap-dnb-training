@@ -7,11 +7,11 @@
 #BSUB -R "rusage[mem=2500]"
 #BSUB -o submitter.out
 #BSUB -e submitter.err
-#BSUB -cwd "./GitHub/sc-rna-seq-snap/analyses/cellranger-analysis"
+#BSUB -cwd "./sc-rna-seq-snap/analyses/cellranger-analysis"
 
 ########################################################################
 # Set up running directory
-prefix="./GitHub/sc-rna-seq-snap/analyses/cellranger-analysis"
+prefix="./sc-rna-seq-snap/analyses/cellranger-analysis"
 cd "$(dirname "${BASH_SOURCE[0]}")" 
 ########################################################################
 # Create directories to save output files to

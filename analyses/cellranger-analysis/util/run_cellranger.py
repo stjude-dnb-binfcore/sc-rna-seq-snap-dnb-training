@@ -49,7 +49,7 @@ elif args.transcriptome == "GRCm39":
 elif args.transcriptome == "GRCh38ANDGRCm39":
 	args.transcriptome = "./ReferenceGenomes/homo_sapiens_mus_musculus/GRCh38_GRCm39/downloads/refdata-gex-GRCh38_and_GRCm39-2024-A/"
 elif args.transcriptome == "GRCh38_GFP_tdTomato":
-	args.transcriptome = "./cab/Automation/REF/Homo_sapiens/Gencode_GFP/r31/CellRanger-index/7.0.1/"
+	args.transcriptome = "./REF/Homo_sapiens/Gencode_GFP/r31/CellRanger-index/7.0.1/"
 
 
 #If all info for a single sample command are enter, then submit a single cellranger count command to the HPC

@@ -1,17 +1,48 @@
-# rstudio_containers
+# How to run the Singularity container for the Single cell RNA Seq Snap workflow (ScRNASeqSnap)
 
-This is an example startup sequence:
- 
+We have generated definition and singularity files that contain all tools, packages, and dependencies necessary to run the code and analyses modules in the `sc-rna-seq-snap` repository. 
+
+
+## To use the container in an R interactive session on HPC:
+
+1. Clone the repository
 ```
-ssh hpc.stjude.org
-hpcf_interactive -n 4
-cd ./sc-rna-seq-snap/run-container/working_dir/
-bash run-container.sh
+git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
 ```
+
+2. Pull the singularity container and start the singularity container, from the `sc-rna-seq-snap` folder
+
+From an interactive node on HPC, user can open an R interactive session and run:
+```
+module load singularity/4.1.1
+```
+
+🚧🚧🚧
+```
+singularity pull library://sc-rna-seq-snap-container.sif bash ./run-container/run-container.shRStudio
+```
+🚧🚧🚧
 
 When RStudio launches, please click "Session" -> "Restart R".
 
-The sif file is required and needs to be added in the same directory where `run-container.sh` lives. Please submit an [issue](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/issues) to request the file maintained by our team at the Bioinformatics core at DNB. 
+
+If the user does not have access to the `sc-rna-seq-snap-container.sif`, they can build their own. User can rename the `.sif` file, if they want to (not needed).
+
+```
+singularity build ./run-container/sc-rna-seq-snap-container.sif ./run-container/rstudio-v4.4.0-seurat-v4.4.0.def
+```
+
+```
+build ./run-container/sc-rna-seq-snap-container.sif ./run-container/rstudio-v4.4.0-seurat-v4.4.0.def bash ./run-container/run-container.shRStudio
+```
+
+
+`run-container.shRStudio` is running at `IP_ADDR:PORT`.
+
+
+## To use the container from the command line on HPC:
+
+🚧🚧🚧
 
 
 

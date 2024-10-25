@@ -26,17 +26,13 @@ cd run-container
 ```
 
 
-2. Pull the singularity container
-
-🚧🚧🚧
+2. Pull the singularity container 🚧🚧🚧
 ```
 singularity pull library://sc-rna-seq-snap-container.sif
 ```
-🚧🚧🚧
 
 
 3. Start the singularity container
-
 ```
 bash run-container.sh
 ```
@@ -55,9 +51,8 @@ singularity build sc-rna-seq-snap-container.sif rstudio-v4.4.0-seurat-v4.4.0.def
 Then, the user can start the container as explained in the step (3).
 
 
-## To use the container from the command line on HPC:
+## To use the container from the command line on HPC: 🚧🚧🚧
 
-🚧🚧🚧
 
 
 

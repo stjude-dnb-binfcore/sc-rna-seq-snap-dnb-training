@@ -1,0 +1,73 @@
+---
+title: "Data exploratory analysis"
+author: "Antonia Chroni for SJCRH DNB_BINF_Core"
+---
+
+# Set up
+
+```{r load-library, include=FALSE, echo=TRUE}
+suppressPackageStartupMessages({
+  library(BiocManager)
+  library(devtools)
+  library(remotes)
+  
+  library(miQC)
+  library(scater)
+  library(scDblFinder)
+  library(SingleCellExperiment)
+  library(celldex)
+  library(SingleR)
+  library(infercnv)
+  
+  library(scooter)
+  library(RcppPlanc)
+  library(numbat)
+  
+  library(clustree)
+  library(cowplot)
+  library(data.table)
+  library(flexmix)
+  library(flextable)
+  library(forcats)
+  library(fs)
+  library(future)
+  library(GGally)
+  library(ggh4x)
+  library(ggplot2)
+  library(ggpmisc)
+  library(ggrepel)
+  
+  
+  library(ggthemes)
+  library(grid)
+  library(harmony)
+  library(igraph)
+  library(irlba)
+  library(knitr)
+  library(leiden)
+  library(optparse)
+  library(patchwork)
+  library(purrr)
+  library(RColorBrewer)
+  library(reshape2)
+  #library(rliger)
+  library(rlist)
+  library(R.utils)
+  library(Seurat)
+  library(SeuratObject)
+  library(shiny)
+  library(SoupX)
+  library(stringr)
+  library(tidytext)
+  library(tidyverse)
+  library(tinytex)
+  library(yaml)
+})
+```
+
+# Session Info
+
+```{r echo=FALSE}
+sessionInfo()
+```
+

@@ -13,19 +13,16 @@ The `submit-multiple-jobs.sh` script is designed to be run as if it was called f
    - Step 2: To run `j2.sh` to summarize alignment results, i.e., `summarize-cellranger-analysis`. The latter script will be on hold and executed once all libraries are aligned and `j1.sh` is complete. This is been taken care of by `waiter.sh` script.
 
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
-- `j1.sh`: 
-   - `--file`: define path with `project_metadata` file. This is defined by default in the `./input/` dir within the `/sc-rna-seq-snap/analyses/cellranger-analysis` module. If the file lives in another folder, this path should be modified accordingly within the script. The file needs to be in `*.txt` file format. In addition, there is a code line to convert `*.tsv` file to `*.txt` file, if needed. User can specify the file path in there for the conversion. This file can contain either one or multiple samples as long as the following minimum parameters are provided: `ID`, `SAMPLE`, and `FASTQ` columns.
-   - `--transcriptome`: define reference genome to be used for the alignment. This points out to the path with the reference genome. There are 4 options accommodating for human, mouse, and dual index genomes: `GRCh38`, `GRCm39`, `GRCh38ANDGRCm39`, and `GRCh38_GFP_tdTomato`, respectively. If a different reference genome is required (not provided here), this can be added as an argument option in the `./util/run_cellranger.py` along with the path. 
-  - `--output_dir`: User can change this accordingly if they want to run and compare alignments with CellRanger, e.g., by using `--force_cells=8000` to constraint the number of cells to be used for alignment. We recommend to run by default, and after careful assessment to edit parameters. We have found that the default parameters set up here work well for most of the cases.
+- `../../project_parameters.Config.yaml`: define the `metadata_dir`, `genome_reference_path` and `cellranger_parameters`. Please submit an [issue](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/issues) to request the path to the reference genome of preference. Our team at the Bioinformatics core at DNB maintains the following genome references: `GRCh38`, `GRCm39`, `GRCh38ANDGRCm39`, and `GRCh38_GFP_tdTomato`, for human, mouse, and dual index genomes, respectively. Otherwise, specify the path to the reference genome of your preference.
 
-- `./util/run_cellranger.py`: The path to the reference genome is required. Please submit an [issue](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/issues) to request the path to the path with all reference genomes maintained by our team at the Bioinformatics core at DNB. Otherwise, specify the path to the reference genome of your preference.
-
-
-- `j2.sh`: No modifications are needed by the user, unless the user modifies the `--output_dir` path in the `j1.sh`, then they will need to adjust accordingly the `--dir` flag. 
-
-- `submit-multiple-jobs.sh`: Here, the user will need to set up the absolute path for the directory in `#BSUB -cwd` and `prefix` parameters. If different alignment strategies are used, user should rename `${prefix}/results/02_cellranger_count/DefaultParameters` accordingly, e.g. `${prefix}/results/02_cellranger_count/ForcedCells8000Parameters`.
+- `submit-multiple-jobs.sh`: Here, the user will need to set up the absolute path for the directory in `#BSUB -cwd` and `prefix` parameters. 
 
 - `waiter.sh`: Here, the user will need to set up the absolute path for the directory in `#BSUB -cwd` and `prefix` parameters. Also, user needs to replace `DST` with the Sample ID used for the samples of the project. This requires that all of the Sample IDs are the same, e.g., DST800, DST802, DST811 and so on.
+
+
+- `j1.sh`: 
+   - `--file`: This is defined by default in the `./sc-rna-seq-snap/analyses/cellranger-analysis/input/` dir. If the file lives in another folder, e.g., `metadata_dir`, this should be modified accordingly in the `../../project_parameters.Config.yaml`. The file needs to be in `*.txt` file format. In addition, there is a code line to convert `*.tsv` file to `*.txt` file, if needed. If the file exists already in `./input` as `*.txt`, this line of code will be ignored. This file can contain either one or multiple samples as long as the following minimum parameters are provided: `ID`, `SAMPLE`, and `FASTQ` columns.
+  - `--force_cells`: User can add flags as necessary for their analyses and compare alignments with CellRanger, e.g., by using `--force_cells=8000` to constraint the number of cells to be used for alignment. We recommend to run by default, and after careful assessment to edit parameters. We have found that the default parameters set up here work well for most of the cases.
 
 
 Default memory for running the alignment is set up to 16GB. In case more memory is needed to run a specific sample, this can be modified here:

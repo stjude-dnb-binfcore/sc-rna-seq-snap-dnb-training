@@ -33,7 +33,7 @@ git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
 cd /home/rstudio/sc-rna-seq-snap/analyses/<module_of_interest>
 ```
 
-## To run the code in this repository wiht your own data:
+## To run the code in this repository with your own data:
 
 1. Fork the repository on your own account from the main page of the `stjude-dnb-binfcore/sc-rna-seq-snap` by clicking the “Fork” button
 

@@ -56,7 +56,7 @@ cd /home/rstudio/sc-rna-seq-snap/analyses/<module_of_interest>
 
 5. How to run a module analysis
 
-Before running a module, you will do `synk fork` of your project repo at GitHub, if your branch is behind the main branch of the `stjude-dnb-binfcore/sc-rna-seq-snap:main`. This will update the main branch of your project repo with the new code and modules (if any). This will add code and not break any analyses already run in your project repo. 
+Before running a module, you will do `sync fork` of your project repo at GitHub, if your branch is behind the main branch of the `stjude-dnb-binfcore/sc-rna-seq-snap:main`. This will update the main branch of your project repo with the new code and modules (if any). This will add code and not break any analyses already run in your project repo. 
 
 Then navigate to your `./sc-rna-seq-snap` project repo and ensure you are at the `main` branch. If not, you will need to `git checkout` to the main branch.
 

@@ -13,8 +13,8 @@ This repository contains tools and workflows for analyzing single cell and singl
 The `sc-rna-seq-snap` repository is an initiative of the [Bioinformatics Core at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital](https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html).
 
 
-⚠️ 🚧 The repo is currently under development and code review process. 🚧 ⚠️ 
-
+⚠️ 🚧 🚧 ⚠️
+The repo is currently under development and code review process. 
 
 
 
@@ -32,6 +32,47 @@ git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
 ```
 cd /home/rstudio/sc-rna-seq-snap/analyses/<module_of_interest>
 ```
+
+## To run the code in this repository wiht your own data:
+
+1. Fork the repository on your own account from the main page of the `stjude-dnb-binfcore/sc-rna-seq-snap` by clicking the “Fork” button
+
+
+
+2. Change the name if you like, but probably not; click “Create fork”
+
+
+
+3. Enjoy your new project repo!
+
+
+
+4. Replace the `project_parameters.Config.yaml` with your own file paths and parameters.
+
+5. How to run a module analysis
+
+Before running a module, you will do `synk fork` of your project repo at GitHub (if your branch is behind from the main branch of the `stjude-dnb-binfcore/sc-rna-seq-snap:main`. This will update the main branch of your project repo with the new modules (if any). This will add code and not break any analyses run already in your project repo. 
+
+Then navigate to your project repo and ensure you are at the `main` branch, if not you will need to `git checkout` to the main.
+
+```
+cd ./sc-rna-seq-snap
+git branch
+git checkout main
+```
+
+Finally, `git pull` to get the most updated changes and code in your project repo. 
+
+```
+git pull
+```
+
+6. Navigate to an analysis module and run the shell script of interest:
+```
+cd /home/rstudio/sc-rna-seq-snap/analyses/<module_of_interest>
+```
+
+
 
 ### Below is the main directory structure listing the analyses and data files used in this repository
 

@@ -7,11 +7,11 @@
 #BSUB -R "rusage[mem=2500]"
 #BSUB -o submit-multiple-jobs.out
 #BSUB -e submit-multiple-jobs.err
-#BSUB -cwd "/research/dept/dnb/core_operations/Bioinformatics/achroni/GitHub/pipeline-testing/sc-rna-seq-snap/analyses/cellranger-analysis"
+#BSUB -cwd "./sc-rna-seq-snap/analyses/cellranger-analysis"
 
 ########################################################################
 # Set up running directory
-prefix="/research/dept/dnb/core_operations/Bioinformatics/achroni/GitHub/pipeline-testing/sc-rna-seq-snap/analyses/cellranger-analysis"
+prefix="./sc-rna-seq-snap/analyses/cellranger-analysis"
 cd "$(dirname "${BASH_SOURCE[0]}")" 
 
 ########################################################################

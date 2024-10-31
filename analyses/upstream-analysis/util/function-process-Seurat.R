@@ -39,8 +39,8 @@ Genome_Specific_Cell_Cycle_Scoring <- function(seurat_obj, Genome) {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.hg19.s.genes, g2m.features = dual.hg19.g2m.genes)
   } else if (Genome == "DualGRCh38") {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.GRCh38.s.genes, g2m.features = dual.GRCh38.g2m.genes)
-  } else if (Genome == "Dualmm10") {
-    seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.mm10.s.genes, g2m.features = dual.mm10.g2m.genes)
+  } else if (Genome == "DualGRCm39") {
+    seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.GRCm39.s.genes, g2m.features = dual.GRCm39.g2m.genes)
   }
 }
 

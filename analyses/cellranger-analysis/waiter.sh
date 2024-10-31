@@ -9,10 +9,12 @@
 #BSUB -e waiter.err
 #BSUB -cwd "/research/dept/dnb/core_operations/Bioinformatics/achroni/GitHub/pipeline-testing/sc-rna-seq-snap/analyses/cellranger-analysis"
 
-
+########################################################################
+# Set up variables
 queue="standard"
 prefix="/research/dept/dnb/core_operations/Bioinformatics/achroni/GitHub/pipeline-testing/sc-rna-seq-snap/analyses/cellranger-analysis"
 
+########################################################################
 # Function to check if there are any running jobs with the title pattern `ID.DST<some number here>`
 check_jobs() {
     # Query bjobs and filter for jobs with titles matching the pattern

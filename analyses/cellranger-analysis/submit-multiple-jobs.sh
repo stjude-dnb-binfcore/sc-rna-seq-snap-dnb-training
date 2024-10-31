@@ -13,21 +13,11 @@
 # Set up running directory
 prefix="/research/dept/dnb/core_operations/Bioinformatics/achroni/GitHub/pipeline-testing/sc-rna-seq-snap/analyses/cellranger-analysis"
 cd "$(dirname "${BASH_SOURCE[0]}")" 
-########################################################################
-########################################################################
-# Read multiple values and assign them to variables by parsing yaml file
-cellranger_parameters=$(cat ../../project_parameters.Config.yaml | grep 'cellranger_parameters:' | awk '{print $2}')
-cellranger_parameters=${cellranger_parameters//\"/}  # Removes all double quotes
-echo "$cellranger_parameters"  # Output: This is a string with quotes.
-
 
 ########################################################################
 # Create directories to save output files to
 mkdir -p ${prefix}/input
 mkdir -p ${prefix}/results
-mkdir -p ${prefix}/results/01_logs
-mkdir -p ${prefix}/results/02_cellranger_count
-mkdir -p ${prefix}/results/02_cellranger_count/${cellranger_parameters}
 
 ########################################################################
 # File in which we store the output text to verify the job execution order.

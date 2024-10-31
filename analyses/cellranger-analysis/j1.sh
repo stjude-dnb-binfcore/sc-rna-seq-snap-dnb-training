@@ -27,6 +27,13 @@ cellranger_parameters=${cellranger_parameters//\"/}  # Removes all double quotes
 echo "$cellranger_parameters"  # Output: This is a string with quotes.
 
 ########################################################################
+# Create directories to save output files to
+mkdir -p ./results/01_logs
+mkdir -p ./results/02_cellranger_count
+mkdir -p ./results/02_cellranger_count/${cellranger_parameters}
+echo "./results/02_cellranger_count/${cellranger_parameters}"
+
+########################################################################
 # If your `project_metadata` is not in `*.txt` file format
 # use the following code line to convert it
 cat "${metadata_dir}"/project_metadata.tsv | sed 's/,/\t/g' > ./input/project_metadata.txt

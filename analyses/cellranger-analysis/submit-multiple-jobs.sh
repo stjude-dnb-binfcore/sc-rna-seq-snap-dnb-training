@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #BSUB -P run_cellranger
-#BSUB -J submitter
+#BSUB -J submit-multiple-jobs
 #BSUB -q standard
 #BSUB -n 1
 #BSUB -R "rusage[mem=2500]"
-#BSUB -o submitter.out
-#BSUB -e submitter.err
+#BSUB -o submit-multiple-jobs.out
+#BSUB -e submit-multiple-jobs.err
 #BSUB -cwd "/research/dept/dnb/core_operations/Bioinformatics/achroni/GitHub/pipeline-testing/sc-rna-seq-snap/analyses/cellranger-analysis"
 
 ########################################################################

@@ -1,25 +1,23 @@
 #!/bin/bash
 
 #BSUB -P run_cellranger
-#BSUB -J submitter
+#BSUB -J submit-multiple-jobs
 #BSUB -q standard
 #BSUB -n 1
 #BSUB -R "rusage[mem=2500]"
-#BSUB -o submitter.out
-#BSUB -e submitter.err
+#BSUB -o submit-multiple-jobs.out
+#BSUB -e submit-multiple-jobs.err
 #BSUB -cwd "./sc-rna-seq-snap/analyses/cellranger-analysis"
 
 ########################################################################
 # Set up running directory
 prefix="./sc-rna-seq-snap/analyses/cellranger-analysis"
 cd "$(dirname "${BASH_SOURCE[0]}")" 
+
 ########################################################################
 # Create directories to save output files to
 mkdir -p ${prefix}/input
 mkdir -p ${prefix}/results
-mkdir -p ${prefix}/results/01_logs
-mkdir -p ${prefix}/results/02_cellranger_count
-mkdir -p ${prefix}/results/02_cellranger_count/DefaultParameters
 
 ########################################################################
 # File in which we store the output text to verify the job execution order.

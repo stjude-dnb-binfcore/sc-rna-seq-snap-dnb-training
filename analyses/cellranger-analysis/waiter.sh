@@ -9,10 +9,12 @@
 #BSUB -e waiter.err
 #BSUB -cwd "./sc-rna-seq-snap/analyses/cellranger-analysis"
 
-
+########################################################################
+# Set up variables
 queue="standard"
 prefix="./sc-rna-seq-snap/analyses/cellranger-analysis"
 
+########################################################################
 # Function to check if there are any running jobs with the title pattern `ID.DST<some number here>`
 check_jobs() {
     # Query bjobs and filter for jobs with titles matching the pattern

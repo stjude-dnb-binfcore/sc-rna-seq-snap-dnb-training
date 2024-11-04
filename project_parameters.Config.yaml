@@ -2,7 +2,7 @@
 root_dir: "./GitHub/sc-rna-seq-snap" # path to the main dir of the project where GitHub repo lives
 data_dir: "./GitHub/sc-rna-seq-snap/analyses/cellranger-analysis/results/02_cellranger_count/ForcedCells8000Parameters" # path to data dir of the project with CellRanger output results
 metadata_dir: "./mouse-test-dataset" # path to metadata dir of the project
-genome_name: "GRCm39" # define genome reference and versioning
+genome_name: "GRCh38ANDGRCm39" # define genome reference and versioning
 PROJECT_NAME: "mouse-test-dataset"
 PI_NAME: "Stanislav Zakharenko"
 TASK_ID: "NA"
@@ -23,6 +23,7 @@ fastqc_dir: "." #path to the fastqc files for the `fastqc-analysis` module
 # `./analyses/cellranger-analysis`
 genome_reference_path: "./" #path to genome reference to be used for the `cellranger-analysis` module
 cellranger_parameters: "DefaultParameters" # or "ForcedCells8000Parameters" etc
+genome_name_cellranger: "GRCm39" #please define the genome of preference for dual genomes. In case for single genomes, please use the same as used for `genome_name`.
 
 # `./analyses/upstream-analysis`
 grouping: "orig.ident" # define grouping to use 

@@ -26,6 +26,7 @@ cellranger_parameters=$(cat ../../project_parameters.Config.yaml | grep 'cellran
 cellranger_parameters=${cellranger_parameters//\"/}  # Removes all double quotes
 echo "$cellranger_parameters"  # Output: This is a string with quotes.
 
+
 ########################################################################
 # Create directories to save output files to
 mkdir -p ./results/01_logs

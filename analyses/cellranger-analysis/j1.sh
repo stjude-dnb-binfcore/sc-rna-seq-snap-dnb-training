@@ -26,6 +26,10 @@ cellranger_parameters=$(cat ../../project_parameters.Config.yaml | grep 'cellran
 cellranger_parameters=${cellranger_parameters//\"/}  # Removes all double quotes
 echo "$cellranger_parameters"  # Output: This is a string with quotes.
 
+genome_name=$(cat ../../project_parameters.Config.yaml | grep 'genome_name:' | awk '{print $2}')
+genome_name=${genome_name//\"/}  # Removes all double quotes
+echo "$genome_name"  # Output: This is a string with quotes.
+
 ########################################################################
 # Create directories to save output files to
 mkdir -p ./results/01_logs
@@ -43,5 +47,6 @@ cat "${metadata_dir}"/project_metadata.tsv | sed 's/,/\t/g' > ./input/project_me
 python ./util/run_cellranger.py --file=./input/project_metadata.txt \
                                 --transcriptome=${genome_reference_path}  \
                                 --create_bam=true \
-                                --output_dir=./results/02_cellranger_count/${cellranger_parameters}/
+                                --output_dir=./results/02_cellranger_count/${cellranger_parameters}/ \
+                                --genome ${genome_name}
                                 # --force_cells=8000                                

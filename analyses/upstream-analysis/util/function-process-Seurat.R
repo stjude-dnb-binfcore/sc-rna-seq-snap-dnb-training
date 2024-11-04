@@ -31,20 +31,30 @@ Genome_Specific_Cell_Cycle_Scoring <- function(seurat_obj, Genome) {
   dual.GRCm39.s.genes <- paste("GRCm39---", GRCm39.s.genes, sep = "")
   dual.GRCm39.g2m.genes <- paste("GRCm39---", GRCm39.g2m.genes, sep = "")
   
+  # Changed genes to title case for mice genes (Human genes are annotated in all CAPS)
+  mm10.s.genes <- str_to_title(cc.genes.updated.2019$s.genes)
+  mm10.g2m.genes <- str_to_title(cc.genes.updated.2019$g2m.genes)
+  
+  # Appended "GRCh38-" to the beginning of all genes due to dual index reference genome used
+  dual.mm10.s.genes <- paste("mm10---", mm10.s.genes, sep="")
+  dual.mm10.g2m.genes <- paste("mm10---", mm10.g2m.genes, sep="")
+  
   if (Genome == "GRCh38" | Genome == "hg19") {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = human.s.genes, g2m.features = human.g2m.genes)
-  } else if (Genome == "GRCm39") {
-    seurat_obj <- CellCycleScoring(seurat_obj, s.features = GRCm39.s.genes, g2m.features = GRCm39.g2m.genes)
-  } else if (Genome == "Dualhg19") {
+    } else if (Genome == "mm10") {
+    seurat_obj <- CellCycleScoring(seurat_obj, s.features = mm10.s.genes, g2m.features = mm10.g2m.genes)
+    } else if (Genome == "Dualhg19") {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.hg19.s.genes, g2m.features = dual.hg19.g2m.genes)
-  } else if (Genome == "DualGRCh38") {
+    } else if (Genome == "DualGRCh38") {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.GRCh38.s.genes, g2m.features = dual.GRCh38.g2m.genes)
-  } else if (Genome == "DualGRCm39") {
+    } else if (Genome == "Dualmm10") {
+    seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.mm10.s.genes, g2m.features = dual.mm10.g2m.genes)
+    } else if (Genome == "GRCm39") {
+    seurat_obj <- CellCycleScoring(seurat_obj, s.features = GRCm39.s.genes, g2m.features = GRCm39.g2m.genes)
+    } else if (Genome == "DualGRCm39") {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.GRCm39.s.genes, g2m.features = dual.GRCm39.g2m.genes)
   }
 }
-
-
 
 #############################################################################################
 #' Function to process and cluster cell for an individual sample

@@ -24,20 +24,20 @@ Genome_Specific_Cell_Cycle_Scoring <- function(seurat_obj, Genome) {
   dual.GRCh38.g2m.genes <- paste("GRCh38-", human.g2m.genes, sep = "")
   
   # Changed genes to title case for mice genes (Human genes are annotated in all CAPS)
-  GRCm39.s.genes <- str_to_title(cc.genes.updated.2019$s.genes)
-  GRCm39.g2m.genes <- str_to_title(cc.genes.updated.2019$g2m.genes)
-  
-  # Appended "GRCm39-" to the beginning of all genes due to dual index reference genome used
-  dual.GRCm39.s.genes <- paste("GRCm39---", GRCm39.s.genes, sep = "")
-  dual.GRCm39.g2m.genes <- paste("GRCm39---", GRCm39.g2m.genes, sep = "")
-  
-  # Changed genes to title case for mice genes (Human genes are annotated in all CAPS)
   mm10.s.genes <- str_to_title(cc.genes.updated.2019$s.genes)
   mm10.g2m.genes <- str_to_title(cc.genes.updated.2019$g2m.genes)
   
   # Appended "GRCh38-" to the beginning of all genes due to dual index reference genome used
   dual.mm10.s.genes <- paste("mm10---", mm10.s.genes, sep="")
   dual.mm10.g2m.genes <- paste("mm10---", mm10.g2m.genes, sep="")
+  
+  # Changed genes to title case for mice genes (Human genes are annotated in all CAPS)
+  GRCm39.s.genes <- str_to_title(cc.genes.updated.2019$s.genes)
+  GRCm39.g2m.genes <- str_to_title(cc.genes.updated.2019$g2m.genes)
+  
+  # Appended "GRCm39-" to the beginning of all genes due to dual index reference genome used
+  dual.GRCm39.s.genes <- paste("GRCm39---", GRCm39.s.genes, sep = "")
+  dual.GRCm39.g2m.genes <- paste("GRCm39---", GRCm39.g2m.genes, sep = "")
   
   if (Genome == "GRCh38" | Genome == "hg19") {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = human.s.genes, g2m.features = human.g2m.genes)

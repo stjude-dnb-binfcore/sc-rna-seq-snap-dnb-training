@@ -13,7 +13,7 @@ The `submit-multiple-jobs.sh` script is designed to be run as if it was called f
    - Step 2: To run `j2.sh` to summarize alignment results, i.e., `summarize-cellranger-analysis`. The latter script will be on hold and executed once all libraries are aligned and `j1.sh` is complete. This is been taken care of by `waiter.sh` script.
 
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
-- `../../project_parameters.Config.yaml`: define the `metadata_dir`, `genome_reference_path` and `cellranger_parameters`. Please submit an [issue](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/issues) to request the path to the reference genome of preference. Our team at the Bioinformatics core at DNB maintains the following genome references: `GRCh38`, `GRCm39`, `GRCh38ANDGRCm39`, and `GRCh38_GFP_tdTomato`, for human, mouse, and dual index genomes, respectively. Otherwise, specify the path to the reference genome of your preference.
+- `../../project_parameters.Config.yaml`: define the `metadata_dir`, `genome_reference_path`, `cellranger_parameters`, and `genome_name_cellranger`. Please submit an [issue](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/issues) to request the path to the reference genome of preference. Our team at the Bioinformatics core at DNB maintains the following genome references: `GRCh38`, `GRCm39`, `GRCh38ANDGRCm39`, and `GRCh38_GFP_tdTomato`, for human, mouse, and dual index genomes, respectively. Otherwise, specify the path to the reference genome of your preference.
 
 - `submit-multiple-jobs.sh`: Here, the user will need to set up the absolute path for the directory in `#BSUB -cwd` and `prefix` parameters. 
 

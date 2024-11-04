@@ -28,8 +28,15 @@ cd run-container
 
 2. Pull the singularity container 🚧🚧🚧
 ```
-singularity pull library://sc-rna-seq-snap-container.sif
+singularity pull docker://wabuala/rstudio:amd64
 ```
+
+or 
+
+```
+docker pull wabuala/rstudio:amd64
+```
+
 
 
 3. Start the singularity container

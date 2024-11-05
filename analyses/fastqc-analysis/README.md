@@ -5,7 +5,7 @@
 `run-fastqc-analysis` is designed to be run as if it was called from this module directory even when called from outside of this directory.
 
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
-- `run-fastqc-analysis.sh`: define path to input data with `*R2*.fastq.gz` files.
+- `project_parameters.Config.yaml`: define `fastqc_dir` path to input data with `*R2*.fastq.gz` files.
 
 ### Run module on an interactive session on HPC
 

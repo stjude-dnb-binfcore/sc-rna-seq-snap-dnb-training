@@ -12,8 +12,8 @@ fastqc_dir=$(cat ../../project_parameters.Config.yaml | grep 'fastqc_dir:' | awk
 fastqc_dir=${fastqc_dir//\"/}  # Removes all double quotes
 
 # Create results dir
-mkdir results
-mkdir results/01-fastqc-reports
+mkdir -p results
+mkdir -p results/01-fastqc-reports
 
 ################################################################################################################
 # Run FastQC per library

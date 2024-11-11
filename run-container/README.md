@@ -1,4 +1,4 @@
-# How to run the Singularity container for the Single cell RNA Seq Snap workflow (ScRNASeqSnap)
+# How to run the container for the Single cell RNA Seq Snap workflow (ScRNASeqSnap)
 
 We have generated Dockerfile and Definition file that contain all tools, packages, and dependencies necessary to run the code and analyses modules in the `sc-rna-seq-snap` repository. These are customized for `Rstudio/R v4.4.0` and `Seurat v4.4.0`.
 

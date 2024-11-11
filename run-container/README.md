@@ -10,9 +10,8 @@ From an interactive node on HPC, the user can open their session. Please modify 
 bsub -P hpcf_interactive -J hpcf_interactive -n 1 -q standard -R "rusage[mem=4G]" -Is "bash"
 ```
 
-```
-module load singularity/4.1.1
-```
+Please note that a version of Singularity is installed by default on all the cluster nodes at St Jude HPC. Otherwise the user needs to ensure and laod Singularity module.
+
 
 1. Clone the repository
 ```

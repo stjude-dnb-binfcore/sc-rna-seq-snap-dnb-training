@@ -43,6 +43,8 @@ use_only_step1: "YES" # define use of both or only first step for filtering low 
 condition_value: "Genotype" # define main condition of the project; this can be used for visualization purposes on the UMAPs; value to be extracted from column name in `project_metadata.tsv` file
 num_dim_seurat_qc: [20, 25] # number of PCs to use in UMAP
 num_neighbors_seurat_qc: [10, 20, 30] # number of neighbors to use in UMAP
+use_condition_split_seurat_multiple_samples: "NO" # 01B_run_seurat_qc_multiple_samples.R
+print_pdf_seurat_multiple_samples: "YES" # 01B_run_seurat_qc_multiple_samples.R
 soup_fraction_value_default: 0.05 # set rho default value to use if estimated rho is > 20%
 num_dim_filter_object: 30 # set one value for 04_run_filter_object.Rmd
 num_neighbors_filter_object: 30 # set one value for 04_run_filter_object.Rmd
@@ -50,4 +52,3 @@ use_SoupX_filtering_filter_object: "NO" # set value for 04_run_filter_object.Rmd
 use_condition_split_filter_object: "YES" # set value for 04_run_filter_object.Rmd
 print_pdf_filter_object_filter_object: "NO" # set value for 04_run_filter_object.Rmd
 use_SoupX_filtering_summary_report: "YES" #set value for 05_run_summary_report.Rmd
-

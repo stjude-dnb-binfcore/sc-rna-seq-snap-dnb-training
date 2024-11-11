@@ -1,11 +1,11 @@
 # How to run the Singularity container for the Single cell RNA Seq Snap workflow (ScRNASeqSnap)
 
-We have generated definition and singularity files that contain all tools, packages, and dependencies necessary to run the code and analyses modules in the `sc-rna-seq-snap` repository. 
+We have generated Dockerfile and Definition file that contain all tools, packages, and dependencies necessary to run the code and analyses modules in the `sc-rna-seq-snap` repository. These are customized for `Rstudio/R v4.4.0` and `Seurat v4.4.0`.
 
 
 ## To use the container in an R interactive session on HPC:
 
-From an interactive node on HPC, the user can open an R interactive session. Please modify memory and resources as needed for the analysis module to run.
+From an interactive node on HPC, the user can open their session. Please modify memory and resources as needed for the analysis module to run.
 ```
 bsub -P hpcf_interactive -J hpcf_interactive -n 1 -q standard -R "rusage[mem=4G]" -Is "bash"
 ```
@@ -14,55 +14,92 @@ bsub -P hpcf_interactive -J hpcf_interactive -n 1 -q standard -R "rusage[mem=4G]
 module load singularity/4.1.1
 ```
 
+1. Clone the repository
+```
+git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
+```
+
+2. Pull the singularity container
+```
+singularity pull docker://wabuala/rstudio_4.4.0_seurat_4.4.0:latest
+```
+
+
+3. Start the singularity container
+
+a. To run from the terminal
+```
+bash run-terminal.sh
+```
+
+Then you may navigate to your module of interest, `./sc-rna-seq-snap/analyses/<module_of_interest>`. For example:
+```
+cd ./sc-rna-seq-snap/analyses/upstream-analysis
+Rscript -e "rmarkdown::render(‘01A_run_seurat_qc.Rmd', clean = TRUE)"
+```
+
+
+b. To run from Rstudio
+```
+bash run-rstudio.sh
+```
+
+The `run-rstudio.sh` is running at `IP_ADDR:PORT`. When RStudio launches, please click "Session" -> "Restart R".
+
+Again, the user can navigate to their module of interest and explore/run their analyses.
+
+
+4. Build container (if needed)
+
+If the user does not have access to the `rstudio_4.4.0_seurat_4.4.0_latest.sif`, they can build their own. 
+User can rename the `.sif` file, if they want to (not needed).
+```
+singularity build rstudio_4.4.0_seurat_4.4.0_latest.sif rstudio_r_4.4.0_seurat_4.4.0.def
+```
+
+Then, the user can start the container as explained in the step (3).
+
+
+## To use the container outside of HPC and singularity:
 
 1. Clone the repository
 ```
 git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
 ```
 
-and navigate to the directory with the files needed to run the container:
-```
-cd run-container
-```
 
-
-2. Pull the singularity container 🚧🚧🚧
+2. Pull the docker container
 ```
-singularity pull docker://wabuala/rstudio:amd64
-```
-
-or 
-
-```
-docker pull wabuala/rstudio:amd64
+docker pull docker://wabuala/rstudio_4.4.0_seurat_4.4.0:latest
 ```
 
 
+3. Start the docker container
 
-3. Start the singularity container
+To run from the terminal
 ```
-bash run-container.sh
-```
-
-The `run-container.sh` is running at `IP_ADDR:PORT`. When RStudio launches, please click "Session" -> "Restart R".
-
-
-4. Build container (if needed)
-
-If the user does not have access to the `sc-rna-seq-snap-container.sif`, they can build their own. 
-User can rename the `.sif` file, if they want to (not needed).
-```
-singularity build sc-rna-seq-snap-container.sif rstudio-v4.4.0-seurat-v4.4.0.def
+docker run --platform linux/amd64 --name review -d -e PASSWORD=ANYTHING -p 8787:8787 -v $PWD:/home/rstudio/sc-rna-seq-snap docker://wabuala/rstudio_4.4.0_seurat_4.4.0:latest
 ```
 
-Then, the user can start the container as explained in the step (3).
+```
+docker container start review
+```
+
+```
+docker exec -ti review bash
+```
+
+Navigate to your module of interest:
+```
+cd ./sc-rna-seq-snap/analyses/upstream-analysis
+Rscript -e "rmarkdown::render(‘01A_run_seurat_qc.Rmd', clean = TRUE)"
+```
 
 
-## To use the container from the command line on HPC: 🚧🚧🚧
+## Authors
 
-
-
-
+Antonia Chroni, PhD ([@AntoniaChroni](https://github.com/AntoniaChroni))
+Walid Abu Al-Afia ([@walidabualafia](https://github.com/walidabualafia))
 
 
 ## Contact

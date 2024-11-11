@@ -2,9 +2,9 @@
   <img src="figures/img/ScRNASeqSnap_logo.png" alt="ScRNASeqSnap repository logo" width="560px" />
 </p>
 <p align="center">
-  <a href="https://github.com/stjudeDNBBinfCore/sc-rna-seq-snap/blob/main/LICENSE"><img src="https://img.shields.io/github/license/kids-first/kf-template-repo.svg?style=for-the-badge"></a>
-</p>
+  <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg?style=for-the-badge" alt="The project has reached a stable, usable state and is being actively developed." /></a>
 
+</p>
 
 # Single cell RNA Seq Snap workflow (ScRNASeqSnap)
 

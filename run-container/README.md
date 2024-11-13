@@ -49,7 +49,7 @@ b. To run from Rstudio
 bash run-rstudio.sh
 ```
 
-The `run-rstudio.sh` is running at `IP_ADDR:PORT`. When RStudio launches, please click "Session" -> "Restart R".
+The `run-rstudio.sh` is running at `IP_ADDR:PORT`. When RStudio launches, please click "Session" -> "Restart R". Note that user may need to turn off any ad-blockers they use to load the `IP_ADDR:PORT` Rstudio properly.
 
 Again, the user can navigate to their module of interest and explore/run their analyses.
 

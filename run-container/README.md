@@ -49,9 +49,26 @@ b. To run from Rstudio
 bash run-rstudio.sh
 ```
 
-The `run-rstudio.sh` is running at `IP_ADDR:PORT`. When RStudio launches, please click "Session" -> "Restart R". Note that user may need to turn off any ad-blockers they use to load the `IP_ADDR:PORT` Rstudio properly.
+The `run-rstudio.sh` is running at `IP_ADDR:PORT`. When RStudio launches, please click "Session" -> "Restart R" (at the RStudio web session). 
 
 Again, the user can navigate to their module of interest and explore/run their analyses.
+
+
+If you encounter issues during this step related to RStudio Server and specifically to an invalid secure cookie error. This might be an issue with how the secure cookie is being handled during an HTTP request. In this case, please check if the following directories have been generated and if so, remove them:
+```
+rm -r .cache/
+```
+```
+rm -r .config/
+```
+```
+rm -r .local/
+```
+```
+rm -r rstudio-container-tmp/
+```
+
+These folders cache history and user info. Then, kill the interactive session, start a new one, and hopefully, it works! 🎉
 
 
 4. Build container (if needed)

@@ -7,7 +7,7 @@ We have generated Dockerfile and Definition file that contain all tools, package
 
 From an interactive node on HPC, the user can open their session. Please modify memory and resources as needed for the analysis module to run.
 ```
-bsub -P hpcf_interactive -J hpcf_interactive -n 1 -q standard -R "rusage[mem=4G]" -Is "bash"
+bsub -P hpcf_interactive -J hpcf_interactive -n 2 -q standard -R "rusage[mem=16G]" -Is "bash"
 ```
 
 ## Load specific version of Singularity

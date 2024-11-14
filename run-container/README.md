@@ -24,11 +24,10 @@ module load singularity/4.1.1
 git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
 ```
 
-2. Pull the singularity container
+2. Pull the singularity container from the `sc-rna-seq-snap` root_dir
 ```
 singularity pull docker://wabuala/rstudio_4.4.0_seurat_4.4.0:latest
 ```
-
 
 3. Start the singularity container
 
@@ -49,7 +48,7 @@ b. To run from Rstudio
 bash run-rstudio.sh
 ```
 
-The `run-rstudio.sh` is running at `IP_ADDR:PORT`. When RStudio launches, please click "Session" -> "Restart R" (at the RStudio web session). 
+The `run-rstudio.sh` is running at `IP_ADDR:PORT`. When RStudio launches, please click "Session" -> "Restart R" (at the RStudio web session). For St Jude users, we advice to disconnect from CloudFlare WARP as this might lead to unstable behavior while on VPN.
 
 Again, the user can navigate to their module of interest and explore/run their analyses.
 

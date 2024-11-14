@@ -3,21 +3,21 @@
 set -e
 set -o pipefail
 
-# Set up modules
-module load fastqc/0.11.5
-module load multiqc/1.0dev
-
 # set up running directory
 cd "$(dirname "${BASH_SOURCE[0]}")" 
 
+########################################################################
+# Read multiple values and assign them to variables by parsing yaml file
+fastqc_dir=$(cat ../../project_parameters.Config.yaml | grep 'fastqc_dir:' | awk '{print $2}')
+fastqc_dir=${fastqc_dir//\"/}  # Removes all double quotes
+
 # Create results dir
-mkdir results
-mkdir results/01-fastqc-reports
+mkdir -p results
+mkdir -p results/01-fastqc-reports
 
 ################################################################################################################
 # Run FastQC per library
-
-fastqc -o results/01-fastqc-reports <filepath>/*/*R2*.fastq.gz
+fastqc -o results/01-fastqc-reports ${fastqc_dir}/*/*R2*.fastq.gz
 
 ################################################################################################################
 # Run multiqc for all samples in the `results` dir

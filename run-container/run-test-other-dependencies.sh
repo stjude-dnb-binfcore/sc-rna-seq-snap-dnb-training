@@ -21,3 +21,5 @@ singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif python3 -
 singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif cellranger --version
 singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif fastqc --version
 singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif multiqc --version
+singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif pandoc --version
+singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif texlive --version

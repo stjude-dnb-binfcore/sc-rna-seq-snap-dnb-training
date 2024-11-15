@@ -262,23 +262,32 @@ for (i in seq_along(sample_name)) {
   # Correcting expression profile and clean data
   # This will contain a corrected matrix to be used in place of the original table of counts in downstream analyses.
   out <- adjustCounts(sc, roundToInt = TRUE) # roundToInt option to make sure we output integer matrix
+  
+  # We will rename the barcodes in the corrected matrix to match the raw matrix
   colnames(out) <- paste0(sample_name, ":", colnames(out))
   colnames(out) = gsub('-1$','', colnames(out)) # remove -1
 
   # Let's save corrected matrix as a separate assay
-  seurat_obj  <- CreateSeuratObject(counts = out)
-  seurat_obj[["RNA_SoupX"]] <- CreateAssayObject(counts = seurat_obj@assays$RNA@counts)
-  seurat_obj@assays$RNA@counts <- out
+  # Create a new Seurat object from the corrected count matrix out, which we had before by replacing the counts slot
+  #seurat_obj  <- CreateSeuratObject(counts = out) 
+  
+  # Create a new assay named "RNA_SoupX", and store the corrected counts matrix (seurat_obj@assays$RNA@counts) in the new assay. 
+  # Essentially, we’re storing our corrected counts under a new assay name, so it won't overwrite the original RNA assay.
+  #seurat_obj[["RNA_SoupX"]] <- CreateAssayObject(counts = seurat_obj@assays$RNA@counts)
+  
+  # This step ensures that the counts slot in the original RNA assay is replaced with the corrected matrix (out). 
+  # The RNA assay will now have the corrected counts, which is why we're updating the RNA assay here.
+  # seurat_obj@assays$RNA@counts <- out
 
   # Setup assay for seurat object for next steps to the one with corrected gene counts
-  DefaultAssay(seurat_obj) <- "RNA_SoupX"
+  #DefaultAssay(seurat_obj) <- "RNA_SoupX"
 
   # Integrating with downstream tools
   # Of course, the next thing you'll want to do is to load this corrected expression matrix 
   # into some downstream analysis tool and further analyse the data.
 
-  colnames(seurat_obj@assays$RNA@counts) = gsub('-1$', '', colnames(seurat_obj@assays$RNA@counts))
-  colnames(seurat_obj@assays$RNA@counts) = paste(sample_name, colnames(seurat_obj@assays$RNA@counts), sep=":")
+  #colnames(seurat_obj@assays$RNA@counts) = gsub('-1$', '', colnames(seurat_obj@assays$RNA@counts))
+  #colnames(seurat_obj@assays$RNA@counts) = paste(sample_name, colnames(seurat_obj@assays$RNA@counts), sep=":")
 
   cat("Processing complete for sample", sample_name[i], "\n")
   

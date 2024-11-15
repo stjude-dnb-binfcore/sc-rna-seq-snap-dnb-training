@@ -34,7 +34,7 @@ We only need to run FastQC on the single cell R2 files. Conducting read sequence
 
 For more information, please:
 - Type from the command line: fastqc --help, or
-- See: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/ 
+- See [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 
 ## Folder structure 
 

@@ -156,8 +156,12 @@ suppressPackageStartupMessages({
   library(ggthemes)
   library(scooter)
   library(RColorBrewer)
+<<<<<<< HEAD
   library(knitr)
 
+=======
+  
+>>>>>>> 32e3abad29bc2cc1967f50170057188a505cf51d
   # Evaluate Seurat R expressions asynchronously when possible using future package
   options(future.globals.maxSize = 8388608000) #8000 * 1024^2
   plan(multisession, workers = parallelly::availableCores())})

@@ -337,7 +337,6 @@ if (use_scDblFinder_filtering == "YES"){
       dplyr::select(-Var1, -Freq) %>%
       left_join(cells_number_seurat_qc) %>%
       rename(cells_number_final = cells_number_seurat_qc) 
-    cells_number_final
 }
 ```
 

@@ -294,6 +294,9 @@ if (use_scDblFinder_filtering == "YES"){
   ##########################################################################################################
   # Report Singlets 
   singlet_cells <- colnames(scDblFinder_obj)[which(scDblFinder_obj@meta.data$scDblFinder.class == "singlet")]
+  
+  ##########################################################################################################
+  # Report Doublets
   seurat_obj_doublets <- subset(seurat_obj, cells = singlet_cells, invert = TRUE)
 
   cells_number_doublets <- table(seurat_obj_doublets@meta.data$orig.ident) %>%
@@ -301,8 +304,7 @@ if (use_scDblFinder_filtering == "YES"){
     mutate(sample_name = Var1,
            cells_number_doublets = Freq) %>% 
     dplyr::select(-Var1, -Freq)
-  ##########################################################################################################
-  # Report Doublets
+  
   doublet_cells <- colnames(seurat_obj)[which(seurat_obj@meta.data$scDblFinder.class == "doublet")]
 
   ##########################################################################################################

@@ -309,8 +309,7 @@ if (use_scDblFinder_filtering == "YES"){
 
   ##########################################################################################################
   # Filter Doublets out
-  # Unique cells to keep
-  cells_filter <- unique(doublet_cells)
+  cells_filter <- unique(doublet_cells) # identify unique cells to filter
   seurat_obj <- subset(seurat_obj, cells = cells_filter, invert = TRUE)
 
   ##########################################################################################################

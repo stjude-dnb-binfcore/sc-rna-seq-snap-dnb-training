@@ -46,6 +46,7 @@ params:
   nfeatures_value: "."
   prefix: "."
   use_SoupX_filtering: "."
+  use_scDblFinder_filtering: "."
   use_condition_split: "."
   condition_value: "."
   print_pdf: "."
@@ -270,7 +271,7 @@ if (use_SoupX_filtering == "YES"){
 Here, `r print_message`.
 
 # Filter doublets out
-Next, we will remove any doublets from all samples as identified by [ScDblFinder](https://bioconductor.org/packages/devel/bioc/vignettes/scDblFinder/inst/doc/scDblFinder.html).
+Next, we will remove any doublets from all samples as identified by [ScDblFinder](https://bioconductor.org/packages/devel/bioc/vignettes/scDblFinder/inst/doc/scDblFinder.html). This is an optional step, so it will be skipped or not as defined in params.
 
 ```{r filter-doublets, echo=TRUE}
 # Read scDblFinder results
@@ -279,42 +280,64 @@ scDblFinder_obj <- readRDS(scDblFinder_file)
 #############################################################################
 # Estimate `cells_number_raw` per sample_name
 cells_number_raw <- table(scDblFinder_obj@meta.data$orig.ident) %>%
-    as.data.frame() %>% 
-    mutate(sample_name = Var1,
-           cells_number_raw = Freq) %>% 
-    dplyr::select(-Var1, -Freq)
+  as.data.frame() %>% 
+  mutate(sample_name = Var1,
+        cells_number_raw = Freq) %>% 
+  dplyr::select(-Var1, -Freq)
 
-#############################################################################
-# Add metadata
-seurat_obj <- AddMetaData(seurat_obj, scDblFinder_obj@meta.data)
+if (use_scDblFinder_filtering == "YES"){
+  print_message <- print("we will use scDblFinder to remove doublets")
+  #############################################################################
+  # Add metadata
+  seurat_obj <- AddMetaData(seurat_obj, scDblFinder_obj@meta.data)
 
-##########################################################################################################
-# Report Singlets 
-singlet_cells <- colnames(scDblFinder_obj)[which(scDblFinder_obj@meta.data$scDblFinder.class == "singlet")]
-seurat_obj_doublets <- subset(seurat_obj, cells = singlet_cells, invert = TRUE)
+  ##########################################################################################################
+  # Report Singlets 
+  singlet_cells <- colnames(scDblFinder_obj)[which(scDblFinder_obj@meta.data$scDblFinder.class == "singlet")]
+  seurat_obj_doublets <- subset(seurat_obj, cells = singlet_cells, invert = TRUE)
 
-cells_number_doublets <- table(seurat_obj_doublets@meta.data$orig.ident) %>%
+  cells_number_doublets <- table(seurat_obj_doublets@meta.data$orig.ident) %>%
     as.data.frame() %>% 
     mutate(sample_name = Var1,
            cells_number_doublets = Freq) %>% 
     dplyr::select(-Var1, -Freq)
-##########################################################################################################
-# Report Doublets
-doublet_cells <- colnames(seurat_obj)[which(seurat_obj@meta.data$scDblFinder.class == "doublet")]
+  ##########################################################################################################
+  # Report Doublets
+  doublet_cells <- colnames(seurat_obj)[which(seurat_obj@meta.data$scDblFinder.class == "doublet")]
 
-##########################################################################################################
-# Filter Doublets out
-# Unique cells to keep
-cells_filter <- unique(doublet_cells)
-seurat_obj <- subset(seurat_obj, cells = cells_filter, invert = TRUE)
+  ##########################################################################################################
+  # Filter Doublets out
+  # Unique cells to keep
+  cells_filter <- unique(doublet_cells)
+  seurat_obj <- subset(seurat_obj, cells = cells_filter, invert = TRUE)
 
-##########################################################################################################
-# Estimate `cells_number_final` per sample_name
-cells_number_final <- table(seurat_obj@meta.data$orig.ident) %>%
+  ##########################################################################################################
+  # Estimate `cells_number_final` per sample_name
+  cells_number_final <- table(seurat_obj@meta.data$orig.ident) %>%
     as.data.frame() %>% 
     mutate(sample_name = Var1,
            cells_number_final = Freq) %>% 
     dplyr::select(-Var1, -Freq)
+} else {
+    print_message <- print("we will skip usage of the scDblFinder to remove doublets")
+    ##########################################################################################################
+    cells_number_doublets <- table(seurat_obj@meta.data$orig.ident) %>%
+      as.data.frame() %>%
+      #mutate_at(('Freq'), ~replace_na(.,0)) %>%
+      mutate(sample_name = Var1,
+             cells_number_doublets ='NA') %>%
+      dplyr::select(-Var1, -Freq) 
+   
+    ##########################################################################################################
+    # Estimate `cells_number_final` per sample_name
+    cells_number_final <- table(seurat_obj@meta.data$orig.ident) %>%
+      as.data.frame() %>% 
+      mutate(sample_name = Var1) %>% 
+      dplyr::select(-Var1, -Freq) %>%
+      left_join(cells_number_seurat_qc) %>%
+      rename(cells_number_final = cells_number_seurat_qc) 
+    cells_number_final
+}
 ```
 
 # Number of cells per sample at each QC step

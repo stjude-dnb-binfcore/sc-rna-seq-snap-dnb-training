@@ -46,10 +46,9 @@ num_neighbors_seurat_qc: [10, 20, 30] # number of neighbors to use in UMAP
 soup_fraction_value_default: 0.05 # set rho default value to use if estimated rho is > 20%
 num_dim_filter_object: 30 # set one value for 04_run_filter_object.Rmd
 num_neighbors_filter_object: 30 # set one value for 04_run_filter_object.Rmd
-use_SoupX_filtering_filter_object: "NO" # set value for 04_run_filter_object.Rmd
-use_condition_split_filter_object: "YES" # set value for 04_run_filter_object.Rmd
-print_pdf_filter_object: "NO" # set value for 04_run_filter_object.Rmd
+use_SoupX_filtering_filter_object: "YES" # set for 04_run_filter_object.Rmd
+use_condition_split_filter_object: "YES" # set for 04_run_filter_object.Rmd
+print_pdf_filter_object: "NO" # set for 04_run_filter_object.Rmd
+use_scDblFinder_filtering_filter_object: "NO" # set for 04_run_filter_object.Rmd
 #PCA_Feature_List_value: transcription.factor.gene.list # set for 04_run_filter_object.Rmd if necessary
-use_scDblFinder_filtering_filter_object: "YES" # set for 04_run_filter_object.Rmd
-
 use_SoupX_filtering_summary_report: "YES" #set value for 05_run_summary_report.Rmd

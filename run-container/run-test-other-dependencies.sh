@@ -22,5 +22,4 @@ singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif cellrange
 singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif fastqc --version
 singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif multiqc --version
 singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif pandoc --version
-singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif texlive --version
-singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif cmake --version
+singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif tex --version

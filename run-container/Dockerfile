@@ -1,26 +1,28 @@
 FROM rocker/rstudio:4.4.0
 
 # Set environment variables
-#ENV PATH=/usr/lib/rstudio-server/bin:${PATH}
 ENV PATH=/opt/cellranger-8.0.1/bin:${PATH}
-ENV LD_LIBRARY_PATH=/opt/cellranger-8.0.1/lib:${PATH}
-ENV R_LIBS_USER=${HOME}/R/my-rstudio/4.4.0
-ENV LC_ALL=en_US.UTF-8
-ENV LANG=en_US.UTF-8
+ENV LD_LIBRARY_PATH=/opt/cellranger-8.0.1/lib:${LD_LIBRARY_PATH}
 
 # Install base dependencies and locales
-RUN apt-get update 
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
         locales \
         aptitude \
         gnupg \
         software-properties-common \
-        dirmngr 
-RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen 
-RUN locale-gen en_US.utf8 
-RUN /usr/sbin/update-locale LANG=en_US.UTF-8 
-RUN apt-get clean 
-RUN rm -rf /var/lib/apt/lists/*
+        dirmngr && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install dependencies and configure locale
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen en_US.UTF-8 && \
+    update-locale LANG=en_US.UTF-8
+
+# Set locale environment variables
+ENV LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8
 
 # Install R and dependencies
 RUN apt-get update && \
@@ -73,14 +75,44 @@ RUN apt-get update && \
         automake \
         flex \
         bison \
-        texlive \
         pandoc \
-        fastqc && \
+        fastqc \
+        gdebi-core && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install texlive full version
+ENV TEXLIVE_INSTALL_NO_CONTEXT_CACHE=1 \
+    NOPERLDOC=1
+
+# Install TexLive prerequisites
+RUN apt-get update && \
+    apt-get install -y wget unzip tar \
+    make fontconfig perl openjdk-8-jre libgetopt-long-descriptive-perl \
+    libdigest-perl-md5-perl libncurses5 \
+    python3-pygments && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install TexLive to the container
+RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \ 
+    tar xzf install-tl-unx.tar.gz && rm install-tl-unx.tar.gz && \ 
+    cd install-tl* && \ 
+    echo "selected_scheme scheme-full" > install.profile && \ 
+    echo "tlpdbopt_install_docfiles 0" >> install.profile && \ 
+    echo "tlpdbopt_install_srcfiles 0" >> install.profile && \
+    echo "tlpdbopt_autobackup 0" >> install.profile && \ 
+    echo "tlpdbopt_sys_bin /usr/bin" >> install.profile && \
+    ./install-tl -profile install.profile && cd .. && rm -rf install-tl*
+
+# Symlink TexLive binaries to PATH
+RUN /usr/local/texlive/2024/bin/x86_64-linux/tlmgr path add
+
+# Install rsession
+RUN wget -P /tmp https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2024.09.1-394-amd64.deb && \
+    gdebi -n /tmp/rstudio-server-2024.09.1-394-amd64.deb
+
 # Install CellRanger v8.0.1
-RUN curl -o /tmp/cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1730520355&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=dKG42KftNgYzAf6NWHB24YZHD7Ar2cwJOctYfVlWfEJ-y-euy0qOnzV8BdGTdY8AghsX3wcRfGl0Mkk9Ec5Cb52HDDMXuD4NWnW5UNupdC2SWAHzy9lL7rJd3LAk6nUPdUMuZDEfTS2VbAAMnR3GhVuAvjSqu3rSiIpN6NHSpPff5sLwjvWJ10oCydKMzwGPyv50qXZzyj~O2DxABYOuN32UjEW5JevrzYaZEcfSivQn2NjvOtSsCVxzLJopFQVlPFHOldqeYnC87F1NyRSlgoK9oXUdsBeLhkSKSEuo9wspEOxnTgl38NFZGtc1vRo5uZYsazDyb19izSYQWkyseA__"
+RUN curl -o /tmp/cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1732073866&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=jhymj1SxgW1K5~mN15DbjkIblCdhaylDUuab9WW7W6G3GH4PYwowal4eh3tpK8fEnJXHz6VtWr-5JQJjnXidYbu5wF9AjMIMnyzVYdrT5pFpt31z7o7Kec16DZgPVtjyhQhh3NS9BxKuFcrUuqeWpRcB~M1-3POrEHAKiAUOlYT0fwmJNfr6ON3pNFk75va3~Z3h2J3AZGnFMcZtAFXtxz8a4JHoR68RDwDnGTYYT6cGoqOTcVxtWMaTdkSERklmAkbyNSGLUXp2LVORdsXsQK3kiNmdU1aPv7GdRZK4O5hHL33omNmA0fxSyQGZ2Ud5nfE6qQcmZ1IDjJ8gjIp~Sg__"
 RUN tar -xvzf /tmp/cellranger-8.0.1.tar.gz -C /opt
 
 # Install pip for Python 3.9

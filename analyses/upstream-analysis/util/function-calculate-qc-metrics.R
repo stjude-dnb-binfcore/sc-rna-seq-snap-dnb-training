@@ -146,7 +146,7 @@ Generate_QC_Plots_1 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
                         plot2 + theme(legend.position = "none"),
                         legend_grid, 
                         ncol = 3)
-  plot_grid(title, plot_row, ncol = 1, rel_heights = c(0.1, 1))
+  plot_grid(plot_row, ncol = 1, rel_heights = c(0.1, 1))
   ggsave(file = fname, width = 14, height = 8, device = "png")
   #dev.off()
   
@@ -252,7 +252,7 @@ Generate_QC_Plots_3 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
                         plot2 + theme(legend.position = "none"),
                         legend_grid, 
                         ncol = 3)
-  plot_grid(title, plot_row, ncol = 1, rel_heights = c(0.1, 1))
+  plot_grid(plot_row, ncol = 1, rel_heights = c(0.1, 1))
   ggsave(file = fname, width = 14, height = 8, device = "png")
   #dev.off()
   
@@ -306,7 +306,7 @@ Generate_QC_Plots_4 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
                         plot2 + theme(legend.position = "none"),
                         legend_grid, 
                         ncol = 3)
-  plot_grid(title, plot_row, ncol = 1, rel_heights = c(0.1, 1))
+  plot_grid(plot_row, ncol = 1, rel_heights = c(0.1, 1))
   ggsave(file = fname, width = 14, height = 8, device = "png")
   #dev.off()
   
@@ -360,7 +360,7 @@ Generate_QC_Plots_5 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
                         plot2 + theme(legend.position = "none"),
                         legend_grid, 
                         ncol = 3)
-  plot_grid(title, plot_row, ncol = 1, rel_heights = c(0.1, 1))
+  plot_grid(plot_row, ncol = 1, rel_heights = c(0.1, 1))
   ggsave(file = fname, width = 14, height = 8, device = "png")
   #dev.off()
   

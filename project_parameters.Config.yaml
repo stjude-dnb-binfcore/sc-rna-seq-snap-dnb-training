@@ -1,6 +1,6 @@
 # the following parameters are the same across the project and might be needed in more than one module #
-root_dir: "./GitHub/sc-rna-seq-snap" # path to the main dir of the project where GitHub repo lives
-data_dir: "./GitHub/sc-rna-seq-snap/analyses/cellranger-analysis/results/02_cellranger_count/ForcedCells8000Parameters" # path to data dir of the project with CellRanger output results
+root_dir: "./sc-rna-seq-snap" # path to the main dir of the project where GitHub repo lives
+data_dir: "./sc-rna-seq-snap/analyses/cellranger-analysis/results/02_cellranger_count/ForcedCells8000Parameters" # path to data dir of the project with CellRanger output results
 metadata_dir: "./mouse-test-dataset" # path to metadata dir of the project
 genome_name: "GRCm39" # define genome reference and versioning
 PROJECT_NAME: "mouse-test-dataset"

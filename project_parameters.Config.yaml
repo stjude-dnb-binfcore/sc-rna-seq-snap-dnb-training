@@ -1,6 +1,6 @@
 # the following parameters are the same across the project and might be needed in more than one module #
-root_dir: "./GitHub/sc-rna-seq-snap" # path to the main dir of the project where GitHub repo lives
-data_dir: "./GitHub/sc-rna-seq-snap/analyses/cellranger-analysis/results/02_cellranger_count/ForcedCells8000Parameters" # path to data dir of the project with CellRanger output results
+root_dir: "./sc-rna-seq-snap" # path to the main dir of the project where GitHub repo lives
+data_dir: "./sc-rna-seq-snap/analyses/cellranger-analysis/results/02_cellranger_count/ForcedCells8000Parameters" # path to data dir of the project with CellRanger output results
 metadata_dir: "./mouse-test-dataset" # path to metadata dir of the project
 genome_name: "GRCm39" # define genome reference and versioning
 PROJECT_NAME: "mouse-test-dataset"
@@ -54,4 +54,5 @@ print_pdf_filter_object: "NO" # set value for 04_run_filter_object.Rmd
 #PCA_Feature_List_value: transcription.factor.gene.list # set for 04_run_filter_object.Rmd if necessary
 use_scDblFinder_filtering_filter_object: "YES" # set for 04_run_filter_object.Rmd
 
-use_SoupX_filtering_summary_report: "YES" #set value for 05_run_summary_report.Rmd
+use_SoupX_filtering_summary_report: "NO" #set value for 05_run_summary_report.Rmd
+use_scDblFinder_filtering_summary_report: "NO" #set value for 05_run_summary_report.Rmd

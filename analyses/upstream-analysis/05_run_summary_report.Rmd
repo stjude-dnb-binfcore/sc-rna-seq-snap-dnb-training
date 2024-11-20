@@ -353,7 +353,7 @@ knitr::include_graphics(p)
 ```
 
 ## Read SoupX plots and results
-We will summarize the estimated and removed background due to contamination per sample. This is an optional step, so it will be skipped or not as defined in `params`. Results are shown by sample (as ordered in the `Samples` section).
+We will summarize the estimated and removed background due to contamination per sample. Results are shown by sample (as ordered in the `Samples` section). This is an optional step, so it will be skipped or not as defined in `params`. 
 
 ```{r read-SoupX, echo = FALSE}
 if (use_SoupX_filtering == "YES"){
@@ -368,7 +368,6 @@ if (use_SoupX_filtering == "YES"){
 Here, `r print_message`.
 
 ### Summary table per sample
-
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 if (use_SoupX_filtering == "YES"){
   tables1 <- contamination_summary
@@ -381,7 +380,6 @@ if (use_SoupX_filtering == "YES"){
 ```
 
 ### Plots per sample
-
 ```{r read-SoupX-plots-file, echo = FALSE}
 p <- list()
 if (use_SoupX_filtering == "YES"){
@@ -405,9 +403,7 @@ if (use_SoupX_filtering == "YES"){
 ```
 
 ## Read scDblFinder plots and results
-We will summarize the estimated and removed doublets per sample. Results are shown by sample (as ordered in the `Samples` section).
-
-### Summary table per sample
+We will summarize the estimated and removed doublets per sample. Results are shown by sample (as ordered in the `Samples` section). This is an optional step, so it will be skipped or not as defined in `params`. 
 
 ```{r read-scDblFinder, echo = FALSE}
 if (use_scDblFinder_filtering == "YES"){
@@ -421,7 +417,7 @@ if (use_scDblFinder_filtering == "YES"){
 
 Here, `r print_message`.
 
-
+### Summary table per sample
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 if (use_scDblFinder_filtering == "YES"){
   tables1 <- doublets_metrics
@@ -434,7 +430,6 @@ if (use_scDblFinder_filtering == "YES"){
 ```
 
 ### Plots per sample
-
 ```{r read-scDblFinder-plots-file, echo = FALSE}
 if (use_scDblFinder_filtering == "YES"){
   p <- list()

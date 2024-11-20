@@ -16,32 +16,21 @@ The `sc-rna-seq-snap` repository is an initiative of the [Bioinformatics Core at
 
 
 ⚠️ 🚧 🚧 ⚠️
-The repo is currently under development and code review process. 
+The repo is currently under development and code review process. Analysis modules in the main branch are ready to be used.
 
 
+## To access the code in this repository:
 
-## To reproduce the code in this repository:
-
-This repository contains tools and pipelines for the repository noted above. There is a co
-
-
+### Clone option
 1. Clone the repository
 ```
 git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
 ```
 
-2. Navigate to an analysis module and run the shell script:
-```
-cd /home/rstudio/sc-rna-seq-snap/analyses/<module_of_interest>
-```
-
-## To run the code in this repository with your own data:
-
+### Fork option
 1. Fork the repository on your own account from the main page of the `stjude-dnb-binfcore/sc-rna-seq-snap` by clicking the “Fork” button
 
 <img width="650" alt="how-to-fork-repo-1" src="https://github.com/user-attachments/assets/1fc0a459-2c8c-4d2e-ab6b-6abaafae963e">
-
-
 
 
 2. Change the name if you like, but probably not; click “Create fork”
@@ -54,30 +43,29 @@ cd /home/rstudio/sc-rna-seq-snap/analyses/<module_of_interest>
 <img width="650" alt="how-to-fork-repo-3" src="https://github.com/user-attachments/assets/073abb78-3993-4527-a574-859fd3046d39">
 
 
-4. Replace the `project_parameters.Config.yaml` with your file paths and parameters.
+## To run the code in this repository:
 
-5. How to run a module analysis
+1. Replace the `project_parameters.Config.yaml` with your file paths and parameters.
 
-Before running a module, you will do `sync fork` of your project repo at GitHub, if your branch is behind the main branch of the `stjude-dnb-binfcore/sc-rna-seq-snap:main`. This will update the main branch of your project repo with the new code and modules (if any). This will add code and not break any analyses already run in your project repo. 
+2. Navigate to an analysis module and run the shell script of interest:
+```
+cd ./sc-rna-seq-snap/analyses/<module_of_interest>
+```
+
+**If you have forked the repo**, you will need to do the following steps before running the script of interest. **If you have cloned the repo, you can skip this.**
+
+You need to do `sync fork` of your project repo at GitHub before running a module, if your branch is behind the main branch of the `stjude-dnb-binfcore/sc-rna-seq-snap:main`. This will update the main branch of your project repo with the new code and modules (if any). This will add code and not break any analyses already run in your project repo. 
 
 Then navigate to your `./sc-rna-seq-snap` project repo and ensure you are at the `main` branch. If not, you will need to `git checkout` to the main branch.
-
 ```
 git branch
 git checkout main
 ```
 
 Finally, `git pull` to get the most updated changes and code in your project repo. 
-
 ```
 git pull
 ```
-
-6. Navigate to an analysis module and run the shell script of interest:
-```
-cd ./sc-rna-seq-snap/analyses/<module_of_interest>
-```
-
 
 
 ### Below is the main directory structure listing the analyses and data files used in this repository

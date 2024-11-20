@@ -37,6 +37,7 @@ header-includes:
   - \usepackage{float}
 params:
   use_SoupX_filtering: "."
+  use_scDblFinder_filtering: "."
   root_dir: './'
   metadata_dir: './'
   PROJECT_NAME: './'
@@ -359,9 +360,9 @@ if (use_SoupX_filtering == "YES"){
   print_message <- "we will use SoupX corrected matrix"
   contamination_summary <- readr::read_tsv(SoupX_results_file, guess_max = 100000, show_col_types = FALSE)
   SoupX_plots_file <- c(dir(path = SoupX_plots_dir,  pattern = ".png", full.names = TRUE, recursive = TRUE))
-  #print(SoupX_plots_file)
   } else {
-    print_message <- "we will skip usage of the SoupX corrected matrix"}
+    print_message <- "we will skip usage of the SoupX corrected matrix"
+}
 ```
 
 Here, `r print_message`.
@@ -384,17 +385,23 @@ if (use_SoupX_filtering == "YES"){
 ```{r read-SoupX-plots-file, echo = FALSE}
 p <- list()
 if (use_SoupX_filtering == "YES"){
-    p <- knitr::include_graphics(SoupX_plots_file)
-    fig.cap_list <- list()
+  p <- knitr::include_graphics(SoupX_plots_file)
+  fig.cap_list <- list()
     
-    for (i in seq_along(sample_name)) {
-      fig.cap_list = glue::glue('SoupX plot for sample {sample_name}')}
-    } else {
-    }
+  for (i in seq_along(sample_name)) {
+    fig.cap_list = glue::glue('SoupX plot for sample {sample_name}')}
+  } else {
+}
 ```
 
 ```{r read-SoupX-plots-file-plot, echo = FALSE, fig.align = 'center', out.width = '100%', fig.cap = fig.cap_list}
-knitr::include_graphics(p)
+if (use_SoupX_filtering == "YES"){
+  knitr::include_graphics(p)
+  } else {
+    for (i in seq_along(sample_name)) {
+      fig.cap_list = glue::glue('SoupX plot for sample {sample_name}')
+      }
+}
 ```
 
 ## Read scDblFinder plots and results
@@ -403,32 +410,51 @@ We will summarize the estimated and removed doublets per sample. Results are sho
 ### Summary table per sample
 
 ```{r read-scDblFinder, echo = FALSE}
-doublets_metrics <- readr::read_tsv(scDblFinder_results_file, guess_max = 100000, show_col_types = FALSE) 
-scDblFinder_plots_file <- c(dir(path = scDblFinder_plots_dir,  pattern = ".png", full.names = TRUE, recursive = TRUE))
+if (use_scDblFinder_filtering == "YES"){
+  print_message <- "we will use scDblFinder to remove doublets"
+  doublets_metrics <- readr::read_tsv(scDblFinder_results_file, guess_max = 100000, show_col_types = FALSE) 
+  scDblFinder_plots_file <- c(dir(path = scDblFinder_plots_dir,  pattern = ".png", full.names = TRUE, recursive = TRUE))
+  } else {
+    print_message <- "we will skip usage of the scDblFinder to remove doublets"
+}
 ```
 
+Here, `r print_message`.
+
+
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
-tables1 <- doublets_metrics
-cat("  \n<div style=\"font-size:80%\">  \n")
-print(knitr::kable(tables1, align = "lcccc", caption = "Summary of doublets detection per sample"))
-cat("  \n</div>  \n")
-cat("  \n\\pagebreak  \n")
+if (use_scDblFinder_filtering == "YES"){
+  tables1 <- doublets_metrics
+  cat("  \n<div style=\"font-size:80%\">  \n")
+  print(knitr::kable(tables1, align = "lcccc", caption = "Summary of doublets detection per sample"))
+  cat("  \n</div>  \n")
+  cat("  \n\\pagebreak  \n")
+  } else {
+}
 ```
 
 ### Plots per sample
 
 ```{r read-scDblFinder-plots-file, echo = FALSE}
-p <- list()
-p <- knitr::include_graphics(scDblFinder_plots_file)
+if (use_scDblFinder_filtering == "YES"){
+  p <- list()
+  p <- knitr::include_graphics(scDblFinder_plots_file)
 
-fig.cap_list <- list()
-for (i in seq_along(sample_name)) {
-  #fig.cap_list = glue::glue('\n\n\n\nscDblFinder plot for sample {sample_name}')
-  fig.cap_list = glue::glue('\n\n\n')}
+  fig.cap_list <- list()
+  for (i in seq_along(sample_name)) {
+    fig.cap_list = glue::glue('\n\n\n')}
+  } else {
+}
 ```
 
 ```{r read-scDblFinder-plots-file-plot, echo = FALSE, fig.align = 'center', out.width = '100%', fig.cap = fig.cap_list}
-knitr::include_graphics(p)
+if (use_scDblFinder_filtering == "YES"){
+  knitr::include_graphics(p)
+  } else {
+    fig.cap_list <- list()
+    for (i in seq_along(sample_name)) {
+      fig.cap_list = glue::glue('\n\n\n')}
+}
 ```
 
 ## Number of cells per sample at each QC step

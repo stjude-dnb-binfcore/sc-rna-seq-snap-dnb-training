@@ -13,23 +13,18 @@ bsub -P hpcf_interactive -J hpcf_interactive -n 2 -q standard -R "rusage[mem=16G
 ## Load specific version of Singularity
 
 Please note that a version of Singularity is installed by default on all the cluster nodes at St Jude HPC. 
-Otherwise the user needs to ensure and load Singularity module by running:
+Otherwise the user needs to ensure and load Singularity module by running the following on HPC:
 ```
 module load singularity/4.1.1
 ```
 
 
-1. Clone the repository
-```
-git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
-```
-
-2. Pull the singularity container from the `sc-rna-seq-snap` root_dir
+1. Pull the singularity container from the `sc-rna-seq-snap` root_dir
 ```
 singularity pull docker://wabuala/rstudio_4.4.0_seurat_4.4.0:latest
 ```
 
-3. Start the singularity container
+2. Start the singularity container
 
 a. To run from the terminal
 ```
@@ -70,7 +65,7 @@ rm -r rstudio-container-tmp/
 These folders cache history and user info. Then, kill the interactive session, start a new one, and hopefully, it works! 🎉
 
 
-4. Build container (if needed)
+3. Build container (if needed)
 
 If the user does not have access to the `rstudio_4.4.0_seurat_4.4.0_latest.sif`, they can build their own. 
 User can rename the `.sif` file, if they want to (not needed).
@@ -83,19 +78,12 @@ Then, the user can start the container as explained in the step (3).
 
 ## To use the container outside of HPC and singularity:
 
-1. Clone the repository
-```
-git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
-```
-
-
-2. Pull the docker container
+1. Pull the docker container from the `sc-rna-seq-snap` root_dir
 ```
 docker pull docker://wabuala/rstudio_4.4.0_seurat_4.4.0:latest
 ```
 
-
-3. Start the docker container
+2. Start the docker container
 
 To run from the terminal
 ```
@@ -119,7 +107,7 @@ Rscript -e "rmarkdown::render(‘01A_run_seurat_qc.Rmd', clean = TRUE)"
 
 ## Authors
 
-Antonia Chroni, PhD ([@AntoniaChroni](https://github.com/AntoniaChroni))
+Antonia Chroni, PhD ([@AntoniaChroni](https://github.com/AntoniaChroni)) and 
 Walid Abu Al-Afia ([@walidabualafia](https://github.com/walidabualafia))
 
 

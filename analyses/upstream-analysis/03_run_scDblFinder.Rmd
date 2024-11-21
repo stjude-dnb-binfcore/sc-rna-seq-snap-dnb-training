@@ -158,7 +158,7 @@ a4height <- 11.7
 attach(params)
 analysis_dir <- file.path(root_dir, "analyses", "upstream-analysis") 
 results_dir <- file.path(analysis_dir, "results") 
-seurat_results_dir <- file.path(analysis_dir, "results", "01-Seurat-qc") 
+seurat_results_dir <- file.path(analysis_dir, "results", "01_Seurat_qc") 
 
 # Input files
 seurat_results_file <- c(dir(path = seurat_results_dir,  pattern = "seurat_obj_raw.rds", full.names = TRUE, recursive = TRUE))

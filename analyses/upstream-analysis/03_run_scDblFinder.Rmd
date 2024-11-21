@@ -140,7 +140,8 @@ suppressPackageStartupMessages({
   library(grid)
   library(knitr)
 
-  # Evaluate Seurat R expressions asynchronously when possible (such as ScaleData) using future package
+  # Evaluate Seurat R expressions asynchronously when possible using future package
+  options(future.globals.maxSize = 8388608000) #8000 * 1024^2
   plan(multisession, workers = parallelly::availableCores())})
 ```
 

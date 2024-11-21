@@ -52,17 +52,17 @@ git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
 cd ./sc-rna-seq-snap/analyses/<module_of_interest>
 ```
 
-**If you have forked the repo**, you will need to do the following steps before running the script of interest. **If you have cloned the repo, you can skip this.**
+**If you have forked the repo, you will need to do the following steps before running the script of interest. If you have cloned the repo, you can skip this.**
 
 You need to do `sync fork` of your project repo at GitHub before running a module, if your branch is behind the main branch of the `stjude-dnb-binfcore/sc-rna-seq-snap:main`. This will update the main branch of your project repo with the new code and modules (if any). This will add code and not break any analyses already run in your project repo. 
 
-Then navigate to your `./sc-rna-seq-snap` project repo and ensure you are at the `main` branch. If not, you will need to `git checkout` to the main branch.
+Then navigate to your `./sc-rna-seq-snap` project repo and ensure you are at the `main` branch (in case you have featured branches). If not, you will need to `git checkout` to the main branch.
 ```
 git branch
 git checkout main
 ```
 
-Finally, `git pull` to get the most updated changes and code in your project repo. 
+Finally, `git pull` to get the most updated changes and code in your project repo. Please be mindful of any changes in files in your project repo that you have done, e.g., `project_parameters.Config.yaml`. You will need to commit or stash (or restore) the changes to the yaml before completing the pull.
 ```
 git pull
 ```

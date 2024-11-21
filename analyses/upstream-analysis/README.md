@@ -10,13 +10,13 @@ Parameters according to the project and analysis strategy will need to be specif
 
 ### Run module on an interactive session on HPC within the container
 
-To run all of the Rscripts in this module sequentially on an interactive session on HPC, please run the following command from an interactive compute node:
+To run all of the Rscripts in this module sequentially on an interactive session on HPC, please run the following command from an interactive compute node (while within the container):
 
 ```
 bash run-upstream-analysis.sh
 ```
 
-### Run module by using lsf on HPC within the container
+### Run module by using lsf on HPC with the container
 
 There is also the option to run a lsf job on the HPC cluster by using the following command on an HPC node:
 

@@ -1,15 +1,16 @@
 # How to use analysis modules in the Single cell RNA Seq Snap workflow (ScRNASeqSnap)
 
-This repository contains tools and workflows for analyzing single cell and single nuclei RNA (sc/snRNA) data from 10X sequencing technology. 
+This repository contains a collection of analysis modules designed to process and analyze single cell and single nuclei RNA (sc/snRNA) data from 10X sequencing technology. 
 
-We recommend the following order in running analysis modules which is up to customization based on the user's needs.
-1. `fastqc-analysis` module (help=`Required`. Pipeline for FastQC quality control tool for high throughput sequence data analysis.)
-2. `cellranger-analysis` module (help=`Required`. Pipeline for running and summarizing Cell Ranger count for single or multiple libraries.)
-3. `upstream-analysis` module (help=`Required`. Pipeline for estimating QC metrics and filtering low quality cells.)
-4. `integrative-analysis` module (help=`Required`. Pipeline for Integrative analysis.)
-5. `cluster-cell-calling` module (help=`Required`. Pipeline for cluster cell calling and gene marker analysis.)
-6. `cell-contamination-removal-analysis` module (help=`Optional`. To remove clusters and repeat steps (4) and (5), e.g. for PDX experiments)
-7. `cell-types-annotation` module (help=`Required`. Pipeline for annotating cell types.)
+Each module is self-contained and can be executed independently or as part of a larger analysis pipeline. Below is a summary of each analysis module, including whether they are required or optional. Furthermore, the analysis modules should be run in the following recommended order:
+
+1. `fastqc-analysis` module (description="Pipeline for FastQC quality control tool for high throughput sequence data analysis.", required=True)
+2. `cellranger-analysis` module (description="Pipeline for running and summarizing Cell Ranger count for single or multiple libraries.", required=True)
+3. `upstream-analysis` module (description="Pipeline for estimating QC metrics and filtering low quality cells.", required=True)
+4. `integrative-analysis` module (description="Pipeline for Integrative analysis.", required=True)
+5. `cluster-cell-calling` module (description="Pipeline for cluster cell calling and gene marker analysis.", required=True)
+6. `cell-contamination-removal-analysis` module (description="To remove clusters and repeat steps (4) and (5), e.g. for PDX experiments.", required=False)
+7. `cell-types-annotation` module (description="Pipeline for annotating cell types.", required=True)
 
 
 ## Contact

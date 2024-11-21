@@ -138,6 +138,7 @@ suppressPackageStartupMessages({
   library(future)
   library(tidyverse)
   library(grid)
+  library(knitr)
 
   # Evaluate Seurat R expressions asynchronously when possible (such as ScaleData) using future package
   plan(multisession, workers = parallelly::availableCores())})

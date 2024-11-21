@@ -7,7 +7,7 @@
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
 - `project_parameters.Config.yaml`: define `fastqc_dir` path to input data with `*R2*.fastq.gz` files.
 
-### Run module on an interactive session on HPC
+### Run module on an interactive session on HPC within the container
 
 To run the script on an interactive session on HPC, please run the following command from an interactive compute node:
 
@@ -15,7 +15,7 @@ To run the script on an interactive session on HPC, please run the following com
 bash run-fastqc-analysis.sh
 ```
 
-### Run module by using lsf on HPC
+### Run module by using lsf on HPC within the container
 
 There is also the option to run a lsf job on the HPC cluster by using the following command on an HPC node:
 
@@ -34,7 +34,7 @@ We only need to run FastQC on the single cell R2 files. Conducting read sequence
 
 For more information, please:
 - Type from the command line: fastqc --help, or
-- See: https://www.bioinformatics.babraham.ac.uk/projects/fastqc/ 
+- See [fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/)
 
 ## Folder structure 
 

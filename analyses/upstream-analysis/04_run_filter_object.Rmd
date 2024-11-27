@@ -157,7 +157,7 @@ suppressPackageStartupMessages({
   library(scooter)
   library(RColorBrewer)
   library(knitr)
-
+  
   # Evaluate Seurat R expressions asynchronously when possible using future package
   options(future.globals.maxSize = 8388608000) #8000 * 1024^2
   plan(multisession, workers = parallelly::availableCores())})
@@ -206,7 +206,6 @@ source(paste0(analysis_dir, "/util/function-create-UMAP.R"))
 ```
 
 # Read metadata file and define `sample_name`
-
 ```{r read-metadata-define-sample-name, echo=TRUE}
 # Read metadata
 project.metadata <- read.csv(metadata_file, sep = '\t', header = TRUE)
@@ -304,7 +303,7 @@ if (use_scDblFinder_filtering == "YES"){
     mutate(sample_name = Var1,
            cells_number_doublets = Freq) %>% 
     dplyr::select(-Var1, -Freq)
-  
+
   doublet_cells <- colnames(seurat_obj)[which(seurat_obj@meta.data$scDblFinder.class == "doublet")]
 
   ##########################################################################################################
@@ -326,7 +325,7 @@ if (use_scDblFinder_filtering == "YES"){
       as.data.frame() %>%
       #mutate_at(('Freq'), ~replace_na(.,0)) %>%
       mutate(sample_name = Var1,
-             cells_number_doublets ='NA') %>%
+             cells_number_doublets ='NA') %>% #0
       dplyr::select(-Var1, -Freq) 
    
     ##########################################################################################################
@@ -336,9 +335,10 @@ if (use_scDblFinder_filtering == "YES"){
       mutate(sample_name = Var1) %>% 
       dplyr::select(-Var1, -Freq) %>%
       left_join(cells_number_seurat_qc) %>%
-      rename(cells_number_final = cells_number_seurat_qc) 
+      dplyr::rename(cells_number_final = cells_number_seurat_qc) 
 }
 ```
+
 Here, `r print_message_doublets`.
 
 # Number of cells per sample at each QC step
@@ -390,7 +390,7 @@ seurat_obj <- Process_Seurat(seurat_obj = seurat_obj, nfeatures_value = nfeature
 # Save output files
 
 ```{r save_seurat}
-saveRDS(seurat_obj, file = paste0(results_dir, "/", "seurat_obj_merged_filtered.rds"))
+#saveRDS(seurat_obj, file = paste0(results_dir, "/", "seurat_obj_merged_filtered.rds"))
 ```
 
 ```{r echo=FALSE}

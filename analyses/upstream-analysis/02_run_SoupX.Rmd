@@ -20,6 +20,8 @@ output:
     number_sections: TRUE
     latex_engine: lualatex
     keep_tex: FALSE
+    #extra_dependencies: ["float"]
+    #extra_dependencies: ["flafter"]
     fig_caption: yes
     fig_crop: no
     fig_height: 2
@@ -36,8 +38,8 @@ header-includes:
   - \usepackage{graphicx}
   - \usepackage{float}
 params:
-  root_dir: './'
-  metadata_dir: './'
+  root_dir: '.'
+  metadata_dir: '.'
   PROJECT_NAME: '.'
   PI_NAME: '.'
   TASK_ID: '.'
@@ -49,7 +51,7 @@ params:
   PIPELINE: '.'
   START_DATE: '.'
   COMPLETION_DATE: '.'
-  data_dir: './'
+  data_dir: '.'
   soup_fraction_value_default: '.'
 ---
 
@@ -167,7 +169,7 @@ attach(params)
 analysis_dir <- file.path(root_dir, "analyses", "upstream-analysis") 
 module_results_dir <- file.path(analysis_dir, paste0("results"))
 
-# Input files
+# We will first read in metadata file as we need to define sample_name 
 metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
 
 # Create SoupX_results_dir
@@ -200,7 +202,6 @@ a4height <- 11.7
 ```
 
 # Read metadata file and define `sample_name`
-
 ```{r read-metadata-define-sample-name, echo=TRUE}
 # Read metadata
 project.metadata <- read.csv(metadata_file, sep = '\t', header = TRUE)
@@ -262,11 +263,24 @@ for (i in seq_along(sample_name)) {
   # Correcting expression profile and clean data
   # This will contain a corrected matrix to be used in place of the original table of counts in downstream analyses.
   out <- adjustCounts(sc, roundToInt = TRUE) # roundToInt option to make sure we output integer matrix
-  
-  # We will rename the barcodes in the corrected matrix to match the raw matrix
   colnames(out) <- paste0(sample_name, ":", colnames(out))
   colnames(out) = gsub('-1$','', colnames(out)) # remove -1
 
+  # Let's save corrected matrix as a separate assay
+  #seurat_obj  <- CreateSeuratObject(counts = out)
+  #seurat_obj[["RNA_SoupX"]] <- CreateAssayObject(counts = seurat_obj@assays$RNA@counts)
+  #seurat_obj@assays$RNA_SoupX@counts <- out
+
+  # Setup assay for seurat object for next steps to the one with corrected gene counts
+  #DefaultAssay(seurat_obj) <- "RNA_SoupX"
+
+  # Integrating with downstream tools
+  # Of course, the next thing you'll want to do is to load this corrected expression matrix 
+  # into some downstream analysis tool and further analyse the data.
+
+  #colnames(seurat_obj@assays$RNA@counts) = gsub('-1$', '', colnames(seurat_obj@assays$RNA@counts))
+  #colnames(seurat_obj@assays$RNA@counts) = paste(sample_name, colnames(seurat_obj@assays$RNA@counts), sep=":")
+  
   cat("Processing complete for sample", sample_name[i], "\n")
   
   # Let's combine corrected matrices from all samples 
@@ -285,7 +299,8 @@ We will summarize the estimated and removed background due to contamination per 
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- contamination_summary
 cat("  \n<div align=\"center\", style=\"font-size:80%\">  \n")
-print(knitr::kable(tables1, caption = "Summary of contamination fraction per sample"))
+caption_value = "Summary of contamination fraction per sample"
+print(knitr::kable(tables1, align = "lcccc", caption = caption_value))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
 ```

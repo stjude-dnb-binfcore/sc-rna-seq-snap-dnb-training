@@ -317,7 +317,8 @@ We will summarize the estimated and removed doublets per sample.
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- doublets_metrics
 cat("  \n<div align=\"center\", style=\"font-size:80%\">  \n")
-print(knitr::kable(tables1, caption = "Summary of doublets detection per sample"))
+caption_value = "Summary of doublets detection per sample"
+print(knitr::kable(tables1, align = "lcccc", caption = caption_value))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
 ```

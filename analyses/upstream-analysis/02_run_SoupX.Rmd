@@ -13,15 +13,12 @@ output:
     toc_depth: 2
     highlight: tango
     number_sections: TRUE
-    #keep_md: yes
   pdf_document:
     toc: TRUE
     highlight: tango
     number_sections: TRUE
     latex_engine: lualatex
     keep_tex: FALSE
-    #extra_dependencies: ["float"]
-    #extra_dependencies: ["flafter"]
     fig_caption: yes
     fig_crop: no
     fig_height: 2
@@ -38,8 +35,8 @@ header-includes:
   - \usepackage{graphicx}
   - \usepackage{float}
 params:
-  root_dir: '.'
-  metadata_dir: '.'
+  root_dir: './'
+  metadata_dir: './'
   PROJECT_NAME: '.'
   PI_NAME: '.'
   TASK_ID: '.'
@@ -51,7 +48,7 @@ params:
   PIPELINE: '.'
   START_DATE: '.'
   COMPLETION_DATE: '.'
-  data_dir: '.'
+  data_dir: './'
   soup_fraction_value_default: '.'
 ---
 
@@ -169,7 +166,7 @@ attach(params)
 analysis_dir <- file.path(root_dir, "analyses", "upstream-analysis") 
 module_results_dir <- file.path(analysis_dir, paste0("results"))
 
-# We will first read in metadata file as we need to define sample_name 
+# Input files
 metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
 
 # Create SoupX_results_dir
@@ -266,21 +263,6 @@ for (i in seq_along(sample_name)) {
   colnames(out) <- paste0(sample_name, ":", colnames(out))
   colnames(out) = gsub('-1$','', colnames(out)) # remove -1
 
-  # Let's save corrected matrix as a separate assay
-  #seurat_obj  <- CreateSeuratObject(counts = out)
-  #seurat_obj[["RNA_SoupX"]] <- CreateAssayObject(counts = seurat_obj@assays$RNA@counts)
-  #seurat_obj@assays$RNA_SoupX@counts <- out
-
-  # Setup assay for seurat object for next steps to the one with corrected gene counts
-  #DefaultAssay(seurat_obj) <- "RNA_SoupX"
-
-  # Integrating with downstream tools
-  # Of course, the next thing you'll want to do is to load this corrected expression matrix 
-  # into some downstream analysis tool and further analyse the data.
-
-  #colnames(seurat_obj@assays$RNA@counts) = gsub('-1$', '', colnames(seurat_obj@assays$RNA@counts))
-  #colnames(seurat_obj@assays$RNA@counts) = paste(sample_name, colnames(seurat_obj@assays$RNA@counts), sep=":")
-  
   cat("Processing complete for sample", sample_name[i], "\n")
   
   # Let's combine corrected matrices from all samples 

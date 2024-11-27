@@ -9,45 +9,52 @@
 #'
 #' @examples
 #' 
-Genome_Specific_Cell_Cycle_Scoring <- function(seurat_obj, Genome){
+Genome_Specific_Cell_Cycle_Scoring <- function(seurat_obj, Genome) {
   
   # Pull standard cell cycle genes for cell cycle scoring
   human.s.genes <- cc.genes.updated.2019$s.genes
   human.g2m.genes <- cc.genes.updated.2019$g2m.genes
   
   # Had to append "hg19-" to the beginning of all genes due to dual index reference genome used
-  dual.hg19.s.genes <- paste("hg19-", human.s.genes, sep="")
-  dual.hg19.g2m.genes <- paste("hg19-", human.g2m.genes, sep="")
+  dual.hg19.s.genes <- paste("hg19-", human.s.genes, sep = "")
+  dual.hg19.g2m.genes <- paste("hg19-", human.g2m.genes, sep = "")
   
   # Had to append "GRCh38-" to the beginning of all genes due to dual index reference genome used
-  dual.GRCh38.s.genes <- paste("GRCh38-", human.s.genes, sep="")
-  dual.GRCh38.g2m.genes <- paste("GRCh38-", human.g2m.genes, sep="")
+  dual.GRCh38.s.genes <- paste("GRCh38-", human.s.genes, sep = "")
+  dual.GRCh38.g2m.genes <- paste("GRCh38-", human.g2m.genes, sep = "")
+  
+  # Changed genes to title case for mice genes (Human genes are annotated in all CAPS)
+  mm10.s.genes <- str_to_title(cc.genes.updated.2019$s.genes)
+  mm10.g2m.genes <- str_to_title(cc.genes.updated.2019$g2m.genes)
+  
+  # Appended "GRCh38-" to the beginning of all genes due to dual index reference genome used
+  dual.mm10.s.genes <- paste("mm10---", mm10.s.genes, sep="")
+  dual.mm10.g2m.genes <- paste("mm10---", mm10.g2m.genes, sep="")
   
   # Changed genes to title case for mice genes (Human genes are annotated in all CAPS)
   GRCm39.s.genes <- str_to_title(cc.genes.updated.2019$s.genes)
   GRCm39.g2m.genes <- str_to_title(cc.genes.updated.2019$g2m.genes)
   
-  # Appended "GRCh38-" to the beginning of all genes due to dual index reference genome used
-  dual.GRCm39.s.genes <- paste("GRCm39---", GRCm39.s.genes, sep="")
-  dual.GRCm39.g2m.genes <- paste("GRCm39---", GRCm39.g2m.genes, sep="")
+  # Appended "GRCm39-" to the beginning of all genes due to dual index reference genome used
+  dual.GRCm39.s.genes <- paste("GRCm39---", GRCm39.s.genes, sep = "")
+  dual.GRCm39.g2m.genes <- paste("GRCm39---", GRCm39.g2m.genes, sep = "")
   
-  if (Genome == "GRCh38" | Genome == "hg19"){
+  if (Genome == "GRCh38" | Genome == "hg19") {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = human.s.genes, g2m.features = human.g2m.genes)
-  }
-  else if (Genome == "GRCm39"){
-    seurat_obj <- CellCycleScoring(seurat_obj, s.features = GRCm39.s.genes, g2m.features = GRCm39.g2m.genes)
-  }
-  else if (Genome == "Dualhg19"){
+    } else if (Genome == "mm10") {
+    seurat_obj <- CellCycleScoring(seurat_obj, s.features = mm10.s.genes, g2m.features = mm10.g2m.genes)
+    } else if (Genome == "Dualhg19") {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.hg19.s.genes, g2m.features = dual.hg19.g2m.genes)
-  }
-  else if (Genome == "DualGRCh38"){
+    } else if (Genome == "DualGRCh38") {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.GRCh38.s.genes, g2m.features = dual.GRCh38.g2m.genes)
+    } else if (Genome == "Dualmm10") {
+    seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.mm10.s.genes, g2m.features = dual.mm10.g2m.genes)
+    } else if (Genome == "GRCm39") {
+    seurat_obj <- CellCycleScoring(seurat_obj, s.features = GRCm39.s.genes, g2m.features = GRCm39.g2m.genes)
+    } else if (Genome == "DualGRCm39") {
+    seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.GRCm39.s.genes, g2m.features = dual.GRCm39.g2m.genes)
   }
-  else if (Genome == "DualGRCm39"){
-    seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.GRCm39.s.genes, g2m.features = dual.GRCm39.g2m.genes)}
 }
-
-
 
 #############################################################################################
 #' Function to process and cluster cell for an individual sample
@@ -74,7 +81,7 @@ Genome_Specific_Cell_Cycle_Scoring <- function(seurat_obj, Genome){
 #' 
 Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cycle, assay, 
                           num_pcs, prefix, num_dim, num_neighbors, results_dir, 
-                          plots_output, use_condition_split, condition, print_pdf, PCA_Feature_List){
+                          plots_output, use_condition_split, condition, print_pdf, PCA_Feature_List) {
   
   set.seed(1234) # Make code reproducible
 
@@ -87,26 +94,29 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
   
   cat("Scale data", "\n")
   # Indicates whether or not to regress for cell cycle and, if so, which method to use and scale data
-  if (Regress_Cell_Cycle == "NO"){
+  if (Regress_Cell_Cycle == "NO") {
     print("We will NOT regress out for cell cycle and scale data!")
     seurat_obj <- ScaleData(seurat_obj, features = rownames(seurat_obj))
-    } else if (Regress_Cell_Cycle == "YES"){    
+    } else if (Regress_Cell_Cycle == "YES") {    
       print("We will regress out for cell cycle and scale data!")
       seurat_obj <- ScaleData(seurat_obj, vars.to.regress = c("S.Score", "G2M.Score"), features = rownames(seurat_obj))
-      } else if (Regress_Cell_Cycle == "DIFF"){
+      } else if (Regress_Cell_Cycle == "DIFF") {
         print("We will regress out for cell cycle difference and scale data!")
         seurat_obj$CC.Difference <- seurat_obj$S.Score - seurat_obj$G2M.Score
-        seurat_obj <- ScaleData(seurat_obj, vars.to.regress = "CC.Difference", features = rownames(seurat_obj))} 
+        seurat_obj <- ScaleData(seurat_obj, vars.to.regress = "CC.Difference", features = rownames(seurat_obj))
+  } 
   
   cat("Run PCA", "\n") # Get PCs for dimensionality reduction
   # Either use the prespecified PCA.Feature.List or use Variable Features found before
-  if (missing(PCA_Feature_List)){
+  if (missing(PCA_Feature_List)) {
     seurat_obj <- RunPCA(seurat_obj, features = VariableFeatures(seurat_obj), assay = assay, npcs = num_pcs, verbose = FALSE)
   } else {
-      seurat_obj <- RunPCA(seurat_obj, features = PCA_Feature_List, assay = assay, npcs = num_pcs, verbose = FALSE)}
+      seurat_obj <- RunPCA(seurat_obj, features = PCA_Feature_List, assay = assay, npcs = num_pcs, verbose = FALSE)
+  }
   
   cat("Run UMAP", "\n")
   set.seed(1234) # Make code reproducible
+  
   # Create a dataframe of all of the possible combinations of number of PCs to use for UMAP, and the number of neighbors
   num_dim_vect <- c(num_dim)
   num_neighbors_vect <- c(num_neighbors)
@@ -146,10 +156,9 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
   # Both cells and features are ordered according to their PCA scores. 
   # Setting cells to a number plots the ‘extreme’ cells on both ends of the spectrum, 
   # which dramatically speeds plotting for large datasets.
-  # print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1, cells = 500, balanced = TRUE))
-  # print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1:15, cells = 500, balanced = TRUE))
+  #print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1, cells = 500, balanced = TRUE))
+  #print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1:15, cells = 500, balanced = TRUE))
   
-  # OTHER SOLUTIONS FOR Heatmap
   # par(mar = c(2, 2, 1, 1))  # Adjust margins: (bottom, left, top, right)
   # name <- paste0(plots_dir, "/", "DimHeatmap.pdf")
   # print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1, cells = 100, balanced = TRUE))
@@ -161,18 +170,15 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
   # print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1:15, cells = 100, balanced = TRUE))
   # pdf(file = name, width = 10, height = 6)
   # dev.off()
-
+  
   # Determine the ‘dimensionality’ of the dataset
-  # name <- paste0(plots_dir, "/", "ElbowPlot.pdf")
   print(ElbowPlot(seurat_obj, reduction = paste0("pca")))
-  # pdf(file = name, width = 10, height = 6)
-  # dev.off()
   
   cat("Plot UMAP", "\n")
   umap_values <- c(paste0("UMAP", "ndim", possibilities[,1], "nn", possibilities[,2]))
   
-  if (print_pdf == "YES"){
-    for (umap_val in umap_values){
+  if (print_pdf == "YES") {
+    for (umap_val in umap_values) {
       print(umap_val)
       set.seed(1234) # Make code reproducible for UMAPs
     
@@ -243,7 +249,7 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
      print(p)
      dev.off()
      
-     if (use_condition_split == "YES"){
+     if (use_condition_split == "YES") {
        print("Print condition_split!")
        # condition_split
        name <- paste0(umap_out, "07_", umap_val, "_condition_split.pdf")
@@ -255,10 +261,10 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
        dev.off()
        } else { 
          print("Do NOT Print condition_split!")
-         next}
+         next }
      }
-    } else if (print_pdf == "NO"){
-      for (umap_val in umap_values){
+    } else if (print_pdf == "NO") {
+      for (umap_val in umap_values) {
         print(umap_val)
         set.seed(1234) # Make code reproducible for UMAPs
     
@@ -327,11 +333,12 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
           ggsave(file = name, width = 10, height = 6, device = "png")
           } else { 
             print("Do NOT Print condition_split!")
-            next}
-      }
+            next }
     }
+  }
   
   cat("Returned Seurat object", "\n")
-  return(seurat_obj)}
+  return(seurat_obj)
+}
 
 

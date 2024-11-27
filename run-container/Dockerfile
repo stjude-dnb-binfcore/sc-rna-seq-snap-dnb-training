@@ -77,11 +77,14 @@ RUN apt-get update && \
         automake \
         flex \
         bison \
-        pandoc \
         fastqc \
         gdebi-core && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Install pandoc/1.19.2.1 to avoid conflixt with texlive 
+ENV PANDOC_VERSION "1.19.2.1"
+RUN apt-get update && apt-get install -y pandoc-${PANDOC_VERSION}
 
 # Install texlive full version
 ENV TEXLIVE_INSTALL_NO_CONTEXT_CACHE=1 \

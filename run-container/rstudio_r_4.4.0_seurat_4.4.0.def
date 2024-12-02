@@ -113,12 +113,34 @@ From: ubuntu:20.04
     automake \
     flex \
     bison \
-    pandoc \
     fastqc \
     gdebi-core && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
+
+   # Remove any existing version of Pandoc (if installed)
+   apt-get update && apt-get remove -y pandoc
+
+   # Install necessary tools for downloading and installing the .deb package
+    apt-get install -y \
+    wget \
+    gdebi-core \
+    curl \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    zlib1g-dev
+
+# Install pandoc/1.19.2.1 to avoid conflixt with texlive 
+# Set the Pandoc version and the URL for the release
+ PANDOC_VERSION="1.19.2.1"
+ PANDOC_URL="https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb"
+
+    # Download and install Pandoc .deb package
+    wget ${PANDOC_URL} -O /tmp/pandoc.deb \
+    && gdebi -n /tmp/pandoc.deb \
+    && rm /tmp/pandoc.deb
+    
   # Install TexLive prerequisites
   apt-get update && \
   apt-get install -y wget unzip tar \
@@ -142,7 +164,7 @@ From: ubuntu:20.04
   /usr/local/texlive/2024/bin/x86_64-linux/tlmgr path add
 
   # Install CellRanger v8.0.1
-  curl -o /tmp/cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1730520355&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=dKG42KftNgYzAf6NWHB24YZHD7Ar2cwJOctYfVlWfEJ-y-euy0qOnzV8BdGTdY8AghsX3wcRfGl0Mkk9Ec5Cb52HDDMXuD4NWnW5UNupdC2SWAHzy9lL7rJd3LAk6nUPdUMuZDEfTS2VbAAMnR3GhVuAvjSqu3rSiIpN6NHSpPff5sLwjvWJ10oCydKMzwGPyv50qXZzyj~O2DxABYOuN32UjEW5JevrzYaZEcfSivQn2NjvOtSsCVxzLJopFQVlPFHOldqeYnC87F1NyRSlgoK9oXUdsBeLhkSKSEuo9wspEOxnTgl38NFZGtc1vRo5uZYsazDyb19izSYQWkyseA__"
+  curl -o /tmp/cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1732798103&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=KB2q5~9KXKipr5lQiNv6~aIPAWVIjagY422q2tETCFvJgD~Cdadbd6P4uL45qz0fZ2otkmKCOiy~OKb8LYYKi6SGq-zVWtjro3hg8Qk3WBh6Q4MHsdSaFPdEoTGjKBr5PJoDSeOBCwix8~NBjMpGC1pbydjBzWkSk94j3SZHt7D8rUKd9VH-nxg4fADyvZSthiTK5mwV5cl-8gv-ooEBBYHfJ3caQeEvHNfUh7eClxPyN-cEm91SSTjIeN4NrF2Y4edqDag9RDiaAB27EQiexF8AlH2suiIEtHjwELrOmJVP7DFkTtpYzxvLYOTZtPVKC3ZNz6aYNnVFy0Wd~20U3w__"
   tar -xvzf /tmp/cellranger-8.0.1.tar.gz -C /opt
 
   # Add a default CRAN mirror

@@ -21,7 +21,7 @@ module load singularity/4.1.1
 
 1. Pull the singularity container from the `sc-rna-seq-snap` root_dir
 ```
-singularity pull docker://wabuala/rstudio_4.4.0_seurat_4.4.0:latest
+singularity pull docker://achronistjude/rstudio_4.4.0_seurat_4.4.0:latest
 ```
 
 2. Start the singularity container

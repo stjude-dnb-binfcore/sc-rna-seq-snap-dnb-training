@@ -54,3 +54,19 @@ use_scDblFinder_filtering_filter_object: "NO" # set for 04_run_filter_object.Rmd
 use_scDblFinder_filtering_filter_object: "YES" # set for 04_run_filter_object.Rmd
 use_SoupX_filtering_summary_report: "NO" #set value for 05_run_summary_report.Rmd
 use_scDblFinder_filtering_summary_report: "NO" #set value for 05_run_summary_report.Rmd
+
+# `./analyses/integrative-analysis`
+use_seurat_integration: 'YES'
+use_harmony_integration: 'NO'
+use_liger_integration: 'NO'
+integration_method: 'seurat' options:'seurat', 'harmony', 'inmf'
+num_dim_seurat: 30
+num_dim_seurat_integration: 50
+big_data_value: 'FALSE' #options:'TRUE' or 'FALSE'
+num_dim_harmony: 30
+n_neighbors_value: 20
+variable_value: 'ID'
+reference_list_value: NULL
+PCA_Feature_List_value: NULL
+
+

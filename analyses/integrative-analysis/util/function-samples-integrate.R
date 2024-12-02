@@ -35,7 +35,7 @@ seurat_integration <- function(seurat_obj_list, nfeatures_value, num_dim_seurat,
     x <- RunPCA(x, features = features, verbose = TRUE)})
   
   # We will consider projects that contain big data, i.e., >= 1.3M cells.
-  if (big_data == big_data){
+  if (big_data == TRUE){
     if (missing(reference_list)){
       cat("Finding Integration Anchors using rPCA reduction, but no Reference\n")
       anchors <- FindIntegrationAnchors(object.list = seurat_obj_list, normalization.method = "SCT", anchor.features = features, dims = 1:num_dim_seurat_integration, reduction = "rpca", k.anchor = 20, verbose = TRUE)

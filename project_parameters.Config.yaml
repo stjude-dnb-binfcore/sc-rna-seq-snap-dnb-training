@@ -62,7 +62,7 @@ use_liger_integration: 'NO'
 integration_method: 'seurat' options:'seurat', 'harmony', 'inmf'
 num_dim_seurat: 30
 num_dim_seurat_integration: 50
-big_data_value: 'FALSE' #options:'TRUE' or 'FALSE'
+big_data_value: FALSE #options:'TRUE' or 'FALSE'
 num_dim_harmony: 30
 n_neighbors_value: 20
 variable_value: 'ID'

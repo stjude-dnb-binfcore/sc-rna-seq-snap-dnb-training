@@ -82,9 +82,28 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Remove any existing version of Pandoc (if installed)
+RUN apt-get update && apt-get remove -y pandoc
+
+# Install necessary tools for downloading and installing the .deb package
+RUN apt-get install -y \
+    wget \
+    gdebi-core \
+    curl \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    zlib1g-dev
+
 # Install pandoc/1.19.2.1 to avoid conflixt with texlive 
-ENV PANDOC_VERSION "1.19.2.1"
-RUN apt-get update && apt-get install -y pandoc-${PANDOC_VERSION}
+# Set the Pandoc version and the URL for the release
+ENV PANDOC_VERSION="1.19.2.1"
+ENV PANDOC_URL="https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb"
+
+# Download and install Pandoc .deb package
+RUN wget ${PANDOC_URL} -O /tmp/pandoc.deb \
+    && gdebi -n /tmp/pandoc.deb \
+    && rm /tmp/pandoc.deb
+
 
 # Install texlive full version
 ENV TEXLIVE_INSTALL_NO_CONTEXT_CACHE=1 \
@@ -117,7 +136,8 @@ RUN wget -P /tmp https://download2.rstudio.org/server/jammy/amd64/rstudio-server
     gdebi -n /tmp/rstudio-server-2024.09.1-394-amd64.deb
 
 # Install CellRanger v8.0.1
-RUN curl -o /tmp/cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1732073866&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=jhymj1SxgW1K5~mN15DbjkIblCdhaylDUuab9WW7W6G3GH4PYwowal4eh3tpK8fEnJXHz6VtWr-5JQJjnXidYbu5wF9AjMIMnyzVYdrT5pFpt31z7o7Kec16DZgPVtjyhQhh3NS9BxKuFcrUuqeWpRcB~M1-3POrEHAKiAUOlYT0fwmJNfr6ON3pNFk75va3~Z3h2J3AZGnFMcZtAFXtxz8a4JHoR68RDwDnGTYYT6cGoqOTcVxtWMaTdkSERklmAkbyNSGLUXp2LVORdsXsQK3kiNmdU1aPv7GdRZK4O5hHL33omNmA0fxSyQGZ2Ud5nfE6qQcmZ1IDjJ8gjIp~Sg__"
+# Remove any existing version of Pandoc (if installed)
+RUN curl -o /tmp/cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1732798103&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=KB2q5~9KXKipr5lQiNv6~aIPAWVIjagY422q2tETCFvJgD~Cdadbd6P4uL45qz0fZ2otkmKCOiy~OKb8LYYKi6SGq-zVWtjro3hg8Qk3WBh6Q4MHsdSaFPdEoTGjKBr5PJoDSeOBCwix8~NBjMpGC1pbydjBzWkSk94j3SZHt7D8rUKd9VH-nxg4fADyvZSthiTK5mwV5cl-8gv-ooEBBYHfJ3caQeEvHNfUh7eClxPyN-cEm91SSTjIeN4NrF2Y4edqDag9RDiaAB27EQiexF8AlH2suiIEtHjwELrOmJVP7DFkTtpYzxvLYOTZtPVKC3ZNz6aYNnVFy0Wd~20U3w__"
 RUN tar -xvzf /tmp/cellranger-8.0.1.tar.gz -C /opt
 
 # Install pip for Python 3.9

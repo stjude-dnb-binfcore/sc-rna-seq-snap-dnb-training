@@ -13,7 +13,6 @@ output:
     toc_depth: 2
     highlight: tango
     number_sections: TRUE
-    #keep_md: yes
   pdf_document:
     toc: TRUE
     highlight: tango
@@ -200,7 +199,6 @@ a4height <- 11.7
 ```
 
 # Read metadata file and define `sample_name`
-
 ```{r read-metadata-define-sample-name, echo=TRUE}
 # Read metadata
 project.metadata <- read.csv(metadata_file, sep = '\t', header = TRUE)
@@ -262,8 +260,6 @@ for (i in seq_along(sample_name)) {
   # Correcting expression profile and clean data
   # This will contain a corrected matrix to be used in place of the original table of counts in downstream analyses.
   out <- adjustCounts(sc, roundToInt = TRUE) # roundToInt option to make sure we output integer matrix
-  
-  # We will rename the barcodes in the corrected matrix to match the raw matrix
   colnames(out) <- paste0(sample_name, ":", colnames(out))
   colnames(out) = gsub('-1$','', colnames(out)) # remove -1
 
@@ -285,7 +281,8 @@ We will summarize the estimated and removed background due to contamination per 
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- contamination_summary
 cat("  \n<div align=\"center\", style=\"font-size:80%\">  \n")
-print(knitr::kable(tables1, caption = "Summary of contamination fraction per sample"))
+caption_value = "Summary of contamination fraction per sample"
+print(knitr::kable(tables1, align = "lcccc", caption = caption_value))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
 ```

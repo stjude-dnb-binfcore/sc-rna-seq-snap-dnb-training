@@ -156,8 +156,20 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
   # Both cells and features are ordered according to their PCA scores. 
   # Setting cells to a number plots the ‘extreme’ cells on both ends of the spectrum, 
   # which dramatically speeds plotting for large datasets.
-  print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1, cells = 500, balanced = TRUE))
-  print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1:15, cells = 500, balanced = TRUE))
+  #print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1, cells = 500, balanced = TRUE))
+  #print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1:15, cells = 500, balanced = TRUE))
+  
+  # par(mar = c(2, 2, 1, 1))  # Adjust margins: (bottom, left, top, right)
+  # name <- paste0(plots_dir, "/", "DimHeatmap.pdf")
+  # print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1, cells = 100, balanced = TRUE))
+  # pdf(file = name, width = 10, height = 6)
+  # dev.off()
+  
+  # par(mar = c(2, 2, 1, 1))  # Adjust margins: (bottom, left, top, right)
+  # name <- paste0(plots_dir, "/", "DimHeatmap-dims15.pdf")
+  # print(DimHeatmap(seurat_obj, reduction = paste0("pca"), dims = 1:15, cells = 100, balanced = TRUE))
+  # pdf(file = name, width = 10, height = 6)
+  # dev.off()
   
   # Determine the ‘dimensionality’ of the dataset
   print(ElbowPlot(seurat_obj, reduction = paste0("pca")))

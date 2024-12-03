@@ -1,6 +1,6 @@
 FROM rocker/rstudio:4.4.0
 
-LABEL maintainer="Walid Abu Al-Afia"
+LABEL maintainer="Walid Abu Al-Afia and Antonia Chroni"
 
 # Set environment variables
 ENV PATH=/opt/cellranger-8.0.1/bin:${PATH}
@@ -136,8 +136,7 @@ RUN wget -P /tmp https://download2.rstudio.org/server/jammy/amd64/rstudio-server
     gdebi -n /tmp/rstudio-server-2024.09.1-394-amd64.deb
 
 # Install CellRanger v8.0.1
-# Remove any existing version of Pandoc (if installed)
-RUN curl -o /tmp/cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1732798103&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=KB2q5~9KXKipr5lQiNv6~aIPAWVIjagY422q2tETCFvJgD~Cdadbd6P4uL45qz0fZ2otkmKCOiy~OKb8LYYKi6SGq-zVWtjro3hg8Qk3WBh6Q4MHsdSaFPdEoTGjKBr5PJoDSeOBCwix8~NBjMpGC1pbydjBzWkSk94j3SZHt7D8rUKd9VH-nxg4fADyvZSthiTK5mwV5cl-8gv-ooEBBYHfJ3caQeEvHNfUh7eClxPyN-cEm91SSTjIeN4NrF2Y4edqDag9RDiaAB27EQiexF8AlH2suiIEtHjwELrOmJVP7DFkTtpYzxvLYOTZtPVKC3ZNz6aYNnVFy0Wd~20U3w__"
+RUN curl -o /tmp/cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1733244151&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=Oev2Ml0L0ns0vQRE8ToqCFLGQIJjh~~2dVe1y6C7RvhnSsIViSBTyz1vlKgELLqgo1q8mvb-X1qsEZWXMwVmHzifnO6UseqQxDo2qKbfF9FMwCorTXtBcFiM~irstt2JqKEp9-LJ6zLLAwyXPDJPGvPHcnhp08Wt1S7HN-RWSdWGqbNeFXWjVSZeqG3OooUnB4S3Ykq5aJW9tSUBrCo6s2sR7mC-a0uwf-aawbXSSv3cvnTaAeyuMEFtH7G8QZnOmCCYlNG9~JtomynscwBvf3Hax1IVF8x4kEmCbdaKmBFrPqN8ifVz-FrsnXm3K9Smb2ArkKg6Ur-kIeJ-Q7FK4A__"
 RUN tar -xvzf /tmp/cellranger-8.0.1.tar.gz -C /opt
 
 # Install pip for Python 3.9

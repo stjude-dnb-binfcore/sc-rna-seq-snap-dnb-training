@@ -136,6 +136,9 @@ RUN wget -P /tmp https://download2.rstudio.org/server/jammy/amd64/rstudio-server
     gdebi -n /tmp/rstudio-server-2024.09.1-394-amd64.deb
 
 # Install CellRanger v8.0.1
+# You will need to download the desired version from here: https://www.10xgenomics.com/support/software/cell-ranger/downloads/previous-versions
+# Save on your `/tmp/` locally
+# You should also replace the link with the one from the most recent download
 RUN curl -o /tmp/cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1733244151&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=Oev2Ml0L0ns0vQRE8ToqCFLGQIJjh~~2dVe1y6C7RvhnSsIViSBTyz1vlKgELLqgo1q8mvb-X1qsEZWXMwVmHzifnO6UseqQxDo2qKbfF9FMwCorTXtBcFiM~irstt2JqKEp9-LJ6zLLAwyXPDJPGvPHcnhp08Wt1S7HN-RWSdWGqbNeFXWjVSZeqG3OooUnB4S3Ykq5aJW9tSUBrCo6s2sR7mC-a0uwf-aawbXSSv3cvnTaAeyuMEFtH7G8QZnOmCCYlNG9~JtomynscwBvf3Hax1IVF8x4kEmCbdaKmBFrPqN8ifVz-FrsnXm3K9Smb2ArkKg6Ur-kIeJ-Q7FK4A__"
 RUN tar -xvzf /tmp/cellranger-8.0.1.tar.gz -C /opt
 
@@ -166,7 +169,7 @@ RUN Rscript -e 'install.packages(c("flexmix", "flextable", "forcats"))'
 RUN Rscript -e 'install.packages(c("fs", "future", "GGally"))'
 RUN Rscript -e 'install.packages(c("ggh4x", "ggplot2", "ggpmisc"))'
 RUN Rscript -e 'install.packages(c("ggrepel", "ggthemes", "grid"))'
-RUN Rscript -e 'install.packages(c("harmony", "igraph", "irlba"))'
+RUN Rscript -e 'install.packages(c("harmony", "hdf5r", "igraph", "irlba"))'
 RUN Rscript -e 'install.packages(c("knitr", "optparse"))'
 RUN Rscript -e 'install.packages(c("patchwork", "purrr", "RColorBrewer"))'
 RUN Rscript -e 'install.packages(c("remotes", "reshape2", "rliger"))'

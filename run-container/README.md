@@ -68,7 +68,7 @@ These folders cache history and user info. Then, kill the interactive session, s
 3. Build container (if needed)
 
 If the user does not have access to the `rstudio_4.4.0_seurat_4.4.0_latest.sif`, they can build their own. 
-User can rename the `.sif` file, if they want to (not needed).
+User can rename the `.sif` file, if they want to (not needed). Run the following from the `./run-container` dir:
 ```
 singularity build rstudio_4.4.0_seurat_4.4.0_latest.sif rstudio_r_4.4.0_seurat_4.4.0.def
 ```

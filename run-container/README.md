@@ -34,7 +34,7 @@ bash run-terminal.sh
 Then you may navigate to your module of interest, `./sc-rna-seq-snap/analyses/<module_of_interest>`. For example:
 ```
 cd ./sc-rna-seq-snap/analyses/upstream-analysis
-Rscript -e "rmarkdown::render('01A_run_seurat_qc.Rmd', clean = TRUE)"
+bash run-upstream-analysis.sh
 ```
 
 

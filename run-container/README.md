@@ -21,7 +21,7 @@ module load singularity/4.1.1
 
 1. Pull the singularity container from the `sc-rna-seq-snap` root_dir
 ```
-singularity pull docker://wabuala/rstudio_4.4.0_seurat_4.4.0:latest
+singularity pull docker://achronistjude/rstudio_4.4.0_seurat_4.4.0:latest
 ```
 
 2. Start the singularity container
@@ -34,7 +34,7 @@ bash run-terminal.sh
 Then you may navigate to your module of interest, `./sc-rna-seq-snap/analyses/<module_of_interest>`. For example:
 ```
 cd ./sc-rna-seq-snap/analyses/upstream-analysis
-Rscript -e "rmarkdown::render('01A_run_seurat_qc.Rmd', clean = TRUE)"
+bash run-upstream-analysis.sh
 ```
 
 
@@ -68,7 +68,7 @@ These folders cache history and user info. Then, kill the interactive session, s
 3. Build container (if needed)
 
 If the user does not have access to the `rstudio_4.4.0_seurat_4.4.0_latest.sif`, they can build their own. 
-User can rename the `.sif` file, if they want to (not needed).
+User can rename the `.sif` file, if they want to (not needed). Run the following from the `./run-container` dir:
 ```
 singularity build rstudio_4.4.0_seurat_4.4.0_latest.sif rstudio_r_4.4.0_seurat_4.4.0.def
 ```

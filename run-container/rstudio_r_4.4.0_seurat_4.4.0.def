@@ -113,12 +113,34 @@ From: ubuntu:20.04
     automake \
     flex \
     bison \
-    pandoc \
     fastqc \
     gdebi-core && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
+
+   # Remove any existing version of Pandoc (if installed)
+   apt-get update && apt-get remove -y pandoc
+
+   # Install necessary tools for downloading and installing the .deb package
+    apt-get install -y \
+    wget \
+    gdebi-core \
+    curl \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    zlib1g-dev
+
+# Install pandoc/1.19.2.1 to avoid conflixt with texlive 
+# Set the Pandoc version and the URL for the release
+ PANDOC_VERSION="1.19.2.1"
+ PANDOC_URL="https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-amd64.deb"
+
+    # Download and install Pandoc .deb package
+    wget ${PANDOC_URL} -O /tmp/pandoc.deb \
+    && gdebi -n /tmp/pandoc.deb \
+    && rm /tmp/pandoc.deb
+    
   # Install TexLive prerequisites
   apt-get update && \
   apt-get install -y wget unzip tar \
@@ -142,7 +164,10 @@ From: ubuntu:20.04
   /usr/local/texlive/2024/bin/x86_64-linux/tlmgr path add
 
   # Install CellRanger v8.0.1
-  curl -o /tmp/cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1730520355&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=dKG42KftNgYzAf6NWHB24YZHD7Ar2cwJOctYfVlWfEJ-y-euy0qOnzV8BdGTdY8AghsX3wcRfGl0Mkk9Ec5Cb52HDDMXuD4NWnW5UNupdC2SWAHzy9lL7rJd3LAk6nUPdUMuZDEfTS2VbAAMnR3GhVuAvjSqu3rSiIpN6NHSpPff5sLwjvWJ10oCydKMzwGPyv50qXZzyj~O2DxABYOuN32UjEW5JevrzYaZEcfSivQn2NjvOtSsCVxzLJopFQVlPFHOldqeYnC87F1NyRSlgoK9oXUdsBeLhkSKSEuo9wspEOxnTgl38NFZGtc1vRo5uZYsazDyb19izSYQWkyseA__"
+  # You will need to download the desired version from here: https://www.10xgenomics.com/support/software/cell-ranger/downloads/previous-versions
+  # Save on your `/tmp/` locally
+  # You should also replace the link with the one from the most recent download
+  curl -o /tmp/cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1733244151&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=Oev2Ml0L0ns0vQRE8ToqCFLGQIJjh~~2dVe1y6C7RvhnSsIViSBTyz1vlKgELLqgo1q8mvb-X1qsEZWXMwVmHzifnO6UseqQxDo2qKbfF9FMwCorTXtBcFiM~irstt2JqKEp9-LJ6zLLAwyXPDJPGvPHcnhp08Wt1S7HN-RWSdWGqbNeFXWjVSZeqG3OooUnB4S3Ykq5aJW9tSUBrCo6s2sR7mC-a0uwf-aawbXSSv3cvnTaAeyuMEFtH7G8QZnOmCCYlNG9~JtomynscwBvf3Hax1IVF8x4kEmCbdaKmBFrPqN8ifVz-FrsnXm3K9Smb2ArkKg6Ur-kIeJ-Q7FK4A__"
   tar -xvzf /tmp/cellranger-8.0.1.tar.gz -C /opt
 
   # Add a default CRAN mirror
@@ -153,6 +178,8 @@ From: ubuntu:20.04
   #echo "options(repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.method = 'libcurl')" >> /usr/lib/R/etc/Rprofile.site
 
   # Install RStudio
+  apt-get update
+  apt-get install psmisc
   apt-get install -y --no-install-recommends \
     ca-certificates 
   wget \
@@ -169,7 +196,12 @@ From: ubuntu:20.04
   
   # Enable copilot
   echo "copilot-enabled=1" >> /etc/rstudio/rsession.conf
-
+  
+  # Install necessary system libraries for HDF5 
+  # The hdf5r package depends on the underlying HDF5 C libraries. 
+  apt-get update && \
+    apt-get install -y libhdf5-dev
+  
   # Install R Packages into base R
   #
   # Setup
@@ -185,7 +217,11 @@ From: ubuntu:20.04
   Rscript -e 'devtools::install_github("igordot/scooter")'
   Rscript -e 'devtools::install_github("welch-lab/RcppPlanc")'
   Rscript -e 'devtools::install_github("kharchenkolab/numbat")'
-  
+  Rscript -e 'devtools::install_github("welch-lab/liger")'
+
+  #Rscript -e 'install.packages("hdf5r")'
+  Rscript -e 'install.packages("hdf5r", type = "source")'
+
   Rscript -e 'install.packages(c("clustree", "cowplot", "data.table"))'
   Rscript -e 'install.packages(c("flexmix", "flextable", "forcats"))'
   Rscript -e 'install.packages(c("fs", "future", "GGally"))'
@@ -199,6 +235,5 @@ From: ubuntu:20.04
   Rscript -e 'install.packages(c("shiny", "SoupX", "stringr"))'
   Rscript -e 'install.packages(c("tidytext", "tidyverse", "tinytex", "yaml"))'
  
-  Rscript -e 'devtools::install_github("welch-lab/liger")'
 
   Rscript -e 'remotes::install_version("Seurat", "4.4.0", repos = c("https://packagemanager.posit.co/cran/__linux__/focal/latest"))'

@@ -154,6 +154,11 @@ RUN pip3 install MACS2 leidenalg multiqc
 # Enable RStudio Copilot
 RUN echo "copilot-enabled=1" >> /etc/rstudio/rsession.conf
 
+# Install necessary system libraries for HDF5 
+# The hdf5r package depends on the underlying HDF5 C libraries. 
+RUN apt-get update && \
+    apt-get install -y libhdf5-dev
+
 # Install R packages
 RUN Rscript -e 'install.packages("usethis")' && \
     Rscript -e 'install.packages(c("BiocManager", "devtools", "remotes"))'
@@ -163,21 +168,26 @@ RUN Rscript -e 'BiocManager::install(c("miQC", "scater", "scDblFinder", "SingleC
 RUN Rscript -e 'devtools::install_github("igordot/scooter")'
 RUN Rscript -e 'devtools::install_github("welch-lab/RcppPlanc")'
 RUN Rscript -e 'devtools::install_github("kharchenkolab/numbat")'
+RUN Rscript -e 'devtools::install_github("welch-lab/liger")'
+
+#RUN Rscript -e 'install.packages("hdf5r")'
+RUN Rscript -e 'install.packages("hdf5r", type = "source")'
+
+#You can also add the following line to your Dockerfile to ensure the library path is set correctly:
+ENV LD_LIBRARY_PATH=/path/to/hdf5/libs:$LD_LIBRARY_PATH
 
 RUN Rscript -e 'install.packages(c("clustree", "cowplot", "data.table"))'
 RUN Rscript -e 'install.packages(c("flexmix", "flextable", "forcats"))'
 RUN Rscript -e 'install.packages(c("fs", "future", "GGally"))'
 RUN Rscript -e 'install.packages(c("ggh4x", "ggplot2", "ggpmisc"))'
 RUN Rscript -e 'install.packages(c("ggrepel", "ggthemes", "grid"))'
-RUN Rscript -e 'install.packages(c("harmony", "hdf5r", "igraph", "irlba"))'
+RUN Rscript -e 'install.packages(c("harmony", "igraph", "irlba"))'
 RUN Rscript -e 'install.packages(c("knitr", "optparse"))'
 RUN Rscript -e 'install.packages(c("patchwork", "purrr", "RColorBrewer"))'
 RUN Rscript -e 'install.packages(c("remotes", "reshape2", "rliger"))'
 RUN Rscript -e 'install.packages(c("rlist", "R.utils", "SeuratObject"))'
 RUN Rscript -e 'install.packages(c("shiny", "SoupX", "stringr"))'
 RUN Rscript -e 'install.packages(c("tidytext", "tidyverse", "tinytex", "yaml"))'
-
-RUN Rscript -e 'devtools::install_github("welch-lab/liger")'
 
 # Seurat
 RUN Rscript -e 'remotes::install_version("Seurat", "4.4.0", repos = c("https://packagemanager.posit.co/cran/__linux__/jammy/latest"))'

@@ -192,5 +192,10 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3
 # Install Python packages
 RUN pip3 install MACS2 leidenalg multiqc
 
+# Create and lsf_bin inside the container script
+# We will use this to bind the `user_lsf_path`
+mkdir /lsf_bin
+ENV export PATH=$PATH:/lsf_bin
+
 # Set the entrypoint to rserver
 ENTRYPOINT ["/init"]

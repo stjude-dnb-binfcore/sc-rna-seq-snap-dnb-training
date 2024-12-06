@@ -143,7 +143,8 @@ suppressPackageStartupMessages({
   library(igraph)
   library(scooter)
   library(leiden)
- 
+  library(knitr)
+
   # Evaluate Seurat R expressions asynchronously when possible using future package
   options(future.globals.maxSize = future_globals_value, future.rng.onMisuse = "ignore") 
   plan(multisession, workers = parallelly::availableCores())}) 
@@ -181,6 +182,15 @@ source(paste0(root_dir, "/figures/scripts/theme_plot.R"))
 source(paste0(analysis_dir, "/util/function-cluster-cell-calling.R"))
 ```
 
+```{r echo=FALSE, warning=FALSE}
+opts_chunk$set(fig.align='center',
+               external=TRUE,
+               echo=FALSE,
+               warning=FALSE,
+               fig.pos='H')
+a4width <- 8.3
+a4height <- 11.7
+```
 
 # Read seurat object
 First, we will use the `seurat_obj_integrated_{integration_method}.rds` object as generated from the pipeline in the `integrative-analysis` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params`. There we have already applied the `FindClusters` function but here we will explore and expand the cell clustering further.

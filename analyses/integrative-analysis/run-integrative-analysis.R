@@ -25,10 +25,11 @@ report_dir <- file.path(analysis_dir, "plots")
 # Run Rmd scripts to process data per method
 ################################################################################################################
 future_globals_value = yaml$future_globals_value_integration_module
+integration_method=yaml$integration_method
 
 rmarkdown::render('01-integrative-analysis.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),
-                  output_file = c(paste('Report-', 'integrative-analysis-seurat', '-', Sys.Date(), sep = '')),
+                  output_file = c(paste('Report-', 'integrative-analysis-{integration_method}', '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(
                   # the following parameters are defined in the `yaml` file

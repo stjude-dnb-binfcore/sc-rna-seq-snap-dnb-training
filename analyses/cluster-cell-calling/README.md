@@ -58,8 +58,7 @@ The structure of this folder is as follows:
 |   └── 02_find_markers
 ├── run-cluster-cell-calling-step1.R
 ├── run-cluster-cell-calling-step2.R
-├── run-cluster-cell-calling-step1.sh
-├── run-cluster-cell-calling-step2.sh
+├── run-cluster-cell-calling.sh
 └── util
 |___└──function-cluster-cell-calling.R
 ```

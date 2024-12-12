@@ -26,7 +26,7 @@ report_dir <- file.path(analysis_dir, "plots")
 ################################################################################################################
 # Run Rmd scripts 
 ################################################################################################################
-future_globals_value = 8388608000 #8000 * 1024^2
+future_globals_value = yaml$future_globals_value_step1_contamination_module
 resolution = yaml$resolution_clustering_module
 
 # STEP 1 - Remove contamination
@@ -34,13 +34,11 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),
                   output_file = c(paste('Report_', 'cell_contamination_removal', '_', Sys.Date(), sep = '')),
                   output_format = 'all',
-                  params = list(integration_method = 'harmony', # other options: 'seurat', 'harmony', 'inmf'
-                                
+                  params = list(integration_method = yaml$integration_method,
                                 # this will be the single resolution that fits the data the best
-                                resolution_list = '0.1', 
-                                
+                                resolution_list = yaml$resolution_list_find_markers, 
                                 # number of clusters to keep
-                                keep_clusters = c(0:5, 7:10, 12:13, 15:16), 
+                                keep_clusters = yaml$keep_clusters_contamination_module, 
                                 
                                 # process_seurat
                                 nfeatures_value = yaml$nfeatures_value,
@@ -49,11 +47,11 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
                                 assay = yaml$assay,
                                 num_pcs = yaml$num_pcs,
                                 prefix = yaml$prefix,
-                                num_dim = 30,
-                                num_neighbors = 30,
-                                use_condition_split = "YES",
+                                num_dim = yaml$num_dim_filter_object,
+                                num_neighbors = yaml$num_neighbors_filter_object,
+                                use_condition_split = yaml$use_condition_split_filter_object,
                                 condition_value = yaml$condition_value,
-                                print_pdf = "NO",
+                                print_pdf = yaml$print_pdf_filter_object,
                                 PCA_Feature_List_value = yaml$PCA_Feature_List_value,
                                 
                                 # the following parameters are defined in the `yaml` file
@@ -72,8 +70,7 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
 
 ################################################################################################################
 # STEP 2 - Integration
-
-future_globals_value = 20971520000 # 20000 * 1024^2
+future_globals_value = yaml$future_globals_value_step2_contamination_module
 
 rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),

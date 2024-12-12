@@ -67,10 +67,10 @@ n_neighbors_value: 20
 variable_value: "ID"
 reference_list_value: NULL
 PCA_Feature_List_value: NULL
-future_globals_value_integration_module: 20971520000 # Seurat: 20971520000, 2000 * 1024^2; Harmony: 1048576000, 1000 * 1024^2; Liger: 1048576000, 1000 * 1024^2
+future_globals_value_integration_module: 1048576000 #Indicative but might need to be adjusted based on cohort size. Seurat: 20971520000, 2000 * 1024^2; Harmony: 1048576000, 1000 * 1024^2; Liger: 1048576000, 1000 * 1024^2
 
 # `./analyses/cluster-cell-calling`
-future_globals_value_clustering_module: 1048576000 # 1048576000, 1000 * 1024^2
+future_globals_value_clustering_module: 1048576000 #Indicative but might need to be adjusted based on cohort size. 1048576000, 1000 * 1024^2
 resolution_clustering_module: "custom_multiple" # "custom_multiple", "default_multiple" or define value of resolution, e.g., 0.5
 integration_method_clustering_module: "harmony" # other options: "seurat", "harmony", "inmf"
 num_dim_clustering_module: 30 

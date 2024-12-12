@@ -130,7 +130,10 @@ Reviewed by: _____________________   Date: ____________ \
   
 # Information about this notebook
 
-For more information, see [Seurat clustering](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html).
+This notebook is tasked to calculate clusters across the project. For more information, see [Seurat clustering](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html).
+
+In order to interpret the clustering and decide properly on the resolution, we should consider tissue type, total number of cells in the dataset, and expected known cell types in there (i.e., tissue ecosystem). That would help to determine the correct number of clusters in a biologically meaningful way, considering known cell types and avoiding splitting clusters into unstable, small ones. That can also help to explore smaller clusters that might contain unknown or disease/patient-specific clusters that are still worth considering and investigating from the research/clinical perspective. 
+
 
 # Set up
 ```{r load-library, echo=TRUE}
@@ -233,7 +236,7 @@ To build a clustering tree we need to look at how cells move as the clustering r
 
 # Intepretation of clustering trees
 
-We can see that one cluster is very distinct and does not change with the value of \(k\). This is the Center players which are very different to the other positions. On the other side of the tree we see a single cluster that splits into the two clusters we would expect to see. After this the tree becomes messier and there might be even nodes with multiple incoming edges. This is a good indication that we have over clustered the data.
+To better understand the clustering trees structure, note that one cluster would be probably very distinct and will not change with the value of \(k\). This is the Center players which are very different to the other positions. On the other side of the tree we should see a single cluster that splits into the two (or more) clusters. After this the tree becomes messier and there might be even nodes with multiple incoming edges. This is a good indication that we have over clustered the data.
 
 # SC3 stability index
 Apart from information in the dataset itself it can useful to display measures of clustering quality as aesthetics. The stability index from the {SC3} package [Kiselev et al. 2017](https://doi.org/10.1038/nmeth.4236) measures the stability of clusters across resolutions and is automatically calculated when a clustering tree is built. It can be accessed by setting an aesthetic to `sc3_stability` and because it is calculated by cluster we don’t need to provide an aggregation function. 

@@ -147,7 +147,10 @@ Hence, integration of single-cell sequencing datasets, for example across experi
 (2) [Harmony](https://portals.broadinstitute.org/harmony/) integration workflow by [Korsunsky et al., 2019](https://www.nature.com/articles/s41592-019-0619-0), and
 (3) [Liger](https://welch-lab.github.io/liger/articles/liger_with_seurat.html) integration workflow by [Welch et al., 2019](https://doi.org/10.1016/j.cell.2019.05.006).
 
-Different number of dimensions for different integration algorithms (Seurat, Harmony, Liger, etc.) is common and depending on the algorithm they come with their corresponding variables depending on how the algorithm is being used. Each of these integration algorithm takes into account typically the same variables but the math they use to transform them is so different that you can't use the same number of resolutions. Even though they use the same word, resolution doesn't actually effect each algorithm the same way and their maximums can be different. 30 for Seurat, 30 for Harmony and 20 for Liger give the most similar integration results when all other variables are taken into account while also not wasting too much compute time.
+
+Different integration algorithms, such as Seurat, Harmony, and Liger, often use different numbers of dimensions. The optimal number of dimensions depends on the specific algorithm and its associated parameters. While these algorithms generally consider similar variables, the mathematical approaches they use to process and transform those variables differ significantly, which means the same number of dimensions (or "resolutions") doesn't work equally well across all algorithms.
+
+Even though they all refer to "resolution," the effect of resolution can vary from one algorithm to another, and the maximum number of dimensions they can effectively use may differ. Based on our experience, we recommend using 30 dimensions for Seurat, 30 for Harmony, and 20 for Liger. These settings tend to produce the most consistent integration results without unnecessarily increasing computational load.
 
 
 # Set up

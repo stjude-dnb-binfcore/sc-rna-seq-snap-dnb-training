@@ -1,4 +1,4 @@
-# Pipeline for removing cell contamination, and repeating normalization and integration steps analysis for sc-/sn-RNA-Seq Analysis in 10X Genomics data
+# Pipeline for removing cell contamination, and repeating normalization and integration steps of analysis for sc-/sn-RNA-Seq Analysis in 10X Genomics data
 
 ## Usage
 

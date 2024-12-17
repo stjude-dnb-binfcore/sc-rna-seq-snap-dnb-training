@@ -29,7 +29,7 @@ report_dir <- file.path(analysis_dir, "plots")
 future_globals_value = yaml$future_globals_value_clustering_module
 resolution = yaml$resolution_find_markers
 
-rmarkdown::render('02-find-markers.Rmd', clean = TRUE,
+rmarkdown::render('04-find-markers.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),
                   output_file = c(paste('Report-', 'find-markers', '-', Sys.Date(), sep = '')),
                   output_format = 'all',

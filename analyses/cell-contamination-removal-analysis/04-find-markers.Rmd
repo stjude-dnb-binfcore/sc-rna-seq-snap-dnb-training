@@ -177,7 +177,7 @@ if (!dir.exists(plots_dir)) {
 
 
 # Read seurat object
-First, we will use the `seurat_obj_integrated_{integration_method}_clusters_{resolution_list}.rds` object as generated from the first first step of the pipeline in the `cluster-cell-calling` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params` along with the clusters after the final selection of the granularity (defined as `resolution_list` in the `params`).
+First, we will use the `seurat_obj_integrated_{integration_method}_clusters_{resolution_list}.rds` object as generated from the first step of the pipeline in the `cluster-cell-calling` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params` along with the clusters after the final selection of the granularity (defined as `resolution_list` in the `params`).
 
 ```{r read-object, echo=TRUE}
 seurat_obj <- readRDS(data_file)

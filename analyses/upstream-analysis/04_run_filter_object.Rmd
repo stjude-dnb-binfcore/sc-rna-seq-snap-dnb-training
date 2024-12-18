@@ -390,7 +390,7 @@ seurat_obj <- Process_Seurat(seurat_obj = seurat_obj, nfeatures_value = nfeature
 # Save output files
 
 ```{r save_seurat}
-#saveRDS(seurat_obj, file = paste0(results_dir, "/", "seurat_obj_merged_filtered.rds"))
+saveRDS(seurat_obj, file = paste0(results_dir, "/", "seurat_obj_merged_filtered.rds"))
 ```
 
 ```{r echo=FALSE}

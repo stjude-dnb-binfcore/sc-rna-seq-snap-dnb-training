@@ -139,6 +139,7 @@ In order to interpret the clustering and decide properly on the resolution, we s
 
 # Set up
 ```{r load-library, echo=TRUE}
+attach(params)
 suppressPackageStartupMessages({
   library(future)
   library(tidyverse)
@@ -168,7 +169,6 @@ a4height <- 11.7
 # Directories and paths to file Inputs/Outputs
 
 ```{r set-dir-and-file-names, echo=TRUE}
-attach(params)
 analysis_dir <- file.path(root_dir, "analyses", "cell-contamination-removal-analysis") 
 data_dir <- file.path(analysis_dir, "results", glue::glue("02_integration_{integration_method}"))
 clustering_analysis_functions_dir <- file.path(root_dir, "analyses", "cluster-cell-calling")

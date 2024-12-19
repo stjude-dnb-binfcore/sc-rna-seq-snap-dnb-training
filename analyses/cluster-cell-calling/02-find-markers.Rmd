@@ -131,6 +131,7 @@ For more information, please see the [Finding differentially expressed features 
 
 # Set up
 ```{r load-library, echo=TRUE}
+attach(params)
 suppressPackageStartupMessages({
   library(future)
   library(tidyverse)
@@ -145,7 +146,6 @@ suppressPackageStartupMessages({
 # Directories and paths to file Inputs/Outputs
 
 ```{r set-dir-and-file-names, echo=TRUE}
-attach(params)
 analysis_dir <- file.path(root_dir, "analyses", "cluster-cell-calling") 
 data_dir <- file.path(root_dir, "analyses", "cluster-cell-calling", "results", glue::glue("01_cluster_cell_calling_{resolution}"))
 module_results_dir <- file.path(analysis_dir, "results")

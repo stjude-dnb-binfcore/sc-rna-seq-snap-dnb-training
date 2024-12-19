@@ -144,6 +144,7 @@ This notebook is relevant to projects in which we need to remove cell contaminat
 
 # Set up
 ```{r load-library, echo=TRUE}
+attach(params)
 suppressPackageStartupMessages({
   library(devtools)
   library(future)
@@ -173,7 +174,6 @@ a4height <- 11.7
 # Directories and paths to file Inputs/Outputs
 
 ```{r set-dir-and-file-names, echo=TRUE}
-attach(params)
 analysis_dir <- file.path(root_dir, "analyses", "cell-contamination-removal-analysis") 
 data_dir <- file.path(root_dir, "analyses", "cluster-cell-calling", "results", glue::glue("01_cluster_cell_calling_{resolution}"))
 module_functions_dir <- file.path(root_dir, "analyses", "upstream-analysis")

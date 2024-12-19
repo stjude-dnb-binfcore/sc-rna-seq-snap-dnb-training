@@ -155,6 +155,7 @@ Even though they all refer to "resolution," the effect of resolution can vary fr
 
 # Set up
 ```{r load-library, echo=TRUE}
+attach(params)
 suppressPackageStartupMessages({
   library(future)
   library(tidyverse)
@@ -175,7 +176,6 @@ suppressPackageStartupMessages({
 
 # Directories and paths to file Inputs/Outputs
 ```{r set-dir-and-file-names, echo=TRUE}
-attach(params)
 analysis_dir <- file.path(root_dir, "analyses", "cell-contamination-removal-analysis") 
 data_dir <- file.path(analysis_dir, "results", "01_cell_contamination_removal")
 integrative_analysis_functions_dir <- file.path(root_dir, "analyses", "integrative-analysis")

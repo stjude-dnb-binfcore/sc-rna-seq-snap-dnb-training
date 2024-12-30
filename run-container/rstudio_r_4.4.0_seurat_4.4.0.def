@@ -143,7 +143,7 @@ From: rocker/rstudio:4.4.0
     # Save on the same folder where Dockerfile is located
     # You should also replace the link with the one from the most recent download as the url expires after 1-2 days
     # Set environment variables
-    curl -o cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1733387810&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=EEQ85~Ek1~O32n3Og5thXwhUy5WkoMODkh3ssf~WyRQ47sGkMs-uW6SBRRoDVxyQMZzWzNBqpxgesMvNCTxJpPQogB9vK~6rUlIPtwxdoeG-HdWjQvrOZNw5wrUSt3iITZiI9HFrqgakuNz0d79TBX4aBUsLv4~FAqtswhBeP1-nRr5t2U5BDVWSQjW-55mZiTI6gADSSO4PXzYYCy9PTS9RVQ65tqtRWl~u8jmtcdJkzUKoTikHp5ipoLKkwMva1ZGTX6X9MW1Ukanpw2Jv1fKSI0rO9NfLjea19QUgC6jXzZEHO21UPc-pLJv2UrH6lYR~AaAN-MG4p7n5mIjSRQ__"
+    curl -o cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1735627055&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=Bn20s3ftEjQ6jD2HqiXz3GmLAf7U-GVnMyng-R1jN8fd9XyVu1B5kRVG5FLIor9LiXyVLRG0beBSx0QIf-0qthevVbwzl3ycNyfol33zRzcJqVPGhlyud6KSZFoqGeRf2FhEKmj7dIjCBWd0O0Sval63ABz~CjgCOIcPdHrldJcVNO1WFw4JXd0np~GyLcHbX4vuSoogNhnv52yYooELkpbnbeBuMekXojo2jIecbnb2yxBYxKDrmsNQ8ew8T2aMeWbLz9hphw8s0jvINITPriYdloqrpSgWAgfXzYEfiEyAATpE6hu6CU0I9dSOGn8lNkQP51PgZFxtA4Wte5qz3A__"
     tar -xvzf cellranger-8.0.1.tar.gz -C /opt
 
 

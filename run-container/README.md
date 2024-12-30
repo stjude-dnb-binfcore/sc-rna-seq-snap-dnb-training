@@ -101,14 +101,17 @@ docker exec -ti review bash
 Navigate to your module of interest:
 ```
 cd ./sc-rna-seq-snap/analyses/upstream-analysis
-Rscript -e "rmarkdown::render(‘01A_run_seurat_qc.Rmd', clean = TRUE)"
+bash run-upstream-analysis.sh
 ```
 
 
 ## Authors
 
-Antonia Chroni, PhD ([@AntoniaChroni](https://github.com/AntoniaChroni)) and 
-Walid Abu Al-Afia ([@walidabualafia](https://github.com/walidabualafia))
+Antonia Chroni, PhD ([@AntoniaChroni](https://github.com/AntoniaChroni)), 
+Walid Abu Al-Afia ([@walidabualafia](https://github.com/walidabualafia)), and
+John Grime ([@JohnGrime](https://github.com/JohnGrime))
+
+
 
 
 ## Contact

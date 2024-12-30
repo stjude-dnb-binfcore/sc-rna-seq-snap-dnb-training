@@ -35,35 +35,35 @@ header-includes:
   - \usepackage{graphicx}
   - \usepackage{float}
 params:
-  use_seurat_integration: '.'
-  use_harmony_integration: '.'
-  use_liger_integration: '.'
-  integration_method: '.'
-  num_dim_seurat: '.'
-  num_dim_seurat_integration: '.'
-  big_data_value: '.'
-  genome_name: '.'
-  Regress_Cell_Cycle_value: '.'
-  num_dim_harmony: '.'
-  n_neighbors_value: '.'
-  variable_value: '.'
-  nfeatures_value: '.'
+  use_seurat_integration: './'
+  use_harmony_integration: './'
+  use_liger_integration: './'
+  integration_method: './'
+  num_dim_seurat: './'
+  num_dim_seurat_integration: './'
+  big_data_value: './'
+  genome_name: './'
+  Regress_Cell_Cycle_value: './'
+  num_dim_harmony: './'
+  n_neighbors_value: './'
+  variable_value: './'
+  nfeatures_value: './'
   reference_list_value: '.'
   PCA_Feature_List_value: '.'
   future_globals_value: '.'
   root_dir: './'
   metadata_dir: './'
-  PROJECT_NAME: '.'
-  PI_NAME: '.'
-  TASK_ID: '.'
-  PROJECT_LEAD_NAME: '.'
-  DEPARTMENT: '.'
-  LEAD_ANALYSTS: '.'
-  GROUP_LEAD: '.'
-  CONTACT_EMAIL: '.'
-  PIPELINE: '.'
-  START_DATE: '.'
-  COMPLETION_DATE: '.'
+  PROJECT_NAME: './'
+  PI_NAME: './'
+  TASK_ID: './'
+  PROJECT_LEAD_NAME: './'
+  DEPARTMENT: './'
+  LEAD_ANALYSTS: './'
+  GROUP_LEAD: './'
+  CONTACT_EMAIL: './'
+  PIPELINE: './'
+  START_DATE: './'
+  COMPLETION_DATE: './'
 ---
 
 ```{r logo-file, echo=FALSE}
@@ -167,8 +167,6 @@ suppressPackageStartupMessages({
   library(RcppPlanc)
   library(SeuratWrappers)
   library(scooter)
-  library(reshape2)
-  library(RColorBrewer)
   library(knitr)
 
   # Evaluate Seurat R expressions asynchronously when possible using future package
@@ -178,33 +176,34 @@ suppressPackageStartupMessages({
 
 # Directories and paths to file Inputs/Outputs
 ```{r set-dir-and-file-names, echo=TRUE}
-analysis_dir <- file.path(root_dir, "analyses", "integrative-analysis") 
-data_dir <- file.path(root_dir, "analyses", "upstream-analysis", "results", "04_Filter_object")
-upstream_analysis_dir <- file.path(root_dir, "analyses", "upstream-analysis")
+analysis_dir <- file.path(root_dir, "analyses", "cell-contamination-removal-analysis") 
+data_dir <- file.path(analysis_dir, "results", "01_cell_contamination_removal")
+integrative_analysis_functions_dir <- file.path(root_dir, "analyses", "integrative-analysis")
+upstream_analysis_functions_dir <- file.path(root_dir, "analyses", "upstream-analysis")
 
 # Input files
-data_file <- file.path(data_dir, "seurat_obj_merged_filtered.rds")
+data_file <- file.path(data_dir, "seurat_obj_cell_contamination_rm.rds")
 
 # Create results_dir
-results_dir <- file.path(analysis_dir, "results")
+module_results_dir <- file.path(analysis_dir, "results")
+
+results_dir <- file.path(module_results_dir, glue::glue("02_results_{integration_method}"))
 if (!dir.exists(results_dir)) {
   dir.create(results_dir)}
 
-# Create plots directory
-report_dir <- file.path(analysis_dir, "plots") 
-if (!dir.exists(report_dir)) {
-  dir.create(report_dir)}
+# Create plots_dir
+module_plots_dir <- file.path(analysis_dir, "plots")
 
-plots_dir <- file.path(report_dir, glue::glue("plots_{integration_method}")) 
+plots_dir <- file.path(module_plots_dir, glue::glue("02_plots_{integration_method}"))
 if (!dir.exists(plots_dir)) {
   dir.create(plots_dir)}
 
-source(paste0(root_dir, "/figures/scripts/theme_plot.R"))
-source(paste0(analysis_dir, "/util/function-samples-integrate.R"))
-source(paste0(analysis_dir, "/util/custom-seurat-functions.R"))
-source(paste0(upstream_analysis_dir, "/util/function-process-Seurat.R"))
-```
 
+source(paste0(root_dir, "/figures/scripts/theme_plot.R"))
+source(paste0(integrative_analysis_functions_dir, "/util/function-samples-integrate.R"))
+source(paste0(integrative_analysis_functions_dir, "/util/custom_seurat_functions.R"))
+source(paste0(upstream_analysis_functions_dir, "/util/function-process-Seurat.R"))
+```
 
 ```{r echo=FALSE, warning=FALSE}
 opts_chunk$set(fig.align='center',
@@ -217,7 +216,7 @@ a4height <- 11.7
 ```
 
 # Read seurat object
-First, we will use the `seurat_obj_merged_filtered.rds` object as generated from the pipeline in the `upstream-analysis` module. This object contains all samples of the project merged.
+First, we will use the `seurat_obj_cell_contamination_rm.rds` object as generated from the first step of the pipeline in the `01-cell-contamination-removal.Rmd` script. This object contains all samples of the project merged.
 
 ```{r read-object, echo=TRUE}
 merged_obj <- readRDS(data_file)

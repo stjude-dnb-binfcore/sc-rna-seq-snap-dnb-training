@@ -80,14 +80,14 @@ Then, the user can start the container as explained in the step (3).
 
 1. Pull the docker container from the `sc-rna-seq-snap` root_dir
 ```
-docker pull docker://wabuala/rstudio_4.4.0_seurat_4.4.0:latest
+docker pull docker://achroni/rstudio_4.4.0_seurat_4.4.0:latest
 ```
 
 2. Start the docker container
 
 To run from the terminal
 ```
-docker run --platform linux/amd64 --name review -d -e PASSWORD=ANYTHING -p 8787:8787 -v $PWD:/home/rstudio/sc-rna-seq-snap docker://wabuala/rstudio_4.4.0_seurat_4.4.0:latest
+docker run --platform linux/amd64 --name review -d -e PASSWORD=ANYTHING -p 8787:8787 -v $PWD:/home/rstudio/sc-rna-seq-snap docker://achroni/rstudio_4.4.0_seurat_4.4.0:latest
 ```
 
 ```
@@ -101,7 +101,7 @@ docker exec -ti review bash
 Navigate to your module of interest:
 ```
 cd ./sc-rna-seq-snap/analyses/upstream-analysis
-Rscript -e "rmarkdown::render(‘01A_run_seurat_qc.Rmd', clean = TRUE)"
+bash run-upstream-analysis.sh
 ```
 
 

@@ -4,8 +4,23 @@ ENV LC_ALL=C
 ENV VIRTUAL_ENV=/opt/container-venv
 ENV PATH=/opt/container-venv/bin:$PATH
 
-ENV PATH_cellranger=/opt/cellranger-8.0.1/bin:${PATH_cellranger}
-ENV LD_LIBRARY_PATH=/opt/cellranger-8.0.1/lib
+
+#
+# Or FROM ubuntu:22.04
+
+# Install necessary certificates package
+#RUN apt-get update && apt-get install -y ca-certificates
+
+# Copy and add Cloudflare root certificate
+# `SJ 2025-2029 CF WARP certificate.pem` was renamed to `certificate.pem` for simplicity
+# file obtained by Matt Foil on 12-30-2024
+# The certificate will be updated in 2029 before November when it expires. 
+# HPC team plans to keep a 4-5 year rotation unless something unexpected happens.
+#COPY certs/certificate.pem /usr/local/share/ca-certificates/certificate.crt
+#RUN update-ca-certificates
+#
+
+
 #
 # Ensure core system software is up to date and ready
 #
@@ -59,8 +74,27 @@ RUN echo "options(repos = c(CRAN = 'https://packagemanager.posit.co/cran/__linux
 # Install required R package managers
 #
 
+# Enable RStudio Copilot
+# RUN echo "copilot-enabled=1" >> /etc/rstudio/rsession.conf
+
+
+# Install system dependencies and R
+# RUN apt-get update && apt-get install -y \
+#    r-base \
+#    libcurl4-openssl-dev \
+#    libssl-dev \
+#    libxml2-dev \
+#    build-essential
+
+
 RUN Rscript -e 'install.packages("usethis")'
 RUN Rscript -e 'install.packages(c("BiocManager", "devtools", "remotes"))'
+
+# Debugging step: Verify installations
+RUN Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) stop("BiocManager not installed!")'
+RUN Rscript -e 'if (!requireNamespace("devtools", quietly = TRUE)) stop("devtools not installed!")'
+RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) stop("remotes not installed!")'
+
 
 #
 # This is a fairly time consuming section; lots built from source.
@@ -125,14 +159,19 @@ RUN Rscript -e 'remotes::install_version("Seurat", version = "4.4.0")'
 # As per Antonia's request via Teams, 12/16/2024 09:46.
 #
 
-RUN Rscript -e 'install.packages("Signac")'
+#RUN Rscript -e 'install.packages("Signac")'
+RUN Rscript -e 'devtools::install_github("stuart-lab/signac", ref = "develop")'
+
 
 # Install CellRanger v8.0.1
 # You will need to download the desired version from here: https://www.10xgenomics.com/support/software/cell-ranger/downloads/previous-versions
 # Save on the same folder where Dockerfile is located
 # You should also replace the link with the one from the most recent download as the url expires after 1-2 days
 # Set environment variables
-Run curl -o cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1735627055&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=Bn20s3ftEjQ6jD2HqiXz3GmLAf7U-GVnMyng-R1jN8fd9XyVu1B5kRVG5FLIor9LiXyVLRG0beBSx0QIf-0qthevVbwzl3ycNyfol33zRzcJqVPGhlyud6KSZFoqGeRf2FhEKmj7dIjCBWd0O0Sval63ABz~CjgCOIcPdHrldJcVNO1WFw4JXd0np~GyLcHbX4vuSoogNhnv52yYooELkpbnbeBuMekXojo2jIecbnb2yxBYxKDrmsNQ8ew8T2aMeWbLz9hphw8s0jvINITPriYdloqrpSgWAgfXzYEfiEyAATpE6hu6CU0I9dSOGn8lNkQP51PgZFxtA4Wte5qz3A__"
+ENV PATH=/opt/cellranger-8.0.1/bin:${PATH}
+ENV LD_LIBRARY_PATH=/opt/cellranger-8.0.1/lib
+
+RUN curl -o cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1735637913&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=g0mi3a~7RGhqh51x1p6qL0rJ7gvx3~NVWlpW5pg4E7D0xWTISNpa1kmb6AS~qxAiP2mLwDBqjfH9NLmzelBmTx02xRZ3YfsKikcPPRn9KyB8D5Ki2lrIUZkChkfuLdDkoxAfmBOBv~kLvsuefV~2k8-B1WRNCPcoxryhdbbK3-b~FkZgnP~Fe0h5rI~5757jV2r1I6yq3xTs0ayw0WDyL49apdI0bIi4E7-lCPohbnGop0Z~G1Y~QMTR3TN98e8mEKWfmZjboSgG7triA8jDY3g1hbSI5pQh8yzHfww3fTcFN8P1ksjX0NH~~UWNeepSJwPA11MfoQ3cUq3SLvazuA__"
 RUN tar -xvzf cellranger-8.0.1.tar.gz -C /opt
 
 

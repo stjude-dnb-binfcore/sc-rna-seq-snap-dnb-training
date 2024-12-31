@@ -46,7 +46,7 @@ suppressPackageStartupMessages({
   
   library(miQC)
   library(scater)
-  #library(scDblFinder)
+  library(scDblFinder)
   library(SingleCellExperiment)
   library(celldex)
   library(SingleR)
@@ -54,8 +54,7 @@ suppressPackageStartupMessages({
   
   library(scooter)
   library(RcppPlanc)
-  #library(numbat)
-  #library(liger)
+  library(numbat)
 
   library(clustree)
   library(cowplot)
@@ -91,7 +90,7 @@ suppressPackageStartupMessages({
   library(Seurat)
   library(SeuratObject)
   library(shiny)
-  #library(Signac)
+  library(Signac)
   library(SoupX)
   library(stringr)
   library(tidytext)

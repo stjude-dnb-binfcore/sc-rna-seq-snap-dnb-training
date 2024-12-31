@@ -64,6 +64,35 @@ RUN apt-get install -y openjdk-8-jre-headless fastqc multiqc curl
 # Needed for the cluster-cell-calling stage etc. Pandas as per Antonia's request.
 RUN pip3 install pandas leidenalg
 
+
+# Install texlive full version
+ENV TEXLIVE_INSTALL_NO_CONTEXT_CACHE=1 \
+    NOPERLDOC=1
+
+# Install TexLive prerequisites
+RUN apt-get update && \
+    apt-get install -y wget unzip tar \
+    make fontconfig perl openjdk-8-jre libgetopt-long-descriptive-perl \
+    libdigest-perl-md5-perl libncurses5 \
+    python3-pygments && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install TexLive to the container
+RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
+    tar xzf install-tl-unx.tar.gz && rm install-tl-unx.tar.gz && \
+    cd install-tl* && \
+    echo "selected_scheme scheme-full" > install.profile && \
+    echo "tlpdbopt_install_docfiles 0" >> install.profile && \
+    echo "tlpdbopt_install_srcfiles 0" >> install.profile && \
+    echo "tlpdbopt_autobackup 0" >> install.profile && \
+    echo "tlpdbopt_sys_bin /usr/bin" >> install.profile && \
+    ./install-tl -profile install.profile && cd .. && rm -rf install-tl*
+
+# Symlink TexLive binaries to PATH
+RUN /usr/local/texlive/2024/bin/x86_64-linux/tlmgr path add
+
+
+
 #
 # Use latest R sources to avoid e.g. "matrixStats" version too low for "MatrixGenerics"
 #

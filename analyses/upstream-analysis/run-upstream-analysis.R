@@ -29,53 +29,54 @@ Final_summary_report_dir <- file.path(analysis_dir, "plots", "05_Final_summary_r
 ################################################################################################################
 # (1) Seurat QC metrics
 # Run the seurat_qc script for each sample/library and save html/pdf reports per each
-source(paste0(analysis_dir, "/", "01B_run_seurat_qc_multiple_samples.R"))
+# source(paste0(analysis_dir, "/", "01B_run_seurat_qc_multiple_samples.R"))
 
 ################################################################################################################
 # (2) Estimating and filtering out ambient mRNA (`empty droplets`)
-rmarkdown::render('02_run_SoupX.Rmd', 
-                  clean = FALSE,
-                  output_dir = file.path(SoupX_dir),
-                  output_file = paste('Report-', 'SoupX', '-', Sys.Date(), sep = ''),
-                  output_format = 'all',
-                  params = list(
-                    data_dir = yaml$data_dir,
-                    soup_fraction_value_default = yaml$soup_fraction_value_default,
-                    root_dir = yaml$root_dir,
-                    metadata_dir = yaml$metadata_dir,
-                    PROJECT_NAME = yaml$PROJECT_NAME,
-                    PI_NAME = yaml$PI_NAME,
-                    TASK_ID = yaml$TASK_ID,
-                    PROJECT_LEAD_NAME = yaml$PROJECT_LEAD_NAME,
-                    DEPARTMENT = yaml$DEPARTMENT,
-                    LEAD_ANALYSTS = yaml$LEAD_ANALYSTS,
-                    GROUP_LEAD = yaml$GROUP_LEAD,
-                    CONTACT_EMAIL = yaml$CONTACT_EMAIL,
-                    PIPELINE = yaml$PIPELINE, 
-                    START_DATE = yaml$START_DATE,
-                    COMPLETION_DATE = yaml$COMPLETION_DATE))
+# rmarkdown::render('02_run_SoupX.Rmd', 
+#                   clean = FALSE,
+#                   output_dir = file.path(SoupX_dir),
+#                   output_dir = file.path(SoupX_dir),
+#                  output_file = paste('Report-', 'SoupX', '-', Sys.Date(), sep = ''),
+#                  output_format = 'all',
+#                  params = list(
+#                    data_dir = yaml$data_dir,
+#                    soup_fraction_value_default = yaml$soup_fraction_value_default,
+#                    root_dir = yaml$root_dir,
+#                    metadata_dir = yaml$metadata_dir,
+#                    PROJECT_NAME = yaml$PROJECT_NAME,
+#                    PI_NAME = yaml$PI_NAME,
+#                    TASK_ID = yaml$TASK_ID,
+#                    PROJECT_LEAD_NAME = yaml$PROJECT_LEAD_NAME,
+#                    DEPARTMENT = yaml$DEPARTMENT,
+#                    LEAD_ANALYSTS = yaml$LEAD_ANALYSTS,
+#                    GROUP_LEAD = yaml$GROUP_LEAD,
+#                    CONTACT_EMAIL = yaml$CONTACT_EMAIL,
+#                    PIPELINE = yaml$PIPELINE, 
+#                    START_DATE = yaml$START_DATE,
+#                    COMPLETION_DATE = yaml$COMPLETION_DATE))
 
 ################################################################################################################
 # (3) Estimating and filtering out doublets
-rmarkdown::render('03_run_scDblFinder.Rmd', 
-                  clean = FALSE,
-                  output_dir = file.path(scDblFinder_dir),
-                  output_file = paste('Report-', 'scDblFinder', '-', Sys.Date(), sep = ''),
-                  output_format = 'all',
-                  params = list(
-                    root_dir = yaml$root_dir,
-                    metadata_dir = yaml$metadata_dir,
-                    PROJECT_NAME = yaml$PROJECT_NAME,
-                    PI_NAME = yaml$PI_NAME,
-                    TASK_ID = yaml$TASK_ID,
-                    PROJECT_LEAD_NAME = yaml$PROJECT_LEAD_NAME,
-                    DEPARTMENT = yaml$DEPARTMENT,
-                    LEAD_ANALYSTS = yaml$LEAD_ANALYSTS,
-                    GROUP_LEAD = yaml$GROUP_LEAD,
-                    CONTACT_EMAIL = yaml$CONTACT_EMAIL,
-                    PIPELINE = yaml$PIPELINE, 
-                    START_DATE = yaml$START_DATE,
-                    COMPLETION_DATE = yaml$COMPLETION_DATE))
+#rmarkdown::render('03_run_scDblFinder.Rmd', 
+#                  clean = FALSE,
+#                  output_dir = file.path(scDblFinder_dir),
+#                  output_file = paste('Report-', 'scDblFinder', '-', Sys.Date(), sep = ''),
+#                  output_format = 'all',
+#                  params = list(
+#                    root_dir = yaml$root_dir,
+#                    metadata_dir = yaml$metadata_dir,
+#                    PROJECT_NAME = yaml$PROJECT_NAME,
+#                    PI_NAME = yaml$PI_NAME,
+#                    TASK_ID = yaml$TASK_ID,
+#                    PROJECT_LEAD_NAME = yaml$PROJECT_LEAD_NAME,
+#                    DEPARTMENT = yaml$DEPARTMENT,
+#                    LEAD_ANALYSTS = yaml$LEAD_ANALYSTS,
+#                    GROUP_LEAD = yaml$GROUP_LEAD,
+#                    CONTACT_EMAIL = yaml$CONTACT_EMAIL,
+#                    PIPELINE = yaml$PIPELINE, 
+#                    START_DATE = yaml$START_DATE,
+#                    COMPLETION_DATE = yaml$COMPLETION_DATE))
 
 ################################################################################################################
 # (4) Merging filtered data

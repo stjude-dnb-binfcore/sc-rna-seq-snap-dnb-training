@@ -49,11 +49,11 @@ num_dim_filter_object: 30 # set one value for 04_run_filter_object.Rmd
 num_neighbors_filter_object: 30 # set one value for 04_run_filter_object.Rmd
 use_condition_split_filter_object: "YES" # set for 04_run_filter_object.Rmd
 print_pdf_filter_object: "NO" # set for 04_run_filter_object.Rmd
-use_SoupX_filtering_filter_object: "NO" # set for 04_run_filter_object.Rmd
-use_scDblFinder_filtering_filter_object: "NO" # set for 04_run_filter_object.Rmd
+use_SoupX_filtering_filter_object: "YES" # set for 04_run_filter_object.Rmd; "YES", "NO"
+use_scDblFinder_filtering_filter_object: "NO" # set for 04_run_filter_object.Rmd; "YES", "NO"
 #PCA_Feature_List_value: transcription.factor.gene.list # set for 04_run_filter_object.Rmd if necessary
-use_SoupX_filtering_summary_report: "NO" #set value for 05_run_summary_report.Rmd
-use_scDblFinder_filtering_summary_report: "NO" #set value for 05_run_summary_report.Rmd
+use_SoupX_filtering_summary_report: "YES" #set value for 05_run_summary_report.Rmd; "YES", "NO"
+use_scDblFinder_filtering_summary_report: "NO" #set value for 05_run_summary_report.Rmd; "YES", "NO"
 
 # `./analyses/integrative-analysis`
 use_seurat_integration: "NO"

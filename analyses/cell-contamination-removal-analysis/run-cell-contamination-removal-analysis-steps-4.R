@@ -26,7 +26,7 @@ report_dir <- file.path(analysis_dir, "plots")
 
 ################################################################################################################
 # step 4 - Run markers
-future_globals_value = yaml$future_globals_value_clustering_module
+future_globals_value = 107374182400 # 100 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_find_markers
 
 rmarkdown::render('04-find-markers.Rmd', clean = TRUE,

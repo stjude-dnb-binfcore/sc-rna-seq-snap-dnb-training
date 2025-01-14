@@ -40,7 +40,7 @@ cat "${metadata_dir}"/project_metadata.tsv | sed 's/,/\t/g' > ./input/project_me
 ########################################################################
 # Run CellRanger for all libraries
 # let's generate the shell scripts for later submission 
-python3 ./util/run_cellranger.py --file=./input/project_metadata.txt \
+singularity exec ${rootdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif python3 ./util/run_cellranger.py --file=./input/project_metadata.txt \
                                  --transcriptome=${genome_reference_path}  \
                                  --create_bam=true \
                                  --output_dir=./results/02_cellranger_count/${cellranger_parameters}/

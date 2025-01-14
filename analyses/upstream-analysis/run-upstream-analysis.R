@@ -34,11 +34,11 @@ source(paste0(analysis_dir, "/", "01B_run_seurat_qc_multiple_samples.R"))
 ################################################################################################################
 # (2) Estimating and filtering out ambient mRNA (`empty droplets`)
 rmarkdown::render('02_run_SoupX.Rmd', 
-                  clean = FALSE,
-                  output_dir = file.path(SoupX_dir),
-                  output_file = paste('Report-', 'SoupX', '-', Sys.Date(), sep = ''),
-                  output_format = 'all',
-                  params = list(
+                   clean = FALSE,
+                   output_dir = file.path(SoupX_dir),
+                   output_file = paste('Report-', 'SoupX', '-', Sys.Date(), sep = ''),
+                   output_format = 'all',
+                   params = list(
                     data_dir = yaml$data_dir,
                     soup_fraction_value_default = yaml$soup_fraction_value_default,
                     root_dir = yaml$root_dir,
@@ -55,7 +55,7 @@ rmarkdown::render('02_run_SoupX.Rmd',
                     START_DATE = yaml$START_DATE,
                     COMPLETION_DATE = yaml$COMPLETION_DATE))
 
-################################################################################################################
+###############################################################################################################
 # (3) Estimating and filtering out doublets
 rmarkdown::render('03_run_scDblFinder.Rmd', 
                   clean = FALSE,
@@ -77,7 +77,7 @@ rmarkdown::render('03_run_scDblFinder.Rmd',
                     START_DATE = yaml$START_DATE,
                     COMPLETION_DATE = yaml$COMPLETION_DATE))
 
-################################################################################################################
+##############################################################################################################
 # (4) Merging filtered data
 rmarkdown::render('04_run_filter_object.Rmd', 
                   clean = TRUE,
@@ -94,7 +94,7 @@ rmarkdown::render('04_run_filter_object.Rmd',
                     grouping = yaml$grouping,
                     genome_name = yaml$genome_name,
                     Regress_Cell_Cycle_value = yaml$Regress_Cell_Cycle_value,
-                    assay = yaml$assay,
+                    assay = yaml$assay_filter_object,
                     normalize_method = yaml$normalize_method,
                     num_pcs = yaml$num_pcs,
                     nfeatures_value = yaml$nfeatures_value,

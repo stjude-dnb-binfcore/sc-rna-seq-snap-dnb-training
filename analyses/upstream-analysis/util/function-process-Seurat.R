@@ -127,7 +127,7 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
     num_dim <- possibilities[k, 1]
     num_neighbors <- possibilities[k, 2]
     seurat_obj <- run_dr(data = seurat_obj, dr_method = "umap", reduction = paste0("pca"),
-                         num_dim_use = num_dim, assay = "RNA", num_neighbors = num_neighbors,
+                         num_dim_use = num_dim, assay = assay, num_neighbors = num_neighbors,
                          prefix = glue::glue("ndim{num_dim}nn{num_neighbors}"))}
   
   # Generate metadata

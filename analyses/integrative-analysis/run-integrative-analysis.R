@@ -32,7 +32,7 @@ rmarkdown::render('01-integrative-analysis.Rmd', clean = TRUE,
                   output_format = 'all',
                   params = list(
                     # the following parameters are defined in the `yaml` file
-                    future_globals_value = yaml$future_globals_value_integration_module,
+                    future_globals_value = 107374182400, # 100 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
                     use_seurat_integration = yaml$use_seurat_integration,
                     use_harmony_integration = yaml$use_harmony_integration,
                     use_liger_integration = yaml$use_liger_integration,

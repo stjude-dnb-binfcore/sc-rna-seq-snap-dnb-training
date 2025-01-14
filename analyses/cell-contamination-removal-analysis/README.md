@@ -6,7 +6,9 @@
 
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
 - `project_parameters.Config.yaml` located at the `root_dir`.
-- `run-cell-contamination-removal-analysis.sh`: comment in/out accoridng to which step user wants to run, i.e., `run-cell-contamination-removal-analysis-steps-1-2-3.R` or `run-cell-contamination-removal-analysis-steps-4.R`.
+- `run-cell-contamination-removal-analysis.sh`: comment in/out according to which step user wants to run, i.e., `run-cell-contamination-removal-analysis-steps-1-2-3.R` or `run-cell-contamination-removal-analysis-steps-4.R`.
+- `future_globals_value` is hardwired coded in the `run-cell-contamination-removal-analysis-steps-1-2-3.R` and `run-cell-contamination-removal-analysis-steps-4.R`. If necessary, user can increase/decrease resources.
+
 
 ### Run module on an interactive session on HPC within the container
 

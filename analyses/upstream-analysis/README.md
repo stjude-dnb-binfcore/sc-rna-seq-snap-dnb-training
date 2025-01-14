@@ -6,6 +6,7 @@
 
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
 - `project_parameters.Config.yaml` located at the `root_dir`.
+- `future.globals.maxSize` is hardwired coded in the `01A_run_seurat_qc.Rmd`, `03_run_scDblFinder.Rmd`, and `04_run_filter_object.Rmd`. If necessary, user can increase/decrease resources.
 
 
 ### Run module on an interactive session on HPC within the container

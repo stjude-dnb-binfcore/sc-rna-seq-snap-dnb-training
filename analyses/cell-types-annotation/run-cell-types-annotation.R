@@ -42,7 +42,7 @@ bpe <- celldex::celldex_reference
 
 ################################################################################################################
 
-future_globals_value = yaml$future_globals_value_annotation_module
+future_globals_value = 107374182400 # 100 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_list_find_markers
 resolution_for_input_data = yaml$resolution_find_markers
 integration_method = yaml$integration_method_clustering_module

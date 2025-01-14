@@ -7,6 +7,9 @@
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
 - `project_parameters.Config.yaml` located at the `root_dir`.
 - `run-cluster-cell-calling.sh`: comment in/out according to which step user wants to run, i.e., `run-cluster-cell-calling-step1.R` or `run-cluster-cell-calling-step2.R`.
+- `future_globals_value` is hardwired coded in the `run-cluster-cell-calling-step1.R` and `run-cluster-cell-calling-step2.R`. If necessary, user can increase/decrease resources.
+
+
 
 ### Run module on an interactive session on HPC within the container
 

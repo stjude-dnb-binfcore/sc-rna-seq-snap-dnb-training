@@ -72,7 +72,7 @@ PCA_Feature_List_value: NULL
 
 # `./analyses/cluster-cell-calling`
 #future_globals_value_clustering_module: 1048576000 #Indicative but might need to be adjusted based on cohort size. 1048576000, 1000 * 1024^2
-resolution_clustering_module: "default_multiple" # "custom_multiple", "default_multiple" or define value of resolution, e.g., 0.5
+resolution_clustering_module: "custom_multiple" # "custom_multiple", "default_multiple" or define value of resolution, e.g., 0.5
 integration_method_clustering_module: "harmony" # other options: "seurat", "harmony", "inmf"
 num_dim_clustering_module: 30 
 reduction_value_clustering_module: "harmony" # seurat: "pca"; harmony: "harmony"; liger: "inmf"
@@ -81,12 +81,11 @@ reduction_value_clustering_module: "harmony" # seurat: "pca"; harmony: "harmony"
 # If no list is provided, then it will calculate the clusters by the default list.
 # We recommend to run first by default and then explore a customized list of resolutions (if these are not provided in the list already).
 # In the latter case, user needs to comment in/out the `resolution_list_default_clustering_module` accordingly.
-resolution_list_clustering_module: NULL # [0.1, 0.5, 1]; [0.5]; NULL; This can be a single or multiple resolutions or NULL.
+resolution_list_clustering_module: [0.1, 0.5, 1] # [0.1, 0.5, 1]; [0.5]; NULL; This can be a single or multiple resolutions or NULL.
 resolution_list_default_clustering_module: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-#resolution_list_default_clustering_module: NULL
 algorithm_value_clustering_module: 4 # Leiden algorthim
 
-resolution_find_markers: "default_multiple" # "custom_multiple", "default_multiple" or define value of resolution, e.g., 0.5
+resolution_find_markers: "custom_multiple" # "custom_multiple", "default_multiple" or define value of resolution, e.g., 0.5
 resolution_list_find_markers: 0.1 # this will be the single resolution that fits the data the best
 n_value_find_markers: 10 # number of top genes to explore
 

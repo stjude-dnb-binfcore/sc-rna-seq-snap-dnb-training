@@ -76,8 +76,8 @@ resolution_clustering_module: "custom_multiple" # "custom_multiple", "default_mu
 integration_method_clustering_module: "harmony" # other options: "seurat", "harmony", "inmf"
 num_dim_clustering_module: 30 
 reduction_value_clustering_module: "harmony" # seurat: "pca"; harmony: "harmony"; liger: "inmf"
-resolution_list_clustering_module: c(0.1, 0.5, 1) # c(0.1, 0.5, 1); c(0.5); NULL; This can be a single or multiple resolutions or NULL; Initially, we use a list of multiple resolutions and then we run the module again with the single resolution that fits the data best. if no list is provided, then it will calculate the clusters by the default list
-resolution_list_default_clustering_module: c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+resolution_list_clustering_module: [0.1, 0.5, 1] # c(0.1, 0.5, 1); c(0.5); NULL; This can be a single or multiple resolutions or NULL; Initially, we use a list of multiple resolutions and then we run the module again with the single resolution that fits the data best. if no list is provided, then it will calculate the clusters by the default list
+resolution_list_default_clustering_module: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 algorithm_value_clustering_module: 4 # Leiden algorthim
 
 resolution_find_markers: "default_multiple" # "custom_multiple", "default_multiple" or define value of resolution, e.g., 0.5
@@ -86,7 +86,7 @@ n_value_find_markers: 10 # number of top genes to explore
 
 # `./analyses/cell-contamination-removal-analysis`
 #future_globals_value_step1_contamination_module: 8388608000 #8000 * 1024^2
-keep_clusters_contamination_module: c(0:5, 7:10, 12:13, 15:16)
+keep_clusters_contamination_module: [0:5, 7:10, 12:13, 15:16]
 #future_globals_value_step2_contamination_module: 1048576000 #Indicative but might need to be adjusted based on cohort size. Seurat: 20971520000, 2000 * 1024^2; Harmony: 1048576000, 1000 * 1024^2; Liger: 1048576000, 1000 * 1024^2
 
 # `./analyses/cell-types-annotation`

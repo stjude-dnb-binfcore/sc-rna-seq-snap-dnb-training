@@ -31,8 +31,11 @@ bsub < lsf-script.txt
 This folder contains a script tasked to calculate clusters and find markers for each cluster across the project.
 
 ## Analysis strategy:
+
 We recommend the user to follow the following steps for running the current module:
-- Step (1) `run-cluster-cell-calling-step1.R`: At first, the `01-cluster-cell-calling.Rmd` should be run for a set of resolutions or by default.
+
+- Step (1) `run-cluster-cell-calling-step1.R`: At first, the `01-cluster-cell-calling.Rmd` should be run for a set of resolutions by default (option for `default_multiple`). We recommend to run first by default and then explore a customized list of resolutions (if these are not provided in the list already; option for `custom_multiple`). In the latter case, user needs to comment in/out the `resolution_list_default_clustering_module` accordingly in the `project_parameters.Config.yaml` file.
+
 - Step (2) `run-cluster-cell-calling-step2.R`: After inspection of the first round of results, the single resolution that fits best the data can be provided and used to run the `02-find-markers.Rmd`.
 
 For more information, see [Seurat clustering](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html).

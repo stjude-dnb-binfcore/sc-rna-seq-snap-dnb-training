@@ -76,6 +76,7 @@ resolution_clustering_module: "custom_multiple" # "custom_multiple", "default_mu
 integration_method_clustering_module: "harmony" # other options: "seurat", "harmony", "inmf"
 num_dim_clustering_module: 30 
 reduction_value_clustering_module: "harmony" # seurat: "pca"; harmony: "harmony"; liger: "inmf"
+assay_clustering_module: "RNA_SoupX" # define assay; if user wants to use SoupX matrix, this should be replaced as: "RNA_SoupX" or "RNA"
 
 # Initially, we use a list of multiple resolutions and then we run the module again with the single resolution that fits the data best. 
 # If no list is provided, then it will calculate the clusters by the default list.

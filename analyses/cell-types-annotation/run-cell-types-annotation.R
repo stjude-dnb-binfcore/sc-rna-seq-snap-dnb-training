@@ -37,9 +37,7 @@ report_dir <- file.path(analysis_dir, "plots", "01_cell_types_annotation_SingleR
 # MonacoImmuneData: bulk RNA-seq samples of sorted immune cell populations
 # MouseRNAseqData: a collection of mouse bulk RNA-seq data sets downloaded from the gene expression omnibus
 # NovershternHematopoieticData: microarray datasets for sorted hematopoietic cell populations
-celldex_reference = yaml$celldex_reference_annotation_module
-#bpe <- celldex::celldex_reference
-bpe <- celldex_reference
+bpe <- celldex::MouseRNAseqData()
 
 ################################################################################################################
 

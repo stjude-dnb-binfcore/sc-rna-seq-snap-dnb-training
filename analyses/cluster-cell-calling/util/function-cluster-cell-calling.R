@@ -3,15 +3,16 @@
 #' @param metadata
 #' @param data
 #' @param resolution_list
+#' @param assay
 #'
 #' @return
 #' @export
 #'
 #' @examples
 #' 
-calculate_cluster_average <- function(metadata, data, resolution_list) {
+calculate_cluster_average <- function(metadata, data, resolution_list, assay) {
   
-  use_resolution = glue::glue("RNA_snn_res.{resolution_list}")
+  use_resolution = glue::glue("{assay}_snn_res.{resolution_list}")
   
   # get relevant metadata
   metadata <- metadata %>%
@@ -51,13 +52,14 @@ calculate_cluster_average <- function(metadata, data, resolution_list) {
 #' @param resolution_list
 #' @param resolution_list_default
 #' @param algorithm_value
+#' @param assay
 #'
 #' @return
 #' @export
 #'
 #' @examples
 #' 
-cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir, resolution_list, resolution_list_default, algorithm_value) {
+cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir, resolution_list, resolution_list_default, algorithm_value, assay) {
   
   set.seed(1234) # Make code reproducible
 
@@ -78,11 +80,11 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
     # Generate cluster tree for all resolutions (to aid in finding "stable" resolution)
     cat("Clustree is being created\n")
     name <- paste0(plots_dir, "/", "Cluster_tree.png", sep = "")
-    print(clustree(seurat_obj, prefix = "RNA_snn_res."))
+    print(clustree(seurat_obj, prefix = glue::glue("{assay}_snn_res.")))
     ggsave(file = name, width = 25, height = 20, device = "png")
     
     name <- paste0(plots_dir, "/", "Cluster_tree_sc3_stability.png", sep = "")
-    print(clustree(seurat_obj, prefix = "RNA_snn_res.", node_colour = "sc3_stability"))
+    print(clustree(seurat_obj, prefix = glue::glue("{assay}_snn_res."), node_colour = "sc3_stability"))
     ggsave(file = name, width = 25, height = 20, device = "png")
 
     print_message <- print("we use multiple resolutions by default for now")
@@ -106,17 +108,17 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
         ggsave(file = name, width = 12, height = 6, device = "png")
       }
       #dev.off()
-      
+
       
       # Generate cluster tree for all resolutions (to aid in finding "stable" resolution)
       cat("Clustree is being created\n")
       #pdf(file = paste0(plots_dir, "/", "Cluster_tree.pdf", sep = ""), width = 25, height = 20) #60
       name <- paste0(plots_dir, "/", "Cluster_tree.png", sep = "")
-      print(clustree(seurat_obj, prefix = "RNA_snn_res."))
+      print(clustree(seurat_obj, prefix = glue::glue("{assay}_snn_res.")))
       ggsave(file = name, width = 12, height = 8, device = "png")
       
       name <- paste0(plots_dir, "/", "Cluster_tree_sc3_stability.png", sep = "")
-      print(clustree(seurat_obj, prefix = "RNA_snn_res.", node_colour = "sc3_stability"))
+      print(clustree(seurat_obj, prefix = glue::glue("{assay}_snn_res."), node_colour = "sc3_stability"))
       ggsave(file = name, width = 12, height = 8, device = "png")
       #dev.off()
       
@@ -145,14 +147,13 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
         
         print_message <- print("we use the sigle resolution that fits the data best")
         # Calculate average
-        counts_matrix <- seurat_obj@assays$RNA@counts 
+        counts_matrix <- seurat_obj@assays$assay@counts 
         metadata <- as_data_frame_seurat(seurat_obj, metadata = TRUE)
         
         avg_res <- calculate_cluster_average(metadata = metadata, 
                                              data = counts_matrix,
                                              resolution_list = resolution_list)
-        write_tsv(avg_res, file = paste0(results_dir, "/", glue::glue("RNA_snn_res.{resolution_list}-avg.tsv"))) 
-        
+        write_tsv(avg_res, file = paste0(results_dir, "/", glue::glue("{assay}_snn_res.{resolution_list}-avg.tsv"))) 
         #### #### ####
         write_tsv(metadata, file = paste0(results_dir, "/", glue::glue("metadata_integrated_{integration_method}_clusters_{resolution_list}.tsv")))
         #### #### ####

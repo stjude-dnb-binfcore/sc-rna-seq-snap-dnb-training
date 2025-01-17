@@ -32,7 +32,7 @@ resolution = yaml$resolution_clustering_module
 # STEP 1 - Remove contamination
 rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),
-                  output_file = c(paste('Report_', 'cell_contamination_removal', '_', Sys.Date(), sep = '')),
+                  output_file = c(paste('Report-', 'cell-contamination-removal', '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(integration_method = yaml$integration_method,
                                 # this will be the single resolution that fits the data the best

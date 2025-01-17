@@ -168,8 +168,10 @@ suppressPackageStartupMessages({
   library(RcppPlanc)
   library(SeuratWrappers)
   library(scooter)
+  library(reshape2)
+  library(RColorBrewer)
   library(knitr)
-
+  
   # Evaluate Seurat R expressions asynchronously when possible using future package
   options(future.globals.maxSize = future_globals_value) 
   plan(multisession, workers = parallelly::availableCores())})

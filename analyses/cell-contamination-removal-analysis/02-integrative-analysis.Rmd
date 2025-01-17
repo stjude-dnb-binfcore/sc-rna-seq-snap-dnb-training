@@ -190,7 +190,7 @@ data_file <- file.path(data_dir, "seurat_obj_cell_contamination_rm.rds")
 # Create results_dir
 module_results_dir <- file.path(analysis_dir, "results")
 
-results_dir <- file.path(module_results_dir, glue::glue("02_results_{integration_method}"))
+results_dir <- file.path(module_results_dir, glue::glue("02_integration_{integration_method}"))
 if (!dir.exists(results_dir)) {
   dir.create(results_dir)}
 

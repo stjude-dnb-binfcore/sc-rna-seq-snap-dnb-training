@@ -42,7 +42,7 @@ bpe <- celldex::celldex_reference
 
 ################################################################################################################
 
-future_globals_value = 107374182400 # 100 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
+future_globals_value = 214748364800 # 200*1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_list_find_markers
 resolution_for_input_data = yaml$resolution_find_markers
 integration_method = yaml$integration_method_clustering_module
@@ -68,6 +68,7 @@ rmarkdown::render('01-cell-types-annotation-SingleR-broad.Rmd', clean = TRUE,
                                 min.diff.med_value = yaml$min.diff.med_value_annotation_module,
                                 use_min.diff.med = use_min.diff.med_annotation_module,
                                 data_file = input_data_file,
+                                assay = yaml$assay_annotation_module,
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,
@@ -93,6 +94,7 @@ rmarkdown::render('02-cell-types-annotation-SingleR-fine.Rmd', clean = TRUE,
                                 min.diff.med_value = yaml$min.diff.med_value_annotation_module,
                                 use_min.diff.med = use_min.diff.med_annotation_module,
                                 data_file = input_data_file,
+                                assay = yaml$assay_annotation_module,
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,

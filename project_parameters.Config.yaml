@@ -110,4 +110,5 @@ input_data_folder_name: "01_cluster_cell_calling" # or "03_cluster_cell_calling"
 redution_value_annotation_module: "umap" #for seurat and harmony use: "umap"; for Liger: "glue::glue("{integration_method}")"
 min.diff.med_value_annotation_module: 0.1 # higher thresholds for pruning labels correspond to greater assignment certainty
 use_min.diff.med_annotation_module: "NO" # options: 'YES' or 'NO'
+assay_annotation_module: "RNA_SoupX" # define assay; if user wants to use SoupX matrix, this should be replaced as: "RNA_SoupX" or "RNA"
 

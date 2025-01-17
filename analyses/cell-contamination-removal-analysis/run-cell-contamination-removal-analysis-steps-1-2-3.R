@@ -70,8 +70,6 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
 
 ################################################################################################################
 # STEP 2 - Integration
-future_globals_value = yaml$future_globals_value_step2_contamination_module
-
 rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),
                   output_file = c(paste('Report-', 'integrative-analysis-seurat', '-', Sys.Date(), sep = '')),
@@ -111,8 +109,6 @@ rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
 
 ################################################################################################################
 # step 3 - Clustering
-
-future_globals_value = yaml$future_globals_value_clustering_module
 resolution = yaml$resolution_clustering_module
 
 rmarkdown::render('03-cluster-cell-calling.Rmd', clean = TRUE,

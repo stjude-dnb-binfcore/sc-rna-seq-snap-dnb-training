@@ -202,7 +202,7 @@ if (!dir.exists(plots_dir)) {
 
 source(paste0(root_dir, "/figures/scripts/theme_plot.R"))
 source(paste0(integrative_analysis_functions_dir, "/util/function-samples-integrate.R"))
-source(paste0(integrative_analysis_functions_dir, "/util/custom_seurat_functions.R"))
+source(paste0(integrative_analysis_functions_dir, "/util/custom-seurat-functions.R"))
 source(paste0(upstream_analysis_functions_dir, "/util/function-process-Seurat.R"))
 ```
 

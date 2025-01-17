@@ -38,7 +38,8 @@ report_dir <- file.path(analysis_dir, "plots", "01_cell_types_annotation_SingleR
 # MouseRNAseqData: a collection of mouse bulk RNA-seq data sets downloaded from the gene expression omnibus
 # NovershternHematopoieticData: microarray datasets for sorted hematopoietic cell populations
 celldex_reference = yaml$celldex_reference_annotation_module
-bpe <- celldex::celldex_reference
+#bpe <- celldex::celldex_reference
+bpe <- celldex_reference
 
 ################################################################################################################
 
@@ -53,7 +54,7 @@ input_data_folder= yaml$input_data_folder_name
 # Set data_dir
 # Caution! Sometimes this file will be located in the `cluster-cell-calling` module
 # BUT if we had to remove contamination, then it will be located in the `cell-contamination-removal-analysis` module
-data_dir_annotation_module <- file.path(root_dir, "analyses", input_data, "results", glue::glue("input_data_folder_{resolution_for_input_data}"))
+data_dir_annotation_module <- file.path(root_dir, "analyses", input_data, "results", glue::glue("{input_data_folder}_{resolution_for_input_data}"))
 input_data_file <- file.path(data_dir_annotation_module, glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))
 
 ################################################################################################################
@@ -66,7 +67,7 @@ rmarkdown::render('01-cell-types-annotation-SingleR-broad.Rmd', clean = TRUE,
                                 redution_value = yaml$redution_value_annotation_module,
                                 condition_value = yaml$condition_value,
                                 min.diff.med_value = yaml$min.diff.med_value_annotation_module,
-                                use_min.diff.med = use_min.diff.med_annotation_module,
+                                use_min.diff.med = yaml$use_min.diff.med_annotation_module,
                                 data_file = input_data_file,
                                 assay = yaml$assay_annotation_module,
                                 root_dir = yaml$root_dir,
@@ -92,7 +93,7 @@ rmarkdown::render('02-cell-types-annotation-SingleR-fine.Rmd', clean = TRUE,
                                 redution_value = yaml$redution_value_annotation_module,
                                 condition_value = yaml$condition_value,
                                 min.diff.med_value = yaml$min.diff.med_value_annotation_module,
-                                use_min.diff.med = use_min.diff.med_annotation_module,
+                                use_min.diff.med = yaml$use_min.diff.med_annotation_module,
                                 data_file = input_data_file,
                                 assay = yaml$assay_annotation_module,
                                 root_dir = yaml$root_dir,

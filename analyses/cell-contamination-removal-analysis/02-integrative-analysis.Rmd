@@ -51,6 +51,7 @@ params:
   reference_list_value: '.'
   PCA_Feature_List_value: '.'
   future_globals_value: '.'
+  assay: '.'
   root_dir: './'
   metadata_dir: './'
   PROJECT_NAME: './'
@@ -220,6 +221,7 @@ First, we will use the `seurat_obj_cell_contamination_rm.rds` object as generate
 
 ```{r read-object, echo=TRUE}
 merged_obj <- readRDS(data_file)
+DefaultAssay(merged_obj) <- assay
 ```
 
 # Seurat ‘anchor-based’ integration workflow

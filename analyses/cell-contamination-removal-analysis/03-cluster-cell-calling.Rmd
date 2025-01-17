@@ -41,6 +41,7 @@ params:
   resolution_list_default: '.'
   resolution_list: '.'
   algorithm_value: '.'
+  assay: '.'
   future_globals_value: '.'
   root_dir: './'
   PROJECT_NAME: '.'
@@ -215,6 +216,7 @@ To cluster the cells, we next apply modularity optimization techniques such as t
 # Remove previous clustering information
 seurat_obj$seurat_clusters <- NULL
 seurat_obj@meta.data <- seurat_obj@meta.data %>% select(-contains("snn_res."))
+DefaultAssay(seurat_obj) <- assay
 
 # Calculate clusters
 seurat_obj <- cluster_cell_calling(seurat_obj = seurat_obj,
@@ -249,7 +251,7 @@ One way to think of clustering trees is that they add an extra dimension to the 
 # Plot overlaying only if there are >1 resolutions
 if (length(resolution_list) > 1 | is.null(resolution_list)) {
   name <- paste0(plots_dir, "/", glue::glue("plot_clustree_overlay_{integration_method}.png"))
-  print(clustree_overlay(seurat_obj, prefix = "RNA_snn_res.", x_value = "PC_1", y_value = "PC_2",
+  print(clustree_overlay(seurat_obj, prefix = glue::glue("{assay}_snn_res."), x_value = "PC_1", y_value = "PC_2",
                          use_colour = "points", alt_colour = "blue", plot_sides = TRUE))
 } else {}
 

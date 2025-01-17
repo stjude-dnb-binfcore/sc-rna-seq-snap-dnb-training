@@ -26,7 +26,7 @@ report_dir <- file.path(analysis_dir, "plots")
 ################################################################################################################
 # Run Rmd scripts 
 ################################################################################################################
-future_globals_value = 107374182400 # 100 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
+future_globals_value = 161061273600 # 150 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_clustering_module
 
 # STEP 1 - Remove contamination
@@ -44,7 +44,7 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
                                 nfeatures_value = yaml$nfeatures_value,
                                 genome_name = yaml$genome_name,
                                 Regress_Cell_Cycle_value = yaml$Regress_Cell_Cycle_value,
-                                assay = yaml$assay,
+                                assay = yaml$assay_contamination_module,
                                 num_pcs = yaml$num_pcs,
                                 prefix = yaml$prefix,
                                 num_dim = yaml$num_dim_filter_object,
@@ -93,6 +93,7 @@ rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
                     genome_name = yaml$genome_name,
                     nfeatures_value = yaml$nfeatures_value,
                     Regress_Cell_Cycle_value = yaml$Regress_Cell_Cycle_value,
+                    assay = yaml$assay_contamination_module,
                     
                     root_dir = yaml$root_dir,
                     metadata_dir = yaml$metadata_dir,
@@ -124,6 +125,7 @@ rmarkdown::render('03-cluster-cell-calling.Rmd', clean = TRUE,
                                 resolution_list = yaml$resolution_list_clustering_module, 
                                 resolution_list_default = yaml$resolution_list_default_clustering_module,
                                 algorithm_value = yaml$algorithm_value_clustering_module, 
+                                assay = yaml$assay_contamination_module,
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,

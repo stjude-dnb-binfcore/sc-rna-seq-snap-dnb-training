@@ -1,15 +1,15 @@
 
 ------------------------------------------------------------
-Sender: LSF System <lsfadmin@noderome184>
-Subject: Job 247002320: <run-lsf-problematic-packages> in cluster <hpcf_research_cluster> Exited
+Sender: LSF System <lsfadmin@noderome283>
+Subject: Job 247008859: <run-lsf-problematic-packages> in cluster <hpcf_research_cluster> Done
 
-Job <run-lsf-problematic-packages> was submitted from host <noderome184> by user <achroni> in cluster <hpcf_research_cluster> at Fri Jan 17 17:01:20 2025
-Job was executed on host(s) <2*noderome184>, in queue <standard>, as user <achroni> in cluster <hpcf_research_cluster> at Fri Jan 17 17:05:25 2025
+Job <run-lsf-problematic-packages> was submitted from host <noderome184> by user <achroni> in cluster <hpcf_research_cluster> at Fri Jan 17 18:32:36 2025
+Job was executed on host(s) <2*noderome283>, in queue <standard>, as user <achroni> in cluster <hpcf_research_cluster> at Fri Jan 17 18:32:52 2025
 </home/achroni> was used as the home directory.
 </research/dept/dnb/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/.> was used as the working directory.
-Started at Fri Jan 17 17:05:25 2025
-Terminated at Fri Jan 17 17:05:27 2025
-Results reported at Fri Jan 17 17:05:27 2025
+Started at Fri Jan 17 18:32:52 2025
+Terminated at Fri Jan 17 18:33:40 2025
+Results reported at Fri Jan 17 18:33:40 2025
 
 Your job looked like:
 
@@ -22,24 +22,24 @@ Your job looked like:
 #BSUB -R "rusage[mem=2GB] span[hosts=1]"
 #BSUB -cwd "."
 
-singularity exec ../../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript -e "rmarkdown::render('run-lsf-problematic-packages.Rmd')"
+singularity exec ../../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript --vanilla run-lsf-problematic-packages.R
+#singularity exec ../../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript -e "rmarkdown::render('run-lsf-problematic-packages.Rmd')"
 ------------------------------------------------------------
 
-TERM_OWNER: job killed by owner.
-Exited with signal termination: 2.
+Successfully completed.
 
 Resource usage summary:
 
-    CPU time :                                   0.01 sec.
-    Max Memory :                                 1 MB
-    Average Memory :                             1.00 MB
+    CPU time :                                   31.71 sec.
+    Max Memory :                                 1156 MB
+    Average Memory :                             701.18 MB
     Total Requested Memory :                     4096.00 MB
-    Delta Memory :                               4095.00 MB
+    Delta Memory :                               2940.00 MB
     Max Swap :                                   -
-    Max Processes :                              1
-    Max Threads :                                1
-    Run time :                                   248 sec.
-    Turnaround time :                            247 sec.
+    Max Processes :                              6
+    Max Threads :                                21
+    Run time :                                   48 sec.
+    Turnaround time :                            64 sec.
 
 The output (if any) is above this job summary.
 

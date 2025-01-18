@@ -1,44 +1,11 @@
----
-title: "Debugging step: Verify installations for LSF"
-author: "Antonia Chroni for SJCRH DNB_BINF_Core"
-papersize: a4
-fontsize: 11pt
-links-as-notes: true
-output:
-  html_document:
-    toc: TRUE
-    toc_float: TRUE
-    df_print: paged
-    code_folding: hide
-    toc_depth: 2
-    highlight: tango
-    number_sections: TRUE
-  pdf_document:
-    toc: TRUE
-    highlight: tango
-    number_sections: TRUE
-    latex_engine: lualatex
-    keep_tex: FALSE
-    fig_caption: yes
-    fig_crop: no
-    fig_height: 2
-    fig_width: 3
-    toc_depth: 2
-always_allow_html: TRUE
-urlcolor: blue
-linkcolor: black
-citecolor: blue
-geometry: margin=1in
-header-includes: 
-  - \usepackage{titling}
-  - \usepackage{fancyhdr}
-  - \usepackage{graphicx}
-  - \usepackage{float}
----
+# To replicate the clean environment behavior of R Markdown in an R script, consider clearing the workspace at the start of your script by calling
+# rm(list = ls())
 
-# Set up
-```{r load-library, echo=TRUE}
+.libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
+
 suppressPackageStartupMessages({
+  
+# Set up
   # 01A_run_seurat_qc.Rmd
   library(future)
   library(cowplot)
@@ -68,6 +35,9 @@ suppressPackageStartupMessages({
   library(tidyverse)
   library(tinytex)
   library(hdf5r)
+  #library(hdf5r, DLLpath = "/home/achroni/R/x86_64-pc-linux-gnu-library/4.4/hdf5r/libs/hdf5r.so")
+  #library(hdf5r, DLLpath = "/usr/local/lib/R")
+  
 
   # 03_run_scDblFinder.Rmd
   library(scDblFinder)
@@ -121,21 +91,4 @@ suppressPackageStartupMessages({
   library(scooter)
   library(knitr)
 
-  })
-```
-
-```{r echo=FALSE, warning=FALSE}
-opts_chunk$set(fig.align='center',
-               external=TRUE,
-               echo=FALSE,
-               warning=FALSE,
-               fig.pos='H')
-a4width <- 8.3
-a4height <- 11.7
-```
-
-# Session Info
-
-```{r echo=FALSE}
-sessionInfo()
-```
+})

@@ -2,23 +2,16 @@
 
 ## Usage
 
-To run all the scripts in this module from the command line sequentially, use:
+`submit-multiple-jobs.sh` is designed to be run as if it was called from this module directory even when called from outside of this directory.
 
-```
-bsub < submit-multiple-jobs.sh
-```
-
-The `submit-multiple-jobs.sh` script is designed to be run as if it was called from this module directory even when called from outside of this directory. 
+The `submit-multiple-jobs.sh` script is designed to run the following two steps: 
    - Step 1: To run the `j1.sh` script to align single or multiple libraries in parallel, i.e., `run-cellranger-analysis`. 
    - Step 2: To run `j2.sh` to summarize alignment results, i.e., `summarize-cellranger-analysis`. The latter script will be on hold and executed once all libraries are aligned and `j1.sh` is complete. This is been taken care of by `waiter.sh` script.
 
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
 - `../../project_parameters.Config.yaml`: define the `metadata_dir`, `genome_reference_path`, `cellranger_parameters`, and `genome_name_cellranger`. Please submit an [issue](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/issues) to request the path to the reference genome of preference. Our team at the Bioinformatics core at DNB maintains the following genome references: `GRCh38`, `GRCm39`, `GRCh38ANDGRCm39`, and `GRCh38_GFP_tdTomato`, for human, mouse, and dual index genomes, respectively. Otherwise, specify the path to the reference genome of your preference.
 
-- `submit-multiple-jobs.sh`: Here, the user will need to set up the absolute path for the directory in `#BSUB -cwd` and `prefix` parameters. 
-
-- `waiter.sh`: Here, the user will need to set up the absolute path for the directory in `#BSUB -cwd` and `prefix` parameters. Also, user needs to replace `DST` with the Sample ID used for the samples of the project. This requires that all of the Sample IDs are the same, e.g., DST800, DST802, DST811 and so on.
-
+- `waiter.sh`: Here, the user will need to replace `DST` with the Sample ID used for the samples of the project. This requires that all of the Sample IDs are the same, e.g., DST800, DST802, DST811 and so on.
 
 - `j1.sh`: 
    - `--file`: This is defined by default in the `./sc-rna-seq-snap/analyses/cellranger-analysis/input/` dir. If the file lives in another folder, e.g., `metadata_dir`, this should be modified accordingly in the `../../project_parameters.Config.yaml`. The file needs to be in `*.txt` file format. In addition, there is a code line to convert `*.tsv` file to `*.txt` file, if needed. If the file exists already in `./input` as `*.txt`, this line of code will be ignored. This file can contain either one or multiple samples as long as the following minimum parameters are provided: `ID`, `SAMPLE`, and `FASTQ` columns.
@@ -30,6 +23,18 @@ Parameters according to the project and analysis strategy will need to be specif
 
 Default memory for running the alignment is set up to 16GB. In case more memory is needed to run a specific sample, this can be modified here:
 - `./util/run_cellranger.py`: User can search the following and change accordingly `-n 4 -R "rusage[mem=4000] span[hosts=1]`, if that is necessary. However, we have found that these resources work well for most data. 
+
+
+
+### Run module on HPC
+
+To run all of the scripts in this module sequentially on an interactive session on HPC, please run the following command from an interactive compute node:
+
+```
+bsub < submit-multiple-jobs.sh
+```
+
+Please note that this will run the analysis module outside of the container while submitting lsf job on HPC. This is currently the only option of running the `cellranger-analysis` module. By default, we are using `python/3.9.9` and `cellranger/8.0.1` as available on St Jude HPC.
 
 
 ## Folder content

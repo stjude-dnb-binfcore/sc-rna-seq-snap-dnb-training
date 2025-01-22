@@ -4,19 +4,19 @@
 4/6 [unnamed-chunk-1]
 5/6                  
 6/6 [unnamed-chunk-2]
-/usr/bin/pandoc +RTS -K512m -RTS run-lsf-problematic-packages.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output run-lsf-problematic-packages.html --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --table-of-contents --toc-depth 2 --variable toc_float=1 --variable toc_selectors=h1,h2 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /usr/local/lib/R/site-library/rmarkdown/rmd/h/default.html --highlight-style tango --number-sections --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /lsf_tmp/247189122.tmpdir/Rtmpskt08d/rmarkdown-str2e90245411dd2d.html --variable code_folding=hide --variable code_menu=1 
+/usr/bin/pandoc +RTS -K512m -RTS run-lsf-problematic-packages.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output run-lsf-problematic-packages.html --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --table-of-contents --toc-depth 2 --variable toc_float=1 --variable toc_selectors=h1,h2 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /usr/local/lib/R/site-library/rmarkdown/rmd/h/default.html --highlight-style tango --number-sections --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /lsf_tmp/247269420.tmpdir/RtmpW78YAc/rmarkdown-str135e58341a2bb4.html --variable code_folding=hide --variable code_menu=1 
 
 ------------------------------------------------------------
-Sender: LSF System <lsfadmin@noderome205>
-Subject: Job 247189122: <run-lsf-problematic-packages> in cluster <hpcf_research_cluster> Done
+Sender: LSF System <lsfadmin@noderome144>
+Subject: Job 247269420: <run-lsf-problematic-packages> in cluster <hpcf_research_cluster> Done
 
-Job <run-lsf-problematic-packages> was submitted from host <noderome279> by user <achroni> in cluster <hpcf_research_cluster> at Tue Jan 21 22:29:13 2025
-Job was executed on host(s) <2*noderome205>, in queue <standard>, as user <achroni> in cluster <hpcf_research_cluster> at Tue Jan 21 22:29:20 2025
+Job <run-lsf-problematic-packages> was submitted from host <noderome207> by user <achroni> in cluster <hpcf_research_cluster> at Wed Jan 22 17:05:02 2025
+Job was executed on host(s) <2*noderome144>, in queue <standard>, as user <achroni> in cluster <hpcf_research_cluster> at Wed Jan 22 17:05:06 2025
 </home/achroni> was used as the home directory.
 </research/dept/dnb/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/.> was used as the working directory.
-Started at Tue Jan 21 22:29:20 2025
-Terminated at Tue Jan 21 22:30:30 2025
-Results reported at Tue Jan 21 22:30:30 2025
+Started at Wed Jan 22 17:05:06 2025
+Terminated at Wed Jan 22 17:06:05 2025
+Results reported at Wed Jan 22 17:06:05 2025
 
 Your job looked like:
 
@@ -37,16 +37,16 @@ Successfully completed.
 
 Resource usage summary:
 
-    CPU time :                                   36.45 sec.
-    Max Memory :                                 1274 MB
-    Average Memory :                             700.44 MB
+    CPU time :                                   31.69 sec.
+    Max Memory :                                 1150 MB
+    Average Memory :                             657.77 MB
     Total Requested Memory :                     4096.00 MB
-    Delta Memory :                               2822.00 MB
+    Delta Memory :                               2946.00 MB
     Max Swap :                                   -
-    Max Processes :                              8
-    Max Threads :                                27
-    Run time :                                   70 sec.
-    Turnaround time :                            77 sec.
+    Max Processes :                              7
+    Max Threads :                                21
+    Run time :                                   59 sec.
+    Turnaround time :                            63 sec.
 
 The output (if any) is above this job summary.
 

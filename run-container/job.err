@@ -1,6 +1,6 @@
-Error: package or namespace load failed for 'scDblFinder' in dyn.load(file, DLLpath = DLLpath, ...):
- unable to load shared object '/home/achroni/R/x86_64-pc-linux-gnu-library/4.4/rtracklayer/libs/rtracklayer.so':
-  libssl.so.1.1: cannot open shared object file: No such file or directory
+Error: package or namespace load failed for 'hdf5r' in dyn.load(file, DLLpath = DLLpath, ...):
+ unable to load shared object '/home/achroni/R/x86_64-pc-linux-gnu-library/4.4/hdf5r/libs/hdf5r.so':
+  libhdf5_hl.so.100: cannot open shared object file: No such file or directory
 Execution halted
 
 

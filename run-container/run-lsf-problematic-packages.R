@@ -35,8 +35,6 @@ suppressPackageStartupMessages({
   library(tidyverse)
   library(tinytex)
   library(hdf5r)
-  #library(hdf5r, DLLpath = "/home/achroni/R/x86_64-pc-linux-gnu-library/4.4/hdf5r/libs/hdf5r.so")
-  #library(hdf5r, DLLpath = "/usr/local/lib/R")
   
 
   # 03_run_scDblFinder.Rmd

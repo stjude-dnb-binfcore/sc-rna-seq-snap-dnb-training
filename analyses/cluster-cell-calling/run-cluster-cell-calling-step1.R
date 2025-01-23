@@ -28,7 +28,7 @@ report_dir <- file.path(analysis_dir, "plots")
 ################################################################################################################
 # Run Rmd scripts 
 ################################################################################################################
-future_globals_value = yaml$future_globals_value_clustering_module
+future_globals_value = 161061273600 # 150 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_clustering_module
 
 rmarkdown::render('01-cluster-cell-calling.Rmd', clean = TRUE,
@@ -41,6 +41,7 @@ rmarkdown::render('01-cluster-cell-calling.Rmd', clean = TRUE,
                                 resolution_list = yaml$resolution_list_clustering_module, 
                                 resolution_list_default = yaml$resolution_list_default_clustering_module,
                                 algorithm_value = yaml$algorithm_value_clustering_module, 
+                                assay = yaml$assay_clustering_module,
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,

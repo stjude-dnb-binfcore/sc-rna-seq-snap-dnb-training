@@ -15,8 +15,10 @@ There are a Singularity and Docker image that contain all tools, packages, and d
 The `sc-rna-seq-snap` repository is an initiative of the [Bioinformatics Core at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital](https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html).
 
 
+Analysis modules in the main branch are ready to be used. 
+
 ⚠️ 🚧 🚧 ⚠️
-The repo is currently under development and code review process. Analysis modules in the main branch are ready to be used.
+The container is currently under development and code review process. 
 
 
 ## To access the code in this repository:

@@ -7,6 +7,9 @@
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
 - `project_parameters.Config.yaml` located at the `root_dir`.
 - `run-cluster-cell-calling.sh`: comment in/out according to which step user wants to run, i.e., `run-cluster-cell-calling-step1.R` or `run-cluster-cell-calling-step2.R`.
+- `future_globals_value` is hardwired coded in the `run-cluster-cell-calling-step1.R` and `run-cluster-cell-calling-step2.R`. If necessary, user can increase/decrease resources.
+
+
 
 ### Run module on an interactive session on HPC within the container
 
@@ -28,8 +31,10 @@ bsub < lsf-script.txt
 This folder contains a script tasked to calculate clusters and find markers for each cluster across the project.
 
 ## Analysis strategy:
+
 We recommend the user to follow the following steps for running the current module:
-- Step (1) `run-cluster-cell-calling-step1.R`: At first, the `01-cluster-cell-calling.Rmd` should be run for a set of resolutions or by default.
+
+- Step (1) `run-cluster-cell-calling-step1.R`: At first, the `01-cluster-cell-calling.Rmd` should be run for a set of resolutions by default (option for `default_multiple`). We recommend to run first by default and then explore a customized list of resolutions (if these are not provided in the list already; option for `custom_multiple`). 
 - Step (2) `run-cluster-cell-calling-step2.R`: After inspection of the first round of results, the single resolution that fits best the data can be provided and used to run the `02-find-markers.Rmd`.
 
 For more information, see [Seurat clustering](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html).

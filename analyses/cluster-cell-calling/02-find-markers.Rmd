@@ -36,6 +36,7 @@ header-includes:
   - \usepackage{float}
 params:
   integration_method: '.'
+  assay: '.'
   resolution_list: '.'
   future_globals_value: '.'
   n_value: '.'
@@ -181,9 +182,10 @@ First, we will use the `seurat_obj_integrated_{integration_method}_clusters_{res
 
 ```{r read-object, echo=TRUE}
 seurat_obj <- readRDS(data_file)
+DefaultAssay(seurat_obj) <- assay
 
 # Set the identity of your cells to the column with the desired resolution
-use_res_col <- glue::glue("RNA_snn_res.{resolution_list}")
+use_res_col <- glue::glue("{assay}_snn_res.{resolution_list}")
 
 # Set identity classes to an existing column in meta data
 Idents(object = seurat_obj) <- use_res_col

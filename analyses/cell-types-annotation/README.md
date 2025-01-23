@@ -7,6 +7,7 @@
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
 - `project_parameters.Config.yaml` located at the `root_dir`
 - `future_globals_value` is hardwired coded in the `run-cell-types-annotation.R`. If necessary, user can increase/decrease resources.
+- Celldex references are hardwired coded in the `run-cell-types-annotation.R`. User should modify the reference to be used according to their experiment.
 
 
 ### Run module on an interactive session on HPC within the container

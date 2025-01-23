@@ -1,7 +1,7 @@
 # To replicate the clean environment behavior of R Markdown in an R script, consider clearing the workspace at the start of your script by calling
 # rm(list = ls())
 
-#.libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
+.libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
 
 suppressPackageStartupMessages({
   

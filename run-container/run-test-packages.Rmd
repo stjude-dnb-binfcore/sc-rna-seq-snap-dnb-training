@@ -93,6 +93,7 @@ suppressPackageStartupMessages({
   library(R.utils)
   library(Seurat)
   library(SeuratObject)
+  library(SeuratWrappers)
   library(shiny)
   library(Signac)
   library(SoupX)

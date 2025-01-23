@@ -59,6 +59,33 @@ From: rocker/rstudio:4.4.0
 
     # Needed for the cluster-cell-calling stage etc
     pip3 install pandas leidenalg
+    
+    ENV TEXLIVE_INSTALL_NO_CONTEXT_CACHE=1 \
+    NOPERLDOC=1
+
+    # Install TexLive prerequisites
+    apt-get update && \
+    apt-get install -y wget unzip tar \
+    make fontconfig perl openjdk-8-jre libgetopt-long-descriptive-perl \
+    libdigest-perl-md5-perl libncurses5 \
+    python3-pygments && \
+    rm -rf /var/lib/apt/lists/*
+
+    # Install TexLive to the container
+    wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
+    tar xzf install-tl-unx.tar.gz && rm install-tl-unx.tar.gz && \
+    cd install-tl* && \
+    echo "selected_scheme scheme-full" > install.profile && \
+    echo "tlpdbopt_install_docfiles 0" >> install.profile && \
+    echo "tlpdbopt_install_srcfiles 0" >> install.profile && \
+    echo "tlpdbopt_autobackup 0" >> install.profile && \
+    echo "tlpdbopt_sys_bin /usr/bin" >> install.profile && \
+    ./install-tl -profile install.profile && cd .. && rm -rf install-tl*
+
+    # Symlink TexLive binaries to PATH
+    /usr/local/texlive/2024/bin/x86_64-linux/tlmgr path add
+    #
+
 
     #
     # Use latest R sources to avoid e.g. "matrixStats" version too low for "MatrixGenerics"
@@ -143,6 +170,8 @@ From: rocker/rstudio:4.4.0
     # Save on the same folder where Dockerfile is located
     # You should also replace the link with the one from the most recent download as the url expires after 1-2 days
     # Set environment variables
+    ENV PATH=/opt/cellranger-8.0.1/bin:${PATH}
+    ENV LD_LIBRARY_PATH=/opt/cellranger-8.0.1/lib
     curl -o cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1735627055&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=Bn20s3ftEjQ6jD2HqiXz3GmLAf7U-GVnMyng-R1jN8fd9XyVu1B5kRVG5FLIor9LiXyVLRG0beBSx0QIf-0qthevVbwzl3ycNyfol33zRzcJqVPGhlyud6KSZFoqGeRf2FhEKmj7dIjCBWd0O0Sval63ABz~CjgCOIcPdHrldJcVNO1WFw4JXd0np~GyLcHbX4vuSoogNhnv52yYooELkpbnbeBuMekXojo2jIecbnb2yxBYxKDrmsNQ8ew8T2aMeWbLz9hphw8s0jvINITPriYdloqrpSgWAgfXzYEfiEyAATpE6hu6CU0I9dSOGn8lNkQP51PgZFxtA4Wte5qz3A__"
     tar -xvzf cellranger-8.0.1.tar.gz -C /opt
 

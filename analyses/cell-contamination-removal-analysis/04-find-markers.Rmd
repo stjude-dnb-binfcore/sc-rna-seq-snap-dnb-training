@@ -202,7 +202,7 @@ Seurat can help find markers that define clusters via differential expression (D
 
 ```{r find-markers, echo=TRUE}
 all.markers <- FindAllMarkers(seurat_obj, assay = assay, logfc.threshold = 0.25, test.use = "wilcox", min.pct = 0.1, return.thresh = 0.01)
-write.table(all.markers, file = paste(results_dir, "/", "Res_", resolution_list, "_Markers_all.tsv", sep = ""), sep = "\t", quote = FALSE)
+write.table(all.markers, file = paste(results_dir, "/", "Res_", resolution_list, "_Markers_all.tsv", sep = ""), sep = "\t", quote = FALSE, row.names = FALSE)
 ```
 
 # Finding differentially expressed features (cluster biomarkers) for given cells and features
@@ -212,7 +212,7 @@ top_n_value <- all.markers %>%
   group_by(cluster) %>% 
   top_n(n = n_value, wt = avg_log2FC)
 
-write.table(top_n_value, file = paste(results_dir, "/", "Res_", resolution_list, glue::glue("_Markers_top_{n_value}.tsv"), sep = ""), sep = "\t", quote = FALSE)
+write.table(top_n_value, file = paste(results_dir, "/", "Res_", resolution_list, glue::glue("_Markers_top_{n_value}.tsv"), sep = ""), sep = "\t", quote = FALSE, row.names = FALSE)
 ```
 
 Let's generate table and heatmap for given cells and features. In this case, we are plotting the top `r n_value` markers for each cluster.

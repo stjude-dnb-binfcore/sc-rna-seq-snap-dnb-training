@@ -51,6 +51,7 @@ params:
   reference_list_value: '.'
   PCA_Feature_List_value: '.'
   future_globals_value: '.'
+  assay: '.'
   root_dir: './'
   metadata_dir: './'
   PROJECT_NAME: './'
@@ -167,8 +168,10 @@ suppressPackageStartupMessages({
   library(RcppPlanc)
   library(SeuratWrappers)
   library(scooter)
+  library(reshape2)
+  library(RColorBrewer)
   library(knitr)
-
+  
   # Evaluate Seurat R expressions asynchronously when possible using future package
   options(future.globals.maxSize = future_globals_value) 
   plan(multisession, workers = parallelly::availableCores())})
@@ -187,7 +190,7 @@ data_file <- file.path(data_dir, "seurat_obj_cell_contamination_rm.rds")
 # Create results_dir
 module_results_dir <- file.path(analysis_dir, "results")
 
-results_dir <- file.path(module_results_dir, glue::glue("02_results_{integration_method}"))
+results_dir <- file.path(module_results_dir, glue::glue("02_integration_{integration_method}"))
 if (!dir.exists(results_dir)) {
   dir.create(results_dir)}
 
@@ -201,7 +204,7 @@ if (!dir.exists(plots_dir)) {
 
 source(paste0(root_dir, "/figures/scripts/theme_plot.R"))
 source(paste0(integrative_analysis_functions_dir, "/util/function-samples-integrate.R"))
-source(paste0(integrative_analysis_functions_dir, "/util/custom_seurat_functions.R"))
+source(paste0(integrative_analysis_functions_dir, "/util/custom-seurat-functions.R"))
 source(paste0(upstream_analysis_functions_dir, "/util/function-process-Seurat.R"))
 ```
 
@@ -220,6 +223,7 @@ First, we will use the `seurat_obj_cell_contamination_rm.rds` object as generate
 
 ```{r read-object, echo=TRUE}
 merged_obj <- readRDS(data_file)
+DefaultAssay(merged_obj) <- assay
 ```
 
 # Seurat ‘anchor-based’ integration workflow

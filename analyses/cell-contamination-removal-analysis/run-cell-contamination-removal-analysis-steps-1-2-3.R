@@ -1,6 +1,9 @@
 #################################################################################
 # This will run all scripts in the module
 #################################################################################
+# Load the Package with a Specific Library Path
+.libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
+#################################################################################
 # Load library
 suppressPackageStartupMessages({
   library(yaml)
@@ -26,13 +29,13 @@ report_dir <- file.path(analysis_dir, "plots")
 ################################################################################################################
 # Run Rmd scripts 
 ################################################################################################################
-future_globals_value = 107374182400 # 100 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
+future_globals_value = 214748364800 # 200*1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_clustering_module
 
 # STEP 1 - Remove contamination
 rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),
-                  output_file = c(paste('Report_', 'cell_contamination_removal', '_', Sys.Date(), sep = '')),
+                  output_file = c(paste('Report-', 'cell-contamination-removal', '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(integration_method = yaml$integration_method,
                                 # this will be the single resolution that fits the data the best
@@ -44,7 +47,7 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
                                 nfeatures_value = yaml$nfeatures_value,
                                 genome_name = yaml$genome_name,
                                 Regress_Cell_Cycle_value = yaml$Regress_Cell_Cycle_value,
-                                assay = yaml$assay,
+                                assay = yaml$assay_contamination_module,
                                 num_pcs = yaml$num_pcs,
                                 prefix = yaml$prefix,
                                 num_dim = yaml$num_dim_filter_object,
@@ -70,8 +73,6 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
 
 ################################################################################################################
 # STEP 2 - Integration
-future_globals_value = yaml$future_globals_value_step2_contamination_module
-
 rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),
                   output_file = c(paste('Report-', 'integrative-analysis-seurat', '-', Sys.Date(), sep = '')),
@@ -93,6 +94,7 @@ rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
                     genome_name = yaml$genome_name,
                     nfeatures_value = yaml$nfeatures_value,
                     Regress_Cell_Cycle_value = yaml$Regress_Cell_Cycle_value,
+                    assay = yaml$assay_contamination_module,
                     
                     root_dir = yaml$root_dir,
                     metadata_dir = yaml$metadata_dir,
@@ -110,8 +112,6 @@ rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
 
 ################################################################################################################
 # step 3 - Clustering
-
-future_globals_value = yaml$future_globals_value_clustering_module
 resolution = yaml$resolution_clustering_module
 
 rmarkdown::render('03-cluster-cell-calling.Rmd', clean = TRUE,
@@ -124,6 +124,7 @@ rmarkdown::render('03-cluster-cell-calling.Rmd', clean = TRUE,
                                 resolution_list = yaml$resolution_list_clustering_module, 
                                 resolution_list_default = yaml$resolution_list_default_clustering_module,
                                 algorithm_value = yaml$algorithm_value_clustering_module, 
+                                assay = yaml$assay_contamination_module,
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,

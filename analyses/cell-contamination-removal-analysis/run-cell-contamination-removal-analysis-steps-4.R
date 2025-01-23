@@ -28,7 +28,7 @@ report_dir <- file.path(analysis_dir, "plots")
 
 ################################################################################################################
 # step 4 - Run markers
-future_globals_value = 107374182400 # 100 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
+future_globals_value = 214748364800 # 200*1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_find_markers
 
 rmarkdown::render('04-find-markers.Rmd', clean = TRUE,
@@ -38,6 +38,7 @@ rmarkdown::render('04-find-markers.Rmd', clean = TRUE,
                   params = list(integration_method = yaml$integration_method_clustering_module,
                                 resolution_list = yaml$resolution_list_find_markers, 
                                 n_value = yaml$n_value_find_markers,
+                                assay = yaml$assay_contamination_module,
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,

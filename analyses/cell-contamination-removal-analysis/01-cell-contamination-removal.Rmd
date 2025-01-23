@@ -211,9 +211,10 @@ First, we will use the `seurat_obj_integrated_{integration_method}_clusters_all.
 
 ```{r read-object, echo=TRUE}
 seurat_obj <- readRDS(data_file)
+DefaultAssay(seurat_obj) <- assay
 
 # Keep clusters from the following cluster resolution
-use_res_col <- glue::glue("RNA_snn_res.{resolution_list}")
+use_res_col <- glue::glue("{assay}_snn_res.{resolution_list}")
 ```
 
 # Number of cells per cluster before removing cell contamination 

@@ -38,10 +38,19 @@ The pipeline allows for the user to include/exclude methods and adjust the pipel
 
 If the user does not wish to include results from step (2), this can be defined in the `project_parameters.Config.yaml` file. 
 
+### (1) Estimating and filtering out ambient mRNA (`empty droplets`)
 
-### (1) Seurat QC metrics
+[SoupX](https://cran.r-project.org/web/packages/SoupX/vignettes/pbmcTutorial.html) profiles “the soup”, i.e., collection of cell-free mRNAs floating in the input solution. The soup looks different for each input solution and strongly resembles the expression pattern obtained by summing all the individual cells.
 
-[Seurat](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) and [scooter](https://github.com/igordot/scooter) workflows are implemented to pre-process, filter and plot the RNA-sequencing data. The CellRanger output from the `cellranger-analysis` module is used for this step. User will have to define `params` as needed for their experiment. 
+SoupX calculates `Cell-specific contamination fraction` (Estimate (or manually set) the contamination fraction, the fraction of UMIs originating from the background, in each cell) and infers a `corrected expression matrix` (Correct the expression of each cell using the ambient mRNA expression profile and estimated contamination).
+
+The CellRanger output from the `cellranger-analysis` module is used for this step.
+ -  Contamination summary table and Cell-specific contamination fraction plot are generated.
+
+
+### (2) Seurat QC metrics
+
+[Seurat](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) and [scooter](https://github.com/igordot/scooter) workflows are implemented to pre-process, filter and plot the RNA-sequencing data. The CellRanger output from the `cellranger-analysis` module or the corrected matrix fromm `step 1: SoupX` will be used for this step. User will have to define `params` as needed for their experiment. 
   - Before and after filter: Plot distribution of the number of genes, UMI, and percent mitochondrial reads per cell.
   - Summary of Cell Statistics: Percent of reads in cells, Median UMI count per cell, Median genes detected per cell, Median percent reads mitochondrial.
   - Data were normalized by using the global-scaling normalization method “LogNormalize” that normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result. Then, highly variable genes (HVGs) are selected to subset features that indicate high cell-to-cell variation in the dataset (i.e, they are highly expressed in some cells, and lowly expressed in others). Then, these HVGs are used as input to principal component analysis, and the top 30 principal components are selected. A combination of different dimensions (20, 25) and number of neighbors (30, 20, 10) are used along with the principal components to calculate the UMAP (Uniform Manifold Approximation and Projection) embeddings.
@@ -61,15 +70,6 @@ We recommend that the user use the following parameters for initial QC, and then
 - `snRNA`: min_genes = 300 (nFeature_RNA (genes detected))
            min_count = 500 (nCount_RNA (UMIs detected))
            mtDNA_pct_default = 5 (ideally 1; Percent Mitochondrial)
-
-### (2) Estimating and filtering out ambient mRNA (`empty droplets`)
-
-[SoupX](https://cran.r-project.org/web/packages/SoupX/vignettes/pbmcTutorial.html) profiles “the soup”, i.e., collection of cell-free mRNAs floating in the input solution. The soup looks different for each input solution and strongly resembles the expression pattern obtained by summing all the individual cells.
-
-SoupX calculates `Cell-specific contamination fraction` (Estimate (or manually set) the contamination fraction, the fraction of UMIs originating from the background, in each cell) and infers a `corrected expression matrix` (Correct the expression of each cell using the ambient mRNA expression profile and estimated contamination).
-
-The CellRanger output from the `cellranger-analysis` module is used for this step.
- -  Contamination summary table and Cell-specific contamination fraction plot are generated.
 
 
 ### (3) Estimating and filtering out doublets
@@ -97,9 +97,9 @@ Lastly, we provide a final QC summary report containing graphs and summary table
 The structure of this folder is as follows:
 
 ```
-├── 01A_run_seurat_qc.Rmd
-├── 01B_run_seurat_qc_multiple_samples.R
-├── 02_run_SoupX.Rmd
+├── 01_run_SoupX.Rmd
+├── 02A_run_seurat_qc.Rmd
+├── 02B_run_seurat_qc_multiple_samples.R
 ├── 03_run_scDblFinder.Rmd
 ├── 04_run_filter_object.Rmd
 ├── 05_run_summary_report.Rmd

@@ -228,10 +228,10 @@ for (i in seq_along(sample_name)) {
     dir.create(samples_SoupX_results_dir)}
   print(samples_SoupX_results_dir)
 
-  strainedCounts_SoupX_results_dir <- file.path(samples_SoupX_results_dir, "strainedCounts") 
-  if (!dir.exists(strainedCounts_SoupX_results_dir)) {
-    dir.create(strainedCounts_SoupX_results_dir)}
-  print(strainedCounts_SoupX_results_dir)
+  #strainedCounts_SoupX_results_dir <- file.path(samples_SoupX_results_dir, "strainedCounts") 
+  #if (!dir.exists(strainedCounts_SoupX_results_dir)) {
+  #  dir.create(strainedCounts_SoupX_results_dir)}
+  # print(strainedCounts_SoupX_results_dir)
   
   cat("Reading in data\n")
   
@@ -279,17 +279,18 @@ for (i in seq_along(sample_name)) {
   #write10xCounts(path = file.path(SoupX_results_dir, sample_name[i], "strainedCounts"), x = out) #library(SingleCellExperiment)
   #Write10X(out_merge, path = file.path(SoupX_results_dir, "strainedCounts")) #library(Seurat)
 
-  writeMM(out, file = file.path(strainedCounts_SoupX_results_dir, "matrix.mtx"))
+  #writeMM(out, file = file.path(strainedCounts_SoupX_results_dir, "matrix.mtx"))
   
   # Write barcodes (column names of the count matrix)
-  write.table(colnames(out), file = file.path(strainedCounts_SoupX_results_dir, "barcodes.tsv"), 
-            quote = FALSE, row.names = FALSE, col.names = FALSE)
+  #write.table(colnames(out), file = file.path(strainedCounts_SoupX_results_dir, "barcodes.tsv"), 
+  #          quote = FALSE, row.names = FALSE, col.names = FALSE)
 
   # Write features (row names of the count matrix)
-  write.table(rownames(out), file = file.path(strainedCounts_SoupX_results_dir, "features.tsv"),
-            quote = FALSE, row.names = FALSE, col.names = FALSE)
+  #write.table(rownames(out), file = file.path(strainedCounts_SoupX_results_dir, "features.tsv"),
+  #          quote = FALSE, row.names = FALSE, col.names = FALSE)
 
-
+  saveRDS(out, file.path(samples_SoupX_results_dir, "mtx_corrected_SoupX.rds")) # Save combined matrices
+  
   cat("Processing complete for sample", sample_name[i], "\n")
   
   # Let's combine corrected matrices from all samples 

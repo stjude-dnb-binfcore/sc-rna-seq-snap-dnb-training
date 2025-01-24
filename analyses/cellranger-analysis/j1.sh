@@ -45,4 +45,4 @@ python ./util/run_cellranger.py --file=./input/project_metadata.txt \
                                 --transcriptome=${genome_reference_path}  \
                                 --create_bam=true \
                                 --output_dir=./results/02_cellranger_count/${cellranger_parameters}/
-                                # --force_cells=8000                                
+                                # --force_cells=8000      

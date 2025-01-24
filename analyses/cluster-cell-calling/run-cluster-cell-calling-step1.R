@@ -1,6 +1,9 @@
 #################################################################################
 # This will run all scripts in the module
 #################################################################################
+# Load the Package with a Specific Library Path
+.libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
+#################################################################################
 # Load library
 suppressPackageStartupMessages({
   library(yaml)
@@ -25,7 +28,7 @@ report_dir <- file.path(analysis_dir, "plots")
 ################################################################################################################
 # Run Rmd scripts 
 ################################################################################################################
-future_globals_value = 161061273600 # 150 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
+future_globals_value = 214748364800 #200 * 1024^3; # 150 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_clustering_module
 
 rmarkdown::render('01-cluster-cell-calling.Rmd', clean = TRUE,

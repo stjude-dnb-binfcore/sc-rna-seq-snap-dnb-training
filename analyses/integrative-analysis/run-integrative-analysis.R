@@ -1,6 +1,9 @@
 #################################################################################
 # This will run all scripts in the module
 #################################################################################
+# Load the Package with a Specific Library Path
+.libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
+#################################################################################
 # Load library
 suppressPackageStartupMessages({
   library(yaml)})
@@ -32,7 +35,7 @@ rmarkdown::render('01-integrative-analysis.Rmd', clean = TRUE,
                   output_format = 'all',
                   params = list(
                     # the following parameters are defined in the `yaml` file
-                    future_globals_value = 161061273600, # 150 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
+                    future_globals_value = 214748364800, #200 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
                     use_seurat_integration = yaml$use_seurat_integration,
                     use_harmony_integration = yaml$use_harmony_integration,
                     use_liger_integration = yaml$use_liger_integration,

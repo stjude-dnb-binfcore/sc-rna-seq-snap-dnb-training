@@ -22,7 +22,7 @@ fastqc_dir: "." #path to the fastqc files for the `fastqc-analysis` module
 
 # `./analyses/cellranger-analysis`
 genome_reference_path: "./" #path to genome reference to be used for the `cellranger-analysis` module
-cellranger_parameters: "ForcedCells8000Parameters" # or "ForcedCells8000Parameters" etc
+cellranger_parameters: "ForcedCells8000Parameters" # or "DefaultParameters" etc
 genome_name_cellranger: "GRCm39" #please define the genome of preference for dual genomes. In case for single genomes, please use the same as used for `genome_name`.
 
 # `./analyses/upstream-analysis`

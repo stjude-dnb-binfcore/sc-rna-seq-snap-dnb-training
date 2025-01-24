@@ -236,10 +236,8 @@ if (use_SoupX_filtering == "YES"){
   print_message <- "we will use SoupX corrected matrix"
   
    sample_SoupX_input_dir <- file.path(SoupX_results_dir, sample_name[i]) 
-   print(sample_SoupX_input_dir)
    SoupX_file <- c(dir(path = sample_SoupX_input_dir,  pattern = "mtx_corrected_SoupX.rds", full.names = TRUE, recursive = TRUE))
-   print(SoupX_file)
-   
+
    counts_mat <- readRDS(SoupX_file)
    #seurat_obj <- CreateSeuratObject(counts = counts_mat,
    #                                 assay = "RNA_SoupX")
@@ -356,8 +354,8 @@ We will calculate percentage of cells expressing each gene and their mean.
 
 ```{r plot-cells-genes, fig.width = 5, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 cat("Number of cells express a specific gene for sample", sample_name[i], "\n")
-pct_cells <- apply(as.data.frame(seurat_obj@assays$assay@counts), 1, function(x) (sum(x != 0))) / ncol(seurat_obj@assays$assay@counts)
-gene_means <- rowMeans(as.data.frame(seurat_obj@assays$assay@counts))
+pct_cells <- apply(as.data.frame(seurat_obj@assays$RNA@counts), 1, function(x) (sum(x != 0))) / ncol(seurat_obj@assays$RNA@counts)
+gene_means <- rowMeans(as.data.frame(seurat_obj@assays$RNA@counts))
 p <- as.data.frame(cbind(pct_cells, gene_means)) %>%
   rownames_to_column("gene")
   
@@ -378,8 +376,8 @@ We will calculate the number of expressed genes in the library.
 
 ```{r plot-genes-library, fig.width = 5, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 cat("Number of expressed genes in the library for sample", sample_name[i], "\n")
-num_genes <- apply(as.data.frame(seurat_obj@assays$assay@counts), 2, function(x) (sum(x != 0))) # number of expressed genes
-libsize <- colSums(as.data.frame(seurat_obj@assays$assay@counts))
+num_genes <- apply(as.data.frame(seurat_obj@assays$RNA@counts), 2, function(x) (sum(x != 0))) # number of expressed genes
+libsize <- colSums(as.data.frame(seurat_obj@assays$RNA@counts))
 l  <- as.data.frame(cbind(num_genes, libsize)) 
   
 fname <- paste0(samples_plots_dir, "/", sample_name[i], "_", "09", "_genes_num_library.png")

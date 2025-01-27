@@ -31,19 +31,30 @@ mv snap_rstudio_4.4.0_seurat_4.4.0_latest.sif rstudio_4.4.0_seurat_4.4.0_latest.
 
 2. Start the singularity container
 
-a. To run from the terminal
+a. To run analysis modules via lsf
+
+All analysis modules (except for `.analyses/cellranger-analysis`) are designed to be run while executing the container. User only needs to run the lsf script as described in the `README.md` files in each analysis module.
+
+
+b. To run from the terminal
+
+User can run analysis module while on interactive node after executing the container:
+
 ```
 bash run-terminal.sh
 ```
 
-Then you may navigate to your module of interest, `./sc-rna-seq-snap/analyses/<module_of_interest>`. For example:
+Then user may navigate to their module of interest, `./sc-rna-seq-snap/analyses/<module_of_interest>`. For example:
 ```
 cd ./sc-rna-seq-snap/analyses/upstream-analysis
 bash run-upstream-analysis.sh
 ```
 
 
-b. To run from Rstudio
+c. To run from Rstudio
+
+User can also run analyses via Rstudio OnDemand after executing the container:
+
 ```
 bash run-rstudio.sh
 ```

@@ -6,7 +6,7 @@
 
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
 - `project_parameters.Config.yaml` located at the `root_dir`.
-- `future.globals.maxSize` is hardwired coded in the `01A_run_seurat_qc.Rmd`, `03_run_scDblFinder.Rmd`, and `04_run_filter_object.Rmd`. If necessary, user can increase/decrease resources.
+- `future.globals.maxSize` is hardwired coded in the `02A_run_seurat_qc.Rmd`, `03_run_scDblFinder.Rmd`, and `04_run_filter_object.Rmd`. If necessary, user can increase/decrease resources.
 
 
 ### Run module on an interactive session on HPC within the container
@@ -50,7 +50,7 @@ The CellRanger output from the `cellranger-analysis` module is used for this ste
 
 ### (2) Seurat QC metrics
 
-[Seurat](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) and [scooter](https://github.com/igordot/scooter) workflows are implemented to pre-process, filter and plot the RNA-sequencing data. The CellRanger output from the `cellranger-analysis` module or the corrected matrix fromm `step 1: SoupX` will be used for this step. User will have to define `params` as needed for their experiment. 
+[Seurat](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) and [scooter](https://github.com/igordot/scooter) workflows are implemented to pre-process, filter and plot the RNA-sequencing data. The CellRanger output from the `cellranger-analysis` module or the corrected matrix from `step 1: SoupX` will be used for this step. User will have to define `params` as needed for their experiment. 
   - Before and after filter: Plot distribution of the number of genes, UMI, and percent mitochondrial reads per cell.
   - Summary of Cell Statistics: Percent of reads in cells, Median UMI count per cell, Median genes detected per cell, Median percent reads mitochondrial.
   - Data were normalized by using the global-scaling normalization method “LogNormalize” that normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result. Then, highly variable genes (HVGs) are selected to subset features that indicate high cell-to-cell variation in the dataset (i.e, they are highly expressed in some cells, and lowly expressed in others). Then, these HVGs are used as input to principal component analysis, and the top 30 principal components are selected. A combination of different dimensions (20, 25) and number of neighbors (30, 20, 10) are used along with the principal components to calculate the UMAP (Uniform Manifold Approximation and Projection) embeddings.

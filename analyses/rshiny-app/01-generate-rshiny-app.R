@@ -16,14 +16,10 @@ suppressPackageStartupMessages({
   library(glue)
   library(R.utils)
   library(shiny)
-  #install.packages("shinyhelper")
   library(shinyhelper)
-  
   library(DT)
   library(magrittr)
   library(ggdendro)
- 
-  #devtools::install_github("SGDDNB/ShinyCell")
   library(ShinyCell)
   library(RColorBrewer)
   })

@@ -45,7 +45,8 @@ resolution_list <- yaml$resolution_list
 PROJECT_NAME <- yaml$PROJECT_NAME
 PI_NAME <- yaml$PI_NAME
 condition_value <- yaml$condition_value
-
+assay <- yaml$assay_filter_object
+  
 # Set up directories and paths to root_dir and analysis_dir
 analysis_dir <- file.path(root_dir, "analyses") 
 module_dir <- file.path(analysis_dir, "rshiny-app") 
@@ -68,23 +69,14 @@ results_dir <- file.path(module_dir, "results")
 if (!dir.exists(results_dir)) {
   dir.create(results_dir)}
 
-
 ################################################################################
 ### library(ShinyCell) ### ### ### ### ### ### ### ### ### ### ### ### ### ### #
 ################################################################################
-# To remove this once add library(ShinyCell) in the container
-# It was downloaded from here: https://github.com/SGDDNB/ShinyCell/blob/master/R
-#source(paste0(module_dir, "/util/ShinyCell/R/createConfig.R"))
-#source(paste0(module_dir, "/util/ShinyCell/R/makeShinyFiles.R"))
-
-# Get all R script files in the directory (including subdirectories if needed)
-scripts_to_source <- list.files(path = paste0(module_dir, "/util/ShinyCell/R"), pattern = "\\.R$", full.names = TRUE)
-
-# Source each script
-for (script in scripts_to_source) {
-  source(script)
-}
-
+# I modified the `makeShinyFiles.R` that comes from the library(ShinyCell) and rename as `makeShinyFiles_assay.R`
+# The script was downloaded from here: https://github.com/SGDDNB/ShinyCell/blob/master/R
+# The assay is by default always `RNA` in that script 
+# and it doesn't fit the prerequisites for the  `sc-rna-seq-snap` pipeline as we might have a different name for the assays
+source(paste0(module_dir, "/util/makeShinyFiles_assay.R"))
 
 ################################################################################################################
 ### Generate R shiny app ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
@@ -94,28 +86,28 @@ cat("Beginning to process results from", "integration_file", "\n")
 seu1 <- readRDS(integration_file)
 scConf1 <- createConfig(seu1)
 scConf1 <- modColours(scConf1, meta.to.mod = condition_value, new.colours= c("red", "black"))
-makeShinyFiles(seu1, scConf1, shiny.prefix = "sc1", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
+makeShinyFiles_assay(seu1, scConf1, shiny.prefix = "sc1", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
 
 
 cat("Beginning to process results from", "clustering_file", "\n")
 seu2 <- readRDS(clustering_file)
 scConf2 <- createConfig(seu2)
 scConf2 <- modColours(scConf2, meta.to.mod = condition_value, new.colours= c("red", "black"))
-makeShinyFiles(seu2, scConf2, shiny.prefix = "sc2", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
+makeShinyFiles_assay(seu2, scConf2, shiny.prefix = "sc2", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
 
 
 cat("Beginning to process results from", "broad_SingleR_file", "\n")
 seu3 <- readRDS(broad_SingleR_file)
 scConf3 <- createConfig(seu3)
 scConf3 <- modColours(scConf3, meta.to.mod = condition_value, new.colours= c("red", "black"))
-makeShinyFiles(seu3, scConf3, shiny.prefix = "sc3", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
+makeShinyFiles_assay(seu3, scConf3, shiny.prefix = "sc3", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
 
 
 cat("Beginning to process results from", "fine_SingleR_file", "\n")
 seu4 <- readRDS(fine_SingleR_file)
 scConf4 <- createConfig(seu4)
 scConf4 <- modColours(scConf4, meta.to.mod = condition_value, new.colours= c("red", "black"))
-makeShinyFiles(seu4, scConf4, shiny.prefix = "sc4", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
+makeShinyFiles_assay(seu4, scConf4, shiny.prefix = "sc4", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
 
 
 cat("Make R shiny app for all files", "\n")

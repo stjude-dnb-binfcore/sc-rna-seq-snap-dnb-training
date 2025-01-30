@@ -12,7 +12,7 @@ If the module needs to be run more than one time, user will need to remove the `
 ```
 rm -r 02-multiqc-reports
 ```
-=======
+
 
 ### Run module on an interactive session on HPC within the container
 

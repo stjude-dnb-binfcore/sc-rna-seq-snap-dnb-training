@@ -150,6 +150,8 @@ suppressPackageStartupMessages({
   library(stringr)
   library(tidyverse)
   library(tinytex)
+  #library(SingleCellExperiment)
+  library(Matrix)
 
   # Evaluate Seurat R expressions asynchronously when possible using future package
   plan(multisession, workers = parallelly::availableCores())})
@@ -170,17 +172,15 @@ module_results_dir <- file.path(analysis_dir, paste0("results"))
 metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
 
 # Create SoupX_results_dir
-SoupX_results_dir <- file.path(module_results_dir, paste0("02_SoupX"))
+SoupX_results_dir <- file.path(module_results_dir, paste0("01_SoupX"))
 if (!dir.exists(SoupX_results_dir)) {
   dir.create(SoupX_results_dir)}
 
 # Create to plots directory
 plots_dir <- file.path(analysis_dir, "plots") 
-if (!dir.exists(plots_dir)) {
-  dir.create(plots_dir)}
 
 # Create SoupX_plots_dir
-SoupX_plots_dir <- file.path(plots_dir, paste0("02_SoupX"))
+SoupX_plots_dir <- file.path(plots_dir, paste0("01_SoupX"))
 if (!dir.exists(SoupX_plots_dir)) {
   dir.create(SoupX_plots_dir)}
 
@@ -221,6 +221,18 @@ colnames(contamination_summary) <- c("sample_name", "rho_estimated_by_SoupX", "r
 for (i in seq_along(sample_name)) {
   
   cat("Beginning to process sample", sample_name[i], "\n")
+
+  # Create directory 
+  samples_SoupX_results_dir <- file.path(SoupX_results_dir, sample_name[i]) 
+  if (!dir.exists(samples_SoupX_results_dir)) {
+    dir.create(samples_SoupX_results_dir)}
+  print(samples_SoupX_results_dir)
+
+  #strainedCounts_SoupX_results_dir <- file.path(samples_SoupX_results_dir, "strainedCounts") 
+  #if (!dir.exists(strainedCounts_SoupX_results_dir)) {
+  #  dir.create(strainedCounts_SoupX_results_dir)}
+  # print(strainedCounts_SoupX_results_dir)
+  
   cat("Reading in data\n")
   
   filtered_matrix_file <- file.path(data_dir, sample_name[i], "outs", "filtered_feature_bc_matrix.h5") 
@@ -262,15 +274,31 @@ for (i in seq_along(sample_name)) {
   out <- adjustCounts(sc, roundToInt = TRUE) # roundToInt option to make sure we output integer matrix
   colnames(out) <- paste0(sample_name[i], ":", colnames(out))
   colnames(out) = gsub('-1$','', colnames(out)) # remove -1
+  
+  #DropletUtils:::write10xCounts(paste(SoupX_results_dir, "./strainedCounts", sep = ""), out_merge, overwrite = TRUE) #library(DropletUtils)
+  #write10xCounts(path = file.path(SoupX_results_dir, sample_name[i], "strainedCounts"), x = out) #library(SingleCellExperiment)
+  #Write10X(out_merge, path = file.path(SoupX_results_dir, "strainedCounts")) #library(Seurat)
 
+  #writeMM(out, file = file.path(strainedCounts_SoupX_results_dir, "matrix.mtx"))
+  
+  # Write barcodes (column names of the count matrix)
+  #write.table(colnames(out), file = file.path(strainedCounts_SoupX_results_dir, "barcodes.tsv"), 
+  #          quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+  # Write features (row names of the count matrix)
+  #write.table(rownames(out), file = file.path(strainedCounts_SoupX_results_dir, "features.tsv"),
+  #          quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+  saveRDS(out, file.path(samples_SoupX_results_dir, "mtx_corrected_SoupX.rds")) # Save combined matrices
+  
   cat("Processing complete for sample", sample_name[i], "\n")
   
   # Let's combine corrected matrices from all samples 
   # We will use this file in later stage of the `upstream-analysis` module
-    if(i==1) { 
-      out_merge <- out
-      } else {
-        out_merge <- cbind(out_merge, out) }
+  #  if(i==1) { 
+  #    out_merge <- out
+  #    } else {
+  #      out_merge <- cbind(out_merge, out) }
   #dev.off()
 }
 ```
@@ -290,7 +318,7 @@ cat("  \n\\pagebreak  \n")
 # Save output files
 
 ```{r save-output, echo = TRUE}
-saveRDS(out_merge, file.path(SoupX_results_dir, "SoupX_corrected_mtx_merged.rds")) # Save combined matrices
+#saveRDS(out_merge, file.path(SoupX_results_dir, "SoupX_corrected_mtx_merged.rds")) # Save combined matrices
 
 contamination_summary %>%
   write_tsv(file.path(SoupX_results_dir,"SoupX_contamination_summary.tsv")) # Save `contamination_summary`

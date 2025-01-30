@@ -22,7 +22,20 @@ yaml <- read_yaml(configFile)
 # Set up directories and paths to root_dir and analysis_dir
 root_dir <- yaml$root_dir
 analysis_dir <- file.path(root_dir, "analyses", "upstream-analysis") 
-SoupX_dir <- file.path(analysis_dir, "plots", "02_SoupX") 
+
+# File path to plots directory
+plots_dir <- file.path(analysis_dir, "plots") 
+if (!dir.exists(plots_dir)) {
+  dir.create(plots_dir)
+}
+
+# Create module_results_dir
+module_results_dir <- file.path(analysis_dir, paste0("results"))
+if (!dir.exists(module_results_dir)) {
+  dir.create(module_results_dir)
+}
+
+SoupX_dir <- file.path(analysis_dir, "plots", "01_SoupX") 
 scDblFinder_dir <- file.path(analysis_dir, "plots", "03_scDblFinder") 
 Filter_object_dir <- file.path(analysis_dir, "plots", "04_Filter_object") 
 Final_summary_report_dir <- file.path(analysis_dir, "plots", "05_Final_summary_report")
@@ -30,13 +43,8 @@ Final_summary_report_dir <- file.path(analysis_dir, "plots", "05_Final_summary_r
 ################################################################################################################
 # Run Rmd scripts to process data per method
 ################################################################################################################
-# (1) Seurat QC metrics
-# Run the seurat_qc script for each sample/library and save html/pdf reports per each
-source(paste0(analysis_dir, "/", "01B_run_seurat_qc_multiple_samples.R"))
-
-################################################################################################################
-# (2) Estimating and filtering out ambient mRNA (`empty droplets`)
-rmarkdown::render('02_run_SoupX.Rmd', 
+# (1) Estimating and filtering out ambient mRNA (`empty droplets`)
+rmarkdown::render('01_run_SoupX.Rmd', 
                    clean = FALSE,
                    output_dir = file.path(SoupX_dir),
                    output_file = paste('Report-', 'SoupX', '-', Sys.Date(), sep = ''),
@@ -57,6 +65,11 @@ rmarkdown::render('02_run_SoupX.Rmd',
                     PIPELINE = yaml$PIPELINE, 
                     START_DATE = yaml$START_DATE,
                     COMPLETION_DATE = yaml$COMPLETION_DATE))
+
+###############################################################################################################
+# (2) Seurat QC metrics
+# Run the seurat_qc script for each sample/library and save html/pdf reports per each
+source(paste0(analysis_dir, "/", "02B_run_seurat_qc_multiple_samples.R"))
 
 ###############################################################################################################
 # (3) Estimating and filtering out doublets

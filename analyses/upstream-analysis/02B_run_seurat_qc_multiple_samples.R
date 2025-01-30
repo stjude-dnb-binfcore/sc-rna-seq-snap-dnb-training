@@ -27,30 +27,16 @@ root_dir <- yaml$root_dir
 metadata_dir <- yaml$metadata_dir
 analysis_dir <- file.path(root_dir, "analyses", "upstream-analysis") 
 
-# File path to plots directory
-plots_dir <-
-  file.path(analysis_dir, "plots") 
-if (!dir.exists(plots_dir)) {
-  dir.create(plots_dir)
-}
-
 # File path to plots directory for seurat_qc
 seurat_qc_plots_dir <-
-  file.path(plots_dir, "01_Seurat_qc") 
+  file.path(plots_dir, "02_Seurat_qc") 
 if (!dir.exists(seurat_qc_plots_dir)) {
   dir.create(seurat_qc_plots_dir)
 }
 
-# Create module_results_dir
-module_results_dir <- 
-  file.path(analysis_dir, paste0("results"))
-if (!dir.exists(module_results_dir)) {
-  dir.create(module_results_dir)
-}
-
 # Create seurat_results_dir
 seurat_results_dir <- 
-  file.path(module_results_dir, paste0("01_Seurat_qc"))
+  file.path(module_results_dir, paste0("02_Seurat_qc"))
 if (!dir.exists(seurat_results_dir)) {
   dir.create(seurat_results_dir)
 }
@@ -80,7 +66,7 @@ for (i in seq_along(sample_name)){
     dir.create(results_dir)}
   
   # Render and save html
-  rmarkdown::render("01A_run_seurat_qc.Rmd", 
+  rmarkdown::render("02A_run_seurat_qc.Rmd", 
                     output_dir = file.path(samples_plots_dir),
                     clean = TRUE, # using TRUE will clean intermediate files that are created during rendering
                     output_file = c(paste('Report-', 'seurat-qc', '-', sample_name[i], '-', Sys.Date(), sep = '')),
@@ -92,7 +78,7 @@ for (i in seq_along(sample_name)){
                                   grouping = yaml$grouping,
                                   genome_name = yaml$genome_name,
                                   Regress_Cell_Cycle_value = yaml$Regress_Cell_Cycle_value,
-                                  assay = yaml$assay,
+                                  assay = yaml$assay_seurat_qc,
                                   min_genes = yaml$min_genes, 
                                   min_count = yaml$min_count,
                                   mtDNA_pct_default = yaml$mtDNA_pct_default,
@@ -106,6 +92,7 @@ for (i in seq_along(sample_name)){
                                   use_only_step1 = yaml$use_only_step1,
                                   condition_value = yaml$condition_value,
                                   PCA_Feature_List_value = yaml$PCA_Feature_List_value,
+                                  use_SoupX_filtering = yaml$use_SoupX_filtering_seurat_qc,
                                   
                                   # the following parameters are the same across the module #
                                   PROJECT_NAME = yaml$PROJECT_NAME,

@@ -18,7 +18,10 @@ COMPLETION_DATE: "ONGOING"
 
 # the following parameters are set up as default values and/or are specific for the following modules: 
 # `./analyses/fastqc-analysis`
-fastqc_dir: "." #path to the fastqc files for the `fastqc-analysis` module
+# path to the fastqc files for the `fastqc-analysis` module
+fastqc_dir: 
+  - /path1
+  #- /path2
 
 # `./analyses/cellranger-analysis`
 genome_reference_path: "./" #path to genome reference to be used for the `cellranger-analysis` module

@@ -15,7 +15,7 @@ suppressPackageStartupMessages({
   library(stringr)
   library(ggpmisc)
   library(ggrepel)
-  library(miQC) 
+  #library(miQC) 
   library(flexmix) # to estimate mixtureModel for miQC
   library(scater) 
   library(Seurat) 
@@ -70,7 +70,7 @@ suppressPackageStartupMessages({
   library(SeuratObject)
   library(harmony)
   library(rliger)
-  library(RcppPlanc)
+  #library(RcppPlanc)
   library(SeuratWrappers)
   library(scooter)
   library(reshape2)
@@ -80,7 +80,7 @@ suppressPackageStartupMessages({
   # run-cell-types-annotation.R
   library(yaml)
   library(tidyverse)
-  library(celldex)
+  #library(celldex)
   
   # 01-cell-types-annotation-SingleR-broad.Rmd
   library(tidyverse)
@@ -88,5 +88,10 @@ suppressPackageStartupMessages({
   library(SingleR)
   library(scooter)
   library(knitr)
+
+  library(ShinyCell)
+  library(shinyhelper)
+  library(DT)
+  library(ggdendro)
 
 })

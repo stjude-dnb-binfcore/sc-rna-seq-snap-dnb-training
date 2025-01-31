@@ -38,26 +38,22 @@ header-includes:
 
 # Set up
 
-```{r}
-.libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
-```
-
 ```{r load-library, include=FALSE, echo=TRUE}
 suppressPackageStartupMessages({
   library(BiocManager)
   library(devtools)
   library(remotes)
   
-  library(miQC)
+  #library(miQC)
   library(scater)
   library(scDblFinder)
   library(SingleCellExperiment)
-  library(celldex)
+  #library(celldex)
   library(SingleR)
   library(infercnv)
   
   library(scooter)
-  library(RcppPlanc)
+  #library(RcppPlanc)
   library(numbat)
 
   library(clustree)
@@ -102,6 +98,11 @@ suppressPackageStartupMessages({
   library(tidyverse)
   library(tinytex)
   library(yaml)
+  
+  library(ShinyCell)
+  library(shinyhelper)
+  library(DT)
+  library(ggdendro)
 })
 ```
 

@@ -1,27 +1,38 @@
 FROM rocker/rstudio:4.4.0
 
-#
 # Ensure virtual env on PATH so we're using the right venv binaries
 #
+
+# Set default locale
 ENV LC_ALL=C
+
+# Ensure virtual env is on the PATH so we're using the right venv binaries
 ENV VIRTUAL_ENV=/opt/container-venv
 ENV PATH=/opt/container-venv/bin:$PATH
+#ENV R_LIBS_USER=/home/user/R/x86_64-pc-linux-gnu-library/4.4
 
 #
-# Ensure core system software is up to date and ready. Need certs for Cloudflare!
+# Ensure core system software is up to date and ready
 #
 
-RUN apt-get -y update && apt-get -y install ca-certificates gdebi-core python3-pip python3-venv
+# Clean up and update apt cache
+#RUN rm -rf /var/lib/apt/lists/* && apt-get update
+
+#RUN apt-get clean
+
+# Install necessary certificates package
+#RUN apt-get -y update && apt-get -y install ca-certificates
+RUN apt-get -y update && apt-get -y install gdebi-core python3-pip python3-venv
+#RUN apt-get -y update && apt-get -y install ca-certificates gdebi-core python3-pip python3-venv
 
 #
 # Install Cloudflare certificates so Docker build isn't interrupted by
 # certificate errors. Combination of certificates should be valid until 2029.
 #
 
-COPY "./cloudflare_certs/original-certificate.pem" /usr/local/share/ca-certificates/2024-certificate.crt
-COPY "./cloudflare_certs/SJ-2025-2029-CF-WARP-certificate.pem" /usr/local/share/ca-certificates/2025-2029-certificate.crt
-RUN update-ca-certificates
-
+#COPY "./cloudflare_certs/original-certificate.pem" /usr/local/share/ca-certificates/2024-certificate.crt
+#COPY "./cloudflare_certs/SJ-2025-2029-CF-WARP-certificate.pem" /usr/local/share/ca-certificates/2025-2029-certificate.crt
+#RUN update-ca-certificates
 
 
 #
@@ -42,6 +53,15 @@ RUN update-ca-certificates
 RUN python3 -m venv /opt/container-venv
 RUN . /opt/container-venv/bin/activate
 
+
+# Clean the APT Cache: Sometimes, the package cache may cause problems during installations. 
+# You can clear the cache to ensure there are no broken cached files:
+# RUN apt-get clean
+
+# Prevent errors in dependencies for the following
+#RUN apt-get update
+#
+
 # Avoids BiocManager errors in Rhtslib; "fatal error: lzma.h: No such file or directory" etc
 RUN apt-get -y install liblzma-dev libbz2-dev
 
@@ -49,13 +69,27 @@ RUN apt-get -y install liblzma-dev libbz2-dev
 RUN apt-get -y install libglpk-dev
 
 # Avoids BiocManager errors in infercnv: "libjags.so.4: cannot open shared object file: No such file or directory"
-RUN apt-get -y install r-cran-rjags
+RUN apt-get update && apt-get -y install r-cran-rjags
 
+# Update package list and install necessary dependencies
+#RUN apt-get update && apt-get install -y \
+#    libcurl4-openssl-dev \
+#    libssl-dev \
+#    libxml2-dev \
+#    libjags-dev \
+#    r-cran-rjags \
+#    && rm -rf /var/lib/apt/lists/*
+    
 # Avoids errors in "Rscript -e 'devtools::install_github("welch-lab/RcppPlanc")'"
 RUN apt-get -y install cmake libhdf5-dev
 
 # Needed for pipeline stages
-RUN apt-get install -y openjdk-8-jre-headless fastqc multiqc curl
+RUN apt-get install -y openjdk-8-jre-headless fastqc curl
+
+# Install MultiQC specific version (e.g., 1.25)
+# Current multiqc in the container is v1.12 whereas previously the contained had v1.25. 
+# The report style from v1.25 is preferable as it contains more information on overrepresented sequences.
+RUN pip install multiqc==1.25
 
 # Needed for the cluster-cell-calling stage etc. Pandas as per Antonia's request.
 RUN pip3 install pandas leidenalg
@@ -76,16 +110,19 @@ RUN apt-get update && \
     python3-pygments && \
     rm -rf /var/lib/apt/lists/*
 
+    
 # Install TexLive to the container
-RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
-    tar xzf install-tl-unx.tar.gz && rm install-tl-unx.tar.gz && \
+RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz -v && \
+    tar xzf install-tl-unx.tar.gz -v && \
+    #rm install-tl-unx.tar.gz && \
     cd install-tl* && \
     echo "selected_scheme scheme-full" > install.profile && \
     echo "tlpdbopt_install_docfiles 0" >> install.profile && \
     echo "tlpdbopt_install_srcfiles 0" >> install.profile && \
     echo "tlpdbopt_autobackup 0" >> install.profile && \
     echo "tlpdbopt_sys_bin /usr/bin" >> install.profile && \
-    ./install-tl -profile install.profile && cd .. && rm -rf install-tl*
+    ./install-tl -profile install.profile && \
+    cd .. && rm -rf install-tl*
 
 # Symlink TexLive binaries to PATH
 RUN /usr/local/texlive/2024/bin/x86_64-linux/tlmgr path add
@@ -101,10 +138,11 @@ RUN echo "options(repos = c(CRAN = 'https://packagemanager.posit.co/cran/__linux
 #
 # Install required R package managers
 #
-
-
 RUN Rscript -e 'install.packages("usethis")'
 RUN Rscript -e 'install.packages(c("BiocManager", "devtools", "remotes"))'
+#RUN Rscript -e 'install.packages(c("BiocManager", "remotes"))'
+#RUN Rscript -e 'if (!requireNamespace("devtools", quietly = TRUE)) install.packages("devtools")'
+
 
 # Debugging step: Verify installations
 RUN Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) stop("BiocManager not installed!")'
@@ -134,6 +172,10 @@ RUN Rscript -e 'devtools::install_github("welch-lab/RcppPlanc")'
 RUN Rscript -e 'devtools::install_github("kharchenkolab/numbat")'
 RUN Rscript -e 'devtools::install_github("welch-lab/liger")'
 
+# New R libraries for R shiny app
+RUN Rscript -e 'devtools::install_github("SGDDNB/ShinyCell")'
+
+
 #
 # Removed "grid" from installs as triggered the warning message:
 # "package 'grid' is a base package, and should not be updated"
@@ -149,9 +191,16 @@ RUN Rscript -e 'install.packages(c("harmony", "igraph", "irlba"))'
 RUN Rscript -e 'install.packages(c("knitr", "optparse"))'
 RUN Rscript -e 'install.packages(c("patchwork", "purrr", "RColorBrewer"))'
 RUN Rscript -e 'install.packages(c("remotes", "reshape2", "rliger"))'
-RUN Rscript -e 'install.packages(c("rlist", "R.utils", "SeuratObject"))'
+RUN Rscript -e 'install.packages(c("rlist"))'
+RUN Rscript -e 'install.packages(c("R.utils"))'
+RUN Rscript -e 'install.packages(c("SeuratObject"))'
 RUN Rscript -e 'install.packages(c("shiny", "SoupX", "stringr"))'
 RUN Rscript -e 'install.packages(c("tidytext", "tidyverse", "tinytex", "yaml"))'
+
+# New R libraries for R shiny app
+RUN Rscript -e 'install.packages(c("shinyhelper", "DT", "ggdendro"))'
+
+#
 
 # Prevent errors in dependencies for the following
 RUN apt-get -y update
@@ -178,7 +227,6 @@ RUN Rscript -e 'remotes::install_version("Seurat", version = "4.4.0")'
 #RUN Rscript -e 'install.packages("Signac")'
 RUN Rscript -e 'devtools::install_github("stuart-lab/signac", ref = "develop")'
 
-
 #
 # Install CellRanger v8.0.1
 #
@@ -189,10 +237,17 @@ RUN Rscript -e 'devtools::install_github("stuart-lab/signac", ref = "develop")'
 ENV PATH=/opt/cellranger-8.0.1/bin:${PATH}
 ENV LD_LIBRARY_PATH=/opt/cellranger-8.0.1/lib
 
-RUN curl -o cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1735637913&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=g0mi3a~7RGhqh51x1p6qL0rJ7gvx3~NVWlpW5pg4E7D0xWTISNpa1kmb6AS~qxAiP2mLwDBqjfH9NLmzelBmTx02xRZ3YfsKikcPPRn9KyB8D5Ki2lrIUZkChkfuLdDkoxAfmBOBv~kLvsuefV~2k8-B1WRNCPcoxryhdbbK3-b~FkZgnP~Fe0h5rI~5757jV2r1I6yq3xTs0ayw0WDyL49apdI0bIi4E7-lCPohbnGop0Z~G1Y~QMTR3TN98e8mEKWfmZjboSgG7triA8jDY3g1hbSI5pQh8yzHfww3fTcFN8P1ksjX0NH~~UWNeepSJwPA11MfoQ3cUq3SLvazuA__"
+RUN curl -o cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1738318541&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=Pr~Owd9FgQODubhPWIB3bhTzR7ISYwYXdFYS4RcJZg08KerTxbotkZJIZPc0erJjUbH6qWjMjzSyey669yDOYCX-sZF0egTCGFcOl3GVGOtBBI91lcawNSJH6Pi6Zqjt8Nkn1dsh9NLj3iPKXjaCJIJcsQiV6fgquKfIHVT~hwGfkgDAbMh7NwrFI1Kq-c7pOtsTjytCdTl2ahnX68GNpdbmlTIyygwqfuzzGdQz2~3vsvuBJCQsHG9OOVRK0vZcvOcOE4UUW~xdurHQunWhidsjiMoSpPF-~kIvSz0pK8DHRXCiPBlR228j3G-Mv-Ocyoe1pxdRaYJ4Qtx4PfhFGg__"
 RUN tar -xvzf cellranger-8.0.1.tar.gz -C /opt
 #
 
+# Optional: Clean up to reduce image size
+RUN rm -rf /var/lib/apt/lists/* && apt-get clean
+
+#
+# Set the working directory (optional)
+# WORKDIR /home/user
+#
 
 # Run virtual end on container startup- adjust as needed.
 ENTRYPOINT . /opt/container-venv/bin/activate

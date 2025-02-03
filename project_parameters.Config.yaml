@@ -43,7 +43,7 @@ num_pcs: 30 # define number of principal components
 nfeatures_value: 3000 # define number of variable features
 prefix: "lognorm" # create label based on the normalization method used
 use_miQC: "NO" # define use of miQC R package or not; see `README.md` file for more information; acceptable values: "YES" and "NO"
-use_only_step1: "YES" # define use of both or only first step for filtering low quality cells; see `README.md` file for more information; acceptable values: "YES" and "NO"
+use_only_step1: "NO" # define use of both or only first step for filtering low quality cells; see `README.md` file for more information; acceptable values: "YES" and "NO"
 condition_value: "Genotype" # define main condition of the project; this can be used for visualization purposes on the UMAPs; value to be extracted from column name in `project_metadata.tsv` file
 num_dim_seurat_qc: [20, 25] # number of PCs to use in UMAP
 num_neighbors_seurat_qc: [10, 20, 30] # number of neighbors to use in UMAP

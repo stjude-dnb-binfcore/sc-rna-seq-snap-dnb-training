@@ -179,7 +179,7 @@ data_dir <- file.path(root_dir, "analyses", "cluster-cell-calling", "results", g
 module_functions_dir <- file.path(root_dir, "analyses", "upstream-analysis")
   
 # Input files
-data_file <- file.path(data_dir, glue::glue("seurat_obj_integrated_{integration_method}.rds"))
+data_file <- file.path(data_dir, glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))
 gradient_palette_file <- file.path(root_dir, "figures", "palettes", "gradient_color_palette.tsv")
 
 # Create results_dir

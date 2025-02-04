@@ -63,6 +63,10 @@ Finally, `git pull` to get the most updated changes and code in your project rep
 git pull
 ```
 
+## To request memory from the HPCF cluster
+
+Users should adjust the memory request based on both the size of the cohort and the specific requirements of the analysis. St. Jude users are encouraged to consult the [Introduction to the HPCF cluster](https://wiki.stjude.org/display/HPCF/Introduction+to+the+HPCF+cluster#IntroductiontotheHPCFcluster-queuesQueues:) for guidance. Additionally, if requesting more than 1 TB of memory, consider using the `large_mem` queue to ensure proper resource allocation.
+
 
 ### Below is the main directory structure listing the analyses and data files used in this repository
 

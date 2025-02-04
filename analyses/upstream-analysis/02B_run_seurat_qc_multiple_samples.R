@@ -1,5 +1,5 @@
 #################################################################################
-# This will run the `01A-run-seurat-qc.Rmd` script for multiple samples/libraries
+# This will run the `02A-run-seurat-qc.Rmd` script for multiple samples/libraries
 # and save html report separetely for each one of them
 # https://pkgs.rstudio.com/rmarkdown/reference/render.html
 #################################################################################

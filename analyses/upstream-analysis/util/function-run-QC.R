@@ -43,7 +43,8 @@ run_QC_default <- function(seurat_obj) {
     filtered_seurat_obj <- subset(seurat_obj, 
                            subset = nFeature_RNA >= min_genes &
                                     nCount_RNA >= min_count &
-                                    percent.mito <= mtDNA_pct_default)
+                                    percent.mito <= mtDNA_pct_default &
+                                    percent.mito <= Find_Outlier_Thershold(seurat_obj$percent.mito)[2])
     } else {        
       print("Use step 1 with default parameters for filtering and then use the `Find_Outlier_Thershold` function!")
       # Step 1
@@ -51,16 +52,15 @@ run_QC_default <- function(seurat_obj) {
       filtered_seurat_obj_step1 <- subset(seurat_obj, 
                                           subset = nFeature_RNA >= min_genes &
                                                    nCount_RNA >= min_count &
-                                                   percent.mito <= mtDNA_pct_default)                                   
+                                                   percent.mito <= mtDNA_pct_default &
+                                                   percent.mito <= Find_Outlier_Thershold(seurat_obj$percent.mito)[2])                                   
       # Step 2
       cat("Step 2 data filter", sample_name[i], "\n")
       nFeature_RNA_rm_outlier <- Find_Outlier_Thershold(filtered_seurat_obj_step1$nFeature_RNA)
-      nCount_RNA_rm_outlier <- Find_Outlier_Thershold(filtered_seurat_obj_step1$nCount_RNA)
-      mtDNA_pct_rm_outlier <- Find_Outlier_Thershold(filtered_seurat_obj_step1$percent.mito)
       filtered_seurat_obj <- subset(filtered_seurat_obj_step1, 
-                                    subset = nFeature_RNA >= nFeature_RNA_rm_outlier &
-                                             nCount_RNA >= nCount_RNA_rm_outlier &
-                                             percent.mito <= mtDNA_pct_rm_outlier)
+                                    subset = nFeature_RNA >= Find_Outlier_Thershold(filtered_seurat_obj_step1$nFeature_RNA)[1] &
+                                             nFeature_RNA <= Find_Outlier_Thershold(filtered_seurat_obj_step1$nFeature_RNA)[2])
+
   }
   return(filtered_seurat_obj)
 }

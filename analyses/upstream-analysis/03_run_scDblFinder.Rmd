@@ -195,7 +195,7 @@ print(sample_name)
 ```
 
 # Read raw seurat_objs 
-We will load the raw seurat object as generated in the `01_seurat_alignment_qc.Rmd` step of the pipeline. We will run dimensionality reductions and convert to single cell experiments.
+We will load the raw seurat object as generated in the `02A_seurat_alignment_qc.Rmd` step of the pipeline. We will run dimensionality reductions and convert to single cell experiments.
 
 # Run scDblFinder 
 Next, the `scDblFinder function` is used to identify cells that are doublets based on cluster-based generation of artificial doublets. We will save the cells that need to be filtered based on scDblFinder analysis in a separate table.

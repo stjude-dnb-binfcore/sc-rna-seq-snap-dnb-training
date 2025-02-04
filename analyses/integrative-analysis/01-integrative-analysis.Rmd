@@ -263,7 +263,7 @@ if (use_seurat_integration == "YES"){
                                    reference_list = reference_list_value,
                                    PCA_Feature_List = PCA_Feature_List_value)
   } else {
-    print_message <- "we will skip usage of the Seurat ‘anchor-based’ workflow"}
+    print_message <- "we will skip usage of the Seurat 'anchor-based' workflow"}
 ```
 
 Here, `r print_message`.

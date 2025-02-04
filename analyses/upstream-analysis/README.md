@@ -68,14 +68,14 @@ sc <- autoEstCont(sc_raw, forceAccept = TRUE, tfidfMin = 0.1, soupQuantile = 0.9
 [Seurat](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) and [scooter](https://github.com/igordot/scooter) workflows are implemented to pre-process, filter and plot the RNA-sequencing data. The CellRanger output from the `cellranger-analysis` module or the corrected matrix from `step 1: SoupX` will be used for this step. User will have to define `params` as needed for their experiment. 
   - Before and after filter: Plot distribution of the number of genes, UMI, and percent mitochondrial reads per cell.
   - Summary of Cell Statistics: Percent of reads in cells, Median UMI count per cell, Median genes detected per cell, Median percent reads mitochondrial.
-  - Data were normalized by using the global-scaling normalization method “LogNormalize” that normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result. Then, highly variable genes (HVGs) are selected to subset features that indicate high cell-to-cell variation in the dataset (i.e, they are highly expressed in some cells, and lowly expressed in others). Then, these HVGs are used as input to principal component analysis, and the top 30 principal components are selected. A combination of different dimensions (20, 25) and number of neighbors (30, 20, 10) are used along with the principal components to calculate the UMAP (Uniform Manifold Approximation and Projection) embeddings.
+  - Data are normalized by using the global-scaling normalization method “LogNormalize” that normalizes the feature expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and log-transforms the result. Then, highly variable genes (HVGs) are selected to subset features that indicate high cell-to-cell variation in the dataset (i.e, they are highly expressed in some cells, and lowly expressed in others). Then, these HVGs are used as input to principal component analysis, and the top 30 principal components are selected. A combination of different dimensions (20, 25) and number of neighbors (30, 20, 10) are used along with the principal components to calculate the UMAP (Uniform Manifold Approximation and Projection) embeddings.
   
 Here, the user can select to implement the following strategies to remove low quality cells:
-- `step A` [miQC](https://bioconductor.org/packages/devel/bioc/vignettes/miQC/inst/doc/miQC.html) R package. The miQC model is based on the assumption that there are a non-trivial number of compromised cells in the dataset, which is not true in all datasets. If it is already known that the dataset is high-quality with a trivial number of compromised cells, we recommend that the user skip this step. 
+- `step A` [miQC](https://bioconductor.org/packages/devel/bioc/vignettes/miQC/inst/doc/miQC.html) R package. The miQC model is based on the assumption that there are a non-trivial number of compromised cells in the dataset, which is not true in all datasets. If it is already known that the dataset is high-quality with a trivial number of compromised cells, we recommend that the user skip this step. If miQC does not identify any low quality cells, then the `step B` will automatically be used as for the filtering strategy.
 - `step B` `run_QC_default` function. This is split in two filtering steps.
    - `step 1`: Filter cells with low content of genes expressed and remove mtDNA from each library (as defined in the `params`).
    - `step 2`: `Find_Outlier_Thershold` function. This is an optional step (as defined in the `params`). 
-If miQC does not identify any low quality cells, then the `step B` will automatically be used as for the filtering strategy.
+
 
 #### Post alignment/cell quality filtering parameters
 We recommend that the user use the following parameters for initial QC, and then adjust accordingly if necessary:
@@ -101,7 +101,7 @@ The `seurat_obj_raw.rds` object from step (1) is used for this step.
 
 ### (4) Merging filtered data
 
-Next, we merge count matrices from steps (1-3) after filtering out low quality cells, ambient RNA (optional as defined in the `params`), and doublets. Seurat object and metadata for the library along with UMAP embeddings are saved to be used for downstream analyses.
+Next, we merge count matrices from steps (1-3) after filtering out low quality cells, ambient RNA (optional as defined in the `params`), and doublets (optional as defined in the `params`). Seurat object and metadata for the library along with UMAP embeddings are saved to be used for downstream analyses.
 
 ### (5) Final QC summary report
 

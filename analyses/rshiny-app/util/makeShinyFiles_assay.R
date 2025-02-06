@@ -60,8 +60,8 @@
 #'                default.dimred = c("UMAP_1", "UMAP_2"))
 #'
 #' @export
-makeShinyFiles <- function(
-  obj, scConf, gex.assay = NA, gex.slot = c("data", "scale.data", "counts"), 
+makeShinyFiles_assay <- function(
+  obj, scConf, gex.assay = assay, gex.slot = c("data", "scale.data", "counts"), 
   gene.mapping = FALSE, shiny.prefix = "sc1", shiny.dir = "shinyApp/",
   default.gene1 = NA, default.gene2 = NA, default.multigene = NA, 
   default.dimred = NA, chunkSize = 500){
@@ -69,7 +69,7 @@ makeShinyFiles <- function(
   # Generate defaults for gex.assay / gex.slot
   if(class(obj)[1] == "Seurat"){
     # Seurat Object
-    if(is.na(gex.assay[1])){gex.assay = "RNA_SoupX"} #"RNA"
+    if(is.na(gex.assay[1])){gex.assay = assay} #"RNA", "RNA_SoupX"
     if(class(obj@assays[[gex.assay[1]]]) == "Assay5"){ #"Assay5"
       # Seurat v5
       # check if layers are joined

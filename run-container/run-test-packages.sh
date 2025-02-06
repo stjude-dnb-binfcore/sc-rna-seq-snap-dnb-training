@@ -29,9 +29,17 @@ singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif multiqc -
 singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif pandoc --version
 singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif tex --version
 
-# Run R script
+# Run R script with all R packages
 singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif \
             Rscript -e "rmarkdown::render('run-test-packages.Rmd', clean = TRUE,
                               output_dir = file.path('.'),
                               output_file = c(paste('Report-', 'run-test-packages', '-', Sys.Date(), sep = '')),
                               output_format = 'all')"
+
+# Run R script with all lsf problematic R packages
+singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript -e "rmarkdown::render('run-lsf-problematic-packages.Rmd', clean = TRUE,
+                                                                                               output_dir = file.path('.'),
+                                                                                               output_file = c(paste('Report-', 'run-lsf-problematic-packages', '-', Sys.Date(), sep = '')),
+                                                                                               output_format = 'all')"
+
+singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript --vanilla run-lsf-problematic-packages.R

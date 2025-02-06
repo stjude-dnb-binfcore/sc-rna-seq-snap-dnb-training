@@ -1,7 +1,7 @@
 # To replicate the clean environment behavior of R Markdown in an R script, consider clearing the workspace at the start of your script by calling
 # rm(list = ls())
 
-.libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
+# .libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
 
 suppressPackageStartupMessages({
   
@@ -15,7 +15,7 @@ suppressPackageStartupMessages({
   library(stringr)
   library(ggpmisc)
   library(ggrepel)
-  #library(miQC) 
+  library(miQC) 
   library(flexmix) # to estimate mixtureModel for miQC
   library(scater) 
   library(Seurat) 
@@ -38,7 +38,7 @@ suppressPackageStartupMessages({
   
 
   # 03_run_scDblFinder.Rmd
-  library(scDblFinder)
+  #library(scDblFinder)
   library(Seurat)
   library(scater)
   library(future)
@@ -70,7 +70,7 @@ suppressPackageStartupMessages({
   library(SeuratObject)
   library(harmony)
   library(rliger)
-  #library(RcppPlanc)
+  library(RcppPlanc)
   library(SeuratWrappers)
   library(scooter)
   library(reshape2)
@@ -94,4 +94,9 @@ suppressPackageStartupMessages({
   library(DT)
   library(ggdendro)
 
+  
+  #library(scDblFinder)
+  #library(celldex)
+  #library(infercnv)
+  #library(numbat)
 })

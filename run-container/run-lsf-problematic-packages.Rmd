@@ -48,7 +48,7 @@ suppressPackageStartupMessages({
   library(stringr)
   library(ggpmisc)
   library(ggrepel)
-  #library(miQC) 
+  library(miQC) 
   library(flexmix) # to estimate mixtureModel for miQC
   library(scater) 
   library(Seurat) 
@@ -70,7 +70,7 @@ suppressPackageStartupMessages({
   library(hdf5r)
 
   # 03_run_scDblFinder.Rmd
-  library(scDblFinder)
+  #library(scDblFinder)
   library(Seurat)
   library(scater)
   library(future)
@@ -102,7 +102,7 @@ suppressPackageStartupMessages({
   library(SeuratObject)
   library(harmony)
   library(rliger)
-  #library(RcppPlanc)
+  library(RcppPlanc)
   library(SeuratWrappers)
   library(scooter)
   library(reshape2)

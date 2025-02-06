@@ -5,13 +5,5 @@
 #BSUB -R "rusage[mem=2GB] span[hosts=1]"
 #BSUB -cwd "."
 
-singularity exec ../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript --vanilla run-lsf-problematic-packages.R
-singularity exec ../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript -e "rmarkdown::render('run-lsf-problematic-packages.Rmd', clean = TRUE,
-                                                                                               output_dir = file.path('.'),
-                                                                                               output_file = c(paste('Report-', 'run-lsf-problematic-packages', '-', Sys.Date(), sep = '')),
-                                                                                               output_format = 'all')"
 
-singularity exec ../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript -e "rmarkdown::render('run-test-packages.Rmd', clean = TRUE,
-                              output_dir = file.path('.'),
-                              output_file = c(paste('Report-', 'run-test-packages', '-', Sys.Date(), sep = '')),
-                              output_format = 'all')"
+bash run-test-packages.sh

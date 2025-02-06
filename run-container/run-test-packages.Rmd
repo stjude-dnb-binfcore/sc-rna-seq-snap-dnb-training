@@ -44,17 +44,17 @@ suppressPackageStartupMessages({
   library(devtools)
   library(remotes)
   
-  #library(miQC)
+  library(miQC)
   library(scater)
-  library(scDblFinder)
+  #library(scDblFinder)
   library(SingleCellExperiment)
   #library(celldex)
   library(SingleR)
-  library(infercnv)
+  #library(infercnv)
   
   library(scooter)
-  #library(RcppPlanc)
-  library(numbat)
+  library(RcppPlanc)
+  #library(numbat)
 
   library(clustree)
   library(cowplot)

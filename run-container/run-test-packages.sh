@@ -14,6 +14,7 @@ which python
 cd "$(dirname "${BASH_SOURCE[0]}")" 
 pwd
 
+mkdir -p reports
 ########################################################################
 # Read container path and file
 containerdir=$(realpath "$(dirname "${BASH_SOURCE[0]}")/..")
@@ -31,15 +32,15 @@ singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif tex --ver
 
 # Run R script with all R packages
 singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif \
-            Rscript -e "rmarkdown::render('run-test-packages.Rmd', clean = TRUE,
-                              output_dir = file.path('.'),
+            Rscript -e "rmarkdown::render('01-run-test-packages.Rmd', clean = TRUE,
+                              output_dir = file.path('./reports/'),
                               output_file = c(paste('Report-', 'run-test-packages', '-', Sys.Date(), sep = '')),
                               output_format = 'all')"
 
 # Run R script with all lsf problematic R packages
-singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript -e "rmarkdown::render('run-lsf-problematic-packages.Rmd', clean = TRUE,
-                                                                                               output_dir = file.path('.'),
+singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript -e "rmarkdown::render('02-run-lsf-problematic-packages.Rmd', clean = TRUE,
+                                                                                               output_dir = file.path('./reports/'),
                                                                                                output_file = c(paste('Report-', 'run-lsf-problematic-packages', '-', Sys.Date(), sep = '')),
                                                                                                output_format = 'all')"
 
-singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript --vanilla run-lsf-problematic-packages.R
+singularity exec ${containerdir}/rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript --vanilla 03-run-lsf-problematic-packages.R

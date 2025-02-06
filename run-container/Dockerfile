@@ -9,20 +9,19 @@ ENV LC_ALL=C
 # Ensure virtual env is on the PATH so we're using the right venv binaries
 ENV VIRTUAL_ENV=/opt/container-venv
 ENV PATH=/opt/container-venv/bin:$PATH
+
+# Ensure virtual env is on the PATH for LSF TO load the Package with a Specific Library Path
+# This fixes the issue with the cc libraries
 ENV R_LIBS_USER=/home/user/R/x86_64-pc-linux-gnu-library/4.4
 
 #
 # Ensure core system software is up to date and ready
 #
 
-# Clean up and update apt cache
-#RUN rm -rf /var/lib/apt/lists/* && apt-get update
-
-#RUN apt-get clean
-
 # Install necessary certificates package
 #RUN apt-get -y update && apt-get -y install ca-certificates
 RUN apt-get -y update && apt-get -y install gdebi-core python3-pip python3-venv
+# If the certificate works, better to use the following code of line (instead of breaking in two parts)
 #RUN apt-get -y update && apt-get -y install ca-certificates gdebi-core python3-pip python3-venv
 
 #
@@ -72,15 +71,6 @@ RUN apt-get -y install libglpk-dev
 RUN apt-get update && \
     apt-get install -y r-cran-rjags
 
-# Update package list and install necessary dependencies
-#RUN apt-get update && apt-get install -y \
-#    libcurl4-openssl-dev \
-#    libssl-dev \
-#    libxml2-dev \
-#    libjags-dev \
-#    r-cran-rjags \
-#    && rm -rf /var/lib/apt/lists/*
-    
 # Avoids errors in "Rscript -e 'devtools::install_github("welch-lab/RcppPlanc")'"
 RUN apt-get -y install cmake libhdf5-dev
 
@@ -100,6 +90,8 @@ RUN pip3 install pandas leidenalg
 #
 #
 # Install texlive full version
+# This step can break easily. The code is correct, user needs to keep bulding until it passes this step (very time consuming).
+# I do not know why it breaks, but there must be some issue from Cloudflare that interferes with permissions and proper installation.
 #
 ENV TEXLIVE_INSTALL_NO_CONTEXT_CACHE=1 \
     NOPERLDOC=1
@@ -142,27 +134,144 @@ RUN echo "options(repos = c(CRAN = 'https://packagemanager.posit.co/cran/__linux
 #
 RUN Rscript -e 'install.packages("usethis")'
 RUN Rscript -e 'install.packages(c("BiocManager", "devtools", "remotes"))'
-#RUN Rscript -e 'install.packages(c("BiocManager", "remotes"))'
-#RUN Rscript -e 'if (!requireNamespace("devtools", quietly = TRUE)) install.packages("devtools")'
-
 
 # Debugging step: Verify installations
 RUN Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) stop("BiocManager not installed!")'
 RUN Rscript -e 'if (!requireNamespace("devtools", quietly = TRUE)) stop("devtools not installed!")'
 RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) stop("remotes not installed!")'
 
+RUN Rscript -e 'BiocManager::install("celldex")'
+RUN Rscript -e 'if (!requireNamespace("celldex", quietly = TRUE)) stop("celldex not installed!")'
+
+
+# ###############################################################
+# Problematic installation for the following - February 5, 2025 #
+# START ########## ########## ########## ########## ########## ##
+# Let's fix it!
+#
+# # Docker: Install infercnv
+# https://github.com/broadinstitute/infercnv/blob/master/docker/Dockerfile
+RUN apt-get update && apt-get -y install curl libssl-dev libcurl4-openssl-dev \
+                                        libxml2-dev git python3 jags \
+                                        r-cran-rjags time && \
+                      apt-get clean && rm -rf /var/tmp/* \
+                                          /tmp/* /var/lib/apt/lists/*
+                                          
+RUN Rscript -e 'BiocManager::install("infercnv")'
+# Checkout and install infercnv
+# update to version bump commit
+RUN git clone https://github.com/broadinstitute/infercnv && cd infercnv && \
+      git checkout master && git checkout 1b46b48303bac4a882bcb758e78fcf7f832fdefb && \
+      R CMD INSTALL . 
+
+ENV PATH=${PATH}:/infercnv/scripts
+RUN Rscript -e 'if (!requireNamespace("infercnv", quietly = TRUE)) stop("infercnv not installed!")'
+#
+
+#
+# # Docker: Install scDblFinder
+# https://github.com/plger/scDblFinder/blob/devel/Dockerfile
+# RUN Rscript -e "BiocManager::install('ensembldb'); BiocManager::install('Rtsne')"
+# RUN Rscript -e "devtools::install('.', dependencies=TRUE, repos = BiocManager::repositories(), build_vignettes = TRUE)"
+#RUN apt-get update && apt-get install -y \
+#    libcurl4-openssl-dev \
+#    libssl-dev \
+#    libxml2-dev \
+#    build-essential \
+#    libgit2-dev \
+#    && rm -rf /var/lib/apt/lists/*
+    
+#RUN Rscript -e 'BiocManager::install("scDblFinder")'
+#RUN Rscript -e 'if (!requireNamespace("scDblFinder", quietly = TRUE)) stop("scDblFinder not installed!")'
+
+# Or, to get the very latest version,
+# RUN Rscript -e 'BiocManager::install("plger/scDblFinder")'
+#
+
+#
+# # Docker: Install numbat
+# https://github.com/kharchenkolab/numbat/blob/main/docker/Dockerfile
+RUN apt-get update --yes && apt-get install --yes build-essential \
+  libcurl4-gnutls-dev libxml2-dev libssl-dev libbz2-dev zlib1g-dev \
+  libfontconfig1-dev libharfbuzz-dev libfribidi-dev \
+  libncurses5-dev libncursesw5-dev liblzma-dev libgit2-dev \
+  libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev \
+  libglpk-dev git autoconf gettext libtool automake  \
+  samtools sudo
+
+RUN cd /usr/bin && \
+  wget https://github.com/samtools/htslib/releases/download/1.15.1/htslib-1.15.1.tar.bz2 && \
+  tar -vxjf htslib-1.15.1.tar.bz2 && cd htslib-1.15.1 && make && sudo make install
+
+RUN Rscript -e 'install.packages(c("ragg", "pkgdown"))'
+
+#RUN R -e 'chooseCRANmirror(ind=42); install.packages("ragg")'
+#RUN R -e 'chooseCRANmirror(ind=42); install.packages("pkgdown")'
+
+RUN R -e 'devtools::install_github("YuLab-SMU/ggtree", dependencies=TRUE)'
+
+RUN R -e 'devtools::install_github("kharchenkolab/numbat", dependencies=TRUE)'
+
+RUN git clone https://github.com/kharchenkolab/numbat.git
+
+RUN mkdir -p /tmp && chmod 777 /tmp
+
+RUN chmod 777 /numbat/inst/bin/pileup_and_phase.R 
+
+RUN mkdir data
+
+# hg 38
+# RUN cd /data && wget -q https://sourceforge.net/projects/cellsnp/files/SNPlist/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf.gz && gzip -d genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf.gz 
+
+## Note: not run; the user can follow these commands if they want hg19
+# hg19
+## RUN cd /data && wget https://sourceforge.net/projects/cellsnp/files/SNPlist/genome1K.phase3.SNP_AF5e2.chr1toX.hg19.vcf.gz && gzip -d genome1K.phase3.SNP_AF5e2.chr1toX.hg19.vcf.gz
+
+# hg38
+# RUN cd /data && wget -q http://pklab.med.harvard.edu/teng/data/1000G_hg38.zip && unzip 1000G_hg38.zip 
+
+# hg19
+##RUN cd /data && wget http://pklab.med.harvard.edu/teng/data/1000G_hg19.zip && unzip 1000G_hg19.zip
+
+RUN apt-get -y update
+
+RUN git clone https://github.com/single-cell-genetics/cellsnp-lite.git && cd cellsnp-lite && \
+  autoreconf -iv && ./configure && make && sudo make install    
+
+#RUN apt-get -y update
+
+RUN wget -q https://storage.googleapis.com/broad-alkesgroup-public/Eagle/downloads/Eagle_v2.4.1.tar.gz && cd .. && tar -xvzf Eagle_v2.4.1.tar.gz && cd /Eagle_v2.4.1 && cp eagle /usr/bin
+
+# Debugging
+RUN Rscript -e 'if (!requireNamespace("numbat", quietly = TRUE)) stop("numbat not installed!")'
+#
+# Problematic installation for R packages fixed - February 5, 2025 #
+# THE END ########## ########## ########## ########## ########## ###
+# ##################################################################
 
 #
 # This is a fairly time consuming section; lots built from source.
 #
 
-RUN Rscript -e 'BiocManager::install(c("celldex"))'
-RUN Rscript -e 'BiocManager::install(c("miQC"))'
-RUN Rscript -e 'BiocManager::install(c("infercnv"))'
-RUN Rscript -e 'BiocManager::install(c("scater"))'
-RUN Rscript -e 'BiocManager::install(c("scDblFinder"))'
-RUN Rscript -e 'BiocManager::install(c("SingleCellExperiment"))'
-RUN Rscript -e 'BiocManager::install(c("SingleR"))'
+# This code solve the failing with installation
+RUN apt-get -y update
+RUN apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+
+RUN Rscript -e 'BiocManager::install("scDblFinder", ask = FALSE)'
+RUN Rscript -e 'if (!requireNamespace("scDblFinder", quietly = TRUE)) stop("scDblFinder not installed!")'
+
+RUN Rscript -e 'BiocManager::install("miQC")'
+RUN Rscript -e 'if (!requireNamespace("miQC", quietly = TRUE)) stop("miQC not installed!")'
+
+RUN Rscript -e 'BiocManager::install("scater")'
+RUN Rscript -e 'if (!requireNamespace("scater", quietly = TRUE)) stop("scater not installed!")'
+
+RUN Rscript -e 'BiocManager::install("SingleCellExperiment")'
+RUN Rscript -e 'if (!requireNamespace("SingleCellExperiment", quietly = TRUE)) stop("SingleCellExperiment not installed!")'
+
+RUN Rscript -e 'BiocManager::install("SingleR")'
+RUN Rscript -e 'if (!requireNamespace("SingleR", quietly = TRUE)) stop("SingleR not installed!")'
+
 
 #
 # Some github-based R modules; RcppPlanc needs previously installed cmake
@@ -170,12 +279,14 @@ RUN Rscript -e 'BiocManager::install(c("SingleR"))'
 #
 
 RUN Rscript -e 'devtools::install_github("igordot/scooter")'
+RUN Rscript -e 'if (!requireNamespace("scooter", quietly = TRUE)) stop("scooter not installed!")'
+
 RUN Rscript -e 'devtools::install_github("welch-lab/RcppPlanc")'
-RUN Rscript -e 'devtools::install_github("kharchenkolab/numbat")'
-RUN Rscript -e 'devtools::install_github("welch-lab/liger")'
+RUN Rscript -e 'if (!requireNamespace("RcppPlanc", quietly = TRUE)) stop("RcppPlanc not installed!")'
 
 # New R libraries for R shiny app
 RUN Rscript -e 'devtools::install_github("SGDDNB/ShinyCell")'
+RUN Rscript -e 'if (!requireNamespace("ShinyCell", quietly = TRUE)) stop("ShinyCell not installed!")'
 
 
 #
@@ -222,12 +333,14 @@ RUN apt-get -y update
 RUN Rscript -e 'remotes::install_github("satijalab/seurat-wrappers@community-vignette")'
 RUN Rscript -e 'remotes::install_version("Seurat", version = "4.4.0")'
 
-#
-# As per Antonia's request via Teams, 12/16/2024 09:46.
-#
-
 #RUN Rscript -e 'install.packages("Signac")'
 RUN Rscript -e 'devtools::install_github("stuart-lab/signac", ref = "develop")'
+
+
+# This code solve the failing with installation
+RUN Rscript -e 'devtools::install_github("welch-lab/liger")'
+#RUN Rscript -e 'if (!requireNamespace("liger", quietly = TRUE)) stop("liger not installed!")'
+
 
 #
 # Install CellRanger v8.0.1

@@ -31,7 +31,7 @@ Primary author of TeX: D.E. Knuth.
 5/7                  
 6/7 [unnamed-chunk-2]
 7/7                  
-/usr/bin/pandoc +RTS -K512m -RTS run-test-packages.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/Report-run-test-packages-2025-02-06.html --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --table-of-contents --toc-depth 2 --variable toc_float=1 --variable toc_selectors=h1,h2 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /usr/local/lib/R/site-library/rmarkdown/rmd/h/default.html --highlight-style tango --number-sections --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /lsf_tmp/248320829.tmpdir/RtmpnuYFkn/rmarkdown-str2aaa44340fe076.html --variable code_folding=hide --variable code_menu=1 
+/usr/bin/pandoc +RTS -K512m -RTS 01-run-test-packages.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/reports/Report-run-test-packages-2025-02-06.html --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --table-of-contents --toc-depth 2 --variable toc_float=1 --variable toc_selectors=h1,h2 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /usr/local/lib/R/site-library/rmarkdown/rmd/h/default.html --highlight-style tango --number-sections --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /lsf_tmp/248342983.tmpdir/RtmpiRP8bk/rmarkdown-str4d0c42c2d5f7d.html --variable code_folding=hide --variable code_menu=1 
 1/7                  
 2/7 [load-library]   
 3/7                  
@@ -39,47 +39,47 @@ Primary author of TeX: D.E. Knuth.
 5/7                  
 6/7 [unnamed-chunk-2]
 7/7                  
-/usr/bin/pandoc +RTS -K512m -RTS run-test-packages.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/Report-run-test-packages-2025-02-06.tex --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --table-of-contents --toc-depth 2 --number-sections --highlight-style tango --pdf-engine lualatex --variable graphics --include-in-header /lsf_tmp/248320829.tmpdir/RtmpnuYFkn/rmarkdown-str2aaa44d5ba2bf.html 
+/usr/bin/pandoc +RTS -K512m -RTS 01-run-test-packages.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/reports/Report-run-test-packages-2025-02-06.tex --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --table-of-contents --toc-depth 2 --number-sections --highlight-style tango --pdf-engine lualatex --variable graphics --include-in-header /lsf_tmp/248342983.tmpdir/RtmpiRP8bk/rmarkdown-str4d0c448843444.html 
 1/6                  
 2/6 [load-library]   
 3/6                  
 4/6 [unnamed-chunk-1]
 5/6                  
 6/6 [unnamed-chunk-2]
-/usr/bin/pandoc +RTS -K512m -RTS run-lsf-problematic-packages.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/Report-run-lsf-problematic-packages-2025-02-06.html --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --table-of-contents --toc-depth 2 --variable toc_float=1 --variable toc_selectors=h1,h2 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /usr/local/lib/R/site-library/rmarkdown/rmd/h/default.html --highlight-style tango --number-sections --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /lsf_tmp/248320829.tmpdir/RtmpIDiiyU/rmarkdown-str2aae281e3bd212.html --variable code_folding=hide --variable code_menu=1 
+/usr/bin/pandoc +RTS -K512m -RTS 02-run-lsf-problematic-packages.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/reports/Report-run-lsf-problematic-packages-2025-02-06.html --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --table-of-contents --toc-depth 2 --variable toc_float=1 --variable toc_selectors=h1,h2 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /usr/local/lib/R/site-library/rmarkdown/rmd/h/default.html --highlight-style tango --number-sections --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /lsf_tmp/248342983.tmpdir/RtmpKR7lfp/rmarkdown-str4d56c6aace16f.html --variable code_folding=hide --variable code_menu=1 
 1/6                  
 2/6 [load-library]   
 3/6                  
 4/6 [unnamed-chunk-1]
 5/6                  
 6/6 [unnamed-chunk-2]
-/usr/bin/pandoc +RTS -K512m -RTS run-lsf-problematic-packages.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/Report-run-lsf-problematic-packages-2025-02-06.tex --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --table-of-contents --toc-depth 2 --number-sections --highlight-style tango --pdf-engine lualatex --variable graphics --include-in-header /lsf_tmp/248320829.tmpdir/RtmpIDiiyU/rmarkdown-str2aae283ea5bf3a.html 
+/usr/bin/pandoc +RTS -K512m -RTS 02-run-lsf-problematic-packages.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/reports/Report-run-lsf-problematic-packages-2025-02-06.tex --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --table-of-contents --toc-depth 2 --number-sections --highlight-style tango --pdf-engine lualatex --variable graphics --include-in-header /lsf_tmp/248342983.tmpdir/RtmpKR7lfp/rmarkdown-str4d56c5d10871a.html 
 1/6                  
 2/6 [load-library]   
 3/6                  
 4/6 [unnamed-chunk-1]
 5/6                  
 6/6 [unnamed-chunk-2]
-/usr/bin/pandoc +RTS -K512m -RTS run-lsf-problematic-packages.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/Report-run-lsf-problematic-packages-2025-02-06.html --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --table-of-contents --toc-depth 2 --variable toc_float=1 --variable toc_selectors=h1,h2 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /usr/local/lib/R/site-library/rmarkdown/rmd/h/default.html --highlight-style tango --number-sections --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /lsf_tmp/248320829.tmpdir/Rtmpcd4PZ5/rmarkdown-str2ab59f598d7d5c.html --variable code_folding=hide --variable code_menu=1 
+/usr/bin/pandoc +RTS -K512m -RTS 02-run-lsf-problematic-packages.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/reports/Report-run-lsf-problematic-packages-lsf-2025-02-06.html --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --variable bs3=TRUE --section-divs --table-of-contents --toc-depth 2 --variable toc_float=1 --variable toc_selectors=h1,h2 --variable toc_collapsed=1 --variable toc_smooth_scroll=1 --variable toc_print=1 --template /usr/local/lib/R/site-library/rmarkdown/rmd/h/default.html --highlight-style tango --number-sections --variable theme=bootstrap --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /lsf_tmp/248342983.tmpdir/RtmpIg8at5/rmarkdown-str4dd977ec399e8.html --variable code_folding=hide --variable code_menu=1 
 1/6                  
 2/6 [load-library]   
 3/6                  
 4/6 [unnamed-chunk-1]
 5/6                  
 6/6 [unnamed-chunk-2]
-/usr/bin/pandoc +RTS -K512m -RTS run-lsf-problematic-packages.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/Report-run-lsf-problematic-packages-2025-02-06.tex --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --table-of-contents --toc-depth 2 --number-sections --highlight-style tango --pdf-engine lualatex --variable graphics --include-in-header /lsf_tmp/248320829.tmpdir/Rtmpcd4PZ5/rmarkdown-str2ab59f824812d.html 
+/usr/bin/pandoc +RTS -K512m -RTS 02-run-lsf-problematic-packages.knit.md --to latex --from markdown+autolink_bare_uris+tex_math_single_backslash --output /research_jude/rgs01_jude/dept/DNB/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/reports/Report-run-lsf-problematic-packages-lsf-2025-02-06.tex --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /usr/local/lib/R/site-library/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --table-of-contents --toc-depth 2 --number-sections --highlight-style tango --pdf-engine lualatex --variable graphics --include-in-header /lsf_tmp/248342983.tmpdir/RtmpIg8at5/rmarkdown-str4dd97e085344.html 
 
 ------------------------------------------------------------
-Sender: LSF System <lsfadmin@noderome159>
-Subject: Job 248320829: <run-lsf-problematic-packages> in cluster <hpcf_research_cluster> Done
+Sender: LSF System <lsfadmin@noderome133>
+Subject: Job 248342983: <run-lsf-problematic-packages> in cluster <hpcf_research_cluster> Done
 
-Job <run-lsf-problematic-packages> was submitted from host <noderome310> by user <achroni> in cluster <hpcf_research_cluster> at Wed Feb  5 19:59:54 2025
-Job was executed on host(s) <noderome159>, in queue <standard>, as user <achroni> in cluster <hpcf_research_cluster> at Wed Feb  5 19:59:59 2025
+Job <run-lsf-problematic-packages> was submitted from host <noderome109> by user <achroni> in cluster <hpcf_research_cluster> at Thu Feb  6 11:12:48 2025
+Job was executed on host(s) <noderome133>, in queue <standard>, as user <achroni> in cluster <hpcf_research_cluster> at Thu Feb  6 11:12:50 2025
 </home/achroni> was used as the home directory.
 </research/dept/dnb/core_operations/Bioinformatics/achroni/GitHub/sc-rna-seq-snap/run-container/.> was used as the working directory.
-Started at Wed Feb  5 19:59:59 2025
-Terminated at Wed Feb  5 20:01:43 2025
-Results reported at Wed Feb  5 20:01:43 2025
+Started at Thu Feb  6 11:12:50 2025
+Terminated at Thu Feb  6 11:15:25 2025
+Results reported at Thu Feb  6 11:15:25 2025
 
 Your job looked like:
 
@@ -95,28 +95,30 @@ Your job looked like:
 
 bash run-test-packages.sh
 
-singularity exec ../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript --vanilla run-lsf-problematic-packages.R
-
-singularity exec ../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript -e "rmarkdown::render('run-lsf-problematic-packages.Rmd', clean = TRUE,
-                                                                                               output_dir = file.path('.'),
-                                                                                               output_file = c(paste('Report-', 'run-lsf-problematic-packages', '-', Sys.Date(), sep = '')),
+# Run R script with all lsf problematic R packages
+singularity exec ../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript -e "rmarkdown::render('02-run-lsf-problematic-packages.Rmd', clean = TRUE,
+                                                                                               output_dir = file.path('./reports/'),
+                                                                                               output_file = c(paste('Report-', 'run-lsf-problematic-packages-lsf', '-', Sys.Date(), sep = '')),
                                                                                                output_format = 'all')"
+
+singularity exec ../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript --vanilla 03-run-lsf-problematic-packages.R
+
 ------------------------------------------------------------
 
 Successfully completed.
 
 Resource usage summary:
 
-    CPU time :                                   87.27 sec.
-    Max Memory :                                 1207 MB
-    Average Memory :                             630.10 MB
+    CPU time :                                   116.41 sec.
+    Max Memory :                                 1518 MB
+    Average Memory :                             948.43 MB
     Total Requested Memory :                     2048.00 MB
-    Delta Memory :                               841.00 MB
+    Delta Memory :                               530.00 MB
     Max Swap :                                   -
     Max Processes :                              9
-    Max Threads :                                24
-    Run time :                                   104 sec.
-    Turnaround time :                            109 sec.
+    Max Threads :                                26
+    Run time :                                   155 sec.
+    Turnaround time :                            157 sec.
 
 The output (if any) is above this job summary.
 

@@ -9,7 +9,7 @@ ENV LC_ALL=C
 # Ensure virtual env is on the PATH so we're using the right venv binaries
 ENV VIRTUAL_ENV=/opt/container-venv
 ENV PATH=/opt/container-venv/bin:$PATH
-#ENV R_LIBS_USER=/home/user/R/x86_64-pc-linux-gnu-library/4.4
+ENV R_LIBS_USER=/home/user/R/x86_64-pc-linux-gnu-library/4.4
 
 #
 # Ensure core system software is up to date and ready
@@ -69,7 +69,8 @@ RUN apt-get -y install liblzma-dev libbz2-dev
 RUN apt-get -y install libglpk-dev
 
 # Avoids BiocManager errors in infercnv: "libjags.so.4: cannot open shared object file: No such file or directory"
-RUN apt-get update && apt-get -y install r-cran-rjags
+RUN apt-get update && \
+    apt-get install -y r-cran-rjags
 
 # Update package list and install necessary dependencies
 #RUN apt-get update && apt-get install -y \
@@ -84,7 +85,8 @@ RUN apt-get update && apt-get -y install r-cran-rjags
 RUN apt-get -y install cmake libhdf5-dev
 
 # Needed for pipeline stages
-RUN apt-get install -y openjdk-8-jre-headless fastqc curl
+RUN apt-get update && \
+    apt-get install -y openjdk-8-jre-headless fastqc curl
 
 # Install MultiQC specific version (e.g., 1.25)
 # Current multiqc in the container is v1.12 whereas previously the contained had v1.25. 
@@ -237,7 +239,7 @@ RUN Rscript -e 'devtools::install_github("stuart-lab/signac", ref = "develop")'
 ENV PATH=/opt/cellranger-8.0.1/bin:${PATH}
 ENV LD_LIBRARY_PATH=/opt/cellranger-8.0.1/lib
 
-RUN curl -o cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1738318541&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=Pr~Owd9FgQODubhPWIB3bhTzR7ISYwYXdFYS4RcJZg08KerTxbotkZJIZPc0erJjUbH6qWjMjzSyey669yDOYCX-sZF0egTCGFcOl3GVGOtBBI91lcawNSJH6Pi6Zqjt8Nkn1dsh9NLj3iPKXjaCJIJcsQiV6fgquKfIHVT~hwGfkgDAbMh7NwrFI1Kq-c7pOtsTjytCdTl2ahnX68GNpdbmlTIyygwqfuzzGdQz2~3vsvuBJCQsHG9OOVRK0vZcvOcOE4UUW~xdurHQunWhidsjiMoSpPF-~kIvSz0pK8DHRXCiPBlR228j3G-Mv-Ocyoe1pxdRaYJ4Qtx4PfhFGg__"
+RUN curl -o cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1738835653&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=HtHQnp-gnFU0b5lZlGj8uzZN29pVn5ij7Zoaf1YA6260lqfCqwfaWBH7dU0O8Zsi-C-gY~UPyYGRztoymb5fqR6h0o-FIyYG0KcX5WVAox2cPe1u0k4ZJlq4MrpUmTMbJQ7vpF3abinkB8~y~IzkinoKTuu5Ibvq6ZAZN1MkGBpRZ8hyu-y0dy2KyRru9e3vFWpzRkrEGeUMcx89OMBnM~-MBPRWtc7xrLrhDMAhD9WS4-YGPAQce3qsaq-8OXGnprhpG4hNbnkSzSKcj97p64HmSqW5pddObza7T4bRzLx~e3zYqrLv6bw-YZv~-cRZxgWr2d~fUYWKjEkcikQ32w__"
 RUN tar -xvzf cellranger-8.0.1.tar.gz -C /opt
 #
 

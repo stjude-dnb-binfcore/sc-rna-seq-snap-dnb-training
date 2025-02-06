@@ -59,7 +59,15 @@ git checkout main
 ```
 
 Finally, `git pull` to get the most updated changes and code in your project repo. Please be mindful of any changes in files in your project repo that you have done, e.g., `project_parameters.Config.yaml`. You will need to commit or stash (or restore) the changes to the yaml before completing the pull.
+
 ```
+git status
+git add project_parameters.Config.yaml
+git commit -m "Update yaml"
+```
+
+```
+git config pull.rebase false
 git pull
 ```
 

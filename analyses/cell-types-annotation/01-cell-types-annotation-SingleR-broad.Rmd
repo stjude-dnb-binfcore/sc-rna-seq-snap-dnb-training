@@ -284,33 +284,25 @@ print(plotDeltaDistribution(seurat_obj_broad, ncol = 3))
 ggsave(file = name, width = 15, height = 15, device = "png")
 ```
 
-# Identify number of cells with low-quality assignments of cell type annotations
-
-We will identify and rename the cells with low-quality assignments to `Unassigned` (instead of NAs). 
+# Identify number of cells with low-quality or no assignments of cell type annotations
 
 ```{r echo=TRUE}
-# cells to remove
-cells_to_remove <- length(colnames(seurat_obj)[which(is.na(seurat_obj@meta.data$singler.broad))])
-
-# Remove cells from the object
-#seurat_obj@meta.data <- seurat_obj@meta.data %>%
-#  filter(!is.na(singler.broad))
-
 seurat_obj@meta.data <- seurat_obj@meta.data %>%
-  mutate(singler.broad = if_else(is.na(singler.broad), "Unassigned", as.character(singler.broad)))
+  mutate(singler.broad = if_else(is.na(singler.broad), "unassigned", as.character(singler.broad)),
+         singler.broad = if_else(singler.broad == "", "unassigned", singler.broad))
 
-# cells to keep
-#cells_to_keep <- length(seurat_obj@meta.data$singler.broad)
+# unassigned cells 
+cells_unassigned <- length(which(seurat_obj@meta.data$singler.broad == "unassigned"))
 ```
 
-There were identified `r cells_to_remove` cells due to low-quality assignments of cell type annotations. We will include these cells in the following plots.
+We will identify and rename the cells with low-quality or no assignments to `unassigned` (instead of NAs or empty strings). There were identified `r cells_unassigned` cells due to low-quality or no assignments of cell type annotations. We will include these cells in the following plots.
 
 # Plotting cell type annotations
 
 ```{r define-parameters-for-plots, echo=TRUE}
 # Read color palette
 palette_df <- readr::read_tsv(cell_types_palette_file, guess_max = 100000, show_col_types = FALSE) %>%
-  mutate(cell_type_names = case_when(cell_type_names == "na_color" ~ "Unassigned",
+  mutate(cell_type_names = case_when(cell_type_names == "na_color" ~ "unassigned",
                                        TRUE ~ cell_type_names))
 
 # Define and order palette

@@ -1,0 +1,371 @@
+---
+title: "Cell types annotation using a list of gene-markers as a reference for sc-/sn-RNA-Seq Analysis in 10X Genomics data"
+author: "Antonia Chroni for SJCRH DNB_BINF_Core"
+papersize: a4
+fontsize: 11pt
+links-as-notes: true
+output:
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    df_print: paged
+    code_folding: hide
+    toc_depth: 2
+    highlight: tango
+    number_sections: TRUE
+  pdf_document:
+    toc: TRUE
+    highlight: tango
+    number_sections: TRUE
+    latex_engine: lualatex
+    keep_tex: FALSE
+    fig_caption: yes
+    fig_crop: no
+    fig_height: 2
+    fig_width: 3
+    toc_depth: 2
+always_allow_html: TRUE
+urlcolor: blue
+linkcolor: black
+citecolor: blue
+geometry: margin=1in
+header-includes: 
+  - \usepackage{titling}
+  - \usepackage{fancyhdr}
+  - \usepackage{graphicx}
+  - \usepackage{float}
+params:
+  data_file: '.'
+  input_data: '.'
+  integration_method: '.'
+  redution_value: '.' 
+  condition_value: '.'
+  use_min.diff.med: '.'
+  min.diff.med_value: '.'
+  assay: '.'
+  gene_markers_dir: '.'
+  gene_markers_file_name: '.'
+  genome_name: '.'
+  cluster: '.'
+  clustering_gene_markers_dir: '.'
+  clustering_gene_markers_file_name: '.'
+  root_dir: './'
+  PROJECT_NAME: '.'
+  PI_NAME: '.'
+  TASK_ID: '.'
+  PROJECT_LEAD_NAME: '.'
+  DEPARTMENT: '.'
+  LEAD_ANALYSTS: '.'
+  GROUP_LEAD: '.'
+  CONTACT_EMAIL: '.'
+  PIPELINE: '.'
+  START_DATE: '.'
+  COMPLETION_DATE: '.'
+---
+```{r logo-file, echo=FALSE}
+attach(params)
+# Insert logo on the top of the html report 
+logo_file <- file.path(root_dir, "figures", "img", "DNB-BINF-Core-logo.png")
+htmltools::img(src = knitr::image_uri(logo_file), alt = "logo", style = "position:absolute; top:0; left:0; padding:0px; height:120px;")
+detach(params)
+```
+
+\addtolength{\headheight}{2.0cm} 
+\fancypagestyle{plain}{} 
+\thispagestyle{fancy}
+\fancyhead[L]{\includegraphics[height=120px]{`r logo_file`}}
+\renewcommand{\headrulewidth}{0pt}
+
+<style type="text/css">
+:root {--DNB_BINF_Core_color: #00427B;}
+
+h1.title {margin-top: 130px;
+          margin-bottom: 25px;
+          font-size: 36px;}
+
+.nobullet li {list-style-type: none;}
+
+.reporthead {font-size: 20px;}
+
+body { /* Normal */
+  font-size: 16px;
+  font-style: Arial, Helvetica, sans-serif;}
+
+h1 {color: var(--DNB_BINF_Core_color);
+    font-size: 28px;
+    margin-top: 50px;}
+
+h2 {color: var(--DNB_BINF_Core_color);
+    font-size: 20px;}
+
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+  background-color: var(--DNB_BINF_Core_color);}
+</style>
+
+<a href="https://wiki.stjude.org/display/CAB">
+
+</a>
+
+\pagebreak
+
+<div class="reporthead"><br/>
+**PI: `r params$PI_NAME`**  
+**Project: `r params$PROJECT_NAME`**  
+Task: `r params$TASK_ID`  
+Project Lead(s): `r params$PROJECT_LEAD_NAME`  
+Department: `r params$DEPARTMENT`  
+
+<br />  
+
+DNB Bioinformatics Core Analysis Team: 
+<br />  
+
+>**Lead Analyst(s): `r params$LEAD_ANALYSTS`**  
+>Group Lead: `r params$GROUP_LEAD`  
+<br />
+>**Contact E-mail:** `r params$CONTACT_EMAIL`  
+>**DNB Bioinformatics Core Pipeline:** `r params$PIPELINE`  
+
+Date started: `r params$START_DATE`  
+Date completed:  `r params$COMPLETION_DATE`  
+Report generated: `r format(Sys.time(), '%H:%M:%S %Z %m/%d/%Y')` \
+
+Reviewed by: _____________________   Date: ____________ \
+</div>
+\pagebreak
+  
+# Information about this notebook
+
+For more information, see [SingleR](https://bioconductor.org/packages/release/bioc/vignettes/SingleR/inst/doc/SingleR.html) and the [SingleR book](https://bioconductor.org/books/release/SingleRBook/introduction.html).
+
+# Set up
+```{r load-library, echo=TRUE}
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(Seurat)
+  library(scooter)
+  library(knitr)
+  #library(scran)
+  #library(SingleCellExperiment)
+  #library(dittoSeq)
+  }) 
+```
+
+# Directories and paths to file Inputs/Outputs
+
+```{r set-dir-and-file-names, echo=TRUE}
+attach(params)
+analysis_dir <- file.path(root_dir, "analyses", "cell-types-annotation") 
+
+# Input files
+cell_types_palette_file <- file.path(root_dir, "figures", "palettes", "cell_types_palette.tsv")
+gene_markers_file <- file.path(gene_markers_dir, gene_markers_file_name)
+clustering_gene_markers_file <- file.path(clustering_gene_markers_dir, clustering_gene_markers_file_name)
+
+# Create results_dir
+module_results_dir <- file.path(analysis_dir, "results")
+
+results_dir <- file.path(module_results_dir, "03_cell_types_annotation_gene_markers")
+if (!dir.exists(results_dir)) {
+  dir.create(results_dir)}
+
+# Create plots directory
+module_plots_dir <- file.path(analysis_dir, "plots") 
+plots_dir <- file.path(module_plots_dir, "03_cell_types_annotation_gene_markers") 
+
+source(paste0(root_dir, "/figures/scripts/theme_plot.R"))
+source(paste0(analysis_dir, "/util/function-calculate-cell-type-signature.R"))
+source(paste0(analysis_dir, "/util/function-cell-type-fractions.R"))
+
+# https://github.com/dtm2451/dittoSeq/blob/devel/R/gene-getters.R
+#source(paste0(analysis_dir, "/util/dittoSeq/gene-getters.R"))
+```
+
+```{r echo=FALSE, warning=FALSE}
+opts_chunk$set(fig.align='center',
+               external=TRUE,
+               echo=FALSE,
+               warning=FALSE,
+               fig.pos='H')
+a4width <- 8.3
+a4height <- 11.7
+```
+
+# Read seurat object
+First, we will use the `seurat_obj_integrated_{integration_method}.rds` object as generated from the pipeline in the `input_data` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params` and the clusters. 
+
+```{r read-object, echo=TRUE}
+seurat_obj <- readRDS(data_file)
+```
+
+# Cell types annotation using a list of gene-markers as a reference
+
+We will use a list of gene-markers as a reference to identify and annotate cell types.
+
+```{r read-file-with-gene-markers, echo=TRUE}
+marker_list <- readr::read_tsv(gene_markers_file, guess_max = 100000, show_col_types = FALSE) 
+head(marker_list)
+
+markers <- readr::read_tsv(clustering_gene_markers_file, guess_max = 100000, show_col_types = FALSE) 
+```
+
+```{r calculate_cell_type_signature, echo=TRUE}
+# Approach 1: CODY'S WAY
+# TODO: TO FIX
+#cat("Calculate cell type signatures\n")
+
+#seurat_obj <- calculate_cell_type_signature(seurat_obj = seurat_obj, 
+#                                            results_dir = results_dir, 
+#                                            gene_markers_df = marker_list, 
+#                                            genome_name = genome_name)
+
+########################################################################################################
+# Approach 2
+# Create an empty vector to store the cell type annotation
+cell_types_gene_markers <- vector("character", length = ncol(seurat_obj))
+
+
+# Loop over each cluster and compare marker genes
+for (cluster in unique(seurat_obj@meta.data$seurat_clusters)) {
+  # Get the top markers for the current cluster
+  cluster_markers <- markers[markers$cluster == cluster, ]
+
+  # Annotate the cell type based on the gene markers
+  for (cell_type_gene_markers in names(marker_list)) {
+
+    # Check if the marker genes for this cell type are expressed in the cluster
+    if (any(cluster_markers$gene %in% marker_list[[cell_type_gene_markers]])) {
+      cell_types_gene_markers[seurat_obj@meta.data$seurat_clusters == cluster] <- cell_type_gene_markers
+    }
+  }
+}
+
+# Add the annotations to the Seurat object metadata
+# Add the annotations to the Seurat object metadata
+seurat_obj@meta.data$cell_type_gene_markers <- cell_types_gene_markers
+
+# Add metadata
+new.data <- seurat_obj@meta.data %>%
+  as.data.frame() %>%
+  add_column(project = "project")
+seurat_obj <- AddMetaData(seurat_obj, metadata = new.data)
+
+# Create table
+summary_table <- table(cell_type_gene_markers = seurat_obj@meta.data$cell_type_gene_markers) %>% # all labels
+  as.data.frame() %>% 
+  mutate(cells_number_all = Freq) %>% 
+  dplyr::select(-Freq) 
+```
+
+We will check the number of cells by summarizing the identified cell type annotations.
+
+```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
+tables1 <- summary_table
+cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
+print(knitr::kable(tables1, caption = "Gene markers cell type annotations"))
+cat("  \n</div>  \n")
+cat("  \n\\pagebreak  \n")
+```
+
+# Identify number of cells with low-quality or no assignments of cell type annotations
+
+```{r echo=TRUE}
+seurat_obj@meta.data <- seurat_obj@meta.data %>%
+  mutate(cell_type_gene_markers = if_else(is.na(cell_type_gene_markers), "unassigned", as.character(cell_type_gene_markers)),
+         cell_type_gene_markers = if_else(cell_type_gene_markers == "", "unassigned", cell_type_gene_markers))
+
+# unassigned cells 
+cells_unassigned <- length(which(seurat_obj@meta.data$cell_type_gene_markers == "unassigned"))
+```
+
+We will identify and rename the cells with low-quality or no assignments to `unassigned` (instead of NAs or empty strings). There were identified `r cells_unassigned` cells due to low-quality or no assignments of cell type annotations. We will include these cells in the following plots.
+
+
+# Plotting cell type annotations
+
+```{r define-parameters-for-plots, echo=TRUE}
+# Read color palette
+palette_df <- readr::read_tsv(cell_types_palette_file, guess_max = 100000, show_col_types = FALSE) %>%
+  mutate(cell_type_names = case_when(cell_type_names == "na_color" ~ "unassigned",
+                                       TRUE ~ cell_type_names))
+
+# Define and order palette
+palette <- palette_df$hex_codes 
+names(palette) <- palette_df$cell_type_names 
+```
+
+## Gene markers cell type annotations: before vs after integration
+
+```{r plot-comparison-before-vs-after-integration, fig.width = 18, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-gene-markers-comparison-before-vs-after-integration.png"))
+p1.before <- DimPlot(seurat_obj, group.by = 'cell_type_gene_markers', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle("Gene markers cell type annotations: merged") 
+p1.after <- DimPlot(seurat_obj, reduction = redution_value, group.by = 'cell_type_gene_markers', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle(glue::glue("Gene markers cell type annotations: {integration_method} integration")) 
+print(p1.before + p1.after)
+ggsave(file = name, width = 18, height = 6, device = "png")
+```
+
+```{r plot-cell-types-project-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-gene-markers-project-fractions.png"))
+p.project <- print(cell_type_fractions_cell_type_gene_markers(df = seurat_obj@meta.data,
+                                            condition = "project",
+                                            color_df = palette,
+                                            title_value = "Gene markers"))
+ggsave(file = name, width = 6, height = 5, device = "png")
+```
+
+## Gene markers cell type annotations and fractions per ID
+
+```{r plot-cell-types-ID, fig.width = 25, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-gene-markers-ID.png"))
+p1.after <- print(DimPlot(seurat_obj, reduction = redution_value, split.by = "ID", group.by = 'cell_type_gene_markers', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle(glue::glue("Gene markers cell type annotations: {integration_method} integration")))
+ggsave(file = name, width = 25, height = 6, device = "png")
+```
+
+```{r plot-cell-types-ID-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-gene-markers-ID-fractions.png"))
+p.ID <- print(cell_type_fractions_cell_type_gene_markers(df = seurat_obj@meta.data,
+                                  condition = "ID",
+                                  color_df = palette,
+                                  title_value = "Gene markers"))
+ggsave(file = name, width = 6, height = 5, device = "png")
+```
+
+## Gene markers cell type annotations and fractions per condition
+
+```{r plot-cell-types-condition, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-gene-markers-condition.png"))
+p1.after <- print(DimPlot(seurat_obj, reduction = redution_value, split.by = condition_value, group.by = 'cell_type_gene_markers', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle(glue::glue("Gene markers cell type annotations: {integration_method} integration")))
+ggsave(file = name, width = 15, height = 6, device = "png")
+```
+
+```{r plot-cell-types-condition-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-gene-markers-condition-fractions.png"))
+p.condition <- print(cell_type_fractions_cell_type_gene_markers(df = seurat_obj@meta.data,
+                                         condition = condition_value,
+                                         color_df = palette,
+                                         title_value = "Gene markers"))
+ggsave(file = name, width = 6, height = 5, device = "png")
+```
+
+# Save output files
+
+```{r save-output, echo=TRUE}
+reduction_names <- c(paste0("umap")) # Export the reductions to Seurat
+metadata <- as_data_frame_seurat(seurat_obj, reduction = reduction_names, metadata = TRUE)
+  
+write_tsv(metadata, file = paste0(results_dir, "/", "metadata", ".tsv")) # Save metadata
+saveRDS(seurat_obj, file = paste0(results_dir, "/", "seurat_obj_gene_markers.rds"))
+```
+
+```{r echo=FALSE}
+detach(params)
+```
+
+\pagebreak
+
+# Session Info
+
+```{r echo=FALSE}
+sessionInfo()
+```
+

@@ -167,26 +167,13 @@ module_results_dir <- file.path(analysis_dir, "results")
 if (!dir.exists(module_results_dir)) {
   dir.create(module_results_dir)}
 
-results_dir <- file.path(module_results_dir, "01_cell_types_annotation_SingleR")
+results_dir <- file.path(module_results_dir, "01_cell_types_annotation_SingleR_broad")
 if (!dir.exists(results_dir)) {
   dir.create(results_dir)}
 
-broad_results_dir <- file.path(results_dir, "01_annotations_broad") 
-if (!dir.exists(broad_results_dir)) {
-  dir.create(broad_results_dir)}
-
 # Create plots directory
 module_plots_dir <- file.path(analysis_dir, "plots") 
-if (!dir.exists(module_plots_dir)) {
-  dir.create(module_plots_dir)}
-
-plots_dir <- file.path(module_plots_dir, "01_cell_types_annotation_SingleR") 
-if (!dir.exists(plots_dir)) {
-  dir.create(plots_dir)}
-
-broad_plots_dir <- file.path(plots_dir, "01_annotations_broad") 
-if (!dir.exists(broad_plots_dir)) {
-  dir.create(broad_plots_dir)}
+plots_dir <- file.path(module_plots_dir, "01_cell_types_annotation_SingleR_broad") 
 
 source(paste0(root_dir, "/figures/scripts/theme_plot.R"))
 source(paste0(analysis_dir, "/util/function-cell-type-fractions.R"))
@@ -292,50 +279,57 @@ cat("  \n\\pagebreak  \n")
 Low deltas indicate that the assignment is uncertain, which is especially relevant if the cell’s true label does not exist in the reference. This entire process can be visualized and inspected using the plotScoreDistribution() function, which displays the per-label distribution of the deltas across cells.
 
 ```{r plotDeltaDistribution-broad, fig.width = 15, fig.height = 15, fig.fullwidth = TRUE, echo=TRUE}
-name <- paste0(broad_plots_dir, "/", glue::glue("plotDeltaDistribution_broad.png"))
+name <- paste0(plots_dir, "/", glue::glue("plotDeltaDistribution_broad.png"))
 print(plotDeltaDistribution(seurat_obj_broad, ncol = 3))
 ggsave(file = name, width = 15, height = 15, device = "png")
 ```
 
-# Remove cells with low-quality assignments of cell type annotations
+# Identify number of cells with low-quality assignments of cell type annotations
+
+We will identify and rename the cells with low-quality assignments to `Unassigned` (instead of NAs). 
 
 ```{r echo=TRUE}
 # cells to remove
 cells_to_remove <- length(colnames(seurat_obj)[which(is.na(seurat_obj@meta.data$singler.broad))])
 
 # Remove cells from the object
+#seurat_obj@meta.data <- seurat_obj@meta.data %>%
+#  filter(!is.na(singler.broad))
+
 seurat_obj@meta.data <- seurat_obj@meta.data %>%
-  filter(!is.na(singler.broad))
+  mutate(singler.broad = if_else(is.na(singler.broad), "Unassigned", as.character(singler.broad)))
 
 # cells to keep
-cells_to_keep <- length(seurat_obj@meta.data$singler.broad)
+#cells_to_keep <- length(seurat_obj@meta.data$singler.broad)
 ```
 
-Here, we will remove `r cells_to_remove` cells due to low-quality assignments of cell type annotations. We will include the remaining `r cells_to_keep` cells in the following plots.
+There were identified `r cells_to_remove` cells due to low-quality assignments of cell type annotations. We will include these cells in the following plots.
 
 # Plotting cell type annotations
 
 ```{r define-parameters-for-plots, echo=TRUE}
 # Read color palette
-palette_df <- readr::read_tsv(cell_types_palette_file, guess_max = 100000, show_col_types = FALSE) 
+palette_df <- readr::read_tsv(cell_types_palette_file, guess_max = 100000, show_col_types = FALSE) %>%
+  mutate(cell_type_names = case_when(cell_type_names == "na_color" ~ "Unassigned",
+                                       TRUE ~ cell_type_names))
 
 # Define and order palette
-palette <- palette_df$hex_codes
-names(palette) <- palette_df$cell_type_names
+palette <- palette_df$hex_codes 
+names(palette) <- palette_df$cell_type_names 
 ```
 
 ## Broad cell type annotations: before vs after integration
 
-```{r plot-singler-comparison-broad-before-vs-after-integration, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
-name <- paste0(broad_plots_dir, "/", glue::glue("plot-singler-comparison-broad-before-vs-after-integration.png"))
-p1.before.broad <- DimPlot(seurat_obj, group.by = 'singler.broad', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle("Broad cell type annotations: merged") 
-p1.after.broad <- DimPlot(seurat_obj, reduction = redution_value, group.by = 'singler.broad', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle(glue::glue("Broad cell type annotations: {integration_method} integration")) 
-print(p1.before.broad + p1.after.broad)
+```{r plot-singler-comparison-before-vs-after-integration, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-singler-comparison-broad-before-vs-after-integration.png"))
+p1.before <- DimPlot(seurat_obj, group.by = 'singler.broad', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle("Broad cell type annotations: merged") 
+p1.after <- DimPlot(seurat_obj, reduction = redution_value, group.by = 'singler.broad', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle(glue::glue("Broad cell type annotations: {integration_method} integration")) 
+print(p1.before + p1.after)
 ggsave(file = name, width = 15, height = 6, device = "png")
 ```
 
-```{r plot-cell-types-broad-project-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
-name <- paste0(broad_plots_dir, "/", glue::glue("plot-singler-broad-project-fractions.png"))
+```{r plot-cell-types-project-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-singler-broad-project-fractions.png"))
 p.project <- print(cell_type_fractions_broad(df = seurat_obj@meta.data,
                                              condition = "project",
                                              color_df = palette,
@@ -345,14 +339,14 @@ ggsave(file = name, width = 6, height = 5, device = "png")
 
 ## Broad cell type annotations and fractions per ID
 
-```{r plot-cell-types-broad-ID, fig.width = 25, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
-name <- paste0(broad_plots_dir, "/", glue::glue("plot-singler-broad-ID.png"))
-p1.after.broad <- print(DimPlot(seurat_obj, reduction = redution_value, split.by = "ID", group.by = 'singler.broad', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle(glue::glue("Broad cell type annotations: {integration_method} integration")))
+```{r plot-cell-types-ID, fig.width = 25, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-singler-broad-ID.png"))
+p1.after <- print(DimPlot(seurat_obj, reduction = redution_value, split.by = "ID", group.by = 'singler.broad', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle(glue::glue("Broad cell type annotations: {integration_method} integration")))
 ggsave(file = name, width = 25, height = 6, device = "png")
 ```
 
-```{r plot-cell-types-broad-ID-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
-name <- paste0(broad_plots_dir, "/", glue::glue("plot-singler-broad-ID-fractions.png"))
+```{r plot-cell-types-ID-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-singler-broad-ID-fractions.png"))
 p.ID <- print(cell_type_fractions_broad(df = seurat_obj@meta.data,
                                   condition = "ID",
                                   color_df = palette,
@@ -362,14 +356,14 @@ ggsave(file = name, width = 6, height = 5, device = "png")
 
 ## Broad cell type annotations and fractions per condition
 
-```{r plot-cell-types-broad-condition, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
-name <- paste0(broad_plots_dir, "/", glue::glue("plot-singler-broad-condition.png"))
-p1.after.broad <- print(DimPlot(seurat_obj, reduction = redution_value, split.by = condition_value, group.by = 'singler.broad', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle(glue::glue("Broad cell type annotations: {integration_method} integration")))
+```{r plot-cell-types-condition, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-singler-broad-condition.png"))
+p1.after <- print(DimPlot(seurat_obj, reduction = redution_value, split.by = condition_value, group.by = 'singler.broad', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle(glue::glue("Broad cell type annotations: {integration_method} integration")))
 ggsave(file = name, width = 15, height = 6, device = "png")
 ```
 
-```{r plot-cell-types-broad-condition-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
-name <- paste0(broad_plots_dir, "/", glue::glue("plot-singler-broad-condition-fractions.png"))
+```{r plot-cell-types-condition-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
+name <- paste0(plots_dir, "/", glue::glue("plot-singler-broad-condition-fractions.png"))
 p.condition <- print(cell_type_fractions_broad(df = seurat_obj@meta.data,
                                          condition = condition_value,
                                          color_df = palette,
@@ -383,8 +377,8 @@ ggsave(file = name, width = 6, height = 5, device = "png")
 reduction_names <- c(paste0("umap")) # Export the reductions to Seurat
 metadata <- as_data_frame_seurat(seurat_obj, reduction = reduction_names, metadata = TRUE)
   
-write_tsv(metadata, file = paste0(broad_results_dir, "/", "metadata", ".tsv")) # Save metadata
-saveRDS(seurat_obj, file = paste0(broad_results_dir, "/", "seurat_obj_SingleR_broad.rds"))
+write_tsv(metadata, file = paste0(results_dir, "/", "metadata", ".tsv")) # Save metadata
+saveRDS(seurat_obj, file = paste0(results_dir, "/", "seurat_obj_SingleR_broad.rds"))
 ```
 
 ```{r echo=FALSE}

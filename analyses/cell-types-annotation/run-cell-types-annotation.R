@@ -2,7 +2,7 @@
 # This will run all scripts in the module
 #################################################################################
 # Load the Package with a Specific Library Path
-.libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
+#.libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
 #################################################################################
 # Load library
 suppressPackageStartupMessages({
@@ -25,8 +25,19 @@ yaml <- read_yaml(configFile)
 # Set up directories and paths to root_dir and analysis_dir
 root_dir <- yaml$root_dir
 analysis_dir <- file.path(root_dir, "analyses", "cell-types-annotation") 
-report_dir <- file.path(analysis_dir, "plots", "01_cell_types_annotation_SingleR") 
 
+module_plots_dir <- file.path(analysis_dir, "plots") 
+if (!dir.exists(module_plots_dir)) {
+  dir.create(module_plots_dir)}
+
+broad_report_dir <- file.path(module_plots_dir, "01_cell_types_annotation_SingleR_broad") 
+if (!dir.exists(broad_report_dir)) {
+  dir.create(broad_report_dir)}
+
+fine_report_dir <- file.path(module_plots_dir, "02_cell_types_annotation_SingleR_fine") 
+if (!dir.exists(fine_report_dir)) {
+  dir.create(fine_report_dir)}
+  
 ################################################################################################################
 # Celldex references: These references are intended to be comparable to data from unique molecular identifier (UMI) protocols
 # where the expression values are less sensitive to differences in gene length. 
@@ -61,7 +72,7 @@ input_data_file <- file.path(data_dir_annotation_module, glue::glue("seurat_obj_
 ################################################################################################################
 # Broad cell type annotation
 rmarkdown::render('01-cell-types-annotation-SingleR-broad.Rmd', clean = TRUE,
-                  output_dir = file.path(report_dir),
+                  output_dir = file.path(broad_report_dir),
                   output_file = c(paste('Report-', 'cell-types-annotation-SingleR-broad', '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(integration_method = yaml$integration_method_clustering_module,
@@ -87,7 +98,7 @@ rmarkdown::render('01-cell-types-annotation-SingleR-broad.Rmd', clean = TRUE,
 ################################################################################################################
 # Fine cell type annotation
 rmarkdown::render('02-cell-types-annotation-SingleR-fine.Rmd', clean = TRUE,
-                  output_dir = file.path(report_dir),
+                  output_dir = file.path(fine_report_dir),
                   output_file = c(paste('Report-', 'cell-types-annotation-SingleR-fine', '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(integration_method = yaml$integration_method_clustering_module,
@@ -109,5 +120,4 @@ rmarkdown::render('02-cell-types-annotation-SingleR-fine.Rmd', clean = TRUE,
                                 PIPELINE = yaml$PIPELINE, 
                                 START_DATE = yaml$START_DATE,
                                 COMPLETION_DATE = yaml$COMPLETION_DATE))
-
 ################################################################################################################

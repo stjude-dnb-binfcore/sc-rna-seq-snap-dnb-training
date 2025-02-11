@@ -8,7 +8,7 @@ Parameters according to the project and analysis strategy will need to be specif
 - `project_parameters.Config.yaml` located at the `root_dir`
 - `future_globals_value` is hardwired coded in the `run-cell-types-annotation.R`. If necessary, user can increase/decrease resources.
 - Celldex references are hardwired coded in the `run-cell-types-annotation.R`. User should modify the reference to be used according to their experiment.
-
+- `run-cell-types-annotation.sh`: User should comment in/out the script to use based on thr selection of the desired methods for cell type annotation.
 
 ### Run module on an interactive session on HPC within the container
 
@@ -28,7 +28,7 @@ bsub < lsf-script.txt
 
 
 ## Folder content
-This folder contains a script tasked to identify cell types annotation with SingleR by using a broad and fine resolution labeling across the project.
+This folder contains a script tasked to identify cell types annotation with SingleR by using a broad and fine resolution labeling across the project. There is also a script to identify and annotate cell types by using a list of gene markers.
 
 ## Folder structure 
 
@@ -37,21 +37,26 @@ The structure of this folder is as follows:
 ```
 ├── 01-cell-types-annotation-SingleR-broad.Rmd
 ├── 02-cell-types-annotation-SingleR-fine.Rmd
+├── 03-cell-types-annotation-gene-markers.Rmd
 ├── lsf_script.txt
 ├── plots
-|   ├── 01-cell-types-annotation-SingleR 
-|       ├── 01_annotations_broad
-|       └── 02_annotations_fine
-|   ├── Report_cell_types_annotation_SingleR_broad_<Sys.Date()>.html
-|   ├── Report_cell_types_annotation_SingleR_broad_<Sys.Date()>.pdf
-|   ├── Report_cell_types_annotation_SingleR_fine_<Sys.Date()>.html
-|   └── Report_cell_types_annotation_SingleR_fine_<Sys.Date()>.pdf
+|   ├── 01_cell_types_annotation_SingleR_broad
+|   |   ├── Report_cell_types_annotation_SingleR_broad_<Sys.Date()>.html
+|   |   └── Report_cell_types_annotation_SingleR_broad_<Sys.Date()>.pdf
+|   ├── 02_cell_types_annotation_SingleR_fine
+|   |   ├── Report_cell_types_annotation_SingleR_fine_<Sys.Date()>.html
+|   |   └──Report_cell_types_annotation_SingleR_fine_<Sys.Date()>.pdf
+|   ├── 03_cell_types_annotation_gene_markers
+|   |   ├── Report_cell_types_annotation_gene_markers_<Sys.Date()>.html
+|   |   └── Report_cell_types_annotation_gene_markers_<Sys.Date()>.pdf
 ├── README.md
 ├── results
-|   ├── 01-cell-types-annotation-SingleR 
-|       ├── 01_annotations_broad
-|       └── 02_annotations_fine
-├── run-cell-types-annotation.R
+|   ├── 01_cell_types_annotation_SingleR_broad
+|   ├── 02_cell_types_annotation_SingleR_fine
+|   └── 03_cell_types_annotation_gene_markers
+├── run-cell-types-annotation-all-methods.R
+├── run-cell-types-annotation-SingleR.R
+├── run-cell-types-annotation-gene-markers.R
 ├── run-cell-types-annotation.sh
 └── util
 |___└── function-cell-type-fractions.R

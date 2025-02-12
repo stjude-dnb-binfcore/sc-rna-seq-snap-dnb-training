@@ -46,12 +46,14 @@ analysis_dir <- file.path(root_dir, "analyses")
 module_dir <- file.path(analysis_dir, "rshiny-app") 
 
 annotation_results_dir <- file.path(analysis_dir, "cell-types-annotation", "results") 
-broad_SingleR_results_dir <- file.path(annotation_results_dir, "01_cell_types_annotation_SingleR", "01_annotations_broad") 
-fine_SingleR_results_dir <- file.path(annotation_results_dir, "01_cell_types_annotation_SingleR", "02_annotations_fine") 
+#broad_SingleR_results_dir <- file.path(annotation_results_dir, "01_cell_types_annotation_SingleR", "01_annotations_broad") 
+#fine_SingleR_results_dir <- file.path(annotation_results_dir, "01_cell_types_annotation_SingleR", "02_annotations_fine") 
+annotations_all_results_dir <- file.path(annotation_results_dir, "04_cell_types_annotations_all") 
 
 # Input files
-broad_SingleR_file <- file.path(broad_SingleR_results_dir, "seurat_obj_SingleR_broad.rds")
-fine_SingleR_file <- file.path(fine_SingleR_results_dir, "seurat_obj_SingleR_fine.rds")
+#broad_SingleR_file <- file.path(broad_SingleR_results_dir, "seurat_obj_SingleR_broad.rds")
+#fine_SingleR_file <- file.path(fine_SingleR_results_dir, "seurat_obj_SingleR_fine.rds")
+annotations_all_file <- file.path(annotations_all_results_dir, "seurat_obj_cell_types_annotations_all.rds")
 
 # Create results_dir
 results_dir <- file.path(module_dir, "results")
@@ -69,21 +71,28 @@ source(paste0(module_dir, "/util/makeShinyFiles_assay.R"))
 ################################################################################################################
 ### Generate R shiny app ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
 ################################################################################################################
-cat("Beginning to process results from", "broad_SingleR_file", "\n")
-seu1 <- readRDS(broad_SingleR_file)
+#cat("Beginning to process results from", "broad_SingleR_file", "\n")
+#seu1 <- readRDS(broad_SingleR_file)
+#scConf1 <- createConfig(seu1)
+#makeShinyFiles_assay(seu1, scConf1, shiny.prefix = "sc1", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
+
+
+#cat("Beginning to process results from", "fine_SingleR_file", "\n")
+#seu2 <- readRDS(fine_SingleR_file)
+#scConf2 <- createConfig(seu2)
+#makeShinyFiles_assay(seu2, scConf2, shiny.prefix = "sc2", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
+
+cat("Beginning to process results from", "annotations_all_file", "\n")
+seu1 <- readRDS(annotations_all_file)
 scConf1 <- createConfig(seu1)
 makeShinyFiles_assay(seu1, scConf1, shiny.prefix = "sc1", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
-
-
-cat("Beginning to process results from", "fine_SingleR_file", "\n")
-seu2 <- readRDS(fine_SingleR_file)
-scConf2 <- createConfig(seu2)
-makeShinyFiles_assay(seu2, scConf2, shiny.prefix = "sc2", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
 
 cat("Make R shiny app for all files", "\n")
 makeShinyCodesMulti(
   shiny.title = PROJECT_NAME, shiny.footnotes = PI_NAME,
-  shiny.prefix = c("sc1", "sc2"),
-  shiny.headers = c("broad_SingleR", "fine_SingleR"),
+  shiny.prefix = c("sc1"),
+  shiny.headers = c("annotations_all"),
+  #shiny.prefix = c("sc1", "sc2"),
+  #shiny.headers = c("broad_SingleR", "fine_SingleR"),
   shiny.dir = paste(results_dir, "shinyApp", sep = "/")) 
 ################################################################################################################   

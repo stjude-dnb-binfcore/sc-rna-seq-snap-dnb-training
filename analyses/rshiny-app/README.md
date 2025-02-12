@@ -24,8 +24,6 @@ There is also the option to run a lsf job on the HPC cluster by using the follow
 bsub < lsf-script.txt
 ```
 
-Please note that both approaches will run the analysis module outside of the container. This is currently the only option of running the `rshiny-app` module. By default, we are using `R/4.4.0` and `pandoc/3.2` as available on St Jude HPC. User need to make sure all R libraries are properly installed.
-
 
 ## Folder content
 

@@ -95,10 +95,20 @@ if (method == "all"){
         mutate(pruned.labels.fine = pruned.labels) %>%
         
         # Select for columns to use for join to the object
-        select(cell, pruned.labels.fine, singler.fine) 
+        select(pruned.labels.fine, singler.fine) 
       
-      # Add metadata
-      seurat_obj <- AddMetaData(seurat_obj, metadata = new_metadata) }
+      # Check if the number of rows in new_metadata matches the number of cells in the Seurat object
+      if (nrow(new_metadata) == ncol(seurat_obj)) {
+        # Add metadata to Seurat object
+        seurat_obj <- AddMetaData(seurat_obj, metadata = new_metadata)
+        
+        # Verify the metadata has been added
+        head(seurat_obj@meta.data)
+      } else {
+        # If the number of rows doesn't match, print a warning
+        warning("Number of rows in new_metadata doesn't match the number of cells in seurat_obj!")
+      }
+    }
   
   
 #############################################################################

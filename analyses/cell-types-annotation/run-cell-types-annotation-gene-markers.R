@@ -115,6 +115,3 @@ rmarkdown::render('03-cell-types-annotation-gene-markers.Rmd', clean = TRUE,
                                 COMPLETION_DATE = yaml$COMPLETION_DATE))
 
 ################################################################################################################
-# Merge objects with various annotations
-# source(paste0(analysis_dir, "/", "04-generate-object-with-all-annotations.R"))
-################################################################################################################

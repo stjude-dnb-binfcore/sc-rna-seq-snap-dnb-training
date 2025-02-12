@@ -9,6 +9,7 @@ Parameters according to the project and analysis strategy will need to be specif
 - `future_globals_value` is hardwired coded in the `run-cell-types-annotation.R`. If necessary, user can increase/decrease resources.
 - Celldex references are hardwired coded in the `run-cell-types-annotation.R`. User should modify the reference to be used according to their experiment.
 - `run-cell-types-annotation.sh`: User should comment in/out the script to use based on thr selection of the desired methods for cell type annotation.
+- `04-merge-cell-types-annotations-all.R`: If more than one method was used for cell type annotation, user needs to run this script to merge the annotations. 
 
 ### Run module on an interactive session on HPC within the container
 
@@ -38,6 +39,7 @@ The structure of this folder is as follows:
 ├── 01-cell-types-annotation-SingleR-broad.Rmd
 ├── 02-cell-types-annotation-SingleR-fine.Rmd
 ├── 03-cell-types-annotation-gene-markers.Rmd
+├── 04-merge-cell-types-annotations-all.R
 ├── lsf_script.txt
 ├── plots
 |   ├── 01_cell_types_annotation_SingleR_broad
@@ -53,10 +55,10 @@ The structure of this folder is as follows:
 ├── results
 |   ├── 01_cell_types_annotation_SingleR_broad
 |   ├── 02_cell_types_annotation_SingleR_fine
-|   └── 03_cell_types_annotation_gene_markers
-├── run-cell-types-annotation-all-methods.R
-├── run-cell-types-annotation-SingleR.R
+|   ├── 03_cell_types_annotation_gene_markers
+|   └── 04_cell_types_annotations_all
 ├── run-cell-types-annotation-gene-markers.R
+├── run-cell-types-annotation-SingleR.R
 ├── run-cell-types-annotation.sh
 └── util
 |___└── function-cell-type-fractions.R

@@ -24,12 +24,14 @@ There is also the option to run a lsf job on the HPC cluster by using the follow
 bsub < lsf-script.txt
 ```
 
+## Launch the R Shiny app
+
+To launch the R Shiny app, navigate to the script located at `./results/shinyApp/server.R`. Open it in RStudio on your local machine, and click the `Run App` button in the top-right corner to start the application.
+
 
 ## Folder content
 
 This folder contains scripts designed to run and generate an R shiny app for the project.
-
-To launch the R Shiny app, navigate to the script located at `./results/shinyApp/server.R`. Open it in RStudio on your local machine, and click the `Run App` button in the top-right corner to start the application.
 
 
 ## Folder structure 

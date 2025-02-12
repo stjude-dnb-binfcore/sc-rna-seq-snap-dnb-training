@@ -371,7 +371,7 @@ reduction_names <- c(paste0("umap")) # Export the reductions to Seurat
 metadata <- as_data_frame_seurat(seurat_obj, reduction = reduction_names, metadata = TRUE)
   
 write_tsv(metadata, file = paste0(results_dir, "/", "metadata", ".tsv")) # Save metadata
-saveRDS(seurat_obj, file = paste0(results_dir, "/", "seurat_obj_SingleR_fine.rds"))
+#saveRDS(seurat_obj, file = paste0(results_dir, "/", "seurat_obj_SingleR_fine.rds"))
 ```
 
 ```{r echo=FALSE}

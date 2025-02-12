@@ -108,3 +108,4 @@ gene_markers_dir_annotation_module: "./" # path to gene markers dir
 gene_markers_file_name_annotation_module: "<filename>.tsv" # File name with the gene markers. It needs to be in `tsv` format.
 #cluster_name: "seurat_clusters"
 clustering_gene_markers_dir_annotation_module: "./sc-rna-seq-snap/analyses/cluster-cell-calling/results/02_find_markers" # path to gene markers dir as generated from the `cluster_cell_calling` 
+method_annotation_module: "all" # Options: "all" (for using singler and a list of gene markers), "singler" (for using only singler method for both broad and fine annotation)

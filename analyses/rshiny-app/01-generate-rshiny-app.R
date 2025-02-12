@@ -85,11 +85,16 @@ source(paste0(module_dir, "/util/makeShinyFiles_assay.R"))
 cat("Beginning to process results from", "annotations_all_file", "\n")
 seu1 <- readRDS(annotations_all_file)
 scConf1 <- createConfig(seu1)
-makeShinyFiles_assay(seu1, scConf1, shiny.prefix = "sc1", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
+makeShinyFiles_assay(seu1, 
+                     scConf1, 
+                     shiny.prefix = "sc1", 
+                     default.dimred = c("UMAP1", "UMAP2"),
+                     shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
 
 cat("Make R shiny app for all files", "\n")
 makeShinyCodesMulti(
-  shiny.title = PROJECT_NAME, shiny.footnotes = PI_NAME,
+  shiny.title = PROJECT_NAME, 
+  shiny.footnotes = PI_NAME,
   shiny.prefix = c("sc1"),
   shiny.headers = c("annotations_all"),
   #shiny.prefix = c("sc1", "sc2"),

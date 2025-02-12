@@ -39,8 +39,8 @@ if (!dir.exists(module_plots_dir)) {
 #  dir.create(fine_report_dir)}
 
 gene_markers_report_dir <- file.path(module_plots_dir, "03_cell_types_annotation_gene_markers") 
-if (!dir.exists(fine_report_dir)) {
-  dir.create(fine_report_dir)}
+if (!dir.exists(gene_markers_report_dir)) {
+  dir.create(gene_markers_report_dir)}
   
 ################################################################################################################
 # Celldex references: These references are intended to be comparable to data from unique molecular identifier (UMI) protocols

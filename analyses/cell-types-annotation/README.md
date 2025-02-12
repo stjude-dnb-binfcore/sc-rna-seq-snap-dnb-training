@@ -9,7 +9,7 @@ Parameters according to the project and analysis strategy will need to be specif
 - `future_globals_value` is hardwired coded in the `run-cell-types-annotation.R`. If necessary, user can increase/decrease resources.
 - Celldex references are hardwired coded in the `run-cell-types-annotation.R`. User should modify the reference to be used according to their experiment.
 - `run-cell-types-annotation.sh`: User should comment in/out the script to use based on thr selection of the desired methods for cell type annotation.
-- `04-merge-cell-types-annotations-all.R`: If more than one method was used for cell type annotation, user needs to run this script to merge the annotations. 
+- `04-merge-cell-types-annotations-all.R`: The user should run this script to merge cell type annotations from SingleR (both broad and fine resolutions). Additionally, if multiple annotation methods are used (current options include SingleR method and a gene marker list), this script will merge the annotations accordingly.
 
 ### Run module on an interactive session on HPC within the container
 

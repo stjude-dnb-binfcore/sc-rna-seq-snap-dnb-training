@@ -38,10 +38,6 @@ header-includes:
 
 # Set up
 
-```{r}
-.libPaths("/home/user/R/x86_64-pc-linux-gnu-library/4.4")
-```
-
 ```{r load-library, include=FALSE, echo=TRUE}
 suppressPackageStartupMessages({
   library(BiocManager)
@@ -102,6 +98,11 @@ suppressPackageStartupMessages({
   library(tidyverse)
   library(tinytex)
   library(yaml)
+  
+  library(ShinyCell)
+  library(shinyhelper)
+  library(DT)
+  library(ggdendro)
 })
 ```
 

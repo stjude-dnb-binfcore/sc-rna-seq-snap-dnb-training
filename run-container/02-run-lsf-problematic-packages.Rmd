@@ -121,6 +121,11 @@ suppressPackageStartupMessages({
   library(scooter)
   library(knitr)
 
+  
+  library(ShinyCell)
+  library(shinyhelper)
+  library(DT)
+  library(ggdendro)
   })
 ```
 

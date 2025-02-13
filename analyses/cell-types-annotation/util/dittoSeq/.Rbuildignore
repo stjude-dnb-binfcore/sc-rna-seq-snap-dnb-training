@@ -1,0 +1,9 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+.DS_Store
+.gitignore
+ColorblindCompatibility
+README.md
+Misc
+Demuxlet-Vignette
+QuickStart_image-build.rmd

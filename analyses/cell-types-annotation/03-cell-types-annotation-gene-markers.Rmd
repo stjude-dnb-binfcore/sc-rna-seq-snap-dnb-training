@@ -145,6 +145,9 @@ suppressPackageStartupMessages({
   library(Seurat)
   library(scooter)
   library(knitr)
+  library(scran)
+  library(SingleCellExperiment)
+  #library(dittoSeq)
   }) 
 ```
 
@@ -157,7 +160,7 @@ analysis_dir <- file.path(root_dir, "analyses", "cell-types-annotation")
 # Input files
 cell_types_palette_file <- file.path(root_dir, "figures", "palettes", "cell_types_palette.tsv")
 gene_markers_file <- file.path(gene_markers_dir, gene_markers_file_name)
-clustering_gene_markers_file <- file.path(clustering_gene_markers_dir, clustering_gene_markers_file_name)
+#clustering_gene_markers_file <- file.path(clustering_gene_markers_dir, clustering_gene_markers_file_name)
 
 # Create results_dir
 module_results_dir <- file.path(analysis_dir, "results")
@@ -173,6 +176,22 @@ plots_dir <- file.path(module_plots_dir, "03_cell_types_annotation_gene_markers"
 source(paste0(root_dir, "/figures/scripts/theme_plot.R"))
 source(paste0(analysis_dir, "/util/function-calculate-cell-type-signature.R"))
 source(paste0(analysis_dir, "/util/function-cell-type-fractions.R"))
+
+# https://github.com/dtm2451/dittoSeq/blob/devel/R
+#source(paste0(analysis_dir, "/util/dittoSeq/gene-getters.R"))
+#source(paste0(analysis_dir, "/util/dittoSeq/utils-data-edit.R"))
+#source(paste0(analysis_dir, "/util/dittoSeq/utils-defaulting.R"))
+#source(paste0(analysis_dir, "/util/dittoSeq/utils-getters.R"))
+#source(paste0(analysis_dir, "/util/dittoSeq/utils.R"))
+
+# Get all R script files in the directory (including subdirectories if needed)
+scripts_to_source <- list.files(path = paste0(analysis_dir, "/util/dittoSeq/R"), pattern = "\\.R$", full.names = TRUE)
+
+# Source each script
+for (script in scripts_to_source) {
+  source(script)
+}
+
 ```
 
 ```{r echo=FALSE, warning=FALSE}
@@ -198,33 +217,60 @@ We will use a list of gene-markers as a reference to identify and annotate cell 
 
 ```{r read-file-with-gene-markers, echo=TRUE}
 marker_list <- readr::read_tsv(gene_markers_file, guess_max = 100000, show_col_types = FALSE) 
-head(marker_list)
+#head(marker_list)
 
-markers <- readr::read_tsv(clustering_gene_markers_file, guess_max = 100000, show_col_types = FALSE) 
+#markers <- readr::read_tsv(clustering_gene_markers_file, guess_max = 100000, show_col_types = FALSE) %>%
+#  mutate(seurat_clusters = cluster)
 ```
 
 ```{r calculate_cell_type_signature, echo=TRUE}
+# Approach 1: CODY'S WAY
+# TODO: TO FIX
+cat("Calculate cell type signatures\n")
+
+
+# Add metadata
+#new_data <- seurat_obj@meta.data %>%
+#  mutate(seurat_clusters = as.numeric(seurat_clusters)) %>%
+#  left_join(markers, by = "seurat_clusters", relationship = "many-to-many")
+#head(new_data)
+# Add the new data back into the Seurat object (ensure cell names align)
+#seurat_obj$seurat_clusters <- new_data$seurat_clusters
+#seurat_obj <- AddMetaData(seurat_obj, metadata = new_data)
+#head(seurat_obj@meta.data)
+
+seurat_obj_signature <- calculate_cell_type_signature(seurat_obj = seurat_obj, 
+                                            results_dir = results_dir, 
+                                            gene_markers_df = marker_list, 
+                                            genome_name = genome_name)
+
+head(seurat_obj_signature@meta.data)
+
+
+########################################################################################################
+# Approach 2
 # Create an empty vector to store the cell type annotation
-cell_types_gene_markers <- vector("character", length = ncol(seurat_obj))
+#cell_types_gene_markers <- vector("character", length = ncol(seurat_obj))
 
 
 # Loop over each cluster and compare marker genes
-for (cluster in unique(seurat_obj@meta.data$seurat_clusters)) {
+#for (cluster in unique(seurat_obj@meta.data$seurat_clusters)) {
   # Get the top markers for the current cluster
-  cluster_markers <- markers[markers$cluster == cluster, ]
+#  cluster_markers <- markers[markers$cluster == cluster, ]
 
   # Annotate the cell type based on the gene markers
-  for (cell_type_gene_markers in names(marker_list)) {
+#  for (cell_type_gene_markers in names(marker_list)) {
 
     # Check if the marker genes for this cell type are expressed in the cluster
-    if (any(cluster_markers$gene %in% marker_list[[cell_type_gene_markers]])) {
-      cell_types_gene_markers[seurat_obj@meta.data$seurat_clusters == cluster] <- cell_type_gene_markers
-    }
-  }
-}
+#    if (any(cluster_markers$gene %in% marker_list[[cell_type_gene_markers]])) {
+#      cell_types_gene_markers[seurat_obj@meta.data$seurat_clusters == cluster] <- cell_type_gene_markers
+#    }
+#  }
+#}
 
 # Add the annotations to the Seurat object metadata
-seurat_obj@meta.data$cell_type_gene_markers <- cell_types_gene_markers
+# Add the annotations to the Seurat object metadata
+#seurat_obj@meta.data$cell_type_gene_markers <- cell_types_gene_markers
 
 # Add metadata
 new.data <- seurat_obj@meta.data %>%

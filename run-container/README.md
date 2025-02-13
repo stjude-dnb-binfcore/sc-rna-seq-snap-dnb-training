@@ -120,7 +120,7 @@ bash run-upstream-analysis.sh
 ## Authors
 
 Antonia Chroni, PhD ([@AntoniaChroni](https://github.com/AntoniaChroni)) and 
-Walid Abu Al-Afia ([@walidabualafia](https://github.com/walidabualafia))
+Walid Abu Al-Afia ([@walidabualafia](https://github.com/walidabualafia)).
 
 
 ## Contact

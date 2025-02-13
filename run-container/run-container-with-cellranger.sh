@@ -5,9 +5,9 @@ set -o pipefail
 
 ########################################################################
 pwd
-#echo $PATH
-#echo $LD_LIBRARY_PATH
-#which python
+echo $PATH
+echo $LD_LIBRARY_PATH
+which python
 
 ########################################################################
 # set up running directory
@@ -20,7 +20,7 @@ mkdir -p reports
 ################################################################################################################
 # Run other dependencies
 python3 --version
-#cellranger --version
+cellranger --version
 fastqc --version
 multiqc --version
 pandoc --version

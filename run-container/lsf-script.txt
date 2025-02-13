@@ -1,17 +1,8 @@
 #BSUB -P project
-#BSUB -J run-lsf-problematic-packages
+#BSUB -J run-container
 #BSUB -oo job.out -eo job.err
 #BSUB -n 1
-#BSUB -R "rusage[mem=2GB] span[hosts=1]"
+#BSUB -R "rusage[mem=16GB] span[hosts=1]"
 #BSUB -cwd "."
 
-
-bash run-test-packages.sh
-
-# Run R script with all lsf problematic R packages
-singularity exec ../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript -e "rmarkdown::render('02-run-lsf-problematic-packages.Rmd', clean = TRUE,
-                                                                                               output_dir = file.path('./reports/'),
-                                                                                               output_file = c(paste('Report-', 'run-lsf-problematic-packages-lsf', '-', Sys.Date(), sep = '')),
-                                                                                               output_format = 'all')"
-
-singularity exec ../rstudio_4.4.0_seurat_4.4.0_latest.sif Rscript --vanilla 03-run-lsf-problematic-packages.R
+singularity exec ../rstudio_4.4.0_seurat_4.4.0_latest.sif bash run-container.sh

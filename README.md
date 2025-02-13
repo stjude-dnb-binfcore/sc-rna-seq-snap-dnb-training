@@ -87,6 +87,7 @@ Users should adjust the memory request based on both the size of the cohort and 
 |  ├── fastqc-analysis
 |  ├── integrative-analysis
 |  ├── README.md
+|  ├── rshiny-app
 |  └── upstream-analysis
 ├── figures
 ├── LICENSE

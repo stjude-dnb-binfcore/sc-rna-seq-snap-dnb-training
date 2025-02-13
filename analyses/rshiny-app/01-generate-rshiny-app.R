@@ -40,7 +40,10 @@ PROJECT_NAME <- yaml$PROJECT_NAME
 PI_NAME <- yaml$PI_NAME
 condition_value <- yaml$condition_value
 assay <- yaml$assay_filter_object
-  
+annotations_dir <- yaml$annotations_dir_rshiny_app
+annotations_filename <- yaml$annotations_filename_rshiny_app
+
+
 # Set up directories and paths to root_dir and analysis_dir
 analysis_dir <- file.path(root_dir, "analyses") 
 module_dir <- file.path(analysis_dir, "rshiny-app") 
@@ -48,12 +51,12 @@ module_dir <- file.path(analysis_dir, "rshiny-app")
 annotation_results_dir <- file.path(analysis_dir, "cell-types-annotation", "results") 
 #broad_SingleR_results_dir <- file.path(annotation_results_dir, "01_cell_types_annotation_SingleR", "01_annotations_broad") 
 #fine_SingleR_results_dir <- file.path(annotation_results_dir, "01_cell_types_annotation_SingleR", "02_annotations_fine") 
-annotations_all_results_dir <- file.path(annotation_results_dir, "04_cell_types_annotations_all") 
+annotations_all_results_dir <- file.path(annotation_results_dir, annotations_dir) 
 
 # Input files
 #broad_SingleR_file <- file.path(broad_SingleR_results_dir, "seurat_obj_SingleR_broad.rds")
 #fine_SingleR_file <- file.path(fine_SingleR_results_dir, "seurat_obj_SingleR_fine.rds")
-annotations_all_file <- file.path(annotations_all_results_dir, "seurat_obj_cell_types_annotations_all.rds")
+annotations_all_file <- file.path(annotations_all_results_dir, annotations_filename)
 
 # Create results_dir
 results_dir <- file.path(module_dir, "results")
@@ -82,7 +85,7 @@ source(paste0(module_dir, "/util/makeShinyFiles_assay.R"))
 #scConf2 <- createConfig(seu2)
 #makeShinyFiles_assay(seu2, scConf2, shiny.prefix = "sc2", shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
 
-cat("Beginning to process results from", "annotations_all_file", "\n")
+cat("Beginning to process results from", "annotations_file", "\n")
 seu1 <- readRDS(annotations_all_file)
 scConf1 <- createConfig(seu1)
 makeShinyFiles_assay(seu1, 
@@ -96,7 +99,7 @@ makeShinyCodesMulti(
   shiny.title = PROJECT_NAME, 
   shiny.footnotes = PI_NAME,
   shiny.prefix = c("sc1"),
-  shiny.headers = c("annotations_all"),
+  shiny.headers = c("Annotations"),
   #shiny.prefix = c("sc1", "sc2"),
   #shiny.headers = c("broad_SingleR", "fine_SingleR"),
   shiny.dir = paste(results_dir, "shinyApp", sep = "/")) 

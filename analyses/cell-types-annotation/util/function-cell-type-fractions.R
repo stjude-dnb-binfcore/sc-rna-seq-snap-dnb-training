@@ -79,3 +79,45 @@ cell_type_fractions_fine <- function(df, condition, color_df, title_value) {
   return(p)
 }
 ############################################################################################################
+
+
+############################################################################################################
+#' Function to quantify cell type annotations fractions - gene_markers cell type annotation
+#' @param df
+#' @param condition
+#' @param color_df
+#' @param title_value
+#' 
+#' @return
+#' @export
+#'
+#' @examples
+#' 
+cell_type_fractions_cell_type_gene_markers <- function(df, condition, color_df, title_value) {
+  
+  # Calculate fractions
+  count <- df %>% group_by_at(condition) %>%
+    mutate(condition=row_number()) %>% 
+    dplyr::count(cell_type_gene_markers)
+  
+  # Order cell types
+  cell_type_order <- unique(as.character(count$cell_type_gene_markers))
+  cell_type_order <- sort(cell_type_order, decreasing = FALSE)
+  
+  # Define label for plots
+  count$cell_type_gene_markers <- factor(count$cell_type_gene_markers, levels = cell_type_order)
+  
+  # Plot
+  p <- ggplot(count, aes(x = count[[condition]], y = n, fill = cell_type_gene_markers)) +
+    geom_bar(stat = "identity", position = "fill") +
+    scale_fill_manual(values = color_df) +
+    theme_Publication(base_size = 11) + 
+    xlab(glue::glue("{condition}")) +
+    ylab("Percent Cell Type") +
+    guides(color = guide_legend(override.aes = list(size = 3))) +
+    ggtitle(glue::glue("{title_value} cell type fractions per {condition}")) +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+  
+  return(p)
+}
+############################################################################################################

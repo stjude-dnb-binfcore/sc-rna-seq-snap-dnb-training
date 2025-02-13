@@ -25,8 +25,23 @@ yaml <- read_yaml(configFile)
 # Set up directories and paths to root_dir and analysis_dir
 root_dir <- yaml$root_dir
 analysis_dir <- file.path(root_dir, "analyses", "cell-types-annotation") 
-report_dir <- file.path(analysis_dir, "plots", "01_cell_types_annotation_SingleR") 
 
+module_plots_dir <- file.path(analysis_dir, "plots") 
+if (!dir.exists(module_plots_dir)) {
+  dir.create(module_plots_dir)}
+
+#broad_report_dir <- file.path(module_plots_dir, "01_cell_types_annotation_SingleR_broad") 
+#if (!dir.exists(broad_report_dir)) {
+#  dir.create(broad_report_dir)}
+
+#fine_report_dir <- file.path(module_plots_dir, "02_cell_types_annotation_SingleR_fine") 
+#if (!dir.exists(fine_report_dir)) {
+#  dir.create(fine_report_dir)}
+
+gene_markers_report_dir <- file.path(module_plots_dir, "03_cell_types_annotation_gene_markers") 
+if (!dir.exists(gene_markers_report_dir)) {
+  dir.create(gene_markers_report_dir)}
+  
 ################################################################################################################
 # Celldex references: These references are intended to be comparable to data from unique molecular identifier (UMI) protocols
 # where the expression values are less sensitive to differences in gene length. 
@@ -40,7 +55,7 @@ report_dir <- file.path(analysis_dir, "plots", "01_cell_types_annotation_SingleR
 # MonacoImmuneData: bulk RNA-seq samples of sorted immune cell populations
 # MouseRNAseqData: a collection of mouse bulk RNA-seq data sets downloaded from the gene expression omnibus
 # NovershternHematopoieticData: microarray datasets for sorted hematopoietic cell populations
-bpe <- celldex::MouseRNAseqData()
+#bpe <- celldex::MouseRNAseqData()
 
 ################################################################################################################
 
@@ -60,35 +75,16 @@ input_data_file <- file.path(data_dir_annotation_module, glue::glue("seurat_obj_
 
 ################################################################################################################
 # Broad cell type annotation
-rmarkdown::render('01-cell-types-annotation-SingleR-broad.Rmd', clean = TRUE,
-                  output_dir = file.path(report_dir),
-                  output_file = c(paste('Report-', 'cell-types-annotation-SingleR-broad', '-', Sys.Date(), sep = '')),
-                  output_format = 'all',
-                  params = list(integration_method = yaml$integration_method_clustering_module,
-                                redution_value = yaml$redution_value_annotation_module,
-                                condition_value = yaml$condition_value,
-                                min.diff.med_value = yaml$min.diff.med_value_annotation_module,
-                                use_min.diff.med = yaml$use_min.diff.med_annotation_module,
-                                data_file = input_data_file,
-                                assay = yaml$assay_annotation_module,
-                                root_dir = yaml$root_dir,
-                                PROJECT_NAME = yaml$PROJECT_NAME,
-                                PI_NAME = yaml$PI_NAME,
-                                TASK_ID = yaml$TASK_ID,
-                                PROJECT_LEAD_NAME = yaml$PROJECT_LEAD_NAME,
-                                DEPARTMENT = yaml$DEPARTMENT,
-                                LEAD_ANALYSTS = yaml$LEAD_ANALYSTS,
-                                GROUP_LEAD = yaml$GROUP_LEAD,
-                                CONTACT_EMAIL = yaml$CONTACT_EMAIL,
-                                PIPELINE = yaml$PIPELINE, 
-                                START_DATE = yaml$START_DATE,
-                                COMPLETION_DATE = yaml$COMPLETION_DATE))
+
 
 ################################################################################################################
 # Fine cell type annotation
-rmarkdown::render('02-cell-types-annotation-SingleR-fine.Rmd', clean = TRUE,
-                  output_dir = file.path(report_dir),
-                  output_file = c(paste('Report-', 'cell-types-annotation-SingleR-fine', '-', Sys.Date(), sep = '')),
+
+################################################################################################################
+# Gene score cell type annotation
+rmarkdown::render('03-cell-types-annotation-gene-markers.Rmd', clean = TRUE,
+                  output_dir = file.path(gene_markers_report_dir),
+                  output_file = c(paste('Report-', 'cell-types-annotation-gene-markers', '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(integration_method = yaml$integration_method_clustering_module,
                                 redution_value = yaml$redution_value_annotation_module,
@@ -97,6 +93,14 @@ rmarkdown::render('02-cell-types-annotation-SingleR-fine.Rmd', clean = TRUE,
                                 use_min.diff.med = yaml$use_min.diff.med_annotation_module,
                                 data_file = input_data_file,
                                 assay = yaml$assay_annotation_module,
+                                
+                                gene_markers_dir = yaml$gene_markers_dir_annotation_module,
+                                gene_markers_file_name = yaml$gene_markers_file_name_annotation_module,
+                                genome_name = yaml$genome_name,
+                                #cluster = yaml$cluster_name,
+                                clustering_gene_markers_dir = yaml$clustering_gene_markers_dir_annotation_module,
+                                clustering_gene_markers_file_name = glue::glue("Res_{resolution}_Markers_all.tsv"),
+                                
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,

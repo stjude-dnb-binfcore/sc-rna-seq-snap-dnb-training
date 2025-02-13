@@ -145,9 +145,6 @@ suppressPackageStartupMessages({
   library(Seurat)
   library(scooter)
   library(knitr)
-  #library(scran)
-  #library(SingleCellExperiment)
-  #library(dittoSeq)
   }) 
 ```
 
@@ -176,9 +173,6 @@ plots_dir <- file.path(module_plots_dir, "03_cell_types_annotation_gene_markers"
 source(paste0(root_dir, "/figures/scripts/theme_plot.R"))
 source(paste0(analysis_dir, "/util/function-calculate-cell-type-signature.R"))
 source(paste0(analysis_dir, "/util/function-cell-type-fractions.R"))
-
-# https://github.com/dtm2451/dittoSeq/blob/devel/R/gene-getters.R
-#source(paste0(analysis_dir, "/util/dittoSeq/gene-getters.R"))
 ```
 
 ```{r echo=FALSE, warning=FALSE}
@@ -210,17 +204,6 @@ markers <- readr::read_tsv(clustering_gene_markers_file, guess_max = 100000, sho
 ```
 
 ```{r calculate_cell_type_signature, echo=TRUE}
-# Approach 1: CODY'S WAY
-# TODO: TO FIX
-#cat("Calculate cell type signatures\n")
-
-#seurat_obj <- calculate_cell_type_signature(seurat_obj = seurat_obj, 
-#                                            results_dir = results_dir, 
-#                                            gene_markers_df = marker_list, 
-#                                            genome_name = genome_name)
-
-########################################################################################################
-# Approach 2
 # Create an empty vector to store the cell type annotation
 cell_types_gene_markers <- vector("character", length = ncol(seurat_obj))
 
@@ -240,7 +223,6 @@ for (cluster in unique(seurat_obj@meta.data$seurat_clusters)) {
   }
 }
 
-# Add the annotations to the Seurat object metadata
 # Add the annotations to the Seurat object metadata
 seurat_obj@meta.data$cell_type_gene_markers <- cell_types_gene_markers
 

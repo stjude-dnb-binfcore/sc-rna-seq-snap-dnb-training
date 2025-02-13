@@ -59,7 +59,15 @@ git checkout main
 ```
 
 Finally, `git pull` to get the most updated changes and code in your project repo. Please be mindful of any changes in files in your project repo that you have done, e.g., `project_parameters.Config.yaml`. You will need to commit or stash (or restore) the changes to the yaml before completing the pull.
+
 ```
+git status
+git add project_parameters.Config.yaml
+git commit -m "Update yaml"
+```
+
+```
+git config pull.rebase false
 git pull
 ```
 
@@ -79,6 +87,7 @@ Users should adjust the memory request based on both the size of the cohort and 
 |  ├── fastqc-analysis
 |  ├── integrative-analysis
 |  ├── README.md
+|  ├── rshiny-app
 |  └── upstream-analysis
 ├── figures
 ├── LICENSE
@@ -96,4 +105,4 @@ Contributions, issues, and feature requests are welcome! Please feel free to che
 
 ---
 
-*These tools and pipelines have been developed by the Bioinformatic core team at the [St. Jude Children's Research Hospital](https://www.stjude.org/). These are open access materials distributed under the terms of the [BSD 2-Clause License](https://opensource.org/license/bsd-2-clause), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*
+*These tools and pipelines have been developed by the Bioinformatics core team at the [St. Jude Children's Research Hospital](https://www.stjude.org/). These are open access materials distributed under the terms of the [BSD 2-Clause License](https://opensource.org/license/bsd-2-clause), which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.*

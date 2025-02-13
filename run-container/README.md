@@ -21,13 +21,9 @@ module load singularity/4.1.1
 
 1. Pull the singularity container from the `sc-rna-seq-snap` root_dir
 ```
-singularity pull docker://achronistjude/snap_rstudio_4.4.0_seurat_4.4.0:latest
+singularity pull docker://achronistjude/rstudio_4.4.0_seurat_4.4.0:latest
 ```
 
-We will rename the singularity file.
-```
-mv snap_rstudio_4.4.0_seurat_4.4.0_latest.sif rstudio_4.4.0_seurat_4.4.0_latest.sif
-```
 
 2. Start the singularity container
 
@@ -124,7 +120,7 @@ bash run-upstream-analysis.sh
 ## Authors
 
 Antonia Chroni, PhD ([@AntoniaChroni](https://github.com/AntoniaChroni)) and 
-Walid Abu Al-Afia ([@walidabualafia](https://github.com/walidabualafia))
+Walid Abu Al-Afia ([@walidabualafia](https://github.com/walidabualafia)).
 
 
 ## Contact

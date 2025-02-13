@@ -106,7 +106,7 @@ if (method == "all"){
         head(seurat_obj@meta.data)
       } else {
         # If the number of rows doesn't match, print a warning
-        warning("Number of rows in new_metadata doesn't match the number of cells in seurat_obj!")
+        warning("Number of rows in new_metadata doesn't match the number of cells in seurat_obj. Label metadata will not be added to the Seurat object.")
       }
     }
   

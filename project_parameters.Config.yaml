@@ -109,3 +109,9 @@ gene_markers_file_name_annotation_module: "<filename>.tsv" # File name with the 
 #cluster_name: "seurat_clusters"
 clustering_gene_markers_dir_annotation_module: "./sc-rna-seq-snap/analyses/cluster-cell-calling/results/02_find_markers" # path to gene markers dir as generated from the `cluster_cell_calling` 
 method_annotation_module: "all" # Options: "all" (for using singler and a list of gene markers), "singler" (for using only singler method for both broad and fine annotation)
+
+# `rshiny-app`
+annotations_dir_rshiny_app: "04_cell_types_annotations_all" # Options: to update based on the folder with the desired annotations to use for the R shiny app from the `cell-types-annotation` module
+annotations_filename_rshiny_app: "seurat_obj_cell_types_annotations_all.rds" # Options: to update based on the object with the desired annotations to use for the R shiny app from the `cell-types-annotation` module
+
+

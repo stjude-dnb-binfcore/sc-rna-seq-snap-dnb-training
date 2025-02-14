@@ -68,7 +68,7 @@ if (method == "all"){
   new_metadata <- readr::read_tsv(gene_markers_file, guess_max = 100000, show_col_types = FALSE) %>%
     
     # Select for columns to use for join to the object
-    select(cell, cell_type_gene_markers) %>%
+    select(cell, predicted.cell.signature.ident) %>%
   
     # Join df
     left_join(fine_SingleR_df) %>%

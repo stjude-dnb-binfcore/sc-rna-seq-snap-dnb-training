@@ -250,7 +250,8 @@ We will check the number of cells by summarizing the identified cell type annota
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- seurat_obj@meta.data %>% 
   as.data.frame() %>% 
-  dplyr::count(predicted.cell.signature.ident, ID)
+  dplyr::count(predicted.cell.signature.ident, ID) %>%
+  pivot_wider(names_from = ID, values_from = n, values_fill = list(n = 0))
 cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
 print(knitr::kable(tables1, caption = "Gene markers cell type annotations per ID"))
 cat("  \n</div>  \n")

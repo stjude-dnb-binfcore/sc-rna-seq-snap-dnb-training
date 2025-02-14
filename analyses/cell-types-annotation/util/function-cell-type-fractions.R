@@ -98,17 +98,17 @@ cell_type_fractions_cell_type_gene_markers <- function(df, condition, color_df, 
   # Calculate fractions
   count <- df %>% group_by_at(condition) %>%
     mutate(condition=row_number()) %>% 
-    dplyr::count(cell_type_gene_markers)
+    dplyr::count(predicted.cell.signature.ident)
   
   # Order cell types
-  cell_type_order <- unique(as.character(count$cell_type_gene_markers))
+  cell_type_order <- unique(as.character(count$predicted.cell.signature.ident))
   cell_type_order <- sort(cell_type_order, decreasing = FALSE)
   
   # Define label for plots
-  count$cell_type_gene_markers <- factor(count$cell_type_gene_markers, levels = cell_type_order)
+  count$predicted.cell.signature.ident <- factor(count$predicted.cell.signature.ident, levels = cell_type_order)
   
   # Plot
-  p <- ggplot(count, aes(x = count[[condition]], y = n, fill = cell_type_gene_markers)) +
+  p <- ggplot(count, aes(x = count[[condition]], y = n, fill = predicted.cell.signature.ident)) +
     geom_bar(stat = "identity", position = "fill") +
     scale_fill_manual(values = color_df) +
     theme_Publication(base_size = 11) + 

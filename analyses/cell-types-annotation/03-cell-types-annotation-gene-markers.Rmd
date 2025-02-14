@@ -178,12 +178,12 @@ source(paste0(analysis_dir, "/util/function-cell-type-fractions.R"))
 # library(dittoSeq)
 # https://github.com/dtm2451/dittoSeq/blob/devel/R
 # Get all R script files in the directory (including subdirectories if needed)
-scripts_to_source <- list.files(path = paste0(analysis_dir, "/util/dittoSeq/R"), pattern = "\\.R$", full.names = TRUE)
+#scripts_to_source <- list.files(path = paste0(analysis_dir, "/util/dittoSeq/R"), pattern = "\\.R$", full.names = TRUE)
 
 # Source each script
-for (script in scripts_to_source) {
-  source(script)
-}
+#for (script in scripts_to_source) {
+#  source(script)
+#}
 ```
 
 ```{r echo=FALSE, warning=FALSE}

@@ -65,6 +65,7 @@ The structure of this folder is as follows:
 ├── run-cell-types-annotation-SingleR.R
 ├── run-cell-types-annotation.sh
 └── util
+|   ├── function-calculate-cell-type-signature.R
 |___└── function-cell-type-fractions.R
 ```
 

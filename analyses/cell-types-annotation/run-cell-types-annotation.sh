@@ -14,7 +14,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 ################################################################################################################
 # Run module
-cd "$(dirname "${BASH_SOURCE[0]}")" 
+# cd "$(dirname "${BASH_SOURCE[0]}")" 
 
 #Rscript --vanilla run-cell-types-annotation-SingleR.R
 Rscript --vanilla run-cell-types-annotation-gene-markers.R

@@ -108,7 +108,8 @@ gene_markers_dir_annotation_module: "./" # path to gene markers dir
 gene_markers_file_name_annotation_module: "<filename>.tsv" # File name with the gene markers. It needs to be in `tsv` format. Please ensure cell type names exist and match the ones in the `.figures/palettes/cell_types_palette.tsv`.
 #cluster_name: "seurat_clusters"
 method_annotation_module: "all" # Options: "all" (for using singler and a list of gene markers), "singler" (for using only singler method for both broad and fine annotation)
-gene_name_convention_update_annotation_module: "NO" # Options: "YES" or "NO" (by default)
+gene_name_convention_update_annotation_module: "NO" # Options: "YES" or "NO" (by default). Please set to "YES" if gene names in gene markers file do not match naming convention of genes in reference genome.
+
 
 # `rshiny-app`
 annotations_dir_rshiny_app: "04_cell_types_annotations_all" # Options: to update based on the folder with the desired annotations to use for the R shiny app from the `cell-types-annotation` module

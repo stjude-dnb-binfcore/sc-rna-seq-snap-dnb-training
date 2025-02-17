@@ -50,6 +50,7 @@ params:
   clustering_gene_markers_dir: '.'
   clustering_gene_markers_file_name: '.'
   gene_name_convention_update: '.'
+  resolution: '.'
   root_dir: './'
   PROJECT_NAME: '.'
   PI_NAME: '.'
@@ -208,9 +209,8 @@ seurat_obj <- calculate_cell_type_signature(seurat_obj = seurat_obj,
                                             gene_markers_df = marker_list, 
                                             genome_name = genome_name,
                                             gene_name_convention_update = gene_name_convention_update,
-                                            color_df = palette,
                                             assay = assay, 
-                                            resolution_list = resolution_list)
+                                            resolution = resolution)
 
 # Add metadata
 new.data <- seurat_obj@meta.data %>%

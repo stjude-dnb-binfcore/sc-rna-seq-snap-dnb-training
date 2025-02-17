@@ -6,7 +6,7 @@
 #' @param genome_name
 #' @param gene_name_convention_update
 #' @param assay
-#' @param resolution_list
+#' @param resolution
 #' 
 #' @return
 #' @export
@@ -14,7 +14,7 @@
 #' @examples
 #' 
 calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, gene_markers_df, genome_name, gene_name_convention_update,
-                                          assay, resolution_list) {
+                                          assay, resolution) {
 
   pdf(file = paste(plots_dir, "/", "all_cell_type_signatures.pdf", sep = ""), width = length(gene_markers_df)*6, height = 6)
   
@@ -45,6 +45,7 @@ calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, ge
                     gene.markers <- paste("DualGRCm39---", str_to_title(gene.markers), sep = "") } 
       
       } else if (gene_name_convention_update == "NO"){
+        "There is no need to update gene names. Skipping." }
         
         gene.markers <- gene.markers[gene.markers %in% rownames(seurat_obj)] %>% as.data.frame()
         
@@ -55,7 +56,7 @@ calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, ge
         # Print plots  
         print(VlnPlot(seurat_obj, features = paste(cell.type, "1", sep = ""), pt.size = 0))
         print(VlnPlot(seurat_obj, features = paste(cell.type, "1", sep = ""), pt.size = 0, group.by = "ID"))
-        print(VlnPlot(seurat_obj, features = paste(cell.type, "1", sep = ""), pt.size = 0, group.by = glue::glue("{assay}_snn_res.{resolution_list}")))}
+        print(VlnPlot(seurat_obj, features = paste(cell.type, "1", sep = ""), pt.size = 0, group.by = glue::glue("{assay}_snn_res.{resolution}")))}
     
     cell_cluster_scores <- seurat_obj@meta.data[, grepl(".score1", colnames(seurat_obj@meta.data))]
   
@@ -78,7 +79,7 @@ calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, ge
     print(DimPlot(seurat_obj, reduction = "umap", group.by = "ID") + theme(aspect.ratio = 1))
     print(DimPlot(seurat_obj, reduction = "umap", split.by = "predicted.cell.signature.ident") + theme(aspect.ratio = 1))
     print(ggplot(data = data.frame(table(seurat_obj$predicted.cell.signature.ident)), aes(x = Var1, y = Freq)) + geom_bar(stat = "identity") + geom_text(aes(label = Freq)))
-  
+    
     dev.off()
   
     # Save tables
@@ -86,6 +87,5 @@ calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, ge
     #write.table(prop.table(table(seurat_obj$predicted.cell.signature.ident, seurat_obj$ID), margin = 2) *100, file = paste(results_dir, "/", "all_cell_type_signatures_percentage_data.tsv", sep = ""), sep="\t", quote=FALSE)
   
     return(seurat_obj)
-  }
 }
 

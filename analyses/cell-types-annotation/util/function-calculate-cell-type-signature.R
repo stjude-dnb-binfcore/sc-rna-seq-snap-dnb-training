@@ -39,36 +39,6 @@ calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, ge
     #} else if (genome_name == "DualGRCm39") {
      # gene.markers <- paste("DualGRCm39---", str_to_title(gene.markers), sep = "") } 
 
-    ####################################################
-    # TESTING PHASE ####################################
-    # sce <- as.SingleCellExperiment(seurat_obj)
-    # gene.markers <- gene.markers[gene.markers %in% getGenes(sce)]
-    test_rownames <- gene.markers[gene.markers %in% rownames(seurat_obj)] %>% as.data.frame()
-    write_tsv(test_rownames, file = paste0(results_dir, "/", "test_rownames", ".tsv")) 
-    
-    test_getGenes <- gene.markers[gene.markers %in% getGenes(seurat_obj)] %>% as.data.frame()
-    write_tsv(test_getGenes, file = paste0(results_dir, "/", "test_getGenes", ".tsv")) 
-    
-    # Check overlap (exact row matches)
-    overlap <- intersect(test_rownames, test_getGenes)
-    write_tsv(overlap, file = paste0(results_dir, "/", "test_overlap", ".tsv")) 
-    
-    # View the overlapping rows
-    # print(overlap)
-    
-    # Check if two data frames are exactly the same
-    is_identical <- all.equal(test_rownames, test_getGenes)
-    
-    # Print the result
-    if (is_identical == TRUE) {
-      print("The data frames overlap 100%!")
-    } else {
-      print("The data frames do not overlap 100%.")
-      print(is_identical)
-    }
-    
-    ####################################################    
-    
     ####################################################    
     gene.markers <- gene.markers[gene.markers %in% rownames(seurat_obj)] %>% as.data.frame()
     # Save gene.markers used for the annotation

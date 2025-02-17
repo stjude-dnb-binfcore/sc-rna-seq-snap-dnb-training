@@ -26,7 +26,7 @@ calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, ge
       if (genome_name == "GRCh38" | genome_name == "hg19"){
         gene.markers <- toupper(gene.markers)
         
-        } else if (genome_name == "mm10"){
+        } else if (genome_name == "mm10"| genome_name == "GRCm39"){
           gene.markers <- str_to_title(gene.markers)
           
           } else if (genome_name == "Dualhg19"){
@@ -37,9 +37,6 @@ calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, ge
               
               } else if (genome_name == "Dualmm10"){
                 gene.markers <- paste("mm10---", str_to_title(gene.markers), sep = "") 
-                
-                } else if (genome_name == "GRCm39") {
-                  gene.markers <- paste("GRCm39---", str_to_title(gene.markers), sep = "") 
                   
                 } else if (genome_name == "DualGRCm39") {
                     gene.markers <- paste("DualGRCm39---", str_to_title(gene.markers), sep = "") } 

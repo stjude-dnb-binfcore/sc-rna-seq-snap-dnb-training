@@ -56,6 +56,9 @@ if (method == "all"){
   
   # Rename the column in the metadata of the Seurat object
   seurat_obj@meta.data$pruned.labels.broad <- seurat_obj@meta.data$pruned.labels
+  
+  seurat_obj@meta.data <- seurat_obj@meta.data %>%
+    rename_with(~ paste("broad_", ., sep = ""), matches("^scores\\."))
 
   # We want to attach the metadata related to the cell type annotation from other methods to the ones of the object
   # We randomly chose the object from the first method, `SingleR_broad`
@@ -65,13 +68,16 @@ if (method == "all"){
    mutate(pruned.labels.fine = pruned.labels) %>%
    
    # Select for columns to use for join to the object
-   select(cell, pruned.labels.fine, singler.fine)
-
+   select(cell, pruned.labels.fine, singler.fine, matches("^scores\\.")) %>% # start with
+   rename_with(~ paste("fine_", ., sep = ""), matches("^scores\\."))
+ 
+ 
   # Read metadata `gene_markers`
   new_metadata <- readr::read_tsv(gene_markers_file, guess_max = 100000, show_col_types = FALSE) %>%
     
     # Select for columns to use for join to the object
-    select(cell, predicted.cell.signature.ident) %>%
+    select(cell, predicted.cell.signature.ident, matches("\\.score1$")) %>% #end with
+    rename_with(~ paste("gene_markers_", ., sep = ""), matches("\\.score1$")) %>%
   
     # Join df
     left_join(fine_SingleR_df) %>%
@@ -90,6 +96,12 @@ if (method == "all"){
       ##############################################
       seurat_obj <- readRDS(broad_SingleR_file)
       
+      # Rename the column in the metadata of the Seurat object
+      seurat_obj@meta.data$pruned.labels.broad <- seurat_obj@meta.data$pruned.labels
+      
+      seurat_obj@meta.data <- seurat_obj@meta.data %>%
+        rename_with(~ paste("broad_", ., sep = ""), matches("^scores\\."))
+      
       # We want to attach the metadata related to the cell type annotation from other methods to the ones of the object
       # We randomly chose the object from the first method, `SingleR_broad`
       
@@ -98,7 +110,8 @@ if (method == "all"){
         mutate(pruned.labels.fine = pruned.labels) %>%
         
         # Select for columns to use for join to the object
-        select(pruned.labels.fine, singler.fine) 
+        select(pruned.labels.fine, singler.fine, matches("^scores\\.")) %>% # start with
+        rename_with(~ paste("fine_", ., sep = ""), matches("^scores\\."))
       
       # Check if the number of rows in new_metadata matches the number of cells in the Seurat object
       if (nrow(new_metadata) == ncol(seurat_obj)) {
@@ -106,7 +119,7 @@ if (method == "all"){
         seurat_obj <- AddMetaData(seurat_obj, metadata = new_metadata)
         
         # Verify the metadata has been added
-        head(seurat_obj@meta.data)
+        # head(seurat_obj@meta.data)
       } else {
         # If the number of rows doesn't match, print a warning
         warning("Number of rows in new_metadata doesn't match the number of cells in seurat_obj. Label metadata will not be added to the Seurat object.")

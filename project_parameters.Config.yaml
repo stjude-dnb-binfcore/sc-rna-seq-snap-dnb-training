@@ -34,7 +34,7 @@ use_condition_split_seurat_multiple_samples: "NO" # Options: "NO" (default ALWAY
 grouping: "orig.ident" # define grouping to use 
 Regress_Cell_Cycle_value: "NO" # Options: "YES", "NO" or "DIFF". Indicates whether or not to regress for cell cycle and, if so, which method to use and scale data; acceptable values.
 assay_seurat_qc: "RNA" # Options: "RNA" (default ALWAYS)
-use_SoupX_filtering_seurat_qc: "YES" # Options: "YES" or "NO", for `02A_run_seurat_qc.Rmd`
+use_SoupX_filtering_seurat_qc: "NO" # Options: "YES" or "NO" (default), for `02A_run_seurat_qc.Rmd`
 min_genes: 300 # define minimum number of genes for filtering
 min_count: 500 # define minimum number of UMIs for filtering
 mtDNA_pct_default: 10 # define minimum percentage of mtDNA for filtering
@@ -48,7 +48,7 @@ condition_value: "Genotype" # define main condition of the project; this can be 
 num_dim_seurat_qc: [20, 25] # number of PCs to use in UMAP
 num_neighbors_seurat_qc: [10, 20, 30] # number of neighbors to use in UMAP
 soup_fraction_value_default: 0.05 # set rho default value to use if estimated rho is > 20%
-assay_filter_object: "RNA"  # Optionssay: "RNA" (default) or "RNA_SoupX"
+assay_filter_object: "RNA"  # Options: "RNA" (default) or "RNA_SoupX"
 num_dim_filter_object: 30 # set one value for `04_run_filter_object.Rmd`
 num_neighbors_filter_object: 30 # set one value for `04_run_filter_object.Rmd`
 use_condition_split_filter_object: "YES" # Options: "YES" (default) or "NO", for `04_run_filter_object.Rmd`

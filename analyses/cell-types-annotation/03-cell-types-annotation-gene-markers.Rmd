@@ -162,6 +162,8 @@ gene_markers_file <- file.path(gene_markers_dir, gene_markers_file_name)
 
 # Create results_dir
 module_results_dir <- file.path(analysis_dir, "results")
+if (!dir.exists(module_results_dir)) {
+  dir.create(module_results_dir)}
 
 results_dir <- file.path(module_results_dir, "03_cell_types_annotation_gene_markers")
 if (!dir.exists(results_dir)) {

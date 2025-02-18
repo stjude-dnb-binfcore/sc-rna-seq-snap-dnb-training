@@ -18,8 +18,14 @@ calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, ge
 
   pdf(file = paste(plots_dir, "/", "all_cell_type_signatures.pdf", sep = ""), width = length(gene_markers_df)*6, height = 6)
   
+  merged_gene.markers <- NULL  # Initialize merged_gene.markers outside the loop
+
   for (i in 1:ncol(gene_markers_df)) {
+
+    # Create cell type name for the current column
     cell.type <- paste(colnames(gene_markers_df)[i], ".score", sep = "")
+    
+    # Extract non-empty gene markers for the current column
     gene.markers <- as.character(gene_markers_df[, i][gene_markers_df[, i] != ""])
     
     if (gene_name_convention_update == "YES"){
@@ -44,10 +50,33 @@ calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, ge
       } else if (gene_name_convention_update == "NO"){
         "There is no need to update gene names. Skipping." }
         
-        gene.markers <- gene.markers[gene.markers %in% rownames(seurat_obj)] %>% as.data.frame()
+        # Filter gene markers that are present in rownames of 'seurat_obj'
+        gene.markers <- gene.markers[gene.markers %in% rownames(seurat_obj)] 
+        
+        # Create a data frame for gene markers with the correct column name
+        gene.markers_df <- data.frame(gene = gene.markers)
+        
+        # Rename the first (and only) column to the cell type name
+        colnames(gene.markers_df)[1] <- cell.type
+
+        
+        # If merged_gene.markers is not NULL, adjust row count by padding with NA
+        if (!is.null(merged_gene.markers)) {
+          # Get the maximum row count (length)
+          max_rows <- max(nrow(merged_gene.markers), nrow(gene.markers_df))
+          
+          # Pad with NAs if necessary
+          merged_gene.markers <- merge(merged_gene.markers, gene.markers_df, by = "row.names", all = TRUE) %>%
+            select(-Row.names)
+
+        } else {
+          # For the first iteration, just assign the current gene.markers_df
+          merged_gene.markers <- gene.markers_df 
+        }
         
         # Save gene.markers used for the annotation
-        write_tsv(gene.markers, file = paste0(results_dir, "/", "gene.markers", ".tsv")) 
+        write_tsv(gene.markers_df, file = paste0(results_dir, "/", cell.type, "-gene.markers", ".tsv")) 
+        write_tsv(merged_gene.markers, file = paste0(results_dir, "/", "merged_gene.markers", ".tsv")) 
         seurat_obj <- AddModuleScore(seurat_obj, features = list(gene.markers), name = cell.type)
     
         # Print plots  

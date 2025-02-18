@@ -53,6 +53,9 @@ if (method == "all"){
   # Read seurat object #########################
   ##############################################
   seurat_obj <- readRDS(broad_SingleR_file)
+  
+  # Rename the column in the metadata of the Seurat object
+  seurat_obj@meta.data$pruned.labels.broad <- seurat_obj@meta.data$pruned.labels
 
   # We want to attach the metadata related to the cell type annotation from other methods to the ones of the object
   # We randomly chose the object from the first method, `SingleR_broad`

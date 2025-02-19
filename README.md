@@ -3,15 +3,9 @@
 </p>
 <p align="center">
   <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg?style=for-the-badge" alt="The project has reached a stable, usable state and is being actively developed." /></a>
-
-
-</p>
-
-
-
-![ScRNASeqSnap repository logo](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/blob/main/figures/img/SCRNA_Logo_Primary.png)
 [![version](https://img.shields.io/npm/v/snap?color=brightgreen&label=version)](https://www.npmjs.com/package/snap)
 
+</p>
 
 
 # Single cell RNA Seq Snap workflow (ScRNASeqSnap)

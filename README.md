@@ -1,14 +1,14 @@
-<p align="center">
+<p align="center";">
   <img src="figures/img/SCRNA_Logo_Primary.png" alt="ScRNASeqSnap repository logo" width="560px" />
 </p>
-<p align="center">
-  <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg?style=for-the-badge" alt="The project has reached a stable, usable state and is being actively developed." /></a>
-  
-  <a href="https://img.shields.io/npm/v/snap?color=brightgreen&label=version"><img src="https://www.npmjs.com/package/snap" alt="Version" /></a>
-  
+<p align="center";">
+  <a href="https://www.repostatus.org/#active">
+    <img src="https://www.repostatus.org/badges/latest/active.svg?style=for-the-badge" alt="The project has reached a stable, usable state and is being actively developed." />
+  </a>
+  <a href="https://www.npmjs.com/package/snap">
+    <img src="https://img.shields.io/npm/v/snap?color=brightgreen&label=version" alt="Version" />
+  </a>
 </p>
-
-[![version](https://img.shields.io/npm/v/snap?color=brightgreen&label=version)](https://www.npmjs.com/package/snap)
 
 
 # Single cell RNA Seq Snap workflow (ScRNASeqSnap)

@@ -84,7 +84,7 @@ cell_type_fractions_fine <- function(df, condition, color_df, title_value) {
 ############################################################################################################
 #' Function to quantify cell type annotations fractions - gene_markers cell type annotation
 #' @param df
-#' @param condition
+#' @param condition_plot
 #' @param color_df
 #' @param title_value
 #' 
@@ -93,29 +93,29 @@ cell_type_fractions_fine <- function(df, condition, color_df, title_value) {
 #'
 #' @examples
 #' 
-cell_type_fractions_cell_type_gene_markers <- function(df, condition, color_df, title_value) {
+cell_type_fractions_cell_type_gene_markers <- function(df, condition_plot, color_df, title_value) {
   
   # Calculate fractions
-  count <- df %>% group_by_at(condition) %>%
-    mutate(condition=row_number()) %>% 
-    dplyr::count(cell_type_gene_markers)
+  count <- df %>% group_by_at(condition_plot) %>%
+    mutate(condition_plot=row_number()) %>% 
+    dplyr::count(predicted.cell.signature.ident)
   
   # Order cell types
-  cell_type_order <- unique(as.character(count$cell_type_gene_markers))
+  cell_type_order <- unique(as.character(count$predicted.cell.signature.ident))
   cell_type_order <- sort(cell_type_order, decreasing = FALSE)
   
   # Define label for plots
-  count$cell_type_gene_markers <- factor(count$cell_type_gene_markers, levels = cell_type_order)
+  count$predicted.cell.signature.ident <- factor(count$predicted.cell.signature.ident, levels = cell_type_order)
   
   # Plot
-  p <- ggplot(count, aes(x = count[[condition]], y = n, fill = cell_type_gene_markers)) +
+  p <- ggplot(count, aes(x = count[[condition_plot]], y = n, fill = predicted.cell.signature.ident)) +
     geom_bar(stat = "identity", position = "fill") +
     scale_fill_manual(values = color_df) +
     theme_Publication(base_size = 11) + 
-    xlab(glue::glue("{condition}")) +
+    xlab(glue::glue("{condition_plot}")) +
     ylab("Percent Cell Type") +
     guides(color = guide_legend(override.aes = list(size = 3))) +
-    ggtitle(glue::glue("{title_value} cell type fractions per {condition}")) +
+    ggtitle(glue::glue("{title_value} cell type fractions per {condition_plot}")) +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
   
   return(p)

@@ -3,9 +3,12 @@
 </p>
 <p align="center">
   <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg?style=for-the-badge" alt="The project has reached a stable, usable state and is being actively developed." /></a>
-[![version](https://img.shields.io/npm/v/snap?color=brightgreen&label=version)](https://www.npmjs.com/package/snap)
-
+  
+  <a href="https://img.shields.io/npm/v/snap?color=brightgreen&label=version"><img src="https://www.npmjs.com/package/snap" alt="Version" /></a>
+  
 </p>
+
+[![version](https://img.shields.io/npm/v/snap?color=brightgreen&label=version)](https://www.npmjs.com/package/snap)
 
 
 # Single cell RNA Seq Snap workflow (ScRNASeqSnap)

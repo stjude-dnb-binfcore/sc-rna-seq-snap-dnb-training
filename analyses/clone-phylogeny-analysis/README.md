@@ -49,21 +49,23 @@ The structure of this folder is as follows:
 
 ```
 ├── 01-create-count-mat.R
-├── 02-create-pileup-and-phase.sh
-├── 03-create-df-allele.R
-├── 04-run-numbat.R
-├── 05-create-clone-phylogeny-plots.R
+├── 02-prepare-files-for-pileup-and-phase.sh
+├── 03-run-pileup-and-phase.sh
+├── 04-create-df-allele-rda.R
+├── 05-run-numbat.R
+├── 06A-create-numbat-plots.Rmd
+├── 06B-create-numbat-plots-multiple-samples.R
 ├── input
 ├── lsf-script.txt
 ├── README.md
+├── plots
+|   └── 05-create-numbat-plots
 ├── results
 |   ├── 01-create-count-mat
 |   ├── 02-create-pileup-and-phase
-|   ├── 03-create-df-allele
+|   ├── 03-create-df-allele-rda
 |   ├── 04-run-numbat
-|   └── 05-create-clone-phylogeny-plots
-├── run-clone-phylogeny-analysis.sh
-└── util
-|___└── pileup_and_phase.R
+|   └── 05-create-numbat-plots
+└── run-clone-phylogeny-analysis.sh
 ```
 

@@ -28,19 +28,8 @@ root_dir <- yaml$root_dir
 assay <- yaml$assay_annotation_module
 input_dir <- yaml$input_dir_clone_phylogeny_module
 analysis_dir <- file.path(root_dir, "analyses", "clone-phylogeny-analysis") 
-#input_dir <- file.path(analysis_dir, "input") 
-#input_dir <- file.path(analysis_dir, "input", "dyergrp_projects_ALSF_Pediatric_Atlas") 
-
-# List all directories recursively
-#all_dirs <- list.dirs(input_dir, recursive = TRUE)
-
-# Filter directories that end with "output"
-#sample_input_dir <- all_dirs[grep("/output$", all_dirs)]  # Ensure the directory ends with "output"
-#print(sample_input_dir)
 
 # Input files
-#seurat_obj_file <- c(dir(path = sample_input_dir, pattern =  "_Seurat.Rds", full.names = TRUE, recursive = TRUE))
-#print(dir(input_dir, full.names = TRUE))
 seurat_obj_file <- dir(path = input_dir, pattern =  "seurat_obj.*\\.rds", full.names = TRUE, recursive = TRUE)
 print(seurat_obj_file)
 
@@ -61,17 +50,6 @@ if (!dir.exists(step_results_dir)) {
 
 
 #######################################################
-# Read metadata file and define `sample_name`
-#metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
-
-# Read metadata file and define `sample_name`
-#project_metadata <- read.csv(metadata_file, sep = "\t", header = TRUE)
-#sample_name <- unique(as.character(project_metadata$ID))
-#sample_name <- sort(sample_name, decreasing = FALSE)
-#print(sample_name)
-
-
-#######################################################
 # Create list 
 seurat_obj_list <- list()
 count_mat_list <- list()
@@ -81,7 +59,6 @@ for (i in seq_along(seurat_obj_file)) {
   
   # Extract sample name from the file path
   sample_name <- c(sample_name, gsub("Create-", "", str_split_fixed(seurat_obj_file[i], "/", 16)[, 15]))
-  print(sample_name[i])  # Print the current sample name for debugging
 }
 
 # Sort the sample names outside the loop if needed

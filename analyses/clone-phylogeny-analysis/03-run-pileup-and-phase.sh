@@ -25,10 +25,6 @@ echo "${module_dir}"
 cellranger_data_dir=$(cat ../../project_parameters.Config.yaml | grep 'data_dir:' | awk '{print $2}')
 cellranger_data_dir=${cellranger_data_dir//\"/}  # Removes all double quotes
 echo "$cellranger_data_dir"  # Output: This is a string with quotes.
-########################################################################
-# If your `project_metadata` is not in `*.txt` file format
-# use the following code line to convert it
-# cat "${metadata_dir}"/project_metadata.tsv | sed 's/,/\t/g' > ./input/project_metadata.txt
 
 ########################################################################
 # Directories and paths to file Inputs/Outputs

@@ -48,13 +48,6 @@ if (!dir.exists(numbat_plots_dir)) {
 
 #######################################################
 # Read metadata file and define `sample_name`
-#metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
-
-# Read metadata file and define `sample_name`
-#project_metadata <- read.csv(metadata_file, sep = "\t", header = TRUE)
-#sample_name <- unique(as.character(project_metadata$ID))
-#sample_name <- sort(sample_name, decreasing = FALSE)
-#print(sample_name)
 df_allele_results_dir <- file.path(module_results_dir, "03-create-df-allele-rda") 
 df_allele_file <- c(dir(path = df_allele_results_dir,  pattern = "df_allele.rda", full.names = TRUE, recursive = TRUE))
 

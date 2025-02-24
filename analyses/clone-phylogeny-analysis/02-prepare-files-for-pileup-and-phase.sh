@@ -30,9 +30,9 @@ references_dir=${input_dir}/references
 echo "${references_dir}"
 
 
-#genome_name=$(cat ../../project_parameters.Config.yaml | grep 'genome_name:' | awk '{print $2}')
-#genome_name=${genome_name//\"/}  # Removes all double quotes
-genome_name="GRCh38"
+genome_name=$(cat ../../project_parameters.Config.yaml | grep 'genome_name:' | awk '{print $2}')
+genome_name=${genome_name//\"/}  # Removes all double quotes
+#genome_name="GRCh38"
 echo "$genome_name"  # Output: This is a string with quotes.
 
 ########################################################################

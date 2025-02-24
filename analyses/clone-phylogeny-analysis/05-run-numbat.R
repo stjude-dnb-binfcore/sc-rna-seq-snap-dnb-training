@@ -40,14 +40,6 @@ if (!dir.exists(step_results_dir)) {
   dir.create(step_results_dir)
 }
 
-
-#######################################################
-# Read metadata file and define `sample_name`
-#project_metadata <- read.csv(metadata_file, sep = "\t", header = TRUE)
-#sample_name <- unique(as.character(project_metadata$ID))
-#sample_name <- sort(sample_name, decreasing = FALSE)
-#print(sample_name)
-
 #######################################################
 # Read reference file
 #reference_obj <- readRDS(reference_file)
@@ -59,7 +51,6 @@ df_allele_list <- list()
 sample_name <- c()
 
 for (i in seq_along(df_allele_file)) {
-  
   # Extract sample name from the file path
   sample_name <- c(sample_name, gsub("Create-", "", str_split_fixed(df_allele_file[i], "/", 16)[, 15]))
 }

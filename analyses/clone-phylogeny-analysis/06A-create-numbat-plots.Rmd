@@ -332,7 +332,6 @@ ggsave(file = fname, p, width = 20, height = 15, device = "png")
 ```
 
 # Clonal assignments
-
 Numbat aggregates signals across subclone-specific CNVs to probabilistically assign cells to subclones. The information regarding clonal assignments are contained in the `numbat_obj.df$clone_post` dataframe.
 
 Here clone_opt denotes the maximum likelihood assignment of a cell to a specific clone. p_{1..4} are the detailed breakdown of the posterior probability that the cell belongs to each clone, respectively. Let's visualize the clonal decomposition in a tSNE embedding. Note that clone 1 is always the normal cells.

@@ -12,7 +12,7 @@ Parameters according to the project and analysis strategy will need to be specif
 - `04-merge-cell-types-annotations-all.R`: The user should run this script to merge cell type annotations from SingleR (both broad and fine resolutions). Additionally, if multiple annotation methods are used (current options include SingleR method and a gene marker list), this script will merge the annotations accordingly.
 
 
-Please verify that the cell type names in your customized reference list match exactly with those in the `.figures/palettes/cell_types_palette.tsv`. If any cell types are missing, kindly submit an [issue](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/issues) with the list of those cell types, and we will add them to the palette list.
+We provide a fixed color palette for annotating cell types. Please ensure that the cell type names in your customized reference list (if you use any) exactly match those in the `.figures/palettes/cell_types_palette.tsv`. If any cell types are missing, please submit an [issue](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/issues) with the list of missing types, and we will add them to the palette. Alternatively, users are welcome to use their own `cell_types_palette.tsv`, as long as the column names, file name, and format match those in `./figures/palettes/cell_types_palette.tsv`.
 
 
 ### Run module on an interactive session on HPC within the container

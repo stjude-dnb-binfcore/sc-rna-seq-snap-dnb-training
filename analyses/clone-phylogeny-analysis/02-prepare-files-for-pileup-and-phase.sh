@@ -32,14 +32,10 @@ echo "${references_dir}"
 
 genome_name=$(cat ../../project_parameters.Config.yaml | grep 'genome_name:' | awk '{print $2}')
 genome_name=${genome_name//\"/}  # Removes all double quotes
-#genome_name="GRCh38"
 echo "$genome_name"  # Output: This is a string with quotes.
 
 ########################################################################
-# Check what species the dataset is from
-# GRCh38 
-# NOT THIS YET: GRCm39, GRCh38ANDGRCm39, and GRCh38_GFP_tdTomato, for human, mouse, and dual index genomes
-#if [ ! -f genome_name="GRCh38" ]; then
+# Check what species the dataset is from GRCh38 
 if [ "$genome_name" = "GRCh38" ]; then
     echo "Dataset is GRCh38, i.e., human genome. Processing..."
     
@@ -104,6 +100,7 @@ if [ "$genome_name" = "GRCh38" ]; then
     ########################################################################
 
 else
+    # The pipeline cannot be used yet for for mouse and dual index genomes, i.e., GRCm39, GRCh38ANDGRCm39, and GRCh38_GFP_tdTomato.
     echo "Dataset is GRCm39, i.e., mouse genome. The pipeline is currently available for human species only."
     exit 1  # This will stop the script execution if the genome is GRCm39.
 fi

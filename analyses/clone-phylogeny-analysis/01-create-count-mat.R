@@ -24,13 +24,15 @@ yaml <- read_yaml(configFile)
 #################################################################################
 # Set up directories and paths to file Inputs/Outputs
 root_dir <- yaml$root_dir
-#metadata_dir <- yaml$metadata_dir
+metadata_dir <- yaml$metadata_dir
 assay <- yaml$assay_annotation_module
-input_dir <- yaml$input_dir_clone_phylogeny_module
 analysis_dir <- file.path(root_dir, "analyses", "clone-phylogeny-analysis") 
+annotation_results_dir <- file.path(root_dir, "analyses", "cell-types-annotation", "results") 
+annotations_dir <- yaml$annotations_dir_rshiny_app
+annotations_all_results_dir <- file.path(annotation_results_dir, annotations_dir) 
 
 # Input files
-seurat_obj_file <- dir(path = input_dir, pattern =  "seurat_obj.*\\.rds", full.names = TRUE, recursive = TRUE)
+seurat_obj_file <- dir(path = annotations_all_results_dir, pattern =  "seurat_obj.*\\.rds", full.names = TRUE, recursive = TRUE)
 print(seurat_obj_file)
 
 
@@ -50,20 +52,27 @@ if (!dir.exists(step_results_dir)) {
 
 
 #######################################################
-# Create list 
-seurat_obj_list <- list()
-count_mat_list <- list()
-sample_name <- c()
+# Read metadata file and define `sample_name`
+metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
 
-for (i in seq_along(seurat_obj_file)) {
-  
-  # Extract sample name from the file path
-  sample_name <- c(sample_name, gsub("Create-", "", str_split_fixed(seurat_obj_file[i], "/", 16)[, 15]))
-}
-
-# Sort the sample names outside the loop if needed
+# Read metadata file and define `sample_name`
+project_metadata <- read.csv(metadata_file, sep = "\t", header = TRUE)
+sample_name <- unique(as.character(project_metadata$ID))
 sample_name <- sort(sample_name, decreasing = FALSE)
-print(sample_name)  # Print all sample names to check if they are stored correctly
+print(sample_name)
+
+##########################################################################################################
+# Read the Seurat object
+seurat_obj <- readRDS(seurat_obj_file)
+
+# Split the Seurat object by the 'orig.ident' in the metadata
+seurat_obj_list <- SplitObject(seurat_obj, split.by = "orig.ident")
+#seurat_obj_list
+##########################################################################################################
+# Create list 
+#seurat_obj_list <- list()
+count_mat_list <- list()
+
 
 for (i in seq_along(sample_name)){
 
@@ -76,10 +85,10 @@ for (i in seq_along(sample_name)){
   cat("Processing for sample:", sample_name[i], "\n")
   
   # Read the Seurat object
-  seurat_obj_list[[i]] <- readRDS(seurat_obj_file[i]) # Use double brackets to assign to the list
+  #seurat_obj_list[[i]] <- readRDS(seurat_obj_file[i]) # Use double brackets to assign to the list
   # Save the Seurat object to the results directory
-  saveRDS(seurat_obj_list[[i]], file = file.path(results_dir, paste0(sample_name[i], "seurat_obj.rds")))
-  cat("Saved Seurat object for sample:", sample_name[i], "\n")
+  #saveRDS(seurat_obj_list[[i]], file = file.path(results_dir, paste0(sample_name[i], "_seurat_obj.rds")))
+  #cat("Saved Seurat object for sample:", sample_name[i], "\n")
   
   # Extract count matrix
   count_mat_list[[i]] <- as.matrix(seurat_obj_list[[i]]@assays[[assay]]@counts)
@@ -93,5 +102,5 @@ for (i in seq_along(sample_name)){
   cat("Processing complete for sample:", sample_name[i], "\n")
   
 }
-
+##########################################################################################################
 

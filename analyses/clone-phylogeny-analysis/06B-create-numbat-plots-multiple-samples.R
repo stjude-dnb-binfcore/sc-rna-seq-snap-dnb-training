@@ -5,6 +5,7 @@
 suppressPackageStartupMessages({
   library(yaml)
   library(tidyverse)
+  library(Seurat)
 })
 
 #################################################################################
@@ -123,7 +124,8 @@ for (i in seq_along(sample_name)){
                   output_dir = file.path(samples_plots_dir),
                   output_file = c(paste('Report-', 'create-numbat-plots-', sample_name[i], '-', Sys.Date(), sep = '')),
                   output_format = 'all',
-                  params = list(root_dir = yaml$root_dir,
+                  params = list(cell_type_label = yaml$cell_type_label_numbat,
+                                root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,
                                 TASK_ID = yaml$TASK_ID,

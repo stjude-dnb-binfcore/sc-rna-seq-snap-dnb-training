@@ -35,6 +35,7 @@ header-includes:
   - \usepackage{graphicx}
   - \usepackage{float}
 params:
+  cell_type_label: '.'
   root_dir: './'
   PROJECT_NAME: '.'
   PI_NAME: '.'
@@ -267,7 +268,7 @@ CellsMeta <- seurat_obj@meta.data
 randomnumbers <- merge["p_cnv"]
 
 CellsMeta["p_cnv"] <- randomnumbers
-CellsMetaTrim <- subset(CellsMeta, select = c("p_cnv", "main_hpca"))
+CellsMetaTrim <- subset(CellsMeta, select = c("p_cnv", cell_type_label))
 seurat_obj<- AddMetaData(seurat_obj, CellsMetaTrim)
 
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot4.png")
@@ -375,8 +376,8 @@ library(RColorBrewer)
 mypalette <- brewer.pal(12,"Paired") # colorblindFriendly = TRUE
 mypalette <- colorRampPalette(mypalette)(40)
 
-p3 <- DimPlot(seurat_obj, reduction = "umap", label = TRUE, group.by = 'main_hpca', repel = TRUE, label.size = 2.5, cols = mypalette) + 
-  ggtitle("main_hpca")
+p3 <- DimPlot(seurat_obj, reduction = "umap", label = TRUE, group.by = cell_type_label, repel = TRUE, label.size = 2.5, cols = mypalette) + 
+  ggtitle(cell_type_label)
 p4 <- DimPlot(seurat_obj, reduction = "umap", group.by = 'Timepoint', label = TRUE, repel = TRUE, label.size = 2.5, cols = mypalette) + 
   ggtitle("Disease stage")
 

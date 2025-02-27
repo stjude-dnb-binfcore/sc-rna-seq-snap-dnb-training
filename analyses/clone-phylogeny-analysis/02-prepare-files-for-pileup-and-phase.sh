@@ -2,7 +2,7 @@
 # 
 #BSUB -P project
 #BSUB -J 02-create-pileup-and-phase
-#BSUB -oo 02-create-pileup-and-phase-job.out -eo 02-create-pileup-and-phase-job.err
+#BSUB -oo job.out -eo job.err
 #BSUB -n 24
 #BSUB -R "rusage[mem=128GB] span[hosts=1]"
 #BSUB -cwd "."
@@ -13,7 +13,8 @@ set -o pipefail
 # set up running directory
 cd "$(dirname "${BASH_SOURCE[0]}")" 
 
-mkdir -p ./input
+mkdir -p ./results
+mkdir -p ./results/02-prepare-files-for-pileup-and-phase
 #######################################################
 # Read multiple values and assign them to variables by parsing yaml file
 root_dir=$(cat ../../project_parameters.Config.yaml | grep 'root_dir:' | awk '{print $2}')
@@ -23,7 +24,7 @@ echo "${root_dir}"  # Output: This is a string with quotes.
 module_dir=${root_dir}/analyses/clone-phylogeny-analysis
 echo "${module_dir}"
 
-input_dir=${module_dir}/input
+input_dir=${module_dir}/results/02-prepare-files-for-pileup-and-phase
 echo "${input_dir}"
 
 references_dir=${input_dir}/references

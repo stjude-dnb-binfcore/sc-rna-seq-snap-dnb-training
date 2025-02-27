@@ -22,11 +22,11 @@ yaml <- read_yaml(configFile)
 #################################################################################
 # Set up directories and paths to file Inputs/Outputs
 root_dir <- yaml$root_dir
-metadata_dir <- yaml$metadata_dir
+#metadata_dir <- yaml$metadata_dir
 analysis_dir <- file.path(root_dir, "analyses", "clone-phylogeny-analysis") 
 module_results_dir <- file.path(analysis_dir, "results")
 count_mat_results_dir <- file.path(analysis_dir, "results", "01-create-count-mat") 
-df_allele_results_dir <- file.path(analysis_dir, "results", "03-create-df-allele-rda") 
+df_allele_results_dir <- file.path(analysis_dir, "results", "04-create-df-allele-rda") 
 
 # Input files
 #reference_file <- file.path(input_dir, "myref-Tcellls.rda")
@@ -35,7 +35,7 @@ df_allele_file <- dir(path = df_allele_results_dir,  pattern = ("df_allele.rda")
 
 # Create step_results_dir
 step_results_dir <- 
-  file.path(module_results_dir, paste0("04-run-numbat"))
+  file.path(module_results_dir, paste0("05-run-numbat"))
 if (!dir.exists(step_results_dir)) {
   dir.create(step_results_dir)
 }

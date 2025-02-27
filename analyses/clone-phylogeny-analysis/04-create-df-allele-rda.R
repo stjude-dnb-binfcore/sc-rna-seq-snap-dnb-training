@@ -31,14 +31,14 @@ metadata_dir <- yaml$metadata_dir
 assay <- yaml$assay_annotation_module
 analysis_dir <- file.path(root_dir, "analyses", "clone-phylogeny-analysis") 
 module_results_dir <- file.path(analysis_dir, paste0("results"))
-input_dir <- file.path(module_results_dir, "02-create-pileup-and-phase") 
+input_dir <- file.path(module_results_dir, "03-create-pileup-and-phase") 
 
 # Input files
 input_file <- c(dir(path = input_dir,  pattern = "_allele_counts.tsv.gz", full.names = TRUE, recursive = TRUE))
 
 # Create step_results_dir
 step_results_dir <- 
-  file.path(module_results_dir, paste0("03-create-df-allele-rda"))
+  file.path(module_results_dir, paste0("04-create-df-allele-rda"))
 if (!dir.exists(step_results_dir)) {
   dir.create(step_results_dir)
 }

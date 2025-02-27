@@ -145,10 +145,14 @@ root_dir <- yaml$root_dir
 analysis_dir <- file.path(root_dir, "analyses", "clone-phylogeny-analysis") 
 module_results_dir <- file.path(analysis_dir, "results")
 module_plots_dir <- file.path(analysis_dir, "plots") 
-numbat_plots_dir <-file.path(module_plots_dir, "05-create-numbat-plots") 
-numbat_results_dir <- file.path(module_results_dir, paste0("05-create-numbat-plots"))
-run_numbat_results_dir <- file.path(module_results_dir, "04-run-numbat") 
-seurat_dir <- file.path(module_results_dir, paste0("01-create-count-mat"))
+numbat_plots_dir <-file.path(module_plots_dir, "06-create-numbat-plots") 
+numbat_results_dir <- file.path(module_results_dir, paste0("06-create-numbat-plots"))
+run_numbat_results_dir <- file.path(module_results_dir, "05-run-numbat") 
+#seurat_dir <- file.path(module_results_dir, paste0("01-create-count-mat"))
+
+#annotation_results_dir <- file.path(root_dir, "analyses", "cell-types-annotation", "results") 
+#annotations_dir <- yaml$annotations_dir_rshiny_app
+#annotations_all_results_dir <- file.path(annotation_results_dir, annotations_dir) 
 ```
 
 ```{r echo=FALSE, warning=FALSE}
@@ -162,6 +166,7 @@ a4height <- 11.7
 ```
 
 # Read Numbat results
+
 First, we will use the results from the Numbat run to generate the Numbat object.
 
 ```{r read-numbat, echo=TRUE}
@@ -175,14 +180,15 @@ numbat_obj <- Numbat$new(out_dir = run_numbat_file)
 #saveRDS(numbat_obj, file.path(numbat_results_dir, sample_name[i], "nb_object.rds")) # Save object
 cat("Successfully created Numbat object for sample:", sample_name[i], "\n")
 
-sample_input_dir <- file.path(seurat_dir, sample_name[i])
-
 # Input files
-seurat_obj_file <- c(dir(path = sample_input_dir,pattern =  "seurat_obj.rds", full.names = TRUE, recursive = TRUE))
-print(seurat_obj_file)
+#seurat_obj_file <- dir(path = annotations_all_results_dir, pattern =  "seurat_obj.*\\.rds", full.names = TRUE, recursive = TRUE)
+#print(seurat_obj_file)
 
 # Read the Seurat object
-seurat_obj <- readRDS(seurat_obj_file)
+# You do not need to repeat normalization or UMAP after splitting the Seurat object by sample. 
+# The normalization will carry over, and the UMAP embeddings will be available in each individual Seurat object that you split.
+seurat_obj <- seurat_obj_list[[i]]
+#seurat_obj_all <- readRDS(seurat_obj_file)
 cat("Successfully read Seurat object for sample:", sample_name[i], "\n")
 ```
 

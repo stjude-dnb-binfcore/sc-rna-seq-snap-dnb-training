@@ -22,7 +22,7 @@ yaml <- read_yaml(configFile)
 #################################################################################
 # Set up directories and paths to file Inputs/Outputs
 root_dir <- yaml$root_dir
-#metadata_dir <- yaml$metadata_dir
+metadata_dir <- yaml$metadata_dir
 analysis_dir <- file.path(root_dir, "analyses", "clone-phylogeny-analysis") 
 module_results_dir <- file.path(analysis_dir, "results")
 count_mat_results_dir <- file.path(analysis_dir, "results", "01-create-count-mat") 
@@ -48,16 +48,16 @@ if (!dir.exists(step_results_dir)) {
 # Create list 
 count_mat_list <- list()
 df_allele_list <- list()
-sample_name <- c()
 
-for (i in seq_along(df_allele_file)) {
-  # Extract sample name from the file path
-  sample_name <- c(sample_name, gsub("Create-", "", str_split_fixed(df_allele_file[i], "/", 16)[, 15]))
-}
+#######################################################
+# Read metadata file and define `sample_name`
+metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
 
-# Sort the sample names outside the loop if needed
+# Read metadata file and define `sample_name`
+project_metadata <- read.csv(metadata_file, sep = "\t", header = TRUE)
+sample_name <- unique(as.character(project_metadata$ID))
 sample_name <- sort(sample_name, decreasing = FALSE)
-print(sample_name)  # Print all sample names to check if they are stored correctly
+print(sample_name)
 
 for (i in seq_along(sample_name)){
   
@@ -70,13 +70,35 @@ for (i in seq_along(sample_name)){
   cat("Processing sample:", sample_name[i], "\n")
 
   # Read the count matrix
-  cat("Reading the count matrix for sample", sample_name[i], "\n")
+  cat("Reading the count matrix for sample:", sample_name[i], "\n")
+  cat("Processing count_mat_list[[", i, "]]:", count_mat_file[i], "\n")
   count_mat_list[[i]] <- readRDS(count_mat_file[i]) # Use double brackets to assign to the list
 
   # Read the allele data
-  cat("Reading the allele data for sample", sample_name[i], "\n")
-
+  cat("Reading the allele data for sample:", sample_name[i], "\n")
+  cat("Processing df_allele_list[[", i, "]]:", df_allele_file[i], "\n")
   df_allele_list[[i]] <- readRDS(df_allele_file[i]) # Use double brackets to assign to the list
+  
+  # Rename the cells name to match the ones from the snap pipeline
+  df_allele_list[[i]] <- df_allele_list[[i]] %>%
+    mutate(cell = str_c(sample_name[i], ":", cell),
+           cell = str_remove(cell, "-1$"))
+  print(head(df_allele_list[[i]]))
+  
+  
+  ###############################################################################################################
+  # Debugging step
+  #cat("Input check - count_mat:", is.null(count_mat_list[[i]]), "df_allele:", is.null(df_allele_list[[i]]), "\n")
+  #Input check - count_mat: FALSE df_allele: FALSE 
+  #cat("Processing sample:", sample_name[i], "Count matrix size:", dim(count_mat_list[[i]]), "Allele data size:", dim(df_allele_list[[i]]), "\n")
+  
+  # Print out the results
+  #cat("Common cells:", length(common_cells), "\n")
+  #cat("Missing in count_mat:", length(missing_in_count_mat), "\n")
+  #cat("Missing in df_allele:", length(missing_in_df_allele), "\n")
+  
+  ###############################################################################################################  
+  
   
   ############## ############## ############## ##############
   # Sanity check
@@ -84,26 +106,19 @@ for (i in seq_along(sample_name)){
   cat("count_mat_list sample:", count_mat_file[i], "\n")
   cat("df_allele_list sample:", df_allele_file[i], "\n")
   
-  
   cat("Length of sample_name:", length(sample_name), "\n")
   cat("Length of count_mat_list:", length(count_mat_list), "\n")
   cat("Length of df_allele_list:", length(df_allele_list), "\n")
   
-  
-  cat("Running numbat for sample:", sample_name[i], "\n")
-  cat("Processing count_mat_list[[", i, "]]:", count_mat_file[i], "\n")
-  cat("Processing df_allele_list[[", i, "]]:", df_allele_file[i], "\n")
-  
   cat("Number of cells in count_mat_list[[i]]:", ncol(count_mat_list[[i]]), "\n")
   cat("Number of genes in count_mat_list[[i]]:", nrow(count_mat_list[[i]]), "\n")
-  
   cat("Number of cells in df_allele_list[[i]]:", nrow(df_allele_list[[i]]), "\n") 
   cat("Number of genes in df_allele_list[[i]]:", length(unique(df_allele_list[[i]]$gene)), "\n")
-  print(head(df_allele_list[[i]]))
+  #print(head(df_allele_list[[i]]))
   ############## ############## ############## ##############
   
   # Run numbat
-  cat("Running numbat for sample", sample_name[i], "\n")
+  cat("Running numbat for sample:", sample_name[i], "\n")
   out = run_numbat(
     count_mat = count_mat_list[[i]], # gene x cell integer UMI count matrix 
     lambdas_ref = ref_hca, #reference_obj; # reference expression profile, a gene x cell type normalized expression level matrix

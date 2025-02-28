@@ -44,6 +44,12 @@ For more information about guidelines and best practices for effectively using t
 <img width="650" alt="how-to-fork-repo-3" src="https://github.com/user-attachments/assets/073abb78-3993-4527-a574-859fd3046d39">
 
 
+4. Navigate to your directory and clone the forked repository
+
+```
+git clone https://github.com/<FORK_NAME>.git
+```
+
 ## To run the code in this repository:
 
 1. Replace the `project_parameters.Config.yaml` with your file paths and parameters.

@@ -3,8 +3,8 @@ root_dir: "./sc-rna-seq-snap" # path to the main dir of the project where GitHub
 data_dir: "./sc-rna-seq-snap/analyses/cellranger-analysis/results/02_cellranger_count/DefaultParameters" # Options: "DefaultParameters", "ForcedCells8000Parameters", or else. Path to data dir of the project with CellRanger output results.
 metadata_dir: "./project-metadata" # path to metadata dir of the project
 genome_name: "GRCm39" # define genome reference and versioning
-PROJECT_NAME: "mouse-test-dataset"
-PI_NAME: "Stanislav Zakharenko"
+PROJECT_NAME: "PROJECT_NAME"
+PI_NAME: "PI_NAME"
 TASK_ID: "NA"
 PROJECT_LEAD_NAME: "NA"
 DEPARTMENT: "Developmental Neurobiology"

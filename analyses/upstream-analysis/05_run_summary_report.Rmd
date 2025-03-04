@@ -299,17 +299,23 @@ multiqc_fastqc_df <- read.table(multiqc_fastqc_results_file, header = TRUE, sep 
 
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- multiqc_general_stats_df
-cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
+#cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
+# Start HTML container with alignment and smaller font size
+cat("<div align='center' style='font-size:80%; width: 100%; overflow-x: auto;'>  \n")
 print(knitr::kable(tables1,  align = "lcccc", caption = "General Statistics per sample"))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
 ```
 
+
+
 ### Summary FastQC per sample
 
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- multiqc_fastqc_df
-cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
+#cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
+# Start HTML container with alignment and smaller font size
+cat("<div align='center' style='font-size:80%; width: 100%; overflow-x: auto;'>  \n")
 print(knitr::kable(tables1,  align = "lcccc", caption = "Summary FastQC per sample"))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
@@ -330,7 +336,9 @@ cellranger_results_df <- readr::read_tsv(cellranger_results_file, guess_max = 10
 
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- cellranger_results_df
-cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
+#cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
+# Start HTML container with alignment and smaller font size
+cat("<div align='center' style='font-size:80%; width: 100%; overflow-x: auto;'>  \n")
 print(knitr::kable(tables1,  align = "lcccc", caption = "Summary of CellRanger QC per sample"))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")

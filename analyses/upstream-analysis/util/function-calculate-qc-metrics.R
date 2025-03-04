@@ -72,7 +72,7 @@ create_vln_plot <- function(seurat_obj, grouping, min_genes, min_count, title_na
     xlab("") + 
     ylab("") + 
     scale_fill_manual(values = alpha(c(vln_plot_color_df$hex_codes), .4)) +
-    annotate(geom = "text", size = 2.5, x = 1, y = c(-(mtDNA_pct_default+100)), label = glue::glue("Min mtDNA: {mtDNA_pct_default}"), color = min_color_df$hex_codes)
+    annotate(geom = "text", size = 2.5, x = 1, y = mtDNA_pct_default, label = glue::glue("Min mtDNA: {mtDNA_pct_default}"), color = min_color_df$hex_codes)
   
   # get the legend for one of the plots to use as legend for the combined plot
   legend_grid <- get_legend(mito_num)

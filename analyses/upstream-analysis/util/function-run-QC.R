@@ -19,11 +19,11 @@ run_miQC <- function(sce) {
       print(plotFiltering(sce, model))
       
       # Convert sce back to seurat object 
-      filtered_sce <- as.Seurat(filterCells(sce, model), 
+      sce <- as.Seurat(filterCells(sce, model), 
                                 counts = "counts",
                                 data = "logcounts")
   }
-  return(filtered_sce)
+  return(sce)
 }
 
 

@@ -90,7 +90,9 @@ for (i in seq_along(sample_name)){
                                   prefix = yaml$prefix,
                                   use_miQC = yaml$use_miQC,
                                   use_only_step1 = yaml$use_only_step1,
-                                  condition_value = yaml$condition_value,
+                                  condition_value1 = yaml$condition_value1,
+                                  condition_value2 = yaml$condition_value2,
+                                  condition_value3 = yaml$condition_value3,
                                   PCA_Feature_List_value = yaml$PCA_Feature_List_value,
                                   use_SoupX_filtering = yaml$use_SoupX_filtering_seurat_qc,
                                   

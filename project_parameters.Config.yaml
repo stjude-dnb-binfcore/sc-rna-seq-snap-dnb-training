@@ -32,7 +32,7 @@ genome_name_cellranger: "GRCm39" # define the genome of preference for dual geno
 print_pdf_seurat_multiple_samples: "YES" # Options: "YES" (default ALWAYS), for `02B_run_seurat_qc_multiple_samples.R`
 use_condition_split_seurat_multiple_samples: "NO" # Options: "NO" (default ALWAYS), for  `02B_run_seurat_qc_multiple_samples.R`
 grouping: "orig.ident" # define grouping to use 
-Regress_Cell_Cycle_value: "NO" # Options: "YES", "NO" or "DIFF". Indicates whether or not to regress for cell cycle and, if so, which method to use and scale data; acceptable values.
+Regress_Cell_Cycle_value: "NO" # Options: "YES", "NO", "DIFF", OR "mtDNA". Indicates whether or not to regress for cell cycle and, if so, which method to use and scale data; acceptable values.
 assay_seurat_qc: "RNA" # Options: "RNA" (default ALWAYS)
 use_SoupX_filtering_seurat_qc: "NO" # Options: "YES" or "NO" (default), for `02A_run_seurat_qc.Rmd`
 min_genes: 300 # define minimum number of genes for filtering

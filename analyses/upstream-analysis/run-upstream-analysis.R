@@ -76,7 +76,7 @@ source(paste0(analysis_dir, "/", "02B_run_seurat_qc_multiple_samples.R"))
 ###############################################################################################################
 # (3) Estimating and filtering out doublets
 rmarkdown::render('03_run_scDblFinder.Rmd', 
-                  clean = FALSE,
+                  clean = TRUE,
                   output_dir = file.path(scDblFinder_dir),
                   output_file = paste('Report-', 'scDblFinder', '-', Sys.Date(), sep = ''),
                   output_format = 'all',

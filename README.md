@@ -20,21 +20,21 @@ There is a Docker image that contains all tools, packages, and dependencies nece
 The `sc-rna-seq-snap` repository is an initiative of the [Bioinformatics Core at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital](https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html).
 
 
+## Tutorial on how to use the single cell RNA seq Snap pipeline
+
+For more information about guidelines and best practices for effectively using the [single cell RNA seq Snap pipeline](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap), please see the [Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
+
+
 ## To access the code in this repository:
 
-### Clone option
-1. Clone the repository
-```
-git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
-```
+### Fork 
 
-### Fork option
-1. Fork the repository on your own account from the main page of the `stjude-dnb-binfcore/sc-rna-seq-snap` by clicking the “Fork” button
+1. Fork the repository on the preferred GitHub account from the main page of the `stjude-dnb-binfcore/sc-rna-seq-snap` by clicking the “Fork” button
 
 <img width="650" alt="how-to-fork-repo-1" src="https://github.com/user-attachments/assets/1fc0a459-2c8c-4d2e-ab6b-6abaafae963e">
 
 
-2. Change the name if you like, but probably not; click “Create fork”
+2. Change the name if you like, but probably not (unless you will use it for multiple projects); click “Create fork” 
 
 <img width="650" alt="how-to-fork-repo-2" src="https://github.com/user-attachments/assets/914a3db5-6e87-41fb-baf2-a50ffdb2a7c0">
 
@@ -43,6 +43,12 @@ git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
 
 <img width="650" alt="how-to-fork-repo-3" src="https://github.com/user-attachments/assets/073abb78-3993-4527-a574-859fd3046d39">
 
+
+4. Navigate to your directory and clone the forked repository
+
+```
+git clone https://github.com/<FORK_NAME>.git
+```
 
 ## To run the code in this repository:
 
@@ -53,7 +59,6 @@ git clone https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap.git
 cd ./sc-rna-seq-snap/analyses/<module_of_interest>
 ```
 
-**If you have forked the repo, you will need to do the following steps before running the script of interest. If you have cloned the repo, you can skip this.**
 
 You need to do `sync fork` of your project repo at GitHub before running a module, if your branch is behind the main branch of the `stjude-dnb-binfcore/sc-rna-seq-snap:main`. This will update the main branch of your project repo with the new code and modules (if any). This will add code and not break any analyses already run in your project repo. 
 

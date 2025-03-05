@@ -1,32 +1,44 @@
-cell_type_names	hex_codes 
-aNSCs	#DD6C84 
-Astrocytes	#EB6046 
-Endothelial cells	#79DAAC 
-Ependymal	#7695CC 
-Epithelial cells	#4199B5 
-Fibroblasts	#D1BE8B 
-Microglia           	#C753D4 
-Neurons	#BDC9AD 
-Neurons activated	#BB7E7D 
-NPCs	#D29269 
-Oligodendrocytes	#9E0142 
-OPCs	#9D51DD 
-qNSCs	#ABA398 
-na_color	#7F7F7F
-Amacrine	#FF9200
-Bipolar	#8451AA
-Cones	#FF5A60
-Muller Glia	#86D46B
-Rods	#9ACFE5
-Progenitors	#BE5314
-CD34	#6E1D1D
-Degeneration	#003249
-Horizontal	#1A7E0B
-Immune	#3400A6
-RGC	#A6006F
-RPE	#ABD019
-VascEndo	#16A9DA
-Immature Organoid	#8F1919
-Retinal Progenitor	#472727
-Retinal Ganglion	#D1A1A1
-Neurogenic	#261F1F
+cell_type_names	hex_codes_old	hex_codes
+Amacrine	#FF9200	#DE6B69
+aNSCs	#DD6C84 	#DD6C84 
+APC	NA	#BD7584
+Astrocytes	#EB6046 	#EB6046 
+Bipolar	#8451AA	#79C362
+CD34	#6E1D1D	#6E1D1D
+Cones	#FF5A60	#418BA4
+Cornea	NA	#F9B8B8
+Degeneration	#003249	#003249
+Dying	NA	#797474
+Endothelial cells	#79DAAC 	#822E5F
+Ependymal	#7695CC 	#7695CC 
+Epithelial cells	#4199B5 	#4199B5 
+Erythrocytes	NA	#D51304
+Fibroblasts	#D1BE8B 	#D1BE8B 
+Horizontal	#1A7E0B	#BC372F
+Immature Organoid	#8F1919	#8F1919
+Immune	#3400A6	#3400A6
+Lens	NA	#B2E0E7
+Microglia           	#C753D4 	#877F38
+Muller Glia	#86D46B	#EE934F
+na_color	#7F7F7F	#BCBCBC
+Neurogenic	#261F1F	#D1AAB5
+Neurons	#BDC9AD 	#BDC9AD 
+Neurons activated	#BB7E7D 	#BB7E7D 
+NPCs	#D29269 	#D29269 
+nRPC	NA	#B4A7D6
+Oligodendrocytes	#9E0142 	#9E0142 
+OPCs	#9D51DD 	#9D51DD 
+Progenitors	#BE5314	#BE5314
+pRPC	NA	#987F87
+qNSCs	#ABA398 	#ABA398 
+Retinal Ganglion	#D1A1A1	#D1A1A1
+Retinal Progenitor	#472727	#A98E97
+RGC	#A6006F	#672F8B
+Rods	#9ACFE5	#DED498
+RPE	#ABD019	#C48F74
+T1	NA	#FBE18B
+T2	NA	#C6EA7A
+T3	NA	#B4CEDE
+T4	NA	#F290BF
+VascEndo	#16A9DA	#822E35
+Blood	NA	#D51304

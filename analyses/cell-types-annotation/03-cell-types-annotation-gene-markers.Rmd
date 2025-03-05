@@ -45,6 +45,7 @@ params:
   use_min.diff.med: '.'
   min.diff.med_value: '.'
   assay: '.'
+  ct_palette_file: '.'
   gene_markers_dir: '.'
   gene_markers_file_name: '.'
   genome_name: '.'
@@ -159,7 +160,7 @@ attach(params)
 analysis_dir <- file.path(root_dir, "analyses", "cell-types-annotation") 
 
 # Input files
-cell_types_palette_file <- file.path(root_dir, "figures", "palettes", "cell_types_palette.tsv")
+cell_types_palette_file <- file.path(root_dir, "figures", "palettes", ct_palette_file)
 gene_markers_file <- file.path(gene_markers_dir, gene_markers_file_name)
 
 # Create results_dir

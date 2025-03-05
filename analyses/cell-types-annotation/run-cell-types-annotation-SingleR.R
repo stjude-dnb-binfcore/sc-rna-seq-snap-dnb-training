@@ -55,7 +55,7 @@ if (!dir.exists(fine_report_dir)) {
 # MonacoImmuneData: bulk RNA-seq samples of sorted immune cell populations
 # MouseRNAseqData: a collection of mouse bulk RNA-seq data sets downloaded from the gene expression omnibus
 # NovershternHematopoieticData: microarray datasets for sorted hematopoietic cell populations
-bpe <- celldex::MouseRNAseqData()
+bpe <- celldex::HumanPrimaryCellAtlasData()    
 
 ################################################################################################################
 
@@ -88,6 +88,7 @@ rmarkdown::render('01-cell-types-annotation-SingleR-broad.Rmd', clean = TRUE,
                                 use_min.diff.med = yaml$use_min.diff.med_annotation_module,
                                 data_file = input_data_file,
                                 assay = yaml$assay_annotation_module,
+                                ct_palette_file = yaml$ct_palette_file_broad,
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,
@@ -116,6 +117,7 @@ rmarkdown::render('02-cell-types-annotation-SingleR-fine.Rmd', clean = TRUE,
                                 use_min.diff.med = yaml$use_min.diff.med_annotation_module,
                                 data_file = input_data_file,
                                 assay = yaml$assay_annotation_module,
+                                ct_palette_file = yaml$ct_palette_file_fine,
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,

@@ -76,7 +76,7 @@ for (i in seq_along(sample_name)){
 
                                   data_dir = yaml$data_dir,
                                   grouping = yaml$grouping,
-                                  genome_name = yaml$genome_name,
+                                  genome_name = yaml$genome_name_upstream,
                                   Regress_Cell_Cycle_value = yaml$Regress_Cell_Cycle_value,
                                   assay = yaml$assay_seurat_qc,
                                   min_genes = yaml$min_genes, 

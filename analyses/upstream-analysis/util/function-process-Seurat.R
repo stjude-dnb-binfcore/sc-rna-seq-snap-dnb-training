@@ -108,7 +108,7 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
         seurat_obj <- ScaleData(seurat_obj, vars.to.regress = "CC.Difference", features = rownames(seurat_obj))
         
         } else if (Regress_Cell_Cycle == "mtDNA") {
-        print("We will regress out for cell cycle difference and scale data!")
+        print("We will regress out for mitochondrial gene expression and scale data!")
           #seurat_obj <- ScaleData(seurat_obj, vars.to.regress = "percent.mt", features = rownames(seurat_obj))
           seurat_obj <- ScaleData(seurat_obj, vars.to.regress = "percent.mito", features = rownames(seurat_obj))
           
@@ -258,22 +258,26 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
      dev.off()
      
      # condition2
-     name <- paste0(umap_out, "06_", umap_val, "_condition2.pdf")
-     p <- create_UMAP_condition(df = metadata,
-                                umap_val = umap_val,
-                                color_value = condition2)
-     pdf(file = name, width = 6, height = 5)
-     print(p)
-     dev.off()
+     if (!is.null(condition2)) {
+       name <- paste0(umap_out, "06_", umap_val, "_condition2.pdf")
+       p <- create_UMAP_condition(df = metadata,
+                                  umap_val = umap_val,
+                                  color_value = condition2)
+       pdf(file = name, width = 6, height = 5)
+       print(p)
+       dev.off() 
+     }
      
      # condition3
-     name <- paste0(umap_out, "06_", umap_val, "_condition3.pdf")
-     p <- create_UMAP_condition(df = metadata,
-                                umap_val = umap_val,
-                                color_value = condition3)
-     pdf(file = name, width = 6, height = 5)
-     print(p)
-     dev.off()
+     if (!is.null(condition3)) {
+       name <- paste0(umap_out, "06_", umap_val, "_condition3.pdf")
+       p <- create_UMAP_condition(df = metadata,
+                                  umap_val = umap_val,
+                                  color_value = condition3)
+       pdf(file = name, width = 6, height = 5)
+       print(p)
+       dev.off()
+     }
      
      if (use_condition_split == "YES") {
        print("Print condition_split!")
@@ -287,22 +291,26 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
        dev.off()
        
        # condition_split2
-       name <- paste0(umap_out, "07_", umap_val, "_condition_split2.pdf")
-       p <- create_UMAP_condition_split(df = metadata,
-                                        umap_val = umap_val,
-                                        color_value = metadata[[condition2]])
-       pdf(file = name, width = 10, height = 6)
-       print(p)
-       dev.off()
+       if (!is.null(condition2)) {
+         name <- paste0(umap_out, "07_", umap_val, "_condition_split2.pdf")
+         p <- create_UMAP_condition_split(df = metadata,
+                                          umap_val = umap_val,
+                                          color_value = metadata[[condition2]])
+         pdf(file = name, width = 10, height = 6)
+         print(p)
+         dev.off()
+       }
        
        # condition_split3
-       name <- paste0(umap_out, "07_", umap_val, "_condition_split3.pdf")
-       p <- create_UMAP_condition_split(df = metadata,
-                                        umap_val = umap_val,
-                                        color_value = metadata[[condition3]])
-       pdf(file = name, width = 10, height = 6)
-       print(p)
-       dev.off()
+       if (!is.null(condition3)) {
+         name <- paste0(umap_out, "07_", umap_val, "_condition_split3.pdf")
+         p <- create_UMAP_condition_split(df = metadata,
+                                          umap_val = umap_val,
+                                          color_value = metadata[[condition3]])
+         pdf(file = name, width = 10, height = 6)
+         print(p)
+         dev.off()
+       }
        
        
        } else { 
@@ -372,22 +380,26 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
         dev.off()
         
         # condition2
-        name <- paste0(umap_out, "06_", umap_val, "_condition2.png")
-        p <- create_UMAP_condition(df = metadata,
-                                   umap_val = umap_val,
-                                   color_value = condition2)
-        pdf(file = name, width = 6, height = 5)
-        print(p)
-        dev.off()
+        if (!is.null(condition2)) {
+          name <- paste0(umap_out, "06_", umap_val, "_condition2.png")
+          p <- create_UMAP_condition(df = metadata,
+                                     umap_val = umap_val,
+                                     color_value = condition2)
+          pdf(file = name, width = 6, height = 5)
+          print(p)
+          dev.off()
+        }
         
         # condition3
-        name <- paste0(umap_out, "06_", umap_val, "_condition3.png")
-        p <- create_UMAP_condition(df = metadata,
-                                   umap_val = umap_val,
-                                   color_value = condition3)
-        pdf(file = name, width = 6, height = 5)
-        print(p)
-        dev.off()
+        if (!is.null(condition3)) {
+          name <- paste0(umap_out, "06_", umap_val, "_condition3.png")
+          p <- create_UMAP_condition(df = metadata,
+                                     umap_val = umap_val,
+                                     color_value = condition3)
+          pdf(file = name, width = 6, height = 5)
+          print(p)
+          dev.off()
+        }
 
         if (use_condition_split == "YES"){
           print("Print condition_split!")
@@ -399,18 +411,22 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
           ggsave(file = name, width = 10, height = 6, device = "png")
           
           # condition_split2
-          name <- paste0(umap_out, "07_", umap_val, "_condition_split2.png")
-          p <- create_UMAP_condition_split(df = metadata,
-                                           umap_val = umap_val,
-                                           color_value = condition2)
-          ggsave(file = name, width = 10, height = 6, device = "png")
+          if (!is.null(condition2)) {
+            name <- paste0(umap_out, "07_", umap_val, "_condition_split2.png")
+            p <- create_UMAP_condition_split(df = metadata,
+                                             umap_val = umap_val,
+                                             color_value = condition2)
+            ggsave(file = name, width = 10, height = 6, device = "png")
+          }
           
           # condition_split3
-          name <- paste0(umap_out, "07_", umap_val, "_condition_split3.png")
-          p <- create_UMAP_condition_split(df = metadata,
-                                           umap_val = umap_val,
-                                           color_value = condition3)
-          ggsave(file = name, width = 10, height = 6, device = "png")
+          if (!is.null(condition3)) {
+            name <- paste0(umap_out, "07_", umap_val, "_condition_split3.png")
+            p <- create_UMAP_condition_split(df = metadata,
+                                             umap_val = umap_val,
+                                             color_value = condition3)
+            ggsave(file = name, width = 10, height = 6, device = "png")
+          }
           
           
           

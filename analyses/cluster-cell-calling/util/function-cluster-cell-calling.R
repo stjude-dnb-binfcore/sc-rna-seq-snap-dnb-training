@@ -95,10 +95,10 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
     # Identify columns with a '.1' suffix
     cols_to_remove <- grep("\\.1$", colnames(seurat_obj@meta.data), value = TRUE)
     
-    # Exclude columns that match the specific patterns (e.g., RNA_SoupX_snn_res.0.1, RNA_SoupX_snn_res.1, RNA_SoupX_snn_res.10)
-    cols_to_remove <- cols_to_remove[!grepl("^RNA_SoupX_snn_res\\.0\\.1$", cols_to_remove) & 
-                                       !grepl("^RNA_SoupX_snn_res\\.1$", cols_to_remove) &
-                                       !grepl("^RNA_SoupX_snn_res\\.10$", cols_to_remove)]
+    # Exclude columns that match the specific patterns (e.g., {assay}_snn_res.0.1, {assay}_snn_res.1, {assay}_snn_res.10)
+    cols_to_remove <- cols_to_remove[!grepl("^{assay}_snn_res\\.0\\.1$", cols_to_remove) & 
+                                       !grepl("^{assay}_snn_res\\.1$", cols_to_remove) &
+                                       !grepl("^{assay}_snn_res\\.10$", cols_to_remove)]
     
     # Remove the columns
     seurat_obj@meta.data <- seurat_obj@meta.data[, !colnames(seurat_obj@meta.data) %in% cols_to_remove]
@@ -143,10 +143,10 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
       # Identify columns with a '.1' suffix
       cols_to_remove <- grep("\\.1$", colnames(seurat_obj@meta.data), value = TRUE)
       
-      ## Exclude columns that match the specific patterns (e.g., RNA_SoupX_snn_res.0.1, RNA_SoupX_snn_res.1, RNA_SoupX_snn_res.10)
-      cols_to_remove <- cols_to_remove[!grepl("^RNA_SoupX_snn_res\\.0\\.1$", cols_to_remove) & 
-                                         !grepl("^RNA_SoupX_snn_res\\.1$", cols_to_remove) &
-                                         !grepl("^RNA_SoupX_snn_res\\.10$", cols_to_remove)]
+      ## Exclude columns that match the specific patterns (e.g., {assay}_snn_res.0.1, {assay}_snn_res.1, {assay}_snn_res.10)
+      cols_to_remove <- cols_to_remove[!grepl("^{assay}_snn_res\\.0\\.1$", cols_to_remove) & 
+                                         !grepl("^{assay}_snn_res\\.1$", cols_to_remove) &
+                                         !grepl("^{assay}_snn_res\\.10$", cols_to_remove)]
       
       # Remove the columns
       seurat_obj@meta.data <- seurat_obj@meta.data[, !colnames(seurat_obj@meta.data) %in% cols_to_remove]
@@ -178,10 +178,10 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
         # Identify columns with a '.1' suffix
         cols_to_remove <- grep("\\.1$", colnames(seurat_obj@meta.data), value = TRUE)
         
-        # Exclude columns that match the specific patterns (e.g., RNA_SoupX_snn_res.0.1, RNA_SoupX_snn_res.1, RNA_SoupX_snn_res.10)
-        cols_to_remove <- cols_to_remove[!grepl("^RNA_SoupX_snn_res\\.0\\.1$", cols_to_remove) & 
-                                           !grepl("^RNA_SoupX_snn_res\\.1$", cols_to_remove) &
-                                           !grepl("^RNA_SoupX_snn_res\\.10$", cols_to_remove)]
+        # Exclude columns that match the specific patterns (e.g., {assay}_snn_res.0.1, {assay}_snn_res.1, {assay}_snn_res.10)
+        cols_to_remove <- cols_to_remove[!grepl("^{assay}_snn_res\\.0\\.1$", cols_to_remove) & 
+                                           !grepl("^{assay}_snn_res\\.1$", cols_to_remove) &
+                                           !grepl("^{assay}_snn_res\\.10$", cols_to_remove)]
         
         # Remove the columns
         seurat_obj@meta.data <- seurat_obj@meta.data[, !colnames(seurat_obj@meta.data) %in% cols_to_remove]

@@ -48,7 +48,9 @@ params:
   use_SoupX_filtering: "."
   use_scDblFinder_filtering: "."
   use_condition_split: "."
-  condition_value: "."
+  condition_value1: "."
+  condition_value2: "."
+  condition_value3: "."
   print_pdf: "."
   PCA_Feature_List_value: "."
   root_dir: './'
@@ -381,12 +383,14 @@ Next, we apply a linear transformation (‘scaling’) that is a standard pre-pr
 ## Perform linear dimensional reduction (PCA) and Run non-linear dimensional reduction (UMAP)
 Next we perform PCA on the scaled data. By default, only the previously determined variable features are used as input, but can be defined using features argument if you wish to choose a different subset (if you do want to use a custom subset of features, make sure you pass these to ScaleData first). For the first principal components, Seurat outputs a list of genes with the most positive and negative loadings, representing modules of genes that exhibit either correlation (or anti-correlation) across single-cells in the dataset. Next, we will run UMAP to visualize and explore the data. The goal of non-linear dimensional reduction algorithms is to learn underlying structure in the dataset, in order to place similar cells together in low-dimensional space. Therefore, cells that are grouped together within graph-based clusters determined above should co-localize on these dimension reduction plots.
 
-```{r process-seurat, echo=TRUE}
+```{r process-seurat, fig.width = 10, fig.height = 5, fig.fullwidth = TRUE, echo = TRUE}
 cat("Create and process seurat", "\n")
 seurat_obj <- Process_Seurat(seurat_obj = seurat_obj, nfeatures_value = nfeatures_value, Genome = genome_name,
                              Regress_Cell_Cycle = Regress_Cell_Cycle_value, assay = assay, num_pcs = num_pcs, 
                              prefix = prefix, num_dim = num_dim, num_neighbors = num_neighbors, results_dir = results_dir, 
-                             plots_output = plots_dir, use_condition_split = use_condition_split, condition = condition_value, print_pdf = print_pdf, PCA_Feature_List = PCA_Feature_List_value)
+                             plots_output = plots_dir, use_condition_split = use_condition_split, 
+                             condition1 = condition_value1, condition2 = condition_value2, condition3 = condition_value3, 
+                             print_pdf = print_pdf, PCA_Feature_List = PCA_Feature_List_value)
 ```
 
 # Save output files

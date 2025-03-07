@@ -67,7 +67,7 @@ rmarkdown::render('03-cell-types-annotation-gene-markers.Rmd', clean = TRUE,
                                 
                                 gene_markers_dir = yaml$gene_markers_dir_annotation_module,
                                 gene_markers_file_name = yaml$gene_markers_file_name_annotation_module,
-                                genome_name = yaml$genome_name,
+                                genome_name = yaml$genome_name_upstream,
                                 #cluster = yaml$cluster_name,
                                 clustering_gene_markers_dir = yaml$clustering_gene_markers_dir_annotation_module,
                                 clustering_gene_markers_file_name = glue::glue("Res_{resolution}_Markers_all.tsv"),

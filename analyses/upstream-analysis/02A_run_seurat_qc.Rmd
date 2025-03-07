@@ -52,7 +52,9 @@ params:
   use_miQC: "."
   use_only_step1: "."
   use_condition_split: "."
-  condition_value: "."
+  condition_value1: "."
+  condition_value2: "."
+  condition_value3: "."
   print_pdf: "."
   PCA_Feature_List_value: "."
   use_SoupX_filtering: "."
@@ -440,7 +442,9 @@ cat("Create and process seurat for sample", sample_name[i], "\n")
 seurat_obj <- Process_Seurat(seurat_obj = seurat_obj, nfeatures_value = nfeatures_value, Genome = genome_name,
                              Regress_Cell_Cycle = Regress_Cell_Cycle_value, assay = assay, num_pcs = num_pcs, 
                              prefix = prefix, num_dim = num_dim, num_neighbors = num_neighbors, results_dir = results_dir, 
-                             plots_output = samples_plots_dir, use_condition_split = use_condition_split, condition = condition_value, print_pdf = print_pdf, PCA_Feature_List = PCA_Feature_List_value)
+                             plots_output = samples_plots_dir, use_condition_split = use_condition_split, 
+                             condition1 = condition_value1, condition2 = condition_value2, condition3 = condition_value3, 
+                             print_pdf = print_pdf, PCA_Feature_List = PCA_Feature_List_value)
 ```
 
 # Save output files

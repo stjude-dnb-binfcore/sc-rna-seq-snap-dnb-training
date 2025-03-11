@@ -227,6 +227,7 @@ seurat_obj <- cluster_cell_calling(seurat_obj = seurat_obj,
                                    resolution_list_default = resolution_list_default,
                                    algorithm_value = algorithm_value,
                                    assay = assay)
+head(seurat_obj@meta.data)
 ```
 
 # Plotting clustering trees

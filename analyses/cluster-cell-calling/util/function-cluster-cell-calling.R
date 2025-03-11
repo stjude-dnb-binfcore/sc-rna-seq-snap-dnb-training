@@ -91,16 +91,6 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
     
     #### #### ####
     metadata <- as_data_frame_seurat(seurat_obj, metadata = TRUE)
-    # Identify columns with a '.1' suffix
-    cols_to_remove <- grep("\\.1$", colnames(metadata), value = TRUE)
-    
-    # Exclude columns that match the specific patterns (e.g., {assay}_snn_res.0.1, {assay}_snn_res.1, {assay}_snn_res.10)
-    cols_to_remove <- cols_to_remove[!grepl(glue::glue("^{assay}_snn_res\\.0\\.1$"), cols_to_remove) & 
-                                       !grepl(glue::glue("^{assay}_snn_res\\.1$"), cols_to_remove) &
-                                       !grepl(glue::glue("^{assay}_snn_res\\.10$"), cols_to_remove)]
-    
-    # Remove the columns
-    metadata <- metadata[, !colnames(metadata) %in% cols_to_remove]
     write_tsv(metadata, file = paste0(results_dir, "/", glue::glue("metadata_integrated_{integration_method}_clusters_all.tsv")))
     #### #### ####
     
@@ -136,16 +126,6 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
         
       #### #### ####
       metadata <- as_data_frame_seurat(seurat_obj, metadata = TRUE)
-      # Identify columns with a '.1' suffix
-      cols_to_remove <- grep("\\.1$", colnames(metadata), value = TRUE)
-      
-      # Exclude columns that match the specific patterns (e.g., {assay}_snn_res.0.1, {assay}_snn_res.1, {assay}_snn_res.10)
-      cols_to_remove <- cols_to_remove[!grepl(glue::glue("^{assay}_snn_res\\.0\\.1$"), cols_to_remove) & 
-                                         !grepl(glue::glue("^{assay}_snn_res\\.1$"), cols_to_remove) &
-                                         !grepl(glue::glue("^{assay}_snn_res\\.10$"), cols_to_remove)]
-      
-      # Remove the columns
-      metadata <- metadata[, !colnames(metadata) %in% cols_to_remove]
       write_tsv(metadata, file = paste0(results_dir, "/", glue::glue("metadata_integrated_{integration_method}_clusters_all.tsv")))
       #### #### ####
         
@@ -168,17 +148,8 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
         print_message <- print("we use the sigle resolution that fits the data best")
         # Calculate average
         counts_matrix <- seurat_obj@assays$assay@counts 
+  
         metadata <- as_data_frame_seurat(seurat_obj, metadata = TRUE)
-        # Identify columns with a '.1' suffix
-        cols_to_remove <- grep("\\.1$", colnames(metadata), value = TRUE)
-        
-        # Exclude columns that match the specific patterns (e.g., {assay}_snn_res.0.1, {assay}_snn_res.1, {assay}_snn_res.10)
-        cols_to_remove <- cols_to_remove[!grepl(glue::glue("^{assay}_snn_res\\.0\\.1$"), cols_to_remove) & 
-                                           !grepl(glue::glue("^{assay}_snn_res\\.1$"), cols_to_remove) &
-                                           !grepl(glue::glue("^{assay}_snn_res\\.10$"), cols_to_remove)]
-        
-        # Remove the columns
-        metadata <- metadata[, !colnames(metadata) %in% cols_to_remove]
         avg_res <- calculate_cluster_average(metadata = metadata, 
                                              data = counts_matrix,
                                              resolution_list = resolution_list)

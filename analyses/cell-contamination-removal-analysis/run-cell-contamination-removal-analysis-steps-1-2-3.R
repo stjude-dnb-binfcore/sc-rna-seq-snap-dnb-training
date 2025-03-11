@@ -77,7 +77,7 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
 # STEP 2 - Integration
 rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),
-                  output_file = c(paste('Report-', 'integrative-analysis-seurat', '-', Sys.Date(), sep = '')),
+                  output_file = c(paste('Report-', glue::glue('integrative-analysis-{integration_method}'), '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(
                     # the following parameters are defined in the `yaml` file

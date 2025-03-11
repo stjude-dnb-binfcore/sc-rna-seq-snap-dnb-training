@@ -31,6 +31,7 @@ report_dir <- file.path(analysis_dir, "plots")
 ################################################################################################################
 future_globals_value = 214748364800 # 200*1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_clustering_module
+integration_method = yaml$integration_method
 
 # STEP 1 - Remove contamination
 rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,

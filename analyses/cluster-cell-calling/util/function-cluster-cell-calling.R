@@ -124,10 +124,10 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
       
       print_message <- print("we use multiple resolutions for now")
         
-        #### #### ####
-        metadata <- as_data_frame_seurat(seurat_obj, metadata = TRUE)
-        write_tsv(metadata, file = paste0(results_dir, "/", glue::glue("metadata_integrated_{integration_method}_clusters_all.tsv")))
-        #### #### ####
+      #### #### ####
+      metadata <- as_data_frame_seurat(seurat_obj, metadata = TRUE)
+      write_tsv(metadata, file = paste0(results_dir, "/", glue::glue("metadata_integrated_{integration_method}_clusters_all.tsv")))
+      #### #### ####
         
         saveRDS(seurat_obj, file = paste0(results_dir, "/", glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))) # save object
         
@@ -148,8 +148,8 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
         print_message <- print("we use the sigle resolution that fits the data best")
         # Calculate average
         counts_matrix <- seurat_obj@assays$assay@counts 
+  
         metadata <- as_data_frame_seurat(seurat_obj, metadata = TRUE)
-        
         avg_res <- calculate_cluster_average(metadata = metadata, 
                                              data = counts_matrix,
                                              resolution_list = resolution_list)

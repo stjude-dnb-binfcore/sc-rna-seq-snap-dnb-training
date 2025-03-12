@@ -51,6 +51,7 @@ params:
   reference_list_value: '.'
   PCA_Feature_List_value: '.'
   future_globals_value: '.'
+  assay: '.'
   root_dir: './'
   metadata_dir: './'
   PROJECT_NAME: '.'
@@ -351,6 +352,18 @@ ggsave(file = name, width = 10, height = 6, device = "png")
 # Save output files
 
 ```{r save-obj, echo=TRUE}
+# Identify columns with a '.1' suffix
+cols_to_remove <- grep("\\.1$", colnames(seurat_obj@meta.data), value = TRUE)
+  
+# Exclude columns that match the specific patterns (e.g., {assay}_snn_res.0.1, {assay}_snn_res.1, {assay}_snn_res.10)
+cols_to_remove <- cols_to_remove[!grepl(glue::glue("^{assay}_snn_res\\.0\\.1$"), cols_to_remove) & 
+                                     !grepl(glue::glue("^{assay}_snn_res\\.1$"), cols_to_remove) &
+                                     !grepl(glue::glue("^{assay}_snn_res\\.10$"), cols_to_remove)]
+  
+# Remove the columns
+seurat_obj@meta.data <- seurat_obj@meta.data[, !colnames(seurat_obj@meta.data) %in% cols_to_remove]
+head(seurat_obj@meta.data)
+
 saveRDS(seurat_obj, file = paste0(results_dir, "/", glue::glue("seurat_obj_integrated_{integration_method}.rds")))
 ```
 

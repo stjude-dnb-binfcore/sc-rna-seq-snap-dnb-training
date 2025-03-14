@@ -31,6 +31,7 @@ report_dir <- file.path(analysis_dir, "plots")
 ################################################################################################################
 future_globals_value = 214748364800 # 200*1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_clustering_module
+integration_method = yaml$integration_method
 
 # STEP 1 - Remove contamination
 rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
@@ -77,7 +78,7 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
 # STEP 2 - Integration
 rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),
-                  output_file = c(paste('Report-', 'integrative-analysis-seurat', '-', Sys.Date(), sep = '')),
+                  output_file = c(paste('Report-', glue::glue('integrative-analysis-{integration_method}'), '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(
                     # the following parameters are defined in the `yaml` file

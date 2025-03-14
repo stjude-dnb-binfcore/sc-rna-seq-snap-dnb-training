@@ -145,6 +145,7 @@ rmarkdown::render('05_run_summary_report.Rmd',
                   params = list(
                     use_SoupX_filtering = yaml$use_SoupX_filtering_summary_report,
                     use_scDblFinder_filtering = yaml$use_scDblFinder_filtering_summary_report,
+                    cellranger_parameters = yaml$cellranger_parameters,
                     root_dir = yaml$root_dir,
                     metadata_dir = yaml$metadata_dir,
                     PROJECT_NAME = yaml$PROJECT_NAME,

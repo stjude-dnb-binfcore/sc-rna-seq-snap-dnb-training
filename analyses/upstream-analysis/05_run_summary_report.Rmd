@@ -38,6 +38,7 @@ header-includes:
 params:
   use_SoupX_filtering: "."
   use_scDblFinder_filtering: "."
+  cellranger_parameters: "."
   root_dir: './'
   metadata_dir: './'
   PROJECT_NAME: './'
@@ -161,7 +162,7 @@ fastqc_module_results_dir <- file.path(root_dir, "analyses", "fastqc-analysis", 
 cellranger_module_results_dir <- file.path(root_dir, "analyses", "cellranger-analysis", "results") 
 
 fastqc_results_dir <- file.path(fastqc_module_results_dir, "02-multiqc-reports") 
-cellranger_results_dir <- file.path(cellranger_module_results_dir, "03_cellranger_count_summary") 
+cellranger_results_dir <- file.path(cellranger_module_results_dir, "03_cellranger_count_summary", cellranger_parameters) 
 seurat_plots_dir <- file.path(module_plots_dir, "02_Seurat_qc") 
 SoupX_results_dir <- file.path(module_results_dir, "01_SoupX") 
 SoupX_plots_dir <- file.path(module_plots_dir, "01_SoupX") 

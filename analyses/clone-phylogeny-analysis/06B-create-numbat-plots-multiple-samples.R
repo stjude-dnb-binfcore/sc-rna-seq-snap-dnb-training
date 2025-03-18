@@ -125,6 +125,7 @@ for (i in seq_along(sample_name)){
                   output_file = c(paste('Report-', 'create-numbat-plots-', sample_name[i], '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(cell_type_label = yaml$cell_type_label_numbat,
+                                min_LLR_value = yaml$min_LLR_value_numbat,
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,

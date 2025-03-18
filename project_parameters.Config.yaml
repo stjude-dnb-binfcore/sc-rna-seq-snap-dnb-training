@@ -131,3 +131,4 @@ sample:
   #- sample2
 
 cell_type_label_numbat: "singler.broad" # Options: "singler.broad", "singler.fine", and "predicted.cell.signature.ident" as defined in the `./analyses/cell-types-annotation` module
+min_LLR_value_numbat: 50 # Value for filtering CNVs by evidence (default).

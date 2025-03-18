@@ -85,7 +85,7 @@ if [ "$genome_name" = "GRCh38" ]; then
     ########################################################################
     # 1000G Reference Panel (paste link in browser to download if wget isn’t working)
     ######################
-    file_url="https://pklab.org/teng/data/1000G_hg38.zip"
+    file_url="http://pklab.org/teng/data/1000G_hg38.zip"
     # Extract file name from URL (you can adjust this to your needs)
     file_name=$(basename "$file_url")
     

@@ -47,8 +47,10 @@ if [ "$genome_name" = "GRCh38" ]; then
     # 1000G SNP VCF
     ######################
     file_url="https://sourceforge.net/projects/cellsnp/files/SNPlist/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf.gz"
+    file_url_name="https://sourceforge.net/projects/cellsnp/files/SNPlist/genome1K.phase3.SNP_AF5e2.chr1toX.hg38.vcf"
+
     # Extract file name from URL (you can adjust this to your needs)
-    file_name=$(basename "$file_url")
+    file_name=$(basename "$file_url_name")
 
     # Check if the file exists
     if [ ! -f "$references_dir/$file_name" ]; then

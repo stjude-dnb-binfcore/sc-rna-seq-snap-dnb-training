@@ -194,7 +194,7 @@ seurat_obj <- seurat_obj_list[[i]]
 cat("Successfully read Seurat object for sample:", sample_name[i], "\n")
 ```
 
-# Creat palette
+# Create palette
 
 ```{r create-palette, echo=TRUE}
 mypal = c('gray', "#377EB8", "#4DAF4A", "#984EA3", "#b83748", "#b87c37", "#b8a537", "#37b8af") 

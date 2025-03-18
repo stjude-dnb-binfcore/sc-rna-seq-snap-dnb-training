@@ -19,10 +19,14 @@ root_dir=$(cat ../../project_parameters.Config.yaml | grep 'root_dir:' | awk '{p
 root_dir=${root_dir//\"/}  # Removes all double quotes
 echo "${root_dir}"  # Output: This is a string with quotes.
 
+cellranger_parameters=$(cat ../../project_parameters.Config.yaml | grep 'cellranger_parameters:' | awk '{print $2}')
+cellranger_parameters=${cellranger_parameters//\"/}  # Removes all double quotes
+echo "$cellranger_parameters"  # Output: This is a string with quotes.
+
 module_dir=${root_dir}/analyses/clone-phylogeny-analysis
 echo "${module_dir}"
 
-data_dir=${root_dir}/analyses/cellranger-analysis/results/02_cellranger_count/DefaultParameters
+data_dir=${root_dir}/analyses/cellranger-analysis/results/02_cellranger_count/${cellranger_parameters}
 echo "${data_dir}"
 
 ########################################################################

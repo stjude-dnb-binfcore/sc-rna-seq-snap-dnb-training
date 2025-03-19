@@ -260,67 +260,63 @@ metadata_table <- merge.data.frame(metadata_table, numbat_obj.df, by = "cell", a
 
 `merge["p_cnv"]` contains cell-level information on specific CNV segments (seg), their alteration type (cnv_state), the joint posterior probability of the CNV (p_cnv), the expression-based posterior (p_cnv_x), and the allele-based posterior (p_cnv_y). We can visualize the event-specific posteriors in a expression-based embedding:
 
-```{r plot-4, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
+```{r p_cnv, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 # Extract UMAP coordinates
 umap_data <- seurat_obj@reductions$umap@cell.embeddings
+########################################################################
+## p_cnv
 # Extract feature data from metadata
 feature_data_p_cnv <- metadata_table$p_cnv
 
 # Combine UMAP coordinates and feature data into a data frame
 plot_data_p_cnv <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Feature = feature_data_p_cnv)
 
-fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot4.png")
-p_cnv <- print(ggplot(plot_data_p_cnv, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
+p_cnv <- ggplot(plot_data_p_cnv, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
   ggtitle("Allele") +
   theme_Publication () +
-  theme(legend.position = "right"))
+  theme(legend.position = "right")
 
-ggsave(file = fname, p_cnv, width = 6, height = 5, device = "png")
-```  
-
+########################################################################
 ## Expression-based posterior (p_cnv_x)
-
-```{r plot-5, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 # Extract feature data from metadata
 feature_data <- metadata_table$p_cnv_x
 
 # Combine UMAP coordinates and feature data into a data frame
 plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Feature = feature_data)
 
-fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot5.png")
-p_cnv_x <- print(ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
+p_cnv_x <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
   ggtitle("Expression") +
   theme_Publication () +
-  theme(legend.position = "right"))
-ggsave(file = fname, p_cnv_x, width = 6, height = 5, device = "png")
-```
-
+  theme(legend.position = "right")
+########################################################################
 ## Allele-based posterior (p_cnv_y)
-
-```{r plot-6, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 # Extract feature data from metadata
 feature_data <- metadata_table$p_cnv_y
 
 # Combine UMAP coordinates and feature data into a data frame
 plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Feature = feature_data)
 
-fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot6.png")
-p_cnv_y <- print(ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
+p_cnv_y <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
   ggtitle("Joint") +
   theme_Publication () +
-  theme(legend.position = "right"))
-ggsave(file = fname, p_cnv_y, width = 6, height = 5, device = "png") 
+  theme(legend.position = "right")
+```  
+
+```{r plot-4, fig.width = 20, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot4.png")
+p <- print(p_cnv + p_cnv_x + p_cnv_y + plot_layout(ncol = 3))
+ggsave(file = fname, p, width = 20, height = 6, device = "png")
 ```
 
 # CNVs and seg
 
-```{r plot-7, fig.width = 20, fig.height = 8, fig.fullwidth = TRUE, echo=TRUE}
+```{r plot-5, fig.width = 20, fig.height = 8, fig.fullwidth = TRUE, echo=TRUE}
 split_data <- metadata_table$seg  # Replace 'seg' with your splitting variable
 
 # Combine UMAP coordinates, feature data, and the split variable into a data frame
@@ -341,7 +337,7 @@ p2 <- ggplot(plot_data_p_cnv, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   theme_Publication () +
   theme(legend.position = "right")
 
-fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot7.png")
+fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot5.png")
 p <- print(p1 + p2 + plot_layout(ncol = 2, nrow = 1))
 ggsave(file = fname, p, width = 20, height = 8, device = "png")
 ```
@@ -353,7 +349,7 @@ Here clone_opt denotes the maximum likelihood assignment of a cell to a specific
 
 ## Genotypes vs Tumor microenvironment
 
-```{r plot-8, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+```{r plot-6, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 numbat_obj.df2 <- as.data.frame(numbat_obj[[".__enclos_env__"]][["self"]][["clone_post"]])
 metadata_table <- seurat_obj@meta.data
 metadata_table$cell <- rownames(metadata_table)
@@ -369,14 +365,14 @@ p1 <- DimPlot(seurat_obj, reduction = "umap", group.by = "clone_opt", cols = myp
 p2 <- DimPlot(seurat_obj, reduction = "umap", group.by = "compartment_opt", label = TRUE, label.size = 3 ,repel = TRUE, cols = c('royalblue', 'red3')) + 
   ggtitle("Tumor microenvironment")
 
-fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot8.png")
+fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot6.png")
 p <- print(p1 + p2 + plot_layout(ncol = 2))
 ggsave(file = fname, p, width = 15, height = 6, device = "png")
 ```
 
 ##  Genotypes vs Tumor microenvironment vs Cell type vs Disease stage
 
-```{r plot-9, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+```{r plot-7, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 library(RColorBrewer)
 mypalette <- brewer.pal(12,"Paired") # colorblindFriendly = TRUE
 mypalette <- colorRampPalette(mypalette)(40)
@@ -386,7 +382,7 @@ p3 <- DimPlot(seurat_obj, reduction = "umap", label = TRUE, group.by = cell_type
 p4 <- DimPlot(seurat_obj, reduction = "umap", group.by = 'Timepoint', label = TRUE, repel = TRUE, label.size = 2.5, cols = mypalette) + 
   ggtitle("Disease stage")
 
-fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot9.png")
+fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot7.png")
 #p <- print(p1 + p2 + p3 + p4 + plot_layout(ncol = 2, nrow=2))
 p <- print(p3 + p4 + plot_layout(ncol = 2, nrow=1))
 ggsave(file = fname, p, width = 15, height = 6, device = "png")
@@ -441,8 +437,8 @@ p_cnv_y <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   theme(legend.position = "right")
 ```
 
-```{r plot-10, fig.width = 20, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
-fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot10.png")
+```{r plot-8, fig.width = 20, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot8.png")
 p <- print(p_cnv + p_cnv_x + p_cnv_y + plot_layout(ncol = 3))
 ggsave(file = fname, p, width = 20, height = 6, device = "png")
 ```
@@ -451,8 +447,8 @@ ggsave(file = fname, p, width = 20, height = 6, device = "png")
 
 Let's take a closer look at the inferred single cell phylogeny and where the mutations occurred.
 
-```{r plot-11, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
-fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot11.png")
+```{r plot-9, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
+fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot9.png")
 p <- print(numbat_obj$plot_sc_tree(label_size = 3,
                                    branch_width = 0.5,
                                    tip_length = 0.5,
@@ -463,8 +459,8 @@ ggsave(file = fname, p, width = 6, height = 5, device = "png")
 
 The mutational history can also be represented on the clone level, where cells with the same genotype are aggregated into one node.
 
-```{r plot-12, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
-fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot12.png")
+```{r plot-10, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
+fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot10.png")
 p <- print(numbat_obj$plot_mut_history(pal = mypal))
 ggsave(file = fname, p, width = 6, height = 5, device = "png")
 ```
@@ -480,3 +476,4 @@ detach(params)
 ```{r echo=FALSE}
 sessionInfo()
 ```
+

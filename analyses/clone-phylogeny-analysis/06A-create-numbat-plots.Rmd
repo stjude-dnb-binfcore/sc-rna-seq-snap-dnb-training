@@ -137,6 +137,7 @@ suppressPackageStartupMessages({
   library(numbat)
   library(knitr)
   library(patchwork)
+  library(scooter)
 }) 
 ```
 
@@ -155,6 +156,7 @@ run_numbat_results_dir <- file.path(module_results_dir, "05-run-numbat")
 #annotation_results_dir <- file.path(root_dir, "analyses", "cell-types-annotation", "results") 
 #annotations_dir <- yaml$annotations_dir_rshiny_app
 #annotations_all_results_dir <- file.path(annotation_results_dir, annotations_dir) 
+source(paste0(root_dir, "/figures/scripts/theme_plot.R"))
 ```
 
 ```{r echo=FALSE, warning=FALSE}
@@ -243,20 +245,16 @@ Numbat probabilistically evaluates the presence/absence of CNVs in single cells.
 ```{r echo=TRUE}
 numbat_obj.df <- numbat_obj$joint_post %>% 
   select(cell, CHROM, seg, cnv_state, p_cnv, p_cnv_x, p_cnv_y) %>%
-  as.data.frame %>%
-  rename("UMI_id" = "cell")
+  as.data.frame 
 
 # Print cnv types
 cnv_type <- numbat_obj.df %>% distinct(seg, cnv_state) %>% {setNames(.$cnv_state, .$seg)} 
 print(cnv_type)
 
 umapCoord <- as.data.frame(Embeddings(object = seurat_obj@reductions[["umap"]])) # make dataframe with UMAP coordinates 
-#numbat_obj.df <- as.data.frame(numbat_obj.df[[".__enclos_env__"]][["self"]][["allele_post"]])
-#names(numbat_obj.df)[names(numbat_obj.df) == 'cell'] <- "UMI_id"
-#head(numbat_obj.df)
 metadata_table <- seurat_obj@meta.data
-metadata_table$UMI_id <- rownames(metadata_table)
-metadata_table <- merge.data.frame(metadata_table, numbat_obj.df, by = "UMI_id", all = TRUE)
+metadata_table$cell <- rownames(metadata_table)
+metadata_table <- merge.data.frame(metadata_table, numbat_obj.df, by = "cell", all = TRUE) 
 ```
 
 ## Joint posterior probability of the CNV (p_cnv)
@@ -264,79 +262,89 @@ metadata_table <- merge.data.frame(metadata_table, numbat_obj.df, by = "UMI_id",
 `merge["p_cnv"]` contains cell-level information on specific CNV segments (seg), their alteration type (cnv_state), the joint posterior probability of the CNV (p_cnv), the expression-based posterior (p_cnv_x), and the allele-based posterior (p_cnv_y). We can visualize the event-specific posteriors in a expression-based embedding:
 
 ```{r plot-4, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
-merge <- metadata_table
-CellsMeta <- seurat_obj@meta.data
-randomnumbers <- merge["p_cnv"]
+# Extract UMAP coordinates
+umap_data <- seurat_obj@reductions$umap@cell.embeddings
+# Extract feature data from metadata
+feature_data_p_cnv <- metadata_table$p_cnv
 
-CellsMeta["p_cnv"] <- randomnumbers
-CellsMetaTrim <- subset(CellsMeta, select = c("p_cnv", cell_type_label))
-seurat_obj<- AddMetaData(seurat_obj, CellsMetaTrim)
+# Combine UMAP coordinates and feature data into a data frame
+plot_data_p_cnv <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Feature = feature_data_p_cnv)
 
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot4.png")
-p_cnv <- print(FeaturePlot(seurat_obj, reduction = "umap", features = "p_cnv") +
+p_cnv <- print(ggplot(plot_data_p_cnv, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
+  geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
-  ggtitle("Allele"))
+  ggtitle("Allele") +
+  theme_Publication () +
+  theme(legend.position = "right"))
+
 ggsave(file = fname, p_cnv, width = 6, height = 5, device = "png")
 ```  
 
 ## Expression-based posterior (p_cnv_x)
 
 ```{r plot-5, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
-merge <- metadata_table
-CellsMeta <- seurat_obj@meta.data
-randomnumbers <- merge["p_cnv_x"]
+# Extract feature data from metadata
+feature_data <- metadata_table$p_cnv_x
 
-CellsMeta["p_cnv_x"] <- randomnumbers
-CellsMetaTrim <- subset(CellsMeta, select = c("p_cnv_x"))
-seurat_obj <- AddMetaData(seurat_obj, CellsMetaTrim)
+# Combine UMAP coordinates and feature data into a data frame
+plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Feature = feature_data)
 
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot5.png")
-p_cnv_x <- print(FeaturePlot(seurat_obj, reduction = "umap", features = "p_cnv_x") +
+p_cnv_x <- print(ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
+  geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
-  ggtitle("Expression"))
+  ggtitle("Expression") +
+  theme_Publication () +
+  theme(legend.position = "right"))
 ggsave(file = fname, p_cnv_x, width = 6, height = 5, device = "png")
 ```
 
 ## Allele-based posterior (p_cnv_y)
 
 ```{r plot-6, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
-merge <- metadata_table
-CellsMeta <- seurat_obj@meta.data
-randomnumbers <- merge["p_cnv_y"]
+# Extract feature data from metadata
+feature_data <- metadata_table$p_cnv_y
 
-CellsMeta["p_cnv_y"] <- randomnumbers
-CellsMetaTrim <- subset(CellsMeta, select = c("p_cnv_y"))
-seurat_obj <- AddMetaData(seurat_obj, CellsMetaTrim)
+# Combine UMAP coordinates and feature data into a data frame
+plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Feature = feature_data)
 
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot6.png")
-p_cnv_y <- print(FeaturePlot(seurat_obj, reduction = "umap", features = "p_cnv_y") +
-  scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') + 
-  ggtitle("Joint"))
+p_cnv_y <- print(ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
+  geom_point(alpha = 0.8) +  # Adjust transparency if needed
+  scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
+  ggtitle("Joint") +
+  theme_Publication () +
+  theme(legend.position = "right"))
 ggsave(file = fname, p_cnv_y, width = 6, height = 5, device = "png") 
 ```
 
 # CNVs and seg
 
-```{r plot-7, fig.width = 20, fig.height = 15, fig.fullwidth = TRUE, echo=TRUE}
-merge <- metadata_table
-CellsMeta <- seurat_obj@meta.data
-randomnumbers <- merge["seg"]
+```{r plot-7, fig.width = 20, fig.height = 8, fig.fullwidth = TRUE, echo=TRUE}
+split_data <- metadata_table$seg  # Replace 'seg' with your splitting variable
 
-CellsMeta["seg"] <- randomnumbers
-CellsMetaTrim <- subset(CellsMeta, select = c("seg"))
-seurat_obj <- AddMetaData(seurat_obj, CellsMetaTrim)
+# Combine UMAP coordinates, feature data, and the split variable into a data frame
+plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Feature = feature_data_p_cnv, Seg = split_data)
 
-p1 <- FeaturePlot(seurat_obj, reduction = "umap", features = "p_cnv", split.by = "seg") +
-  scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior')
+# Create the plot using ggplot2
+p1 <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
+  geom_point(alpha = 0.8) +  # Adjust transparency if needed
+  scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
+  facet_wrap(~Seg) +  # Split by 'seg' (or your splitting variable)
+  theme_Publication () +
+  theme(legend.position = "right")
 
-p2 <- FeaturePlot(seurat_obj, reduction = "umap", features = "p_cnv") +
-  scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') + 
-  NoLegend() + 
-  ggtitle("All identified CNVs")
-   
+p2 <- ggplot(plot_data_p_cnv, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
+  geom_point(alpha = 0.8) +  # Adjust transparency if needed
+  scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
+  ggtitle("All identified CNVs") +
+  theme_Publication () +
+  theme(legend.position = "right")
+
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot7.png")
-p <- print(p1 + p2 + plot_layout(ncol = 7, nrow = 7))
-ggsave(file = fname, p, width = 20, height = 15, device = "png")
+p <- print(p1 + p2 + plot_layout(ncol = 2, nrow = 1))
+ggsave(file = fname, p, width = 20, height = 8, device = "png")
 ```
 
 # Clonal assignments
@@ -347,22 +355,19 @@ Here clone_opt denotes the maximum likelihood assignment of a cell to a specific
 ## Genotypes vs Tumor microenvironment
 
 ```{r plot-8, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
-## numbat_obj$clone_post$clone_opt
 numbat_obj.df2 <- as.data.frame(numbat_obj[[".__enclos_env__"]][["self"]][["clone_post"]])
-names(numbat_obj.df2)[names(numbat_obj.df2) == 'cell'] <- "UMI_id"
 metadata_table <- seurat_obj@meta.data
-metadata_table$UMI_id <- rownames(metadata_table)
-metadata_table <- merge.data.frame(metadata_table, numbat_obj.df2, by = "UMI_id", all = TRUE)
-#head(metadata_table)
+metadata_table$cell <- rownames(metadata_table)
+metadata_table <- merge.data.frame(metadata_table, numbat_obj.df2, by = "cell", all = TRUE)
 
 seurat_obj@meta.data <-cbind(seurat_obj@meta.data, metadata_table)
 ###############################################################################################################
-# Customize feature plots and put legend on emtuy space
+# Customize feature plots
 # https://divingintogeneticsandgenomics.rbind.io/post/customize-featureplot-in-seurat-for-multi-condition-comparisons-using-patchwork/
 
-p1 = DimPlot(seurat_obj, reduction = "umap", group.by = "clone_opt", cols = mypal, label = TRUE, label.size = 3, repel = TRUE) + 
+p1 <- DimPlot(seurat_obj, reduction = "umap", group.by = "clone_opt", cols = mypal, label = TRUE, label.size = 3, repel = TRUE) + 
   ggtitle("Clone genotype")
-p2 = DimPlot(seurat_obj, reduction = "umap", group.by = "compartment_opt", label = TRUE, label.size = 3 ,repel = TRUE, cols = c('red3','royalblue')) + 
+p2 <- DimPlot(seurat_obj, reduction = "umap", group.by = "compartment_opt", label = TRUE, label.size = 3 ,repel = TRUE, cols = c('royalblue', 'red3')) + 
   ggtitle("Tumor microenvironment")
 
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot8.png")
@@ -372,7 +377,7 @@ ggsave(file = fname, p, width = 15, height = 6, device = "png")
 
 ##  Genotypes vs Tumor microenvironment vs Cell type vs Disease stage
 
-```{r plot-9, fig.width = 20, fig.height = 15, fig.fullwidth = TRUE, echo=TRUE}
+```{r plot-9, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 library(RColorBrewer)
 mypalette <- brewer.pal(12,"Paired") # colorblindFriendly = TRUE
 mypalette <- colorRampPalette(mypalette)(40)
@@ -383,11 +388,59 @@ p4 <- DimPlot(seurat_obj, reduction = "umap", group.by = 'Timepoint', label = TR
   ggtitle("Disease stage")
 
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot9.png")
-p <- print(p1 + p2 + p3 + p4 + plot_layout(ncol = 2, nrow=2))
-ggsave(file = fname, p, width = 20, height = 15, device = "png")
+#p <- print(p1 + p2 + p3 + p4 + plot_layout(ncol = 2, nrow=2))
+p <- print(p3 + p4 + plot_layout(ncol = 2, nrow=1))
+ggsave(file = fname, p, width = 15, height = 6, device = "png")
 ```
 
 # Tumor versus normal probability
+```{r clone_post, echo=TRUE}
+numbat_obj.df <- numbat_obj$clone_post 
+
+# Extract UMAP coordinates
+umap_data <- seurat_obj@reductions$umap@cell.embeddings
+
+##############################################################
+# Extract feature data from metadata
+feature_data_p_cnv <- numbat_obj.df$p_cnv
+# Combine UMAP coordinates and feature data into a data frame
+plot_data_p_cnv <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Feature = feature_data_p_cnv)
+
+# Create the plot using ggplot2
+p_cnv <- ggplot(plot_data_p_cnv, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
+  geom_point(alpha = 0.8) +  # Adjust transparency if needed
+  scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
+  ggtitle("Allele") +
+  theme_Publication () +
+  theme(legend.position = "right")
+
+##############################################################
+# Extract feature data from metadata
+feature_data <- numbat_obj.df$p_cnv_x
+
+# Combine UMAP coordinates and feature data into a data frame
+plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Feature = feature_data)
+
+p_cnv_x <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
+  geom_point(alpha = 0.8) +  # Adjust transparency if needed
+  scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
+  ggtitle("Expression") +
+  theme_Publication () +
+  theme(legend.position = "right")
+##############################################################
+# Extract feature data from metadata
+feature_data <- numbat_obj.df$p_cnv_y
+
+# Combine UMAP coordinates and feature data into a data frame
+plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Feature = feature_data)
+
+p_cnv_y <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
+  geom_point(alpha = 0.8) +  # Adjust transparency if needed
+  scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
+  ggtitle("Joint") +
+  theme_Publication () +
+  theme(legend.position = "right")
+```
 
 ```{r plot-10, fig.width = 20, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot10.png")

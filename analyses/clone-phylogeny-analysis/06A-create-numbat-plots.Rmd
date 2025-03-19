@@ -258,7 +258,7 @@ metadata_table <- merge.data.frame(metadata_table, numbat_obj.df, by = "cell", a
 
 ## Joint posterior probability of the CNV (p_cnv)
 
-`merge["p_cnv"]` contains cell-level information on specific CNV segments (seg), their alteration type (cnv_state), the joint posterior probability of the CNV (p_cnv), the expression-based posterior (p_cnv_x), and the allele-based posterior (p_cnv_y). We can visualize the event-specific posteriors in a expression-based embedding:
+`numbat_obj$joint_post` contains cell-level information on specific CNV segments (seg), their alteration type (cnv_state), the joint posterior probability of the CNV (p_cnv), the expression-based posterior (p_cnv_x), and the allele-based posterior (p_cnv_y). We can visualize the event-specific posteriors in a expression-based embedding:
 
 ```{r p_cnv, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 # Extract UMAP coordinates
@@ -389,6 +389,9 @@ ggsave(file = fname, p, width = 15, height = 6, device = "png")
 ```
 
 # Tumor versus normal probability
+
+`numbat_obj$clone_post` contains the probability of a cell belong to a clone with aneuploidy (aka being a malignant cell). We can visualize the probability values in a expression-based embedding:
+
 ```{r clone_post, echo=TRUE}
 numbat_obj.df <- numbat_obj$clone_post 
 
@@ -405,7 +408,7 @@ plot_data_p_cnv <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], 
 p_cnv <- ggplot(plot_data_p_cnv, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
-  ggtitle("Allele") +
+  ggtitle("Joint") +
   theme_Publication () +
   theme(legend.position = "right")
 
@@ -432,7 +435,7 @@ plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Featur
 p_cnv_y <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
-  ggtitle("Joint") +
+  ggtitle("Allele") +
   theme_Publication () +
   theme(legend.position = "right")
 ```

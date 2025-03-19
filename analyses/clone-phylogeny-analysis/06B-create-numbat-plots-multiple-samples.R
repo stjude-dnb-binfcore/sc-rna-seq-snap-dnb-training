@@ -126,6 +126,7 @@ for (i in seq_along(sample_name)){
                   output_format = 'all',
                   params = list(cell_type_label = yaml$cell_type_label_numbat,
                                 min_LLR_value = yaml$min_LLR_value_numbat,
+                                ct_palette_file = yaml$ct_palette_file_numbat,
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,

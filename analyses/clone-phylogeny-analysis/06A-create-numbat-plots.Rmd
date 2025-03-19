@@ -139,7 +139,7 @@ suppressPackageStartupMessages({
   library(knitr)
   library(patchwork)
   library(scooter)
-  library(ggrepel)
+  #library(ggrepel)
   #library(RColorBrewer)
 }) 
 ```

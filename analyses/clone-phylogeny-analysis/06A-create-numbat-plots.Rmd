@@ -384,7 +384,7 @@ p <- print(p1 + p2 + plot_layout(ncol = 2))
 ggsave(file = fname, p, width = 15, height = 6, device = "png")
 ```
 
-##  Genotypes vs Tumor microenvironment vs Cell type vs Disease stage
+##  Cell type vs Disease stage
 
 ```{r plot-7, fig.width = 18, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 p3 <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = .data[[cell_type_label]])) +

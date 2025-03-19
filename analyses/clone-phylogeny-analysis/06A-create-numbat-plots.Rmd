@@ -274,7 +274,7 @@ plot_data_p_cnv <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], 
 p_cnv <- ggplot(plot_data_p_cnv, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
-  ggtitle("Allele") +
+  ggtitle("Joint posterior probability of CNV state") +
   theme_Publication () +
   theme(legend.position = "right")
 
@@ -289,7 +289,7 @@ plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Featur
 p_cnv_x <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
-  ggtitle("Expression") +
+  ggtitle("Joint posterior probability of CNV state given expression data") +
   theme_Publication () +
   theme(legend.position = "right")
 ########################################################################
@@ -303,7 +303,7 @@ plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Featur
 p_cnv_y <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
-  ggtitle("Joint") +
+  ggtitle("Joint posterior probability of CNV state given allele data") +
   theme_Publication () +
   theme(legend.position = "right")
 ```  
@@ -390,7 +390,7 @@ ggsave(file = fname, p, width = 15, height = 6, device = "png")
 
 # Tumor versus normal probability
 
-`numbat_obj$clone_post` contains the probability of a cell belong to a clone with aneuploidy (aka being a malignant cell). We can visualize the probability values in a expression-based embedding:
+`numbat_obj$clone_post` contains the probability of a cell belong to a clone with aneuploidy (aka being a malignant cell). We can visualize the posterior probability in a expression-based embedding:
 
 ```{r clone_post, echo=TRUE}
 numbat_obj.df <- numbat_obj$clone_post 
@@ -408,7 +408,7 @@ plot_data_p_cnv <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], 
 p_cnv <- ggplot(plot_data_p_cnv, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
-  ggtitle("Joint") +
+  ggtitle("Joint posterior probability of CNV state") +
   theme_Publication () +
   theme(legend.position = "right")
 
@@ -422,7 +422,7 @@ plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Featur
 p_cnv_x <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
-  ggtitle("Expression") +
+  ggtitle("Joint posterior probability of CNV state given expression data") +
   theme_Publication () +
   theme(legend.position = "right")
 ##############################################################
@@ -435,7 +435,7 @@ plot_data <- data.frame(UMAP_1 = umap_data[, 1], UMAP_2 = umap_data[, 2], Featur
 p_cnv_y <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = Feature)) +
   geom_point(alpha = 0.8) +  # Adjust transparency if needed
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
-  ggtitle("Allele") +
+  ggtitle("Joint posterior probability of CNV state given allele data") +
   theme_Publication () +
   theme(legend.position = "right")
 ```

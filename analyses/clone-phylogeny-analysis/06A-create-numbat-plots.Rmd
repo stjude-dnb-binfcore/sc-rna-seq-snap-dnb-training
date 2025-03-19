@@ -409,7 +409,8 @@ ggsave(file = fname, p, width = 18, height = 6, device = "png")
 
 # Tumor versus normal probability
 
-`numbat_obj$clone_post` contains the probability of a cell belong to a clone with aneuploidy (aka being a malignant cell). We can visualize the posterior probability in a expression-based embedding:
+`numbat_obj$clone_post` represents the probability that a cell belongs to a clone with aneuploidy (i.e., a malignant cell). We can visualize this posterior probability using an expression-based embedding:
+
 
 ```{r clone_post, echo=TRUE}
 numbat_obj.clone_post <- numbat_obj$clone_post

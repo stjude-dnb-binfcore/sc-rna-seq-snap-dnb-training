@@ -48,7 +48,7 @@ if (!dir.exists(numbat_plots_dir)) {
 
 
 # Create numbat_dir
-# numbat_results_dir <- 
+#numbat_results_dir <- 
 #  file.path(module_results_dir, paste0("06-create-numbat-plots"))
 #if (!dir.exists(numbat_results_dir)) {
 #  dir.create(numbat_results_dir)
@@ -127,6 +127,8 @@ for (i in seq_along(sample_name)){
                   params = list(cell_type_label = yaml$cell_type_label_numbat,
                                 min_LLR_value = yaml$min_LLR_value_numbat,
                                 ct_palette_file = yaml$ct_palette_file_numbat,
+                                variable_palette_file = yaml$palette_variable_numbat,
+                                variable_plot = yaml$variable_numbat,
                                 root_dir = yaml$root_dir,
                                 PROJECT_NAME = yaml$PROJECT_NAME,
                                 PI_NAME = yaml$PI_NAME,
@@ -139,6 +141,5 @@ for (i in seq_along(sample_name)){
                                 PIPELINE = yaml$PIPELINE, 
                                 START_DATE = yaml$START_DATE,
                                 COMPLETION_DATE = yaml$COMPLETION_DATE))
-  
 }
 ################################################################################################################

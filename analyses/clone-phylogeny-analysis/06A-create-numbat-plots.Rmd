@@ -326,7 +326,7 @@ ggsave(file = fname, p, width = 25, height = 6, device = "png")
 ```{r plot-5, fig.width = 20, fig.height = 8, fig.fullwidth = TRUE, echo=TRUE}
 # Sort in descending order, you can use desc()
 plot_data <- metadata_table %>%
-  arrange(seg)
+  mutate(seg = factor(seg, levels = names(cnv_type)))
 
 p1 <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = p_cnv)) +
   geom_point(alpha = 1, size = 1) +  # Adjust transparency if needed: alpha = 0.8; # Setting alpha to 1 for no transparency
@@ -351,7 +351,7 @@ ggsave(file = fname, p, width = 20, height = 8, device = "png")
 
 Numbat aggregates signals across subclone-specific CNVs to probabilistically assign cells to subclones. The information regarding clonal assignments are contained in the `numbat_obj.df$clone_post` dataframe.
 
-Here clone_opt denotes the maximum likelihood assignment of a cell to a specific clone. p_{1..4} are the detailed breakdown of the posterior probability that the cell belongs to each clone, respectively. Let's visualize the clonal decomposition in a tSNE embedding. Note that clone 1 is always the normal cells.
+Here clone_opt denotes the maximum likelihood assignment of a cell to a specific clone. p_{1..n} are the detailed breakdown of the posterior probability that the cell belongs to each clone, i.e. clone 1 to clone n, respectively. Let's visualize the clonal decomposition in a tSNE embedding. Note that clone 1 is always the normal cells.
 
 ## Genotypes vs Tumor microenvironment
 

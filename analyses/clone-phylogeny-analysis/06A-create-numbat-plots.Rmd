@@ -205,30 +205,32 @@ cat("Successfully read Seurat object for sample:", sample_name[i], "\n")
 
 # Create palette
 
-```{r create-palette, echo=TRUE}
-mypal <- c("gray", "#377EB8", "#4DAF4A", "#984EA3", "#b83748", "#b87c37", "#b8a537", "#37b8af") 
+```{r create-palette-clones, echo=TRUE}
+palette_clones <- c("gray", "#377EB8", "#4DAF4A", "#984EA3", "#b83748", "#b87c37", "#b8a537", "#37b8af") 
 
 # To be used for timepoint annotations etc
 #mypalette <- brewer.pal(12,"Paired") # colorblindFriendly = TRUE
 #mypalette <- colorRampPalette(mypalette)(40)
-
-# Read color palette
-mypalette_df <- readr::read_tsv(timepoint_palette_file, guess_max = 100000, show_col_types = FALSE) 
-
-# Define and order palette
-mypalette <- mypalette_df$hex_codes 
-names(mypalette) <- mypalette_df$timepoint
 ```
 
-```{r define-parameters-for-plots, echo=TRUE}
+```{r create-palette-timepoint, echo=TRUE}
 # Read color palette
-palette_df <- readr::read_tsv(cell_types_palette_file, guess_max = 100000, show_col_types = FALSE) %>%
+palette_timepoint_df <- readr::read_tsv(timepoint_palette_file, guess_max = 100000, show_col_types = FALSE) 
+
+# Define and order palette
+palette_timepoint <- palette_timepoint_df$hex_codes 
+names(palette_timepoint) <- palette_timepoint_df$timepoint
+```
+
+```{r create-palette-cell-types, echo=TRUE}
+# Read color palette
+palette_cell_type_df <- readr::read_tsv(cell_types_palette_file, guess_max = 100000, show_col_types = FALSE) %>%
   mutate(cell_type_names = case_when(cell_type_names == "na_color" ~ "unassigned",
                                        TRUE ~ cell_type_names))
 
 # Define and order palette
-palette <- palette_df$hex_codes 
-names(palette) <- palette_df$cell_type_names 
+palette_cell_type <- palette_cell_type_df$hex_codes 
+names(palette_cell_type) <- palette_cell_type_df$cell_type_names 
 ```
 
 # Copy number landscape and single-cell phylogeny
@@ -239,7 +241,7 @@ As an overview, we can visualize the CNV calls in single-cells and their evoluti
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot1.png")
 p <- print(numbat_obj$plot_phylo_heatmap(clone_bar = TRUE, 
                                          p_min = 0.9,
-                                         pal_clone = mypal))
+                                         pal_clone = palette_clones))
 ggsave(file = fname, p, width = 8, height = 6, device = "png")
 ```
 
@@ -249,22 +251,22 @@ In this visualization, the single-cell phylogeny (left) is juxtaposed with a hea
 
 Let's take a look at the consensus segments.
 
-```{r plot-2, fig.width = 8, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+```{r plot-2, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 fname <- paste0(numbat_plots_dir, "/",  sample_name[i], "/", "plot2.png")
 p <- print(numbat_obj$plot_consensus())
-ggsave(file = fname, p, width = 8, height = 6, device = "png")
+ggsave(file = fname, p, width = 15, height = 6, device = "png")
 ```
 
 # Bulk CNV profiles
 
 We can also visualize these CNV events in pseudobulks where the data is more rich, aggregating cells by clone:
 
-```{r plot-3, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
+```{r plot-3, fig.width = 15, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot3.png")
 p <- print(numbat_obj$bulk_clones %>% 
   plot_bulks(min_LLR = min_LLR_value, # filtering CNVs by evidence
              legend = FALSE))
-ggsave(file = fname, p, width = 6, height = 5, device = "png")
+ggsave(file = fname, p, width = 15, height = 6, device = "png")
 ```
 
 # Single-cell CNV calls
@@ -293,8 +295,8 @@ p_cnv <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = p_cnv)) +
   geom_point(alpha = 1, size = 1) +  # Adjust transparency if needed: alpha = 0.8; # Setting alpha to 1 for no transparency
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
   ggtitle("Joint posterior probability of CNV state: All identified CNVs") +
-  theme_Publication () #+
-  #theme(legend.position = "right")
+  theme_Publication () +
+  theme(legend.position = "none")  # Remove legend from this plot
 
 ########################################################################
 ## Expression-based posterior (p_cnv_x)
@@ -302,8 +304,8 @@ p_cnv_x <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = p_cnv_x)) 
   geom_point(alpha = 1, size = 1) +  # Adjust transparency if needed: alpha = 0.8; # Setting alpha to 1 for no transparency
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
   ggtitle("Joint posterior probability of CNV state given expression data") +
-  theme_Publication () #+
-  #theme(legend.position = "right")
+  theme_Publication () +
+  theme(legend.position = "none")  # Remove legend from this plot
 
 ########################################################################
 ## Allele-based posterior (p_cnv_y)
@@ -312,16 +314,16 @@ p_cnv_y <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = p_cnv_y)) 
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
   ggtitle("Joint posterior probability of CNV state given allele data") +
   theme_Publication () +
-  theme(legend.position = "right")
+  theme(legend.position = "none")  # Remove legend from this plot
 ```  
 
 ```{r plot-4, fig.width = 25, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot4.png")
-p <- print(p_cnv + p_cnv_x + p_cnv_y + plot_layout(ncol = 3))
+p <- print(p_cnv + p_cnv_x + p_cnv_y + plot_layout(ncol = 3) + theme(legend.position = "right"))
 ggsave(file = fname, p, width = 25, height = 6, device = "png")
 ```
 
-# CNVs and seg
+# CNV segments
 
 ```{r plot-5, fig.width = 20, fig.height = 8, fig.fullwidth = TRUE, echo=TRUE}
 # Sort in descending order, you can use desc()
@@ -331,19 +333,20 @@ plot_data <- metadata_table %>%
 p1 <- ggplot(plot_data, aes(x = UMAP_1, y = UMAP_2, color = p_cnv)) +
   geom_point(alpha = 1, size = 1) +  # Adjust transparency if needed: alpha = 0.8; # Setting alpha to 1 for no transparency
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
+  ggtitle("CNV segments with joint posterior probability") +
   facet_wrap(~seg) +  # Split by 'seg' (or your splitting variable)
   theme_Publication () +
-  theme(legend.position = "right")
+  theme(legend.position = "none")  # Remove legend from this plot
 
 p2 <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = p_cnv)) +
   geom_point(alpha = 1, size = 1) +  # Adjust transparency if needed: alpha = 0.8; # Setting alpha to 1 for no transparency
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
   ggtitle("Joint posterior probability of CNV state: All identified CNVs") +
   theme_Publication () +
-  theme(legend.position = "right")
+  theme(legend.position = "none")  # Remove legend from this plot
 
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot5.png")
-p <- print(p1 + p2 + plot_layout(ncol = 2, nrow = 1))
+p <- print(p1 + p2 + plot_layout(ncol = 2, nrow = 1) + theme(legend.position = "right"))
 ggsave(file = fname, p, width = 20, height = 8, device = "png")
 ```
 
@@ -367,7 +370,7 @@ metadata_table <- as_data_frame_seurat(seurat_obj, metadata = TRUE) %>%
 p1 <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = clone_opt)) +
   geom_point(alpha = 1, size = 1) +  # Adjust transparency if needed: alpha = 0.8; # Setting alpha to 1 for no transparency
   #geom_text_repel(aes(label = clone_opt), size = 3, box.padding = 0.5) +  # Add labels with repulsion
-  scale_color_manual(values = mypal) +  # Apply custom color palette (mypal should be a predefined vector)
+  scale_color_manual(values = palette_clones) + 
   ggtitle("Clone genotype") +
   theme_Publication () +
   theme(legend.position = "right")
@@ -390,14 +393,14 @@ ggsave(file = fname, p, width = 15, height = 6, device = "png")
 p3 <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = .data[[cell_type_label]])) +
   geom_point(alpha = 1, size = 1) +  # Adjust transparency if needed: alpha = 0.8; # Setting alpha to 1 for no transparency
   #geom_text_repel(aes(label = cell_type_label), size = 3, box.padding = 0.5) +  # Add labels with repulsion
-  scale_color_manual(values = palette) +  # Apply custom color palette (mypal should be a predefined vector)
+  scale_color_manual(values = palette_cell_type) +
   ggtitle(cell_type_label) +
   theme_Publication () +
   theme(legend.position = "right")
 p4 <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = timepoint)) +
   geom_point(alpha = 1, size = 1) +  # Adjust transparency if needed: alpha = 0.8; # Setting alpha to 1 for no transparency
   #geom_text_repel(aes(label = timepoint), size = 3, box.padding = 0.5) +  # Add labels with repulsion
-  scale_color_manual(values = mypalette) +  # Apply custom color palette (mypal should be a predefined vector)
+  scale_color_manual(values = palette_timepoint) + 
   ggtitle("Disease stage") +
   theme_Publication () +
   theme(legend.position = "right")
@@ -422,17 +425,17 @@ metadata_table <- as_data_frame_seurat(seurat_obj, metadata = TRUE) %>%
 p_cnv <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = p_cnv)) +
   geom_point(alpha = 1, size = 1) +  # Adjust transparency if needed: alpha = 0.8; # Setting alpha to 1 for no transparency
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
-  ggtitle("Joint posterior probability of CNV state") +
-  theme_Publication () #+
-  #theme(legend.position = "right")
+  ggtitle("Joint posterior probability of CNV state: All identified CNVs") +
+  theme_Publication () +
+  theme(legend.position = "none")  # Remove legend from this plot
 
 ##############################################################
 p_cnv_x <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = p_cnv_x)) +
   geom_point(alpha = 1, size = 1) +  # Adjust transparency if needed: alpha = 0.8; # Setting alpha to 1 for no transparency
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
   ggtitle("Joint posterior probability of CNV state given expression data") +
-  theme_Publication () #+
-  #theme(legend.position = "right")
+  theme_Publication () +
+  theme(legend.position = "none")  # Remove legend from this plot
 
 ##############################################################
 p_cnv_y <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = p_cnv_y)) +
@@ -440,13 +443,13 @@ p_cnv_y <- ggplot(metadata_table, aes(x = UMAP_1, y = UMAP_2, color = p_cnv_y)) 
   scale_color_gradient2(low = 'royalblue', mid = 'white', high = 'red3', midpoint = 0.5, name = 'Posterior') +
   ggtitle("Joint posterior probability of CNV state given allele data") +
   theme_Publication () +
-  theme(legend.position = "right")
+  theme(legend.position = "none")  # Remove legend from this plot
 ```
 
-```{r plot-8, fig.width = 22, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
+```{r plot-8, fig.width = 25, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot8.png")
-p <- print(p_cnv + p_cnv_x + p_cnv_y + plot_layout(ncol = 3))
-ggsave(file = fname, p, width = 22, height = 6, device = "png")
+p <- print(p_cnv + p_cnv_x + p_cnv_y + plot_layout(ncol = 3) + theme(legend.position = "right"))
+ggsave(file = fname, p, width = 25, height = 6, device = "png")
 ```
 
 # Tumor phylogeny
@@ -455,11 +458,7 @@ Let's take a closer look at the inferred single cell phylogeny and where the mut
 
 ```{r plot-9, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot9.png")
-p <- print(numbat_obj$plot_sc_tree(label_size = 3,
-                                   branch_width = 0.5,
-                                   tip_length = 0.5,
-                                   pal_clone = mypal,
-                                   tip = TRUE))
+p <- print(numbat_obj$plot_sc_tree(label_size = 3, branch_width = 0.5, tip_length = 0.5, pal_clone = palette_clones, tip = TRUE))
 ggsave(file = fname, p, width = 6, height = 5, device = "png")
 ```
 
@@ -467,7 +466,7 @@ The mutational history can also be represented on the clone level, where cells w
 
 ```{r plot-10, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot10.png")
-p <- print(numbat_obj$plot_mut_history(pal = mypal))
+p <- print(numbat_obj$plot_mut_history(pal = palette_clones))
 ggsave(file = fname, p, width = 6, height = 5, device = "png")
 ```
 

@@ -141,7 +141,7 @@ Reviewed by: _____________________   Date: ____________ \
   
 # Information about this notebook
 
-For more information, see [SingleR](https://bioconductor.org/packages/release/bioc/vignettes/SingleR/inst/doc/SingleR.html) and the [SingleR book](https://bioconductor.org/books/release/SingleRBook/introduction.html).
+We will use a list of gene markers to annotate cell types in the cohort.
 
 # Set up
 ```{r load-library, echo=TRUE}

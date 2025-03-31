@@ -146,7 +146,7 @@ Reviewed by: _____________________   Date: ____________ \
   
 # Information about this notebook
 
-This notebook is relevant to projects in which we need to remove cell contamination from the object, e.g., clusters. After inspection of the two rounds of results in the `cluster-cell-calling` module, user can remove clusters if necessary. This is the case, e.g., in PDX projects, there might be both human and mouse clusters identified after the `02-find-markers.Rmd` step of the the `cluster-cell-calling` module. In this case, we reccomened the user to run the `cell-contamination-removal-analysis` module that allows to remove clusters, repeat normalization and integration steps. This object can then be used for cell type annotation or other type of analysis.
+This notebook is relevant to projects in which we need to remove cell contamination from the object, e.g., clusters. After inspection of the two rounds of results in the `cluster-cell-calling` module, user can remove clusters if necessary. This is the case, e.g., in PDX projects, there might be both human and mouse clusters identified after the `02-find-markers.Rmd` step of the the `cluster-cell-calling` module. In this case, we recommend the user to run the cell-contamination-removal-analysis module that allows the user to remove clusters, repeat normalization and integration steps. This object can then be used for cell type annotation or other type of analysis.
 
 # Set up
 ```{r load-library, echo=TRUE}

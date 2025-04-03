@@ -292,8 +292,36 @@ if (use_scDblFinder_filtering == "YES"){
   print_message_doublets <- "we will use scDblFinder to remove doublets"
   #############################################################################
   # Add metadata
-  seurat_obj <- AddMetaData(seurat_obj, scDblFinder_obj@meta.data)
-
+  # Check if there are duplicated column names
+  if (any(duplicated(names(scDblFinder_obj@meta.data)))) {
+    # Identify duplicated columns
+    duplicated_columns <- which(duplicated(names(scDblFinder_obj@meta.data)))
+  
+    # Remove columns with duplicated names
+    scDblFinder_obj@meta.data <- scDblFinder_obj@meta.data[, -duplicated_columns]
+    cat("Duplicated columns removed.\n")
+    } else {
+      scDblFinder_obj@meta.data <- scDblFinder_obj@meta.data
+      cat("No duplicated columns found.\n")
+      }
+  
+  # Add metadata   
+  metadata <- as_data_frame_seurat(scDblFinder_obj, metadata = TRUE) 
+  seurat_obj@meta.data <- merge_metadata(seurat_obj, metadata) 
+  
+  # Check if there are duplicated column names
+  if (any(duplicated(names(seurat_obj@meta.data)))) {
+    # Identify duplicated columns
+    duplicated_columns <- which(duplicated(names(seurat_obj@meta.data)))
+  
+    # Remove columns with duplicated names
+    seurat_obj@meta.data <- seurat_obj@meta.data[, -duplicated_columns]
+    cat("Duplicated columns removed.\n")
+    } else {
+      seurat_obj@meta.data <- seurat_obj@meta.data
+      cat("No duplicated columns found.\n")
+    }
+  
   ##########################################################################################################
   # Report Singlets 
   singlet_cells <- colnames(scDblFinder_obj)[which(scDblFinder_obj@meta.data$scDblFinder.class == "singlet")]
@@ -322,7 +350,7 @@ if (use_scDblFinder_filtering == "YES"){
     mutate(sample_name = Var1,
            cells_number_final = Freq) %>% 
     dplyr::select(-Var1, -Freq)
-} else {
+  } else {
     print_message_doublets <- "we will skip usage of the scDblFinder to remove doublets"
     ##########################################################################################################
     cells_number_doublets <- table(seurat_obj@meta.data$orig.ident) %>%

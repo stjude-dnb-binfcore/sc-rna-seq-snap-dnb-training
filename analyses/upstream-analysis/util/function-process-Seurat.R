@@ -375,9 +375,8 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
         p <- create_UMAP_condition(df = metadata,
                                    umap_val = umap_val,
                                    color_value = condition1)
-        pdf(file = name, width = 6, height = 5)
-        print(p)
-        dev.off()
+        ggsave(file = name, width = 6, height = 5, device = "png")
+
         
         # condition2
         if (!is.null(condition2)) {
@@ -385,9 +384,8 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
           p <- create_UMAP_condition(df = metadata,
                                      umap_val = umap_val,
                                      color_value = condition2)
-          pdf(file = name, width = 6, height = 5)
-          print(p)
-          dev.off()
+          ggsave(file = name, width = 6, height = 5, device = "png")
+          
         }
         
         # condition3
@@ -396,9 +394,8 @@ Process_Seurat <- function(seurat_obj, nfeatures_value, Genome, Regress_Cell_Cyc
           p <- create_UMAP_condition(df = metadata,
                                      umap_val = umap_val,
                                      color_value = condition3)
-          pdf(file = name, width = 6, height = 5)
-          print(p)
-          dev.off()
+          ggsave(file = name, width = 6, height = 5, device = "png")
+          
         }
 
         if (use_condition_split == "YES"){

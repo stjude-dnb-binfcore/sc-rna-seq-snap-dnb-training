@@ -53,7 +53,7 @@ create_vln_plot <- function(seurat_obj, grouping, min_genes, min_count, title_na
     ylab("") + 
     geom_hline(yintercept = min_genes, color = min_color_df$hex_codes, size = 1) +
     scale_fill_manual(values = alpha(c(vln_plot_color_df$hex_codes), .4)) +
-    annotate(geom = "text", size = 2.5, x = 1, y = min_genes - 250, label = glue::glue("Min genes: {min_genes}"), color = min_color_df$hex_codes)
+    annotate(geom = "text", size = 2.5, x = 1, y = (min_genes - 250), label = glue::glue("Min genes: {min_genes}"), color = min_color_df$hex_codes)
 
   # plot number of UMIs
   umi_num <- plot_distribution(seurat_obj, 
@@ -64,7 +64,8 @@ create_vln_plot <- function(seurat_obj, grouping, min_genes, min_count, title_na
     ylab("") + 
     geom_hline(yintercept = min_count, color = min_color_df$hex_codes, size = 1) +
     scale_fill_manual(values = alpha(c(vln_plot_color_df$hex_codes), .4)) +
-    annotate(geom = "text", size = 2.5, x = 1, y = c(-(min_count+100)), label = glue::glue("Min count: {min_count}"), color = min_color_df$hex_codes)
+    #annotate(geom = "text", size = 2.5, x = 1, y = c(-(min_count + 100)), label = glue::glue("Min count: {min_count}"), color = min_color_df$hex_codes)
+    annotate(geom = "text", size = 2.5, x = 1, y = (min_count - 100), label = glue::glue("Min count: {min_count}"), color = min_color_df$hex_codes)
 
   # plot percent mitochondrial reads
   mito_num <- plot_distribution(seurat_obj, 
@@ -75,7 +76,8 @@ create_vln_plot <- function(seurat_obj, grouping, min_genes, min_count, title_na
     ylab("") + 
     geom_hline(yintercept = mtDNA_pct_default, color = min_color_df$hex_codes, size = 1) +
     scale_fill_manual(values = alpha(c(vln_plot_color_df$hex_codes), .4)) +
-    annotate(geom = "text", size = 2.5, x = 1, y = mtDNA_pct_default, label = glue::glue("Min mtDNA: {mtDNA_pct_default}"), color = min_color_df$hex_codes)
+    #annotate(geom = "text", size = 2.5, x = 1, y = (mtDNA_pct_default - 2), label = glue::glue("Min mtDNA: {mtDNA_pct_default}"), color = min_color_df$hex_codes)
+    annotate(geom = "text", size = 2.5, x = 1, y = (mtDNA_pct_default + 2), label = glue::glue("Min mtDNA: {mtDNA_pct_default}"), color = min_color_df$hex_codes)
   
   # get the legend for one of the plots to use as legend for the combined plot
   legend_grid <- get_legend(mito_num)

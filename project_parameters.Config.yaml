@@ -111,7 +111,6 @@ assay_annotation_module: "RNA"  # Options: "RNA" (default) or "RNA_SoupX"
 
 gene_markers_dir_annotation_module: "./" # path to gene markers dir
 gene_markers_file_name_annotation_module: "<filename>.tsv" # File name with the gene markers. It needs to be in `tsv` format. Please ensure cell type names exist and match the ones in the `.figures/palettes/cell_types_palette.tsv`.
-#cluster_name: "seurat_clusters"
 method_annotation_module: "all" # Options: "all" (for using singler and a list of gene markers), "singler" (for using only singler method for both broad and fine annotation)
 gene_name_convention_update_annotation_module: "NO" # Options: "YES" or "NO" (default). Set to "YES" if the gene names in the gene markers file do not align with the naming convention of genes in the reference genome.
 
@@ -121,6 +120,7 @@ ct_palette_file_gene_markers: "cell_types_palette.tsv" # File name with the gene
 
 reference_dir_annotation_module: "./" # path to reference dir
 reference_file_name_annotation_module: "<filename>.rds" # File name with the reference object. It needs to be in `rds` format.
+celltype_reference_module: "predicted.cell.signature.ident" # Column name from the reference object to be used to transfer labels
 
 # `rshiny-app`
 annotations_dir_rshiny_app: "04_cell_types_annotations_all" # Options: to update based on the folder with the desired annotations to use for the R shiny app from the `cell-types-annotation` module

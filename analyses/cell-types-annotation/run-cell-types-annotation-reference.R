@@ -64,7 +64,7 @@ rmarkdown::render('04-cell-types-annotation-reference.Rmd', clean = TRUE,
                                 use_min.diff.med = yaml$use_min.diff.med_annotation_module,
                                 data_file = input_data_file,
                                 assay = yaml$assay_annotation_module,
-                                ct_palette_file = yaml$ct_palette_file_gene_markers,
+                                ct_palette_file = yaml$ct_palette_file_reference,
 
                                 reference_dir = yaml$reference_dir_annotation_module,
                                 reference_file_name = yaml$reference_file_name_annotation_module,

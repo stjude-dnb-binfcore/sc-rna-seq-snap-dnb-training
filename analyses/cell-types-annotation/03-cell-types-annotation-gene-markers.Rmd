@@ -49,7 +49,6 @@ params:
   gene_markers_dir: '.'
   gene_markers_file_name: '.'
   genome_name: '.'
-  cluster: '.'
   clustering_gene_markers_dir: '.'
   clustering_gene_markers_file_name: '.'
   gene_name_convention_update: '.'

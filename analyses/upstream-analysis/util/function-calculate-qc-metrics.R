@@ -36,6 +36,8 @@ Find_Outlier_Thershold <- function(metadata) {
 #' @examples
 create_vln_plot <- function(seurat_obj, grouping, min_genes, min_count, title_name, palette) {
   
+  set.seed(1234) # Make code reproducible 
+  
   # Define color
   vln_plot_color_df <- palette %>%
     filter(color_names == "vln_plot_color")
@@ -51,7 +53,7 @@ create_vln_plot <- function(seurat_obj, grouping, min_genes, min_count, title_na
     ylab("") + 
     geom_hline(yintercept = min_genes, color = min_color_df$hex_codes, size = 1) +
     scale_fill_manual(values = alpha(c(vln_plot_color_df$hex_codes), .4)) +
-    annotate(geom = "text", size = 2.5, x = 1, y = min_genes - 250, label = glue::glue("Min genes: {min_genes}"), color = min_color_df$hex_codes)
+    annotate(geom = "text", size = 2.5, x = 1, y = (min_genes - 250), label = glue::glue("Min genes: {min_genes}"), color = min_color_df$hex_codes)
 
   # plot number of UMIs
   umi_num <- plot_distribution(seurat_obj, 
@@ -62,7 +64,8 @@ create_vln_plot <- function(seurat_obj, grouping, min_genes, min_count, title_na
     ylab("") + 
     geom_hline(yintercept = min_count, color = min_color_df$hex_codes, size = 1) +
     scale_fill_manual(values = alpha(c(vln_plot_color_df$hex_codes), .4)) +
-    annotate(geom = "text", size = 2.5, x = 1, y = c(-(min_count+100)), label = glue::glue("Min count: {min_count}"), color = min_color_df$hex_codes)
+    #annotate(geom = "text", size = 2.5, x = 1, y = c(-(min_count + 100)), label = glue::glue("Min count: {min_count}"), color = min_color_df$hex_codes)
+    annotate(geom = "text", size = 2.5, x = 1, y = (min_count - 100), label = glue::glue("Min count: {min_count}"), color = min_color_df$hex_codes)
 
   # plot percent mitochondrial reads
   mito_num <- plot_distribution(seurat_obj, 
@@ -73,7 +76,8 @@ create_vln_plot <- function(seurat_obj, grouping, min_genes, min_count, title_na
     ylab("") + 
     geom_hline(yintercept = mtDNA_pct_default, color = min_color_df$hex_codes, size = 1) +
     scale_fill_manual(values = alpha(c(vln_plot_color_df$hex_codes), .4)) +
-    annotate(geom = "text", size = 2.5, x = 1, y = mtDNA_pct_default, label = glue::glue("Min mtDNA: {mtDNA_pct_default}"), color = min_color_df$hex_codes)
+    #annotate(geom = "text", size = 2.5, x = 1, y = (mtDNA_pct_default - 2), label = glue::glue("Min mtDNA: {mtDNA_pct_default}"), color = min_color_df$hex_codes)
+    annotate(geom = "text", size = 2.5, x = 1, y = (mtDNA_pct_default + 2), label = glue::glue("Min mtDNA: {mtDNA_pct_default}"), color = min_color_df$hex_codes)
   
   # get the legend for one of the plots to use as legend for the combined plot
   legend_grid <- get_legend(mito_num)
@@ -115,13 +119,15 @@ create_vln_plot <- function(seurat_obj, grouping, min_genes, min_count, title_na
 #' 
 Generate_QC_Plots_1 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis_Name, File_Name, palette) {
   
+  set.seed(1234) # Make code reproducible 
+  
   # Create directory to save figures to
   dir.create(paste(Project_Path, "/", Analysis_Name, sep = ""))
   
   # Open path/name to write figures to 
   # pdf(file = paste(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".pdf", sep = ""), width = length(unique(Seurat_obj$ID))*12, height = 12)
   fname <- paste0(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".png", sep = "")
-  print(fname)
+  #print(fname)
 
   # Make density plots of UMI count, gene count split and colored by sample ID
   plot1 <- ggplot() + geom_density(data = Seurat_obj@meta.data, mapping = aes(x = nCount_RNA, fill = ID), alpha = 0.2) + 
@@ -172,13 +178,15 @@ Generate_QC_Plots_1 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
 #' 
 Generate_QC_Plots_2 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis_Name, File_Name, palette) {
   
+  set.seed(1234) # Make code reproducible 
+  
   # Create directory to save figures to
   dir.create(paste(Project_Path, "/", Analysis_Name, sep = ""))
   
   # Open pdf path/name to write figures to 
   #pdf(file = paste(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".pdf", sep = ""), width = length(unique(Seurat_obj$ID))*12, height = 12)
   fname <- paste0(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".png", sep = "")
-  print(fname)
+  #print(fname)
   
   # Make scatter plot of UMI count vs gene count colored by mitochondrial UMI expression percent
   
@@ -221,13 +229,15 @@ Generate_QC_Plots_2 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
 #' 
 Generate_QC_Plots_3 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis_Name, File_Name, palette) {
   
+  set.seed(1234) # Make code reproducible 
+  
   # Create directory to save figures to
   dir.create(paste(Project_Path, "/", Analysis_Name, sep = ""))
   
   # Open pdf path/name to write figures to 
   #pdf(file = paste(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".pdf", sep = ""), width = length(unique(Seurat_obj$ID))*12, height = 12)
   fname <- paste0(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".png", sep = "")
-  print(fname)
+  #print(fname)
   
   # Make density plot of mitochondial percent split and colored by sample ID
   plot1 <- ggplot() + geom_density(data = Seurat_obj@meta.data, mapping = aes(x = percent.mito, fill = ID), alpha = 0.2) +
@@ -278,13 +288,15 @@ Generate_QC_Plots_3 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
 #' 
 Generate_QC_Plots_4 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis_Name, File_Name, palette) {
   
+  set.seed(1234) # Make code reproducible 
+  
   # Create directory to save figures to
   dir.create(paste(Project_Path, "/", Analysis_Name, sep = ""))
   
   # Open pdf path/name to write figures to 
   #pdf(file = paste(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".pdf", sep = ""), width = length(unique(Seurat_obj$ID))*12, height = 12)
   fname <- paste0(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".png", sep = "")
-  print(fname) 
+  #print(fname) 
   
   # Make scatter plots of UMI count vs mitochondrial UMI expression percent colored by sample ID and colored by cell density
   plot1 <- FeatureScatter(object = Seurat_obj, feature1 = "nCount_RNA", feature2 = "percent.mito", group.by = "ID") + 
@@ -332,13 +344,15 @@ Generate_QC_Plots_4 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
 #' 
 Generate_QC_Plots_5 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis_Name, File_Name, palette) {
   
+  set.seed(1234) # Make code reproducible 
+  
   # Create directory to save figures to
   dir.create(paste(Project_Path, "/", Analysis_Name, sep = ""))
   
   # Open pdf path/name to write figures to 
   # pdf(file = paste(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".pdf", sep = ""), width = length(unique(Seurat_obj$ID))*12, height = 12)
   fname <- paste0(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".png", sep = "")
-  print(fname) 
+  #print(fname) 
   
   # Make scatter plots of UMI count vs gene count colored by sample ID and colored by cell density
   plot1 <- FeatureScatter(object = Seurat_obj, feature1 = "nCount_RNA", feature2 = "nFeature_RNA", group.by = "ID") + 
@@ -392,7 +406,7 @@ Generate_QC_Plots_6 <- function(Seurat_obj, Project_Path, Figure_Total, Analysis
   # Open pdf path/name to write figures to 
   # pdf(file = paste(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".pdf", sep = ""), width = length(unique(Seurat_obj$ID))*12, height = 12)
   fname <- paste0(Project_Path, "/", Analysis_Name, "/", Analysis_Name, "_", Figure_Total, "_", File_Name, ".png", sep = "")
-  print(fname) 
+  #print(fname) 
   
   # Make bar plot of cell count after filtering, split and colored by sample ID, relative to total cell count after filtering
   plot_row <- ggplot() + geom_bar(data = Seurat_obj@meta.data, mapping = aes(x = ID, fill = ID), width = 0.5, alpha = 0.4) + 

@@ -26,6 +26,7 @@ yaml <- read_yaml(configFile)
 root_dir <- yaml$root_dir
 PROJECT_NAME <- yaml$PROJECT_NAME
 method <- yaml$method
+assay = yaml$assay_filter_object
 
 # Set up directories and paths to root_dir and analysis_dir
 analysis_dir <- file.path(root_dir, "analyses", "cell-types-annotation") 
@@ -262,10 +263,22 @@ if (method == "all"){
   
 #############################################################################
 # Save output files #########################
+
+# Identify columns with a '.1' suffix
+cols_to_remove <- grep("\\.1$", colnames(seurat_obj@meta.data), value = TRUE)
+
+# Exclude columns that match the specific patterns (e.g., {assay}_snn_res.0.1, {assay}_snn_res.1, {assay}_snn_res.10)
+cols_to_remove <- cols_to_remove[!grepl(glue::glue("^{assay}_snn_res\\.0\\.1$"), cols_to_remove) & 
+                                   !grepl(glue::glue("^{assay}_snn_res\\.1$"), cols_to_remove) &
+                                   !grepl(glue::glue("^{assay}_snn_res\\.10$"), cols_to_remove)]
+
+# Remove the columns
+seurat_obj@meta.data <- seurat_obj@meta.data[, !colnames(seurat_obj@meta.data) %in% cols_to_remove]
+#head(seurat_obj@meta.data)
+
 #reduction_names <- c(paste0("umap")) # Export the reductions to Seurat
 #metadata <- as_data_frame_seurat(seurat_obj, reduction = reduction_names, metadata = TRUE)
-metadata <- seurat_obj@meta.data
-
+metadata <- as_data_frame_seurat(seurat_obj, metadata = TRUE)
 write_tsv(metadata, file = paste0(results_dir, "/", "metadata", ".tsv")) # Save metadata
 saveRDS(seurat_obj, file = paste0(results_dir, "/", "seurat_obj_cell_types_annotations_all.rds"))
 ################################################################################################################   

@@ -44,6 +44,11 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
                                 # number of clusters to keep
                                 keep_clusters = yaml$keep_clusters_contamination_module, 
                                 
+                                grouping = yaml$grouping,
+                                min_genes = yaml$min_genes, 
+                                min_count = yaml$min_count,
+                                mtDNA_pct_default = yaml$mtDNA_pct_default,
+                                
                                 # process_seurat
                                 nfeatures_value = yaml$nfeatures_value,
                                 genome_name = yaml$genome_name_upstream,

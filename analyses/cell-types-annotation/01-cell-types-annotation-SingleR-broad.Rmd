@@ -230,7 +230,7 @@ We will check and compare the pruned labels and the initial labels by summarizin
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- summary_table
 cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
-print(knitr::kable(tables1, caption = "Broad cell type annotations before vs after label pruning"))
+print(knitr::kable(tables1, align = "lcccc", caption = "Broad cell type annotations before vs after label pruning"))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
 ```
@@ -275,7 +275,7 @@ We will summarize the identified broad cell type annotations to be removed.
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- summary_table
 cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
-print(knitr::kable(tables1, caption = "Broad cell type annotations to be removed"))
+print(knitr::kable(tables1, align = "lcccc", caption = "Broad cell type annotations to be removed"))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
 ```

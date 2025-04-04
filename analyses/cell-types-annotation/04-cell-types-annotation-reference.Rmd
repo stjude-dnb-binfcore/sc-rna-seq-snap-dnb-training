@@ -255,7 +255,7 @@ We will check the number of cells by summarizing the identified cell type annota
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- summary_table
 cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
-print(knitr::kable(tables1, caption = "Reference cell type annotations"))
+print(knitr::kable(tables1, align = "lcccc", caption = "Reference cell type annotations"))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
 ```
@@ -270,7 +270,7 @@ tables1 <- seurat_obj.query@meta.data %>%
   dplyr::count(predicted.id, ID) %>%
   pivot_wider(names_from = ID, values_from = n, values_fill = list(n = 0))
 cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
-print(knitr::kable(tables1, caption = "Reference cell type annotations per ID"))
+print(knitr::kable(tables1, align = "lcccc", caption = "Reference cell type annotations per ID"))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
 ```

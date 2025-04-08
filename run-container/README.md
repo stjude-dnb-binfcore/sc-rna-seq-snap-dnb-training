@@ -6,22 +6,22 @@ We provide a Dockerfile and Definition file that include all tools, packages, an
 ## Table of Contents
 
 1. [Running the Container on HPC](#running-the-container-on-hpc)
-   - [Start an Interactive Session](#start-an-interactive-session)
-   - [Load the Singularity Module](#load-the-singularity-module)
-   - [Pull the Singularity Container](#pull-the-singularity-container)
-   - [Start the Singularity Container](#start-the-singularity-container)
-     - [Running Analysis Modules via LSF](#running-analysis-modules-via-lsf)
-     - [Running from the Terminal](#running-from-the-terminal)
-     - [Running from RStudio](#running-from-rstudio)
-     - [Fixing Issues with RStudio Server](#fixing-issues-with-rstudio-server)
-   - [Building the Container (If Needed)](#building-the-container-if-needed)
+   - [1. Start an Interactive Session](#1-start-an-interactive-session)
+   - [2. Load the Singularity Module](#2-load-the-singularity-module)
+   - [3. Pull the Singularity Container](#3-pull-the-singularity-container)
+   - [4. Start the Singularity Container](#4-start-the-singularity-container)
+     - [a. Running Analysis Modules via LSF](#a-running-analysis-modules-via-lsf)
+     - [b. Running from the Terminal](#b-running-from-the-terminal)
+     - [c. Running from RStudio](#c-running-from-rstudio)
+     - [d. Fixing Issues with RStudio Server](#d-fixing-issues-with-rstudio-server)
+   - [5. Building the Container (If Needed)](#building-the-container-if-needed)
    
 2. [Running the Container Outside HPC (Docker)](#running-the-container-outside-hpc-docker)
 
 
 ## Running the Container on HPC
 
-### Start an Interactive Session
+### 1. Start an Interactive Session
 
 Open an interactive node on the HPC and adjust memory/resources as needed:
 
@@ -29,7 +29,7 @@ Open an interactive node on the HPC and adjust memory/resources as needed:
 bsub -P hpcf_interactive -J hpcf_interactive -n 2 -q standard -R "rusage[mem=16G]" -Is "bash"
 ```
 
-### Load the Singularity Module
+### 2. Load the Singularity Module
 
 Please note that a version of Singularity is installed by default on all the cluster nodes at St Jude HPC. Otherwise the user needs to ensure and load Singularity module by running the following on HPC:
 
@@ -37,7 +37,7 @@ Please note that a version of Singularity is installed by default on all the clu
 module load singularity/4.1.1
 ```
 
-### Pull the Singularity Container
+### 3. Pull the Singularity Container
 
 1. Pull the singularity container from the `sc-rna-seq-snap` root_dir
 
@@ -46,14 +46,14 @@ singularity pull docker://achronistjude/rstudio_4.4.0_seurat_4.4.0:latest
 ```
 
 
-### Start the Singularity Container
+### 4. Start the Singularity Container
 
-a. Running Analysis Modules via LSF
+#### a. Running Analysis Modules via LSF
 
 All analysis modules (except for `.analyses/cellranger-analysis`) are designed to be run while executing the container. User only needs to run the lsf script as described in the `README.md` files in each analysis module.
 
 
-b. Running from the Terminal
+#### b. Running from the Terminal
 
 User can run analysis module while on interactive node after executing the container:
 
@@ -68,8 +68,7 @@ cd ./sc-rna-seq-snap/analyses/upstream-analysis
 bash run-upstream-analysis.sh
 ```
 
-
-c. Running from RStudio
+#### c. Running from RStudio
 
 User can also run analyses via Rstudio OnDemand after executing the container:
 
@@ -82,7 +81,7 @@ The `run-rstudio.sh` is running at `IP_ADDR:PORT`. When RStudio launches, please
 Again, the user can navigate to their module of interest and explore/run their analyses.
 
 
-d. Fixing Issues with RStudio Server
+#### d. Fixing Issues with RStudio Server
 
 If you encounter issues during this step related to RStudio Server and specifically to an invalid secure cookie error. This might be an issue with how the secure cookie is being handled during an HTTP request. In this case, please check if the following directories have been generated and if so, remove them:
 
@@ -96,15 +95,16 @@ rm -r rstudio-container-tmp/
 These folders cache history and user info. Then, kill the interactive session, start a new one, and hopefully, it works! 🎉
 
 
-### Building the Container (If Needed)
+### 5. Building the Container (If Needed)
 
 If the user does not have access to the `rstudio_4.4.0_seurat_4.4.0_latest.sif`, they can build their own. 
 User can rename the `.sif` file, if they want to (not needed). Run the following from the `./run-container` dir:
+
 ```
 singularity build rstudio_4.4.0_seurat_4.4.0_latest.sif rstudio_r_4.4.0_seurat_4.4.0.def
 ```
 
-Then, the user can start the container as explained in the step (3).
+Then, the user can start the container as explained in the step (4).
 
 
 ## Running the Container Outside HPC (Docker)

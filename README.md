@@ -17,7 +17,7 @@ Snap is a comprehensive suite of tools and workflows for analyzing single-cell a
 
 A pre-built [Docker image](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/blob/main/run-container/README.md) is available, containing all the necessary tools, packages, and dependencies to seamlessly run the code and analysis modules. 
 
-Snap is an initiative of the [Bioinformatics Core]((https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html) at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital.
+Snap is an initiative of the [Bioinformatics Core](https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html) at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital.
 
 
 ## Tutorial on how to use the single cell RNA seq Snap pipeline

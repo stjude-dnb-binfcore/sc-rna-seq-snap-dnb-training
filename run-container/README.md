@@ -6,22 +6,22 @@ We have provided a Dockerfile and Definition file that include all tools, packag
 ## Table of Contents
 
 1. [Running the Container on HPC](#running-the-container-on-hpc)
-     - [1. Start an Interactive Session](#1-start-an-interactive-session)
-     - [2. Load the Singularity Module](#2-load-the-singularity-module)
-     - [3. Pull the Singularity Container](#3-pull-the-singularity-container)
-     - [4. Start the Singularity Container](#4-start-the-singularity-container)
+     - [Start an Interactive Session](#start-an-interactive-session)
+     - [Load the Singularity Module](#load-the-singularity-module)
+     - [Pull the Singularity Container](#pull-the-singularity-container)
+     - [Start the Singularity Container](#start-the-singularity-container)
        - [a. Running Analysis Modules via LSF](#a-running-analysis-modules-via-lsf)
        - [b. Running from the Terminal](#b-running-from-the-terminal)
        - [c. Running from RStudio](#c-running-from-rstudio)
-     - [5. Fixing Issues with RStudio Server](#5-fixing-issues-with-rstudio-server)
+     - [ixing Issues with RStudio Server](#fixing-issues-with-rstudio-server)
    - [Building the Container (If Needed)](#building-the-container-if-needed)
    
 2. [Running the Container Outside HPC (Docker)](#running-the-container-outside-hpc-docker)
-   - [1. Pull the Docker Container](#1-pull-the-docker-container)
-   - [2. Start the Docker Container](#2-start-the-docker-container)
+   - [Pull the Docker Container](#pull-the-docker-container)
+   - [Start the Docker Container](#start-the-docker-container)
 
 
-## Running the Container on HPC in an interactive session on HPC
+## Running the Container on HPC
 
 ### Start an Interactive Session
 

@@ -13,16 +13,17 @@
 
 # Single cell RNA Seq Snap workflow (ScRNASeqSnap)
 
-This repository contains tools and workflows for analyzing single cell and single nuclei RNA (sc/snRNA) data from 10X sequencing technology. Analysis modules in the main branch are ready to be used. 
+This repository contains tools and workflows for analyzing single cell and single nuclei RNA (sc/snRNA) data from 10X sequencing technology. 
 
-There is a Docker image that contains all tools, packages, and dependencies necessary to run the code and analyses modules in the `sc-rna-seq-snap` repository. For more information on how to run the container and package versioning, please see [./run-container/README.md](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/blob/main/run-container/README.md).
+A pre-built [Docker image](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/blob/main/run-container/README.md) is available, containing all the necessary tools, packages, and dependencies to seamlessly run the code and analysis modules. 
 
-The `sc-rna-seq-snap` repository is an initiative of the [Bioinformatics Core at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital](https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html).
+
+The `sc-rna-seq-snap` repository is an initiative of the [Bioinformatics Core]((https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html)) at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital.
 
 
 ## Tutorial on how to use the single cell RNA seq Snap pipeline
 
-For more information about guidelines and best practices for effectively using the [single cell RNA seq Snap pipeline](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap), please see the [Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
+For more information about guidelines and best practices for effectively using the `sc-rna-seq-snap` pipeline, please see the [Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
 
 
 ## To access the code in this repository:

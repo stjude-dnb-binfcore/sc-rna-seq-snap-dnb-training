@@ -1,4 +1,4 @@
-# How to use analysis modules in the Single cell RNA Seq Snap workflow (ScRNASeqSnap)
+# Using Analysis Modules in scRNA-Seq Snap Workflow
 
 This repository contains a collection of analysis modules designed to process and analyze single cell and single nuclei RNA (sc/snRNA) data from 10X sequencing technology. 
 

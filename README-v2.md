@@ -73,9 +73,11 @@ git clone https://github.com/<FORK_NAME>.git
 #### Running the Code
 
 1. Configure Your Parameters
+
 Replace the project_parameters.Config.yaml file with your own file paths and parameters.
 
 2. Navigate to an Analysis Module
+
 Change to the relevant directory and run the desired shell script:
 
 ```

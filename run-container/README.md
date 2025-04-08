@@ -6,13 +6,13 @@ We provide a Dockerfile and Definition file that include all tools, packages, an
 ## Table of Contents
 
 1. [Running the Container on HPC](#running-the-container-on-hpc)
-     - [Start an Interactive Session](#start-an-interactive-session)
-     - [Load the Singularity Module](#load-the-singularity-module)
-     - [Pull the Singularity Container](#pull-the-singularity-container)
-     - [Start the Singularity Container](#start-the-singularity-container)
-       - [a.Running Analysis Modules via LSF](#a-running-analysis-modules-via-lsf)
-       - [b.Running from the Terminal](#b-running-from-the-terminal)
-       - [c.Running from RStudio](#c-running-from-rstudio)
+   - [Start an Interactive Session](#start-an-interactive-session)
+   - [Load the Singularity Module](#load-the-singularity-module)
+   - [Pull the Singularity Container](#pull-the-singularity-container)
+   - [Start the Singularity Container](#start-the-singularity-container)
+     - [Running Analysis Modules via LSF](#running-analysis-modules-via-lsf)
+     - [Running from the Terminal](#running-from-the-terminal)
+     - [Running from RStudio](#running-from-rstudio)
      - [Fixing Issues with RStudio Server](#fixing-issues-with-rstudio-server)
    - [Building the Container (If Needed)](#building-the-container-if-needed)
    

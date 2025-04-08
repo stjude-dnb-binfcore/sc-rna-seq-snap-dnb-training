@@ -40,6 +40,7 @@ params:
   future_globals_value: '.'
   n_value: '.'
   assay: '.'
+  genome_name: '.'
   root_dir: './'
   PROJECT_NAME: '.'
   PI_NAME: '.'
@@ -216,13 +217,13 @@ if (genome_name %in% c("GRCh38", "GRCh38ANDGRCm39")) {  # Check if genome_name i
            species = case_when(grepl("GRCm39", gene) ~ "mouse",  # If 'gene' contains "GRCm39", set 'species' to "mouse"
                                TRUE ~ species))  # Else, keep the value as 'human'
   
-#  } else if (genome_name == "GRCh38_GFP_tdTomato") {  # Check if genome_name is exactly "GRCh38_GFP_tdTomato"
+  } else if (genome_name == "GRCh38_GFP_tdTomato") {  # Check if genome_name is exactly "GRCh38_GFP_tdTomato"
     
-#    all.markers <- all.markers %>%
+    all.markers <- all.markers %>%
         # Grepl the non-human cells
-#        mutate(species = "human",  # Initialize 'species' as 'human'
-#           species = case_when(grepl("GFP_tdTomato", gene) ~ "tomato",   # If 'gene' contains "GFP_tdTomato", set 'species' to "tomato"
-#                               TRUE ~ species))  # Else, keep the value as 'human'
+        mutate(species = "human",  # Initialize 'species' as 'human'
+           species = case_when(grepl("GFP_tdTomato", gene) ~ "tomato",   # If 'gene' contains "GFP_tdTomato", set 'species' to "tomato"
+                               TRUE ~ species))  # Else, keep the value as 'human'
     
     } else if (genome_name %in% c("GRCm39")) {  # Check if genome_name is "GRCm39" 
       all.markers <- all.markers %>%

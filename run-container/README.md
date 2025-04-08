@@ -5,8 +5,7 @@ We have provided a Dockerfile and Definition file that include all tools, packag
 
 ## Table of Contents
 
-1. [Running the Docker Container for scRNA-seq-snap Pipeline](#running-the-docker-container-for-the-scrna-seq-snap-pipeline)
-   - [Running the Container on HPC](#running-the-container-on-hpc)
+1. [Running the Container on HPC](#running-the-container-on-hpc)
      - [1. Start an Interactive Session](#1-start-an-interactive-session)
      - [2. Load the Singularity Module](#2-load-the-singularity-module)
      - [3. Pull the Singularity Container](#3-pull-the-singularity-container)

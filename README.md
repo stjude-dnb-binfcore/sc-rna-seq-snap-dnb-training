@@ -15,16 +15,19 @@
 
 Snap is a comprehensive suite of tools and workflows for analyzing single-cell and single-nucleus RNA (sc/snRNA) data from 10X Genomics sequencing technology supporting human, mouse, and dual genome cohorts.
 
-A pre-built [Docker image](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/blob/main/run-container/README.md) is available, containing all the necessary tools, packages, and dependencies to seamlessly run the code and analysis modules. 
-
 Snap is an initiative of the [Bioinformatics Core](https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html) at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital.
 
+## Getting Started
 
-## Tutorial on how to use the single cell RNA seq Snap pipeline
+### Installation
 
-For guidelines and best practices on effectively using the sc-rna-seq-snap pipeline, refer to the [Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
+To begin using the Snap pipeline, follow the instructions below to set up the environment and run the code. A pre-built [Docker image](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/blob/main/run-container/README.md) is available for easy setup, containing all the necessary tools, packages, and dependencies to seamlessly run the code and analysis modules. 
 
-For more detailed information on accessing the code, running it, or requesting memory from the HPCF cluster, check our [wiki page](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/wiki).
+### Tutorial and Documentation
+
+For a step-by-step guide on how to access the code, run the analysis, and request memory from the HPCF cluster, refer to the [wiki page](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/wiki).
+
+For best practices and detailed guidelines on effectively using the Snap pipeline, please review the [Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
 
 
 ### Below is the main directory structure listing the analyses and data files used in this repository

@@ -14,7 +14,7 @@ We provide a Dockerfile and Definition file that include all tools, packages, an
      - [b. Running from the Terminal](#b-running-from-the-terminal)
      - [c. Running from RStudio](#c-running-from-rstudio)
      - [d. Fixing Issues with RStudio Server](#d-fixing-issues-with-rstudio-server)
-   - [5. Building the Container (If Needed)](#building-the-container-if-needed)
+   - [5. Building the Container (If Needed)](#5-building-the-container-if-needed)
    
 2. [Running the Container Outside HPC (Docker)](#running-the-container-outside-hpc-docker)
 

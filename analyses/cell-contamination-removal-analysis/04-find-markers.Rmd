@@ -222,7 +222,7 @@ if (genome_name %in% c("GRCh38", "GRCh38ANDGRCm39")) {  # Check if genome_name i
     all.markers <- all.markers %>%
         # Grepl the non-human cells
         mutate(species = "human",  # Initialize 'species' as 'human'
-           species = case_when(grepl("GFP_tdTomato", gene) ~ "tomato",   # If 'gene' contains "GFP_tdTomato", set 'species' to "tomato"
+               species = case_when(grepl("GFP|tdTomato", gene) ~ "tomato",   # If 'gene' contains "GFP", set 'species' to "tomato"
                                TRUE ~ species))  # Else, keep the value as 'human'
     
     } else if (genome_name %in% c("GRCm39")) {  # Check if genome_name is "GRCm39" 

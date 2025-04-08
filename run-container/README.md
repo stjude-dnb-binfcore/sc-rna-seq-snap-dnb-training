@@ -1,6 +1,6 @@
 # Running the Container for scRNA-Seq Snap Workflow
 
-We have provided a Dockerfile and Definition file that include all tools, packages, and dependencies necessary for running the sc-rna-seq-snap analysis modules. These are customized for `Rstudio/R v4.4.0` and `Seurat v4.4.0`.
+We provide a Dockerfile and Definition file that include all tools, packages, and dependencies necessary for running the sc-rna-seq-snap analysis modules. These are customized for `Rstudio/R v4.4.0` and `Seurat v4.4.0`.
 
 
 ## Table of Contents
@@ -10,10 +10,10 @@ We have provided a Dockerfile and Definition file that include all tools, packag
      - [Load the Singularity Module](#load-the-singularity-module)
      - [Pull the Singularity Container](#pull-the-singularity-container)
      - [Start the Singularity Container](#start-the-singularity-container)
-       - [a. Running Analysis Modules via LSF](#a-running-analysis-modules-via-lsf)
-       - [b. Running from the Terminal](#b-running-from-the-terminal)
-       - [c. Running from RStudio](#c-running-from-rstudio)
-     - [ixing Issues with RStudio Server](#fixing-issues-with-rstudio-server)
+       - [a.Running Analysis Modules via LSF](#a-running-analysis-modules-via-lsf)
+       - [b.Running from the Terminal](#b-running-from-the-terminal)
+       - [c.Running from RStudio](#c-running-from-rstudio)
+     - [Fixing Issues with RStudio Server](#fixing-issues-with-rstudio-server)
    - [Building the Container (If Needed)](#building-the-container-if-needed)
    
 2. [Running the Container Outside HPC (Docker)](#running-the-container-outside-hpc-docker)

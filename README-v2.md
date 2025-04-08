@@ -25,10 +25,7 @@ Snap is an initiative of the [Bioinformatics Core](https://www.stjude.org/resear
 For guidelines and best practices on effectively using the sc-rna-seq-snap pipeline, refer to the [Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
 
 
-
-## To access the code in this repository:
-
-### Fork 
+### To access the code in this repository:
 
 1. Fork the repository on the preferred GitHub account from the main page of the `stjude-dnb-binfcore/sc-rna-seq-snap` by clicking the “Fork” button
 
@@ -51,7 +48,7 @@ For guidelines and best practices on effectively using the sc-rna-seq-snap pipel
 git clone https://github.com/<FORK_NAME>.git
 ```
 
-## To run the code in this repository:
+### To run the code in this repository:
 
 1. Replace the `project_parameters.Config.yaml` with your file paths and parameters.
 

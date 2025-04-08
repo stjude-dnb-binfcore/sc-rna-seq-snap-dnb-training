@@ -13,17 +13,16 @@
 
 # Single cell RNA Seq Snap workflow (ScRNASeqSnap)
 
-This repository contains tools and workflows for analyzing single cell and single nuclei RNA (sc/snRNA) data from 10X sequencing technology. 
+Snap is a comprehensive suite of tools and workflows for analyzing single-cell and single-nucleus RNA (sc/snRNA) data from 10X Genomics sequencing technology supporting human, mouse, and dual genome cohorts.
 
 A pre-built [Docker image](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/blob/main/run-container/README.md) is available, containing all the necessary tools, packages, and dependencies to seamlessly run the code and analysis modules. 
 
-
-The `sc-rna-seq-snap` repository is an initiative of the [Bioinformatics Core]((https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html) at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital.
+Snap is an initiative of the [Bioinformatics Core]((https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html) at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital.
 
 
 ## Tutorial on how to use the single cell RNA seq Snap pipeline
 
-For guidelines and best practices on effectively using the sc-rna-seq-snap pipeline, refer to the T[Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
+For guidelines and best practices on effectively using the sc-rna-seq-snap pipeline, refer to the [Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
 
 For more detailed information on accessing the code, running it, or requesting memory from the HPCF cluster, check our [wiki page](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/wiki).
 

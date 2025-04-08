@@ -15,17 +15,21 @@
 
 Snap is a comprehensive suite of tools and workflows for analyzing single-cell and single-nucleus RNA (sc/snRNA) data from 10X Genomics sequencing technology supporting human, mouse, and dual genome cohorts.
 
-A pre-built [Docker image](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/blob/main/run-container/README.md) is available, containing all the necessary tools, packages, and dependencies to seamlessly run the code and analysis modules. 
-
 Snap is an initiative of the [Bioinformatics Core](https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html) at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital.
 
 
-## Tutorial on how to use the single cell RNA seq Snap pipeline
+## Getting Started
 
-For guidelines and best practices on effectively using the sc-rna-seq-snap pipeline, refer to the [Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
+### Installation
+
+To begin using the Snap pipeline, follow the instructions below to set up the environment and run the code. A pre-built [Docker image](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/blob/main/run-container/README.md) is available for easy setup, containing all the necessary tools, packages, and dependencies to seamlessly run the code and analysis modules. 
+
+### Tutorial and Documentation
+
+For best practices and detailed guidelines on effectively using the Snap pipeline, please review the [Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
 
 
-### To access the code in this repository:
+#### To access the code in this repository:
 
 1. Fork the repository on the preferred GitHub account from the main page of the `stjude-dnb-binfcore/sc-rna-seq-snap` by clicking the “Fork” button
 
@@ -48,7 +52,7 @@ For guidelines and best practices on effectively using the sc-rna-seq-snap pipel
 git clone https://github.com/<FORK_NAME>.git
 ```
 
-### To run the code in this repository:
+#### To run the code in this repository:
 
 1. Replace the `project_parameters.Config.yaml` with your file paths and parameters.
 
@@ -79,7 +83,7 @@ git config pull.rebase false
 git pull
 ```
 
-## To request memory from the HPCF cluster
+#### To request memory from the HPCF cluster
 
 While we have provided estimates for the computational resources required, users may need to adjust memory settings based on the cohort size and specific analysis requirements. For reference, the estimated resources are for 8 samples with approximately 50,000 cells in total. 
 

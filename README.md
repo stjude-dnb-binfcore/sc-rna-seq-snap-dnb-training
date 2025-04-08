@@ -13,9 +13,7 @@
 
 # Single cell RNA Seq Snap workflow (ScRNASeqSnap)
 
-Snap is a comprehensive suite of tools and workflows for analyzing single-cell and single-nucleus RNA (sc/snRNA) data from 10X Genomics sequencing technology supporting human, mouse, and dual genome cohorts.
-
-Snap is an initiative of the [Bioinformatics Core](https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html) at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital.
+Snap is a comprehensive suite of tools and workflows for analyzing single-cell and single-nucleus RNA (sc/snRNA) data from 10X Genomics sequencing technology supporting human, mouse, and dual genome cohorts. Snap is an initiative of the [Bioinformatics Core](https://www.stjude.org/research/departments/developmental-neurobiology/shared-resources/bioinformatic-core.html) at the Department of Developmental Neurobiology at the St. Jude Children's Research Hospital.
 
 ## Getting Started
 

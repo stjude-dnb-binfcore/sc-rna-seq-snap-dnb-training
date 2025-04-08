@@ -17,8 +17,6 @@ We provide a Dockerfile and Definition file that include all tools, packages, an
    - [Building the Container (If Needed)](#building-the-container-if-needed)
    
 2. [Running the Container Outside HPC (Docker)](#running-the-container-outside-hpc-docker)
-   - [Pull the Docker Container](#pull-the-docker-container)
-   - [Start the Docker Container](#start-the-docker-container)
 
 
 ## Running the Container on HPC
@@ -117,9 +115,7 @@ Then, the user can start the container as explained in the step (3).
 docker pull docker://achroni/rstudio_4.4.0_seurat_4.4.0:latest
 ```
 
-2. Start the Docker Container
-
-Run the Docker container from the terminal:
+2. Start and Run the Docker Container from the terminal:
 
 ```
 docker run --platform linux/amd64 --name review -d -e PASSWORD=ANYTHING -p 8787:8787 -v $PWD:/home/rstudio/sc-rna-seq-snap docker://achroni/rstudio_4.4.0_seurat_4.4.0:latest

@@ -15,13 +15,10 @@ PIPELINE: "Standard sc-/sn-RNA-Seq Analysis in 10X Genomics data"
 START_DATE: "10/15/2024"
 COMPLETION_DATE: "ONGOING"
 
-
 # the following parameters are set up as default values and/or are specific for the following modules: 
 # `./analyses/fastqc-analysis`
-# path to the fastqc files for the `fastqc-analysis` module with format: `path1/*R2*.fastq.gz`
-fastqc_dir: 
-  - /path1
-  #- /path2
+# FASTQ paths to the fastqc files with format: `path1/*R2*.fastq.gz` are extracted from the `metadata_dir`.
+# No need to manually define variables
 
 # `./analyses/cellranger-analysis`
 genome_reference_path: "./" # path to genome reference to be used for the `cellranger-analysis` module

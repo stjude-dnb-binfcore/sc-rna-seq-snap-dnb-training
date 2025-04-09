@@ -27,6 +27,7 @@ fastqc_dir:
 genome_reference_path: "./" # path to genome reference to be used for the `cellranger-analysis` module
 cellranger_parameters: "DefaultParameters" # Options: "DefaultParameters", "ForcedCells8000Parameters", or else
 genome_name_cellranger: "GRCm39" # define the genome of preference for dual genomes. In case for single genomes, please use the same as used for `genome_name`.
+create_bam_value: "true" # Options: "true" (default) or "false". For non-human experiments, we recommend setting this to 'false' to reduce memory usage per project.
 
 # `./analyses/upstream-analysis`
 print_pdf_seurat_multiple_samples: "YES" # Options: "YES" (default ALWAYS), for `02B_run_seurat_qc_multiple_samples.R`

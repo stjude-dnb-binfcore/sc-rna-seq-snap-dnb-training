@@ -76,6 +76,8 @@ Here, the user can select to implement the following strategies to remove low qu
    - `step 1`: Filter cells with low content of genes expressed and remove mtDNA from each library (as defined in the `params`).
    - `step 2`: `Find_Outlier_Thershold` function. This is an optional step (as defined in the `params`). 
 
+Moreover, only libraries with more than 500 cells will be kepted for merging and integration purposes. We are following CellRanger guidelines as posted [here](https://www.10xgenomics.com/analysis-guides/common-considerations-for-quality-control-filters-for-single-cell-rna-seq-data). This is because in Cell Ranger, UMI count is capped at 500 in the second step of cell calling - barcodes with less than 500 UMI counts will not be regarded as cells.
+  
 
 #### Post alignment/cell quality filtering parameters
 We recommend that the user use the following parameters for initial QC, and then adjust accordingly if necessary:

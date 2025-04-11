@@ -87,7 +87,7 @@ assay_clustering_module: "RNA"  # Options: "RNA" (default) or "RNA_SoupX"
 # If no list is provided, then it will calculate the clusters by the default list.
 # We recommend to run first default and then explore a customized list of resolutions (if these are not provided in the list already).
 # In the latter case, user needs to comment in/out the `resolution_list_default_clustering_module` accordingly.
-resolution_list_clustering_module: [0.1, 0.5, 1] # This can be a single or multiple resolutions or NULL, e.g., NULL; [0.5]; [0.1, 0.5, 1]
+resolution_list_clustering_module: NULL # This can be a single or multiple resolutions or NULL (default), e.g., NULL; [0.5]; [0.1, 0.5, 1]
 resolution_list_default_clustering_module: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 algorithm_value_clustering_module: 4 # Leiden algorthim (default)
 

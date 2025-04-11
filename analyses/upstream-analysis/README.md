@@ -76,6 +76,11 @@ Here, the user can select to implement the following strategies to remove low qu
    - `step 1`: Filter cells with low content of genes expressed and remove mtDNA from each library (as defined in the `params`).
    - `step 2`: `Find_Outlier_Thershold` function. This is an optional step (as defined in the `params`). 
 
+Moreover, only libraries with more than 500 cells will be kept for merging and integration purposes. This value is a commonly used threshold for many single-cell RNA-seq studies as a minimum for obtaining reliable and meaningful analysis. 
+- Statistical Power: At least 500 cells are typically needed to ensure the analysis has enough statistical power to detect meaningful biological signals.
+- Cell Diversity: With fewer cells, you may not capture sufficient cellular diversity, leading to incomplete or biased results.
+- Clustering: Some clustering algorithms in single-cell RNA-seq require a minimum number of cells to create robust, meaningful clusters.
+
 
 #### Post alignment/cell quality filtering parameters
 We recommend that the user use the following parameters for initial QC, and then adjust accordingly if necessary:

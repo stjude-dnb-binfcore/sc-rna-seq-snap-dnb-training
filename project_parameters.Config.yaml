@@ -1,8 +1,8 @@
 # the following parameters are the same across the project and might be needed in more than one module #
 root_dir: "./sc-rna-seq-snap" # path to the main dir of the project where GitHub repo lives
 data_dir: "./sc-rna-seq-snap/analyses/cellranger-analysis/results/02_cellranger_count/DefaultParameters" # Options: "DefaultParameters", "ForcedCells8000Parameters", or else. Path to data dir of the project with CellRanger output results.
-metadata_dir: "./project-metadata" # path to metadata dir of the project
-genome_name: "GRCm39" # define genome reference and versioning
+metadata_dir: "./project-metadata" # path to metadata dir of the project. # File name always named as: `project-metadata.tsv`.
+genome_name: "GRCm39" # define genome reference and versioning. Options: (1) human: "GRCh38"; (2) mouse: "GRCm39" and "mm10"; and (3) dual index genomes: "GRCh38ANDGRCm39", "GRCh38_mm10", and "GRCh38_GFP_tdTomato".
 PROJECT_NAME: "PROJECT_NAME"
 PI_NAME: "PI_NAME"
 TASK_ID: "NA"
@@ -15,13 +15,10 @@ PIPELINE: "Standard sc-/sn-RNA-Seq Analysis in 10X Genomics data"
 START_DATE: "10/15/2024"
 COMPLETION_DATE: "ONGOING"
 
-
 # the following parameters are set up as default values and/or are specific for the following modules: 
 # `./analyses/fastqc-analysis`
-# path to the fastqc files for the `fastqc-analysis` module with format: `path1/*R2*.fastq.gz`
-fastqc_dir: 
-  - /path1
-  #- /path2
+# FASTQ paths to the fastqc files with format: `path1/*R2*.fastq.gz` are extracted from the `metadata_dir`.
+# No need to manually define variables
 
 # `./analyses/cellranger-analysis`
 genome_reference_path: "./" # path to genome reference to be used for the `cellranger-analysis` module
@@ -52,7 +49,8 @@ num_dim_seurat_qc: 30 # number of PCs to use in UMAP. For multiple variations, u
 num_neighbors_seurat_qc: 30 # number of neighbors to use in UMAP. For multiple variations, use: [10, 20, 30]
 soup_fraction_value_default: 0.05 # set rho default value to use if estimated rho is > 20%
 assay_filter_object: "RNA"  # Options: "RNA" (default) or "RNA_SoupX"
-genome_name_upstream: "GRCm39" # Options for the `Genome_Specific_Cell_Cycle_Scoring` function: "GRCh38", "hg19", "mm10", "Dualhg19", "DualGRCh38", "Dualmm10", "GRCm39" and DualGRCm39".
+genome_name_upstream: "GRCm39" # Options for the `Genome_Specific_Cell_Cycle_Scoring` function:  Options: (1) human: "GRCh38"; (2) mouse: "GRCm39", "hg19", and "mm10"; and (3) dual index genomes: "DualGRCh38", "DualGRCm39", "Dualmm10", and "Dualhg19".
+
 
 num_dim_filter_object: 30 # set one value for `04_run_filter_object.Rmd`
 num_neighbors_filter_object: 30 # set one value for `04_run_filter_object.Rmd`
@@ -89,7 +87,7 @@ assay_clustering_module: "RNA"  # Options: "RNA" (default) or "RNA_SoupX"
 # If no list is provided, then it will calculate the clusters by the default list.
 # We recommend to run first default and then explore a customized list of resolutions (if these are not provided in the list already).
 # In the latter case, user needs to comment in/out the `resolution_list_default_clustering_module` accordingly.
-resolution_list_clustering_module: [0.1, 0.5, 1] # This can be a single or multiple resolutions or NULL, e.g., NULL; [0.5]; [0.1, 0.5, 1]
+resolution_list_clustering_module: NULL # This can be a single or multiple resolutions or NULL (default), e.g., NULL; [0.5]; [0.1, 0.5, 1]
 resolution_list_default_clustering_module: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 algorithm_value_clustering_module: 4 # Leiden algorthim (default)
 
@@ -131,7 +129,7 @@ annotations_filename_rshiny_app: "seurat_obj_cell_types_annotations_all.rds" # O
 # list of samples to run
 # you will need to comment out the list from the fastqc_dir, if available
 sample: 
-  - sample1
+  #- sample1
   #- sample2
 
 cell_type_label_numbat: "singler.broad" # Options: "singler.broad", "singler.fine", and "predicted.cell.signature.ident" as defined in the `./analyses/cell-types-annotation` module

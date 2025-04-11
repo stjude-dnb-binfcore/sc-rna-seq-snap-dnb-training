@@ -229,8 +229,16 @@ First, we will merge the `seurat_obj.rds` objects from all samples in the projec
 seurat_obj_list <- list()
 
 for (i in seq_along(sample_name)) {
-  cat("Reading in data", sample_name[i], "\n")
-  seurat_obj_list[i] <- readRDS(seurat_results_file[i])}
+  # Check if the file exists
+  if (file.exists(seurat_results_file[i])) {
+    cat("Reading in data for sample:", sample_name[i], "\n")
+    seurat_obj_list[i] <- readRDS(seurat_results_file[i])
+  } else {
+    cat("File does not exist for sample:", sample_name[i], "\n")
+  }
+}
+
+# Print the list of Seurat objects
 print(seurat_obj_list)
 
 # Merge all seurat objects in the list into one 

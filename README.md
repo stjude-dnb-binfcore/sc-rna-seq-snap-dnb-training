@@ -19,10 +19,11 @@ Snap is a comprehensive suite of tools and workflows for analyzing single-cell a
 1. [Getting Started](#getting-started)
 2. [Installation](#installation)
 3. [Tutorial and Documentation](#tutorial-and-documentation)
-4. [How to Use the Repository](#how-to-use-the-repository)
+4. [Preparing project metadata](#preparing-project-metadata)
+5. [How to Use the Repository](#how-to-use-the-repository)
    - [Accessing the Code](#accessing-the-code)
    - [Running the Code](#running-the-code)
-5. [Requesting Resources from the HPCF Cluster](#requesting-resources-from-the-hpcf-cluster)
+6. [Requesting Resources from the HPCF Cluster](#requesting-resources-from-the-hpcf-cluster)
 
 
 
@@ -35,6 +36,14 @@ To begin using the Snap pipeline, follow the instructions below to set up the en
 ### Tutorial and Documentation
 
 For best practices and detailed guidelines on effectively using the Snap pipeline, please review the [Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
+
+### Preparing project metadata
+
+The pipeline requires a TSV file containing essential metadata for cohort analysis. The file must be named `project_metadata.tsv`. It can include one or more samples, as long as it contains at least the following columns in this exact order: `ID`, `SAMPLE`, and `FASTQ`. Additional metadata columns can be added and arranged as needed by the user.
+
+The file can be stored anywhere, but its filepath must be specified in the `project_parameters.Config.yaml` file.
+
+For user convenience, an example [project_metadata.tsv](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/blob/main/data/project_metadata) file is provided.
 
 
 ### How to Use the Repository

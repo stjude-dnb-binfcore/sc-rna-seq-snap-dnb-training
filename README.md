@@ -50,6 +50,8 @@ For user convenience, an example [project_metadata.tsv](https://github.com/stjud
 
 #### Accessing the Code
 
+We recommend that users fork the `sc-rna-seq-snap` repository and then clone their forked repository to their local machine. Team members should use the [stjude-dnb-binfcore](https://github.com/stjude-dnb-binfcore) account, while others can use their preferred GitHub account. We welcome collaborations, so please feel free to reach out if you're interested in being added to the `stjude-dnb-binfcore` account.
+
 1. Fork the repository
 
 Navigate to the main page of the stjude-dnb-binfcore/sc-rna-seq-snap repository and click the "Fork" button.

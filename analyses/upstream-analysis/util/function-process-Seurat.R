@@ -31,6 +31,10 @@ Genome_Specific_Cell_Cycle_Scoring <- function(seurat_obj, Genome) {
   dual.mm10.s.genes <- paste("mm10---", mm10.s.genes, sep="")
   dual.mm10.g2m.genes <- paste("mm10---", mm10.g2m.genes, sep="")
   
+  # Changed genes to title case for mice genes (Human genes are annotated in all CAPS)
+  mm9.s.genes <- str_to_title(cc.genes.updated.2019$s.genes)
+  mm9.g2m.genes <- str_to_title(cc.genes.updated.2019$g2m.genes)
+  
   # Appended "mm9-" to the beginning of all genes due to dual index reference genome used
   dual.mm9.s.genes <- paste("mm9---", mm9.s.genes, sep="")
   dual.mm9.g2m.genes <- paste("mm9---", mm9.g2m.genes, sep="")

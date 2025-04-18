@@ -35,18 +35,24 @@ calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, ge
         } else if (genome_name == "mm10"| genome_name == "GRCm39"){
           gene.markers <- str_to_title(gene.markers)
           
-          } else if (genome_name == "Dualhg19"){
-            gene.markers <- paste("hg19-", toupper(gene.markers), sep = "")
+          } else if (genome_name == "mm9"| genome_name == "GRCm39"){
+            gene.markers <- str_to_title(gene.markers)
+          
+             } else if (genome_name == "Dualhg19"){
+               gene.markers <- paste("hg19-", toupper(gene.markers), sep = "")
             
-            } else if (genome_name == "DualGRCh38"){
-              gene.markers <- paste("GRCh38-", toupper(gene.markers), sep = "")
+               } else if (genome_name == "DualGRCh38"){
+                gene.markers <- paste("GRCh38-", toupper(gene.markers), sep = "")
               
-              } else if (genome_name == "Dualmm10"){
-                gene.markers <- paste("mm10---", str_to_title(gene.markers), sep = "") 
-                  
-                } else if (genome_name == "DualGRCm39") {
-                    gene.markers <- paste("DualGRCm39---", str_to_title(gene.markers), sep = "") } 
+                } else if (genome_name == "Dualmm10"){
+                 gene.markers <- paste("mm10---", str_to_title(gene.markers), sep = "") 
+                 
+                } else if (genome_name == "Dualmm9"){
+                  gene.markers <- paste("mm9---", str_to_title(gene.markers), sep = "") 
       
+                  } else if (genome_name == "DualGRCm39") {
+                   gene.markers <- paste("GRCm39---", str_to_title(gene.markers), sep = "") } 
+    
       } else if (gene_name_convention_update == "NO"){
         "There is no need to update gene names. Skipping." }
         

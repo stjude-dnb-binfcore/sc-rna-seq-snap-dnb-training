@@ -211,11 +211,11 @@ We save the table with all markers for each cluster at: <font size="3"><span sty
 
 all.markers <- FindAllMarkers(seurat_obj, assay = assay, logfc.threshold = 0.25, test.use = "wilcox", min.pct = 0.1, return.thresh = 0.01)
 
-if (genome_name %in% c("GRCh38", "GRCh38ANDGRCm39")) {  # Check if genome_name is "GRCh38" or "GRCh38ANDGRCm39"
+if (genome_name %in% c("GRCh38", "hg19", "GRCh38ANDGRCm39", "GRCh38_mm10", "GRCh38_mm9")) {  # Check if genome_name is "GRCh38" and "hg19" or "GRCh38ANDGRCm39", "GRCh38_mm10", "GRCh38_mm9"
   all.markers <- all.markers %>%
     # Grepl the non-human cells
     mutate(species = "human",  # Initialize 'species' as 'human'
-           species = case_when(grepl("GRCm39", gene) ~ "mouse",  # If 'gene' contains "GRCm39", set 'species' to "mouse"
+           species = case_when(grepl("GRCm39|mm10|mm9", gene) ~ "mouse",  # If 'gene' contains "GRCm39", set 'species' to "mouse"
                                TRUE ~ species))  # Else, keep the value as 'human'
   
   } else if (genome_name == "GRCh38_GFP_tdTomato") {  # Check if genome_name is exactly "GRCh38_GFP_tdTomato"
@@ -226,7 +226,7 @@ if (genome_name %in% c("GRCh38", "GRCh38ANDGRCm39")) {  # Check if genome_name i
                species = case_when(grepl("GFP|tdTomato", gene) ~ "tomato",   # If 'gene' contains "GFP", set 'species' to "tomato"
                                TRUE ~ species))  # Else, keep the value as 'human'
     
-    } else if (genome_name %in% c("GRCm39")) {  # Check if genome_name is "GRCm39" 
+    } else if (genome_name %in% c("GRCm39", "mm10", "mm9")) {  # Check if genome_name is "GRCm39", "mm10", and "mm9"
       all.markers <- all.markers %>%
         mutate(species = "mouse")
   }

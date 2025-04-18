@@ -34,9 +34,10 @@ This folder contains scripts tasked to:
 
 ## QC Steps and methods
 
-The pipeline allows for the user to include/exclude methods and adjust the pipeline during QC according to the sequence type, expected cells number, type of experiment, and genome reference.
+The pipeline offers flexibility for users to include or exclude methods and adjust the workflow during QC based on factors such as sequence type, expected cell number, experiment type, and genome reference.
 
-If the user does not wish to include results from step (2), this can be defined in the `project_parameters.Config.yaml` file. 
+By default, the pipeline runs all methods from steps (1-3). Step (2) is mandatory for basic QC filtering, while integration of steps (1) and/or (3) is optional. This can be configured in the `project_parameters.Config.yaml` file. However, we recommend reviewing all results, as this can provide valuable insights into the overall quality of each library.
+
 
 ### (1) Estimating and filtering out ambient mRNA (empty droplets)
 

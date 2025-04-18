@@ -6,9 +6,8 @@ Author:
 	Name: 			Cody Alexander Ramirez
 	Email: 			cody.ramirez@stjude.org
 	Affiliation: 	St. Jude Children's Research Hospital, Memphis, TN
-	Date: 			June 27th, 2023
+	Date: 			June 27th, 2023 - Updated April 18th, 2025
 """
-
 
 import os, sys, argparse, glob, numpy, pandas
 
@@ -61,7 +60,20 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCm39 Estimated Number of Cell Partitions"] < 500:
             Warnings = Warnings + "GRCm39 Estimated Number of Cell Partitions < 500, "
             TotalWarnings += 1
-
+    elif args.genome == "hg19":
+        if df.iloc[0]["hg19 Estimated Number of Cell Partitions"] < 500:
+            Warnings = Warnings + "hg19 Estimated Number of Cell Partitions < 500, "
+            TotalWarnings += 1
+    elif args.genome == "mm10":
+        if df.iloc[0]["mm10 Estimated Number of Cell Partitions"] < 500:
+            Warnings = Warnings + "mm10 Estimated Number of Cell Partitions < 500, "
+            TotalWarnings += 1
+    elif args.genome == "mm9":
+        if df.iloc[0]["mm9 Estimated Number of Cell Partitions"] < 500:
+            Warnings = Warnings + "mm9 Estimated Number of Cell Partitions < 500, "
+            TotalWarnings += 1
+    
+    
     
     if args.genome == None:
         if df.iloc[0]["Estimated Number of Cells"] < 100:
@@ -75,13 +87,24 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCm39 Estimated Number of Cell Partitions"] < 100:
             MajorWarnings = MajorWarnings + "GRCm39 Estimated Number of Cell Partitions < 100, "
             TotalWarnings += 1
-    
+    elif args.genome == "hg19":
+        if df.iloc[0]["hg19 Estimated Number of Cells"] < 100:
+            MajorWarnings = MajorWarnings + "hg19 Estimated Number of Cells < 100, "
+            TotalWarnings += 1
+    elif args.genome == "mm10":
+        if df.iloc[0]["mm10 Estimated Number of Cells"] < 100:
+            MajorWarnings = MajorWarnings + "mm10 Estimated Number of Cells < 100, "
+            TotalWarnings += 1
+    elif args.genome == "mm9":
+        if df.iloc[0]["mm9 Estimated Number of Cells"] < 100:
+            MajorWarnings = MajorWarnings + "mm9 Estimated Number of Cells < 100, "
+            TotalWarnings += 1 
+
 
     if df.iloc[0]["Mean Reads per Cell"] < 20000:
         MajorWarnings = MajorWarnings + "Mean Reads per Cell < 20000, "
         TotalWarnings += 1
     
-
     if args.genome == None:
         if df.iloc[0]["Median Genes per Cell"] < 1000:
             MajorWarnings = MajorWarnings + "Median Genes per Cell < 1000, "
@@ -94,7 +117,19 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCm39 Median Genes per Cell"] < 1000:
             MajorWarnings = MajorWarnings + "GRCm39 Median Genes per Cell < 1000, "
             TotalWarnings += 1
-    
+    elif args.genome == "hg19":
+        if df.iloc[0]["hg19 Median Genes per Cell"] < 1000:
+            MajorWarnings = MajorWarnings + "hg19 Median Genes per Cell < 1000, "
+            TotalWarnings += 1
+    elif args.genome == "mm10":
+        if df.iloc[0]["mm10 Median Genes per Cell"] < 1000:
+            MajorWarnings = MajorWarnings + "mm10 Median Genes per Cell < 1000, "
+            TotalWarnings += 1
+    elif args.genome == "mm9":
+        if df.iloc[0]["mm9 Median Genes per Cell"] < 1000:
+            MajorWarnings = MajorWarnings + "mm9 Median Genes per Cell < 1000, "
+            TotalWarnings += 1 
+            
 
     if df.iloc[0]["Valid Barcodes"] < 75:
         Warnings = Warnings + "Valid Barcodes < 75%, "
@@ -125,7 +160,20 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCm39 Reads Mapped to Genome"] < 85:
             Warnings = Warnings + "GRCm39 Reads Mapped to Genome < 85%, "
             TotalWarnings += 1
-    
+    elif args.genome == "hg19":
+        if df.iloc[0]["hg19 Reads Mapped to Genome"] < 85:
+            Warnings = Warnings + "hg19 Reads Mapped to Genome < 85%, "
+            TotalWarnings += 1
+    elif args.genome == "mm10":
+        if df.iloc[0]["mm10 Reads Mapped to Genome"] < 85:
+            Warnings = Warnings + "mm10 Reads Mapped to Genome < 85%, "
+            TotalWarnings += 1
+    elif args.genome == "mm9":
+        if df.iloc[0]["mm9 Reads Mapped to Genome"] < 85:
+            Warnings = Warnings + "mm9 Reads Mapped to Genome < 85%, "
+            TotalWarnings += 1 
+            
+            
 
     if args.genome == None:
         if df.iloc[0]["Reads Mapped Confidently to Genome"] < 80:
@@ -139,7 +187,18 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCm39 Reads Mapped Confidently to Genome"] < 80:
             MajorWarnings = MajorWarnings + "GRCm39 Reads Mapped Confidently to Genome < 80%, "
             TotalWarnings += 1
-    
+    elif args.genome == "hg19":
+        if df.iloc[0]["hg19 Reads Mapped Confidently to Genome"] < 80:
+            MajorWarnings = MajorWarnings + "hg19 Reads Mapped Confidently to Genome < 80%, "
+            TotalWarnings += 1
+    elif args.genome == "mm10":
+        if df.iloc[0]["mm10 Reads Mapped Confidently to Genome"] < 80:
+            MajorWarnings = MajorWarnings + "mm10 Reads Mapped Confidently to Genome < 80%, "
+            TotalWarnings += 1
+    elif args.genome == "mm9":
+        if df.iloc[0]["mm9 Reads Mapped Confidently to Genome"] < 80:
+            MajorWarnings = MajorWarnings + "mm9 Reads Mapped Confidently to Genome < 80%, "
+            TotalWarnings += 1 
 
     if args.genome == None:
         if df.iloc[0]["Reads Mapped Confidently to Intergenic Regions"] > 10:
@@ -153,7 +212,18 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCm39 Reads Mapped Confidently to Intergenic Regions"] > 10:
             Warnings = Warnings + "GRCm39 Reads Mapped Confidently to Intergenic Regions > 10%, "
             TotalWarnings += 1
-    
+    elif args.genome == "hg19":
+        if df.iloc[0]["hg19 Reads Mapped Confidently to Intergenic Regions"] > 10:
+            Warnings = Warnings + "hg19 Reads Mapped Confidently to Intergenic Regions > 10%, "
+            TotalWarnings += 1
+    elif args.genome == "mm10":
+        if df.iloc[0]["mm10 Reads Mapped Confidently to Intergenic Regions"] > 10:
+            Warnings = Warnings + "mm10 Reads Mapped Confidently to Intergenic Regions > 10%, "
+            TotalWarnings += 1
+    elif args.genome == "mm9":
+        if df.iloc[0]["mm9 Reads Mapped Confidently to Intergenic Regions"] > 10:
+            Warnings = Warnings + "mm9 Reads Mapped Confidently to Intergenic Regions > 10%, "
+            TotalWarnings += 1 
 
     if args.genome == None:
         if df.iloc[0]["Reads Mapped Confidently to Intronic Regions"] > 30:
@@ -167,8 +237,19 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCm39 Reads Mapped Confidently to Intronic Regions"] > 30:
             Warnings = Warnings + "GRCm39 Reads Mapped Confidently to Intronic Regions > 30%, "
             TotalWarnings += 1
-    
-
+    elif args.genome == "hg19":
+        if df.iloc[0]["hg19 Reads Mapped Confidently to Intronic Regions"] > 30:
+            Warnings = Warnings + "hg19 Reads Mapped Confidently to Intronic Regions > 30%, "
+            TotalWarnings += 1
+    elif args.genome == "mm10":
+        if df.iloc[0]["mm10 Reads Mapped Confidently to Intronic Regions"] > 30:
+            Warnings = Warnings + "mm10 Reads Mapped Confidently to Intronic Regions > 30%, "
+            TotalWarnings += 1
+    elif args.genome == "mm9":
+        if df.iloc[0]["mm9 Reads Mapped Confidently to Intronic Regions"] > 30:
+            Warnings = Warnings + "mm9 Reads Mapped Confidently to Intronic Regions > 30%, "
+            TotalWarnings += 1 
+            
     if args.genome == None:
         if df.iloc[0]["Reads Mapped Confidently to Exonic Regions"] < 30:
             MajorWarnings = MajorWarnings + "Reads Mapped Confidently to Exonic Regions < 30%, "
@@ -181,7 +262,20 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCm39 Reads Mapped Confidently to Exonic Regions"] < 30:
             MajorWarnings = MajorWarnings + "GRCm39 Reads Mapped Confidently to Exonic Regions < 30%, "
             TotalWarnings += 1
-
+    elif args.genome == "hg19":
+        if df.iloc[0]["hg19 Reads Mapped Confidently to Exonic Regions"] < 30:
+            MajorWarnings = MajorWarnings + "hg19 Reads Mapped Confidently to Exonic Regions < 30%, "
+            TotalWarnings += 1
+    elif args.genome == "mm10":
+        if df.iloc[0]["mm10 Reads Mapped Confidently to Exonic Regions"] < 30:
+            MajorWarnings = MajorWarnings + "mm10 Reads Mapped Confidently to Exonic Regions < 30%, "
+            TotalWarnings += 1
+    elif args.genome == "mm9":
+        if df.iloc[0]["mm9 Reads Mapped Confidently to Exonic Regions"] < 30:
+            MajorWarnings = MajorWarnings + "mm9 Reads Mapped Confidently to Exonic Regions < 30%, "
+            TotalWarnings += 1 
+            
+            
     
     if args.genome == None:
         if df.iloc[0]["Reads Mapped Confidently to Transcriptome"] < 30:
@@ -195,7 +289,19 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCm39 Reads Mapped Confidently to Transcriptome"] < 30:
             MajorWarnings = MajorWarnings + "GRCm39 Reads Mapped Confidently to Transcriptome < 30%, "
             TotalWarnings += 1
-    
+    elif args.genome == "hg19":
+        if df.iloc[0]["hg19 Reads Mapped Confidently to Transcriptome"] < 30:
+            MajorWarnings = MajorWarnings + "hg19 Reads Mapped Confidently to Transcriptome < 30%, "
+            TotalWarnings += 1
+    elif args.genome == "mm10":
+        if df.iloc[0]["mm10 Reads Mapped Confidently to Transcriptome"] < 30:
+            MajorWarnings = MajorWarnings + "mm10 Reads Mapped Confidently to Transcriptome < 30%, "
+            TotalWarnings += 1
+    elif args.genome == "mm9":
+        if df.iloc[0]["mm9 Reads Mapped Confidently to Transcriptome"] < 30:
+            MajorWarnings = MajorWarnings + "mm9 Reads Mapped Confidently to Transcriptome < 30%, "
+            TotalWarnings += 1 
+            
 
     if df.iloc[0]["Reads Mapped Antisense to Gene"] > 10:
         Warnings = Warnings + "Reads Mapped Antisense to Gene > 10%, "
@@ -214,8 +320,19 @@ for filename in glob.glob(os.path.join(args.dir, "*", "outs", "metrics_summary.c
         if df.iloc[0]["GRCm39 Fraction Reads in Cells"] < 70:
             MajorWarnings = MajorWarnings + "GRCm39 Fraction Reads in Cells < 70%, "
             TotalWarnings += 1
-    
-    
+    elif args.genome == "hg19":
+        if df.iloc[0]["hg19 Fraction Reads in Cells"] < 70:
+            MajorWarnings = MajorWarnings + "hg19 Fraction Reads in Cells < 70%, "
+            TotalWarnings += 1
+    elif args.genome == "mm10":
+        if df.iloc[0]["mm10 Fraction Reads in Cells"] < 70:
+            MajorWarnings = MajorWarnings + "mm10 Fraction Reads in Cells < 70%, "
+            TotalWarnings += 1
+    elif args.genome == "mm9":
+        if df.iloc[0]["mm9 Fraction Reads in Cells"] < 70:
+            MajorWarnings = MajorWarnings + "mm9 Fraction Reads in Cells < 70%, "
+            TotalWarnings += 1 
+            
     df["Warnings"] = Warnings
     df["MajorWarnings"] = MajorWarnings
     df["Total Warnings"] = TotalWarnings

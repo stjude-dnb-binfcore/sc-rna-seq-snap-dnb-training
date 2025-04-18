@@ -19,10 +19,11 @@ Snap is a comprehensive suite of tools and workflows for analyzing single-cell a
 1. [Getting Started](#getting-started)
 2. [Installation](#installation)
 3. [Tutorial and Documentation](#tutorial-and-documentation)
-4. [How to Use the Repository](#how-to-use-the-repository)
+4. [Preparing project metadata](#preparing-project-metadata)
+5. [How to Use the Repository](#how-to-use-the-repository)
    - [Accessing the Code](#accessing-the-code)
    - [Running the Code](#running-the-code)
-5. [Requesting Resources from the HPCF Cluster](#requesting-resources-from-the-hpcf-cluster)
+6. [Requesting Resources from the HPCF Cluster](#requesting-resources-from-the-hpcf-cluster)
 
 
 
@@ -36,10 +37,20 @@ To begin using the Snap pipeline, follow the instructions below to set up the en
 
 For best practices and detailed guidelines on effectively using the Snap pipeline, please review the [Tutorial and documentation for the snap pipeline](https://github.com/stjude-dnb-binfcore/trainings/blob/main/courses/sc-rna-seq-snap-repo/tutorial/snap-tutorial-docs/Documentation-snap-repo-tutorial-2025-02-18.pdf).
 
+### Preparing project metadata
+
+The pipeline requires a TSV file containing essential metadata for cohort analysis. The file must be named `project_metadata.tsv`. It can include one or more samples, as long as it contains at least the following columns in this exact order: `ID`, `SAMPLE`, and `FASTQ`. Additional metadata columns can be added and arranged as needed by the user (though not required).
+
+The file can be stored anywhere, but its filepath must be specified in the `project_parameters.Config.yaml` file.
+
+For user convenience, an example [project_metadata.tsv](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/blob/main/data/project_metadata) file is provided.
+
 
 ### How to Use the Repository
 
 #### Accessing the Code
+
+We recommend that users fork the `sc-rna-seq-snap` repository and then clone their forked repository to their local machine. Team members should use the [stjude-dnb-binfcore](https://github.com/stjude-dnb-binfcore) account, while others can use their preferred GitHub account. We welcome collaborations, so please feel free to reach out if you're interested in being added to the `stjude-dnb-binfcore` account.
 
 1. Fork the repository
 
@@ -85,28 +96,35 @@ cd ./sc-rna-seq-snap/analyses/<module_of_interest>
 
 3. Sync Your Fork
 
+User needs to ensure that the main branch of the forked repository is always up to date with `stjude-dnb-binfcore/sc-rna-seq-snap:main`. 
+
 If your fork is behind the main repository (`stjude-dnb-binfcore/sc-rna-seq-snap:main`), sync it to ensure you have the latest updates. This will update the main branch of your project repo with the new code and modules (if any). This will add code and not break any analyses already run in your project repo. 
+
+When syncing your forked repository with the main repository, please be cautious of any changes made to the following files, as they are typically modified and specified for project data analysis:
+
+   - `project_parameters.Config.yaml`
+
+Before pulling the latest changes, stash any modifications you have made to these files. This ensures that you won't accidentally overwrite your changes when syncing with the main repository. 
+
+Some useful git commands:
 
 ```
 git branch
 git checkout main
-git pull
-```
+git config pull.rebase false
 
-Finally, `git pull` to get the most updated changes and code in your project repo. Please be mindful of any local changes in files in your project repo that you have done, e.g., `project_parameters.Config.yaml`. You will need to commit or stash (or restore) the changes to the yaml before completing the pull.
-
-```
 git status
 git add project_parameters.Config.yaml
 git commit -m "Update yaml"
 ```
 
+Finally, `git pull` to get the most updated changes and code in your project repo. Please be mindful of any local changes in files in your project repo that you have done, e.g., `project_parameters.Config.yaml`. You will need to commit or stash (or restore) the changes to the yaml before completing the pull.
+
 ```
-git config pull.rebase false
 git pull
 ```
 
-### Requesting Resources from the HPCF Cluster
+### Requesting CPU and Memory Resources
 
 While we provide estimates for the computational resources required (based on 8 samples with approximately 50,000 cells), users may need to adjust memory settings based on cohort size and analysis requirements.
 

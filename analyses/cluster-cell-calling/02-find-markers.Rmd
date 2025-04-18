@@ -246,23 +246,23 @@ datatable(all.markers,
           filter = "top")
 ```
 
-## Number of cells per species
+## Number of gene markers per species
 
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- count(all.markers, species)
 cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
-caption_value = "Summary of number of cells per species"
+caption_value = "Number of gene markers per species"
 print(knitr::kable(tables1, align = "lcccc", caption = caption_value))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
 ```
 
-## Number of cells per species and cluster
+## Number of gene markers per species and cluster
 
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- count(all.markers, species, cluster)
 cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
-caption_value = "Summary of number of cells per species and cluster"
+caption_value = "Number of gene markers per species and cluster"
 print(knitr::kable(tables1, align = "lcccc", caption = caption_value))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")

@@ -27,9 +27,17 @@ Genome_Specific_Cell_Cycle_Scoring <- function(seurat_obj, Genome) {
   mm10.s.genes <- str_to_title(cc.genes.updated.2019$s.genes)
   mm10.g2m.genes <- str_to_title(cc.genes.updated.2019$g2m.genes)
   
-  # Appended "GRCh38-" to the beginning of all genes due to dual index reference genome used
+  # Appended "mm10-" to the beginning of all genes due to dual index reference genome used
   dual.mm10.s.genes <- paste("mm10---", mm10.s.genes, sep="")
   dual.mm10.g2m.genes <- paste("mm10---", mm10.g2m.genes, sep="")
+  
+  # Changed genes to title case for mice genes (Human genes are annotated in all CAPS)
+  mm9.s.genes <- str_to_title(cc.genes.updated.2019$s.genes)
+  mm9.g2m.genes <- str_to_title(cc.genes.updated.2019$g2m.genes)
+  
+  # Appended "mm9-" to the beginning of all genes due to dual index reference genome used
+  dual.mm9.s.genes <- paste("mm9---", mm9.s.genes, sep="")
+  dual.mm9.g2m.genes <- paste("mm9---", mm9.g2m.genes, sep="")
   
   # Changed genes to title case for mice genes (Human genes are annotated in all CAPS)
   GRCm39.s.genes <- str_to_title(cc.genes.updated.2019$s.genes)
@@ -43,6 +51,8 @@ Genome_Specific_Cell_Cycle_Scoring <- function(seurat_obj, Genome) {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = human.s.genes, g2m.features = human.g2m.genes)
     } else if (Genome == "mm10") {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = mm10.s.genes, g2m.features = mm10.g2m.genes)
+    } else if (Genome == "mm9") {
+    seurat_obj <- CellCycleScoring(seurat_obj, s.features = mm9.s.genes, g2m.features = mm9.g2m.genes)
     } else if (Genome == "Dualhg19") {
     seurat_obj <- CellCycleScoring(seurat_obj, s.features = dual.hg19.s.genes, g2m.features = dual.hg19.g2m.genes)
     } else if (Genome == "DualGRCh38") {

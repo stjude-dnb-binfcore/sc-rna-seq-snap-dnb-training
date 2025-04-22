@@ -443,8 +443,6 @@ if (!is.null(condition_value3)) {
 # Save output files
 
 ```{r save-output, echo=TRUE}
-metadata <- as_data_frame_seurat(seurat_obj.query, metadata = TRUE)
-
 # Identify columns with a '.1' suffix
 cols_to_remove <- grep("\\.1$", colnames(seurat_obj.query@meta.data), value = TRUE)
   
@@ -457,6 +455,7 @@ cols_to_remove <- cols_to_remove[!grepl(glue::glue("^{assay}_snn_res\\.0\\.1$"),
 seurat_obj.query@meta.data <- seurat_obj.query@meta.data[, !colnames(seurat_obj.query@meta.data) %in% cols_to_remove]
 head(seurat_obj.query@meta.data)
 
+metadata <- as_data_frame_seurat(seurat_obj.query, metadata = TRUE)
 write_tsv(metadata, file = paste0(results_dir, "/", "metadata", ".tsv")) # Save metadata
 saveRDS(seurat_obj.query, file = paste0(results_dir, "/", "seurat_obj_reference.rds"))
 ```

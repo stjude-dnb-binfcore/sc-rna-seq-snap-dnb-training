@@ -83,8 +83,8 @@ if (method == "all"){
     rename_with(~ paste("gene_markers_", ., sep = ""), matches("\\.score1$")) %>%
   
     # Join df
-    left_join(fine_SingleR_df) %>%
-    select(!cell)
+    left_join(fine_SingleR_df) #%>%
+    #select(!cell)
 
 
     # Read metadata `reference`
@@ -168,7 +168,7 @@ if (method == "all"){
       
       
       # Read metadata `gene_markers`
-      gene_markers_df <- readr::read_tsv(gene_markers_file, guess_max = 100000, show_col_types = FALSE) %>%
+      new_metadata <- readr::read_tsv(gene_markers_file, guess_max = 100000, show_col_types = FALSE) %>%
         
         # Select for columns to use for join to the object
         select(cell, predicted.cell.signature.ident, matches("\\.score1$")) %>% #end with

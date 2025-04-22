@@ -390,7 +390,7 @@ ggsave(file = name, width = 18, height = 6, device = "png")
 ```{r plot-cell-types-condition-fractions1, fig.width = 8, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-condition-fractions1.png"))
 p.condition <- print(cell_type_fractions_fine(df = seurat_obj@meta.data,
-                                               condition = condition_value1,
+                                               condition_plot = condition_value1,
                                                color_df = palette,
                                                title_value = "Fine"))
 ggsave(file = name, width = 8, height = 6, device = "png")
@@ -423,7 +423,7 @@ if (!is.null(condition_value2)) {
 if (!is.null(condition_value2)) {
   name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-condition-fractions2.png"))
   p.condition <- print(cell_type_fractions_fine(df = seurat_obj@meta.data,
-                                               condition = condition_value2,
+                                               condition_plot = condition_value2,
                                                color_df = palette,
                                                title_value = "Fine"))
   ggsave(file = name, width = 8, height = 6, device = "png")
@@ -457,7 +457,7 @@ if (!is.null(condition_value3)) {
 if (!is.null(condition_value3)) {
   name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-condition-fractions3.png"))
   p.condition <- print(cell_type_fractions_fine(df = seurat_obj@meta.data,
-                                                condition = condition_value3,
+                                                condition_plot = condition_value3,
                                                 color_df = palette,
                                                 title_value = "Fine"))
   ggsave(file = name, width = 8, height = 6, device = "png")

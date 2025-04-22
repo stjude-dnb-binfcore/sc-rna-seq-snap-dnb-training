@@ -1,6 +1,6 @@
 #' Function to quantify cell type annotations fractions - Broad cell type annotation
 #' @param df
-#' @param condition
+#' @param condition_plot
 #' @param color_df
 #' @param title_value
 #' 
@@ -9,11 +9,11 @@
 #'
 #' @examples
 #' 
-cell_type_fractions_broad <- function(df, condition, color_df, title_value) {
+cell_type_fractions_broad <- function(df, condition_plot, color_df, title_value) {
   
   # Calculate fractions
-  count <- df %>% group_by_at(condition) %>%
-    mutate(condition=row_number()) %>% 
+  count <- df %>% group_by_at(condition_plot) %>%
+    mutate(condition_plot=row_number()) %>% 
     dplyr::count(singler.broad)
   
   # Order cell types
@@ -24,14 +24,14 @@ cell_type_fractions_broad <- function(df, condition, color_df, title_value) {
   count$singler.broad <- factor(count$singler.broad, levels = cell_type_order)
   
   # Plot
-  p <- ggplot(count, aes(x = count[[condition]], y = n, fill = singler.broad)) +
+  p <- ggplot(count, aes(x = count[[condition_plot]], y = n, fill = singler.broad)) +
     geom_bar(stat = "identity", position = "fill") +
     scale_fill_manual(values = color_df) +
     theme_Publication(base_size = 11) + 
-    xlab(glue::glue("{condition}")) +
+    xlab(glue::glue("{condition_plot}")) +
     ylab("Percent Cell Type") +
     guides(color = guide_legend(override.aes = list(size = 3))) +
-    ggtitle(glue::glue("{title_value} cell type fractions per {condition}")) +
+    ggtitle(glue::glue("{title_value} cell type fractions per {condition_plot}")) +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
   
   return(p)
@@ -42,7 +42,7 @@ cell_type_fractions_broad <- function(df, condition, color_df, title_value) {
 ############################################################################################################
 #' Function to quantify cell type annotations fractions - Fine cell type annotation
 #' @param df
-#' @param condition
+#' @param condition_plot
 #' @param color_df
 #' @param title_value
 #' 
@@ -51,11 +51,11 @@ cell_type_fractions_broad <- function(df, condition, color_df, title_value) {
 #'
 #' @examples
 #' 
-cell_type_fractions_fine <- function(df, condition, color_df, title_value) {
+cell_type_fractions_fine <- function(df, condition_plot, color_df, title_value) {
   
   # Calculate fractions
-  count <- df %>% group_by_at(condition) %>%
-    mutate(condition=row_number()) %>% 
+  count <- df %>% group_by_at(condition_plot) %>%
+    mutate(condition_plot=row_number()) %>% 
     dplyr::count(singler.fine)
   
   # Order cell types
@@ -66,14 +66,14 @@ cell_type_fractions_fine <- function(df, condition, color_df, title_value) {
   count$singler.fine <- factor(count$singler.fine, levels = cell_type_order)
   
   # Plot
-  p <- ggplot(count, aes(x = count[[condition]], y = n, fill = singler.fine)) +
+  p <- ggplot(count, aes(x = count[[condition_plot]], y = n, fill = singler.fine)) +
     geom_bar(stat = "identity", position = "fill") +
     scale_fill_manual(values = color_df) +
     theme_Publication(base_size = 11) + 
-    xlab(glue::glue("{condition}")) +
+    xlab(glue::glue("{condition_plot}")) +
     ylab("Percent Cell Type") +
     guides(color = guide_legend(override.aes = list(size = 3))) +
-    ggtitle(glue::glue("{title_value} cell type fractions per {condition}")) +
+    ggtitle(glue::glue("{title_value} cell type fractions per {condition_plot}")) +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
   
   return(p)

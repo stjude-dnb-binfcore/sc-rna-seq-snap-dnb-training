@@ -29,9 +29,9 @@ module_plots_dir <- file.path(analysis_dir, "plots")
 if (!dir.exists(module_plots_dir)) {
   dir.create(module_plots_dir)}
 
-gene_markers_report_dir <- file.path(module_plots_dir, "04_cell_types_annotation_reference") 
-if (!dir.exists(gene_markers_report_dir)) {
-  dir.create(gene_markers_report_dir)}
+reference_report_dir <- file.path(module_plots_dir, "04_cell_types_annotation_reference") 
+if (!dir.exists(reference_report_dir)) {
+  dir.create(reference_report_dir)}
 
 ################################################################################################################
 
@@ -52,7 +52,7 @@ input_data_file <- file.path(data_dir_annotation_module, glue::glue("seurat_obj_
 ################################################################################################################
 # Gene score cell type annotation
 rmarkdown::render('04-cell-types-annotation-reference.Rmd', clean = TRUE,
-                  output_dir = file.path(gene_markers_report_dir),
+                  output_dir = file.path(reference_report_dir),
                   output_file = c(paste('Report-', 'cell-types-annotation-reference', '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(integration_method = yaml$integration_method_clustering_module,

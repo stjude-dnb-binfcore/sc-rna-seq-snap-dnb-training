@@ -17,6 +17,7 @@ Dying	NA	#797474
 Embryonic_stem_cells	NA	#0072B2
 Endothelial_cells 	#79DAAC 	#822E5F
 Endothelial cells	#79DAAC 	#822E5F
+Endothelial	#79DAAC 	#822E5F
 Ependymal	#7695CC 	#7695CC 
 Epithelial_cells	#4199B5 	#4199B5 
 Epithelial cells	#4199B5 	#4199B5 
@@ -42,6 +43,7 @@ Immune	#3400A6	#3400A6
 Lens	NA	#B2E0E7
 Microglia           	#C753D4 	#877F38
 Muller Glia	#86D46B	#EE934F
+Muller.Glia	#86D46B	#EE934F
 na_color	#7F7F7F	#BCBCBC
 Neurogenic	#261F1F	#D1AAB5
 Neurons	#BDC9AD 	#BDC9AD 
@@ -62,6 +64,7 @@ Progenitors	#BE5314	#BE5314
 pRPC	NA	#987F87
 qNSCs	#ABA398 	#ABA398 
 Retinal Ganglion	#D1A1A1	#D1A1A1
+Retinal.Ganglion	#D1A1A1	#D1A1A1
 Retinal Progenitor	#472727	#A98E97
 RGC	#A6006F	#672F8B
 Rods	#9ACFE5	#DED498

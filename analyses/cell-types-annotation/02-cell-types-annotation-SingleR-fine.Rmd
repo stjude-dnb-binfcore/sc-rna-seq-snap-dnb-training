@@ -182,7 +182,8 @@ a4height <- 11.7
 ```
 
 # Read seurat object
-First, we will use the `seurat_obj_integrated_{integration_method}.rds` object as generated from the pipeline in the `input_data` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params` and the clusters. 
+
+First, we will use the object as generated from the pipeline in the `input_data` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params` and the clusters. 
 
 ```{r read-object, echo=TRUE}
 seurat_obj <- readRDS(data_file)
@@ -228,7 +229,7 @@ We will check and compare the pruned labels and the initial labels by summarizin
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- summary_table
 cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
-print(knitr::kable(tables1, caption = "Fine cell type annotations before vs after label pruning"))
+print(knitr::kable(tables1, align = "lcccc", caption = "Fine cell type annotations before vs after label pruning"))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
 ```
@@ -274,7 +275,7 @@ We will summarize the identified fine cell type annotations to be removed.
 ```{r, fig.align = "left", results = "asis", message = FALSE, warning = FALSE, echo = FALSE}
 tables1 <- summary_table
 cat("  \n<div align=\"center\" style=\"font-size:80%\">  \n")
-print(knitr::kable(tables1, caption = "Fine cell type annotations to be removed"))
+print(knitr::kable(tables1, align = "lcccc", caption = "Fine cell type annotations to be removed"))
 cat("  \n</div>  \n")
 cat("  \n\\pagebreak  \n")
 ```
@@ -327,7 +328,7 @@ ggsave(file = name, width = 35, height = 12, device = "png")
 ```{r plot-cell-types-project-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-project-fractions.png"))
 p.project <- print(cell_type_fractions_fine(df = seurat_obj@meta.data,
-                                            condition = "project",
+                                            condition_plot = "project",
                                             color_df = palette,
                                             title_value = "Fine"))
 ggsave(file = name, width = 6, height = 5, device = "png")
@@ -358,9 +359,9 @@ ggsave(file = name, width = 25, height = 6, device = "png")
 ```{r plot-cell-types-ID-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-ID-fractions.png"))
 p.ID <- print(cell_type_fractions_fine(df = seurat_obj@meta.data,
-                                  condition = "ID",
-                                  color_df = palette,
-                                  title_value = "Fine"))
+                                       condition_plot = "ID",
+                                       color_df = palette,
+                                       title_value = "Fine"))
 ggsave(file = name, width = 6, height = 5, device = "png")
 ```
 
@@ -389,7 +390,7 @@ ggsave(file = name, width = 18, height = 6, device = "png")
 ```{r plot-cell-types-condition-fractions1, fig.width = 8, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-condition-fractions1.png"))
 p.condition <- print(cell_type_fractions_fine(df = seurat_obj@meta.data,
-                                               condition = condition_value1,
+                                               condition_plot = condition_value1,
                                                color_df = palette,
                                                title_value = "Fine"))
 ggsave(file = name, width = 8, height = 6, device = "png")
@@ -422,7 +423,7 @@ if (!is.null(condition_value2)) {
 if (!is.null(condition_value2)) {
   name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-condition-fractions2.png"))
   p.condition <- print(cell_type_fractions_fine(df = seurat_obj@meta.data,
-                                               condition = condition_value2,
+                                               condition_plot = condition_value2,
                                                color_df = palette,
                                                title_value = "Fine"))
   ggsave(file = name, width = 8, height = 6, device = "png")
@@ -456,7 +457,7 @@ if (!is.null(condition_value3)) {
 if (!is.null(condition_value3)) {
   name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-condition-fractions3.png"))
   p.condition <- print(cell_type_fractions_fine(df = seurat_obj@meta.data,
-                                                condition = condition_value3,
+                                                condition_plot = condition_value3,
                                                 color_df = palette,
                                                 title_value = "Fine"))
   ggsave(file = name, width = 8, height = 6, device = "png")
@@ -466,8 +467,20 @@ if (!is.null(condition_value3)) {
 # Save output files
 
 ```{r save-output, echo=TRUE}
+# Identify columns with a '.1' suffix
+cols_to_remove <- grep("\\.1$", colnames(seurat_obj@meta.data), value = TRUE)
+
+# Exclude columns that match the specific patterns (e.g., {assay}_snn_res.0.1, {assay}_snn_res.1, {assay}_snn_res.10)
+cols_to_remove <- cols_to_remove[!grepl(glue::glue("^{assay}_snn_res\\.0\\.1$"), cols_to_remove) & 
+                                   !grepl(glue::glue("^{assay}_snn_res\\.1$"), cols_to_remove) &
+                                   !grepl(glue::glue("^{assay}_snn_res\\.10$"), cols_to_remove)]
+
+# Remove the columns
+seurat_obj@meta.data <- seurat_obj@meta.data[, !colnames(seurat_obj@meta.data) %in% cols_to_remove]
 head(seurat_obj@meta.data)
+
 metadata <- as_data_frame_seurat(seurat_obj, metadata = TRUE)
+
 write_tsv(metadata, file = paste0(results_dir, "/", "metadata", ".tsv")) # Save metadata
 #saveRDS(seurat_obj, file = paste0(results_dir, "/", "seurat_obj_SingleR_fine.rds"))
 ```

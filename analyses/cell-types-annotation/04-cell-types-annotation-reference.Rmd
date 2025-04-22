@@ -217,6 +217,8 @@ reference_obj <- readRDS(reference_file)
 # Rename column containing cell types in the reference
 reference_obj@meta.data$celltype <- reference_obj@meta.data[[celltype_reference]]
 
+print(table(reference_obj@meta.data$celltype))
+
 # Plot
 name <- paste0(plots_dir, "/", glue::glue("plot-reference-cell-types.png"))
 p1.reference <- DimPlot(reference_obj, group.by = 'celltype', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle("Reference cell type annotations") 

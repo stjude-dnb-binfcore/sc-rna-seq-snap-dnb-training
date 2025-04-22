@@ -455,7 +455,7 @@ cols_to_remove <- cols_to_remove[!grepl(glue::glue("^{assay}_snn_res\\.0\\.1$"),
   
 # Remove the columns
 seurat_obj.query@meta.data <- seurat_obj.query@meta.data[, !colnames(seurat_obj.query@meta.data) %in% cols_to_remove]
-#head(seurat_obj.query@meta.data)
+head(seurat_obj.query@meta.data)
 
 write_tsv(metadata, file = paste0(results_dir, "/", "metadata", ".tsv")) # Save metadata
 saveRDS(seurat_obj.query, file = paste0(results_dir, "/", "seurat_obj_reference.rds"))

@@ -328,7 +328,7 @@ ggsave(file = name, width = 35, height = 12, device = "png")
 ```{r plot-cell-types-project-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-project-fractions.png"))
 p.project <- print(cell_type_fractions_fine(df = seurat_obj@meta.data,
-                                            condition = "project",
+                                            condition_plot = "project",
                                             color_df = palette,
                                             title_value = "Fine"))
 ggsave(file = name, width = 6, height = 5, device = "png")
@@ -359,9 +359,9 @@ ggsave(file = name, width = 25, height = 6, device = "png")
 ```{r plot-cell-types-ID-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-ID-fractions.png"))
 p.ID <- print(cell_type_fractions_fine(df = seurat_obj@meta.data,
-                                  condition = "ID",
-                                  color_df = palette,
-                                  title_value = "Fine"))
+                                       condition_plot = "ID",
+                                       color_df = palette,
+                                       title_value = "Fine"))
 ggsave(file = name, width = 6, height = 5, device = "png")
 ```
 

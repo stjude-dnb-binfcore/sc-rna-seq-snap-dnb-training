@@ -297,9 +297,9 @@ ggsave(file = name, width = 18, height = 6, device = "png")
 ```{r plot-cell-types-project-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", glue::glue("plot-gene-markers-project-fractions.png"))
 p.project <- print(cell_type_fractions_cell_type_gene_markers(df = seurat_obj@meta.data,
-                                            condition = "project",
-                                            color_df = palette,
-                                            title_value = "Gene markers"))
+                                                              condition_plot = "project",
+                                                              color_df = palette,
+                                                              title_value = "Gene markers"))
 ggsave(file = name, width = 6, height = 5, device = "png")
 ```
 
@@ -328,9 +328,9 @@ ggsave(file = name, width = 25, height = 6, device = "png")
 ```{r plot-cell-types-ID-fractions, fig.width = 6, fig.height = 5, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", glue::glue("plot-gene-markers-ID-fractions.png"))
 p.ID <- print(cell_type_fractions_cell_type_gene_markers(df = seurat_obj@meta.data,
-                                  condition = "ID",
-                                  color_df = palette,
-                                  title_value = "Gene markers"))
+                                                         condition_plot = "ID",
+                                                         color_df = palette,
+                                                         title_value = "Gene markers"))
 ggsave(file = name, width = 6, height = 5, device = "png")
 ```
 

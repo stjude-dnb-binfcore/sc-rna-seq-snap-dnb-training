@@ -53,7 +53,7 @@ The structure of this folder is as follows:
 |   |   └── Report_cell_types_annotation_SingleR_broad_<Sys.Date()>.pdf
 |   ├── 02_cell_types_annotation_SingleR_fine
 |   |   ├── Report_cell_types_annotation_SingleR_fine_<Sys.Date()>.html
-|   |   └──Report_cell_types_annotation_SingleR_fine_<Sys.Date()>.pdf
+|   |   └── Report_cell_types_annotation_SingleR_fine_<Sys.Date()>.pdf
 |   ├── 03_cell_types_annotation_gene_markers
 |   |   ├── Report_cell_types_annotation_gene_markers_<Sys.Date()>.html
 |   |   └── Report_cell_types_annotation_gene_markers_<Sys.Date()>.pdf

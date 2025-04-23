@@ -34,7 +34,7 @@ For example:
 
 
 | ID | SAMPLE | FASTQ | 
-:----------|:----------|:----------|:----------|
+:----------|:----------|:----------|
 | DYE001 | seq_submission_code1_sample1 | /absolute_path/seq_submission_code1/replicate1,/absolute_path/seq_submission_code1/replicate2 | 
 
 

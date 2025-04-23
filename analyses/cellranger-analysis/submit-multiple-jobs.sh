@@ -20,7 +20,7 @@ prefix="${rootdir}/analyses/cellranger-analysis"
 
 ########################################################################
 # Create directories to save output files to
-mkdir -p ${prefix}/input
+#mkdir -p ${prefix}/input
 mkdir -p ${prefix}/results
 
 ########################################################################

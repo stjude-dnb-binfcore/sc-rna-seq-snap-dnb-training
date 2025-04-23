@@ -9,10 +9,13 @@ The `submit-multiple-jobs.sh` script is designed to run the following two steps:
    - Step 2: To run `j2.sh` to summarize alignment results, i.e., `summarize-cellranger-analysis`. The latter script will be on hold and executed once all libraries are aligned and `j1.sh` is complete. This is been taken care of by `waiter.sh` script.
 
 Parameters according to the project and analysis strategy will need to be specified in the following scripts:
-- `../../project_parameters.Config.yaml`: define the `metadata_dir`, `genome_reference_path`, `cellranger_parameters`, and `genome_name_cellranger`. Please submit an [issue](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/issues) to request the path to the reference genome of preference. Our team at the Bioinformatics core at DNB maintains the following genome references: (1) human: `GRCh38`, `hg19`,  and `GRCh38_GFP_tdTomato`; (2) mouse: `GRCm39`, `mm10` and `mm9`; and (3) dual index genomes: `GRCh38ANDGRCm39`, `GRCh38_mm10`, and `GRCh38_mm9`. Otherwise, specify the path to the reference genome of your preference. Moreover, for non-human experiments, we recommend setting `create_bam_value` to `false` to reduce memory usage per project. User also need to define `sample_prefix` with the Sample ID used for the samples of the project. This requires that all of the Sample IDs are the same, e.g., DYE001, DYE002, DYE003 and so on.
+- `../../project_parameters.Config.yaml`: define the `metadata_dir`, `genome_reference_path`, `cellranger_parameters`, and `genome_name_cellranger`. Please submit an [issue](https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap/issues) to request the path to the reference genome of preference. Our team at the Bioinformatics core at DNB maintains the following genome references: (1) human: `GRCh38`, `hg19`,  and `GRCh38_GFP_tdTomato`; (2) mouse: `GRCm39`, `mm10` and `mm9`; and (3) dual index genomes: `GRCh38ANDGRCm39`, `GRCh38_mm10`, and `GRCh38_mm9`. Otherwise, specify the path to the reference genome of your preference. 
+
+Moreover, for non-human experiments, we recommend setting `create_bam_value` to `false` to reduce memory usage per project. 
+
+User also need to define `sample_prefix` with the Sample ID used for the samples of the project. This requires that all of the Sample IDs are the same, e.g., DYE001, DYE002, DYE003 and so on. 
 
 - `j1.sh`: 
-   - `--file`: This is defined by default in the `./sc-rna-seq-snap/analyses/cellranger-analysis/input/` dir. If the file lives in another folder, e.g., `metadata_dir`, this should be modified accordingly in the `../../project_parameters.Config.yaml`. The file needs to be in `*.txt` file format. In addition, there is a code line to convert `*.tsv` file to `*.txt` file, if needed. If the file exists already in `./input` as `*.txt`, this line of code will be ignored. This file can contain either one or multiple samples as long as the following minimum parameters are provided: `ID`, `SAMPLE`, and `FASTQ` columns.
   - `--force_cells`: User can add flags as necessary for their analyses and compare alignments with CellRanger, e.g., by using `--force_cells=8000` to constraint the number of cells to be used for alignment. We recommend to run by default, and after careful assessment to edit parameters. We have found that the default parameters set up here work well for most of the cases.
 
 - `j2.sh`: 
@@ -23,8 +26,22 @@ Default memory for running the alignment is set up to 16GB. In case more memory 
 - `./util/run_cellranger.py`: User can search the following and change accordingly `-n 4 -R "rusage[mem=4000] span[hosts=1]`, if that is necessary. However, we have found that these resources work well for most data. 
 
 
+### Handling Technical Replicates in Cell Ranger Count
 
-### Run module on HPC
+If a sample has multiple technical replicates (i.e., multiple sequencing runs of the same library), list all corresponding FASTQ file paths in the same row of the metadata file, separated by commas.
+
+For example:
+
+
+| ID | SAMPLE | FASTQ | 
+:----------|:----------|:----------|:----------|
+| DYE001 | seq_submission_code1_sample1 | /absolute_path/seq_submission_code1/replicate1,/absolute_path/seq_submission_code1/replicate2 | 
+
+
+Cell Ranger will automatically treat these as technical replicates and merge the data into a single output for that sample during processing. There is no need to manually combine the files—just list them correctly, and the pipeline takes care of the rest.
+
+
+## Run module on HPC
 
 To run all of the scripts in this module sequentially on an interactive session on HPC, please run the following command from an interactive compute node:
 
@@ -46,8 +63,6 @@ This module uses CellRanger v8.0.1 for the alignment.
 The structure of this folder is as follows:
 
 ```
-├── input
-|   └── project_metadata.txt
 ├── j1.sh
 ├── j2.sh
 ├── README.md

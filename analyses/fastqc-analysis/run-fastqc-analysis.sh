@@ -32,7 +32,6 @@ fi
 
 ################################################################################################################
 # Extract sample names and fastq paths in parallel
-# Extract column numbers
 sample_column="ID"
 fastq_column="FASTQ"
 
@@ -59,19 +58,19 @@ tail -n +2 "$metadata_file" | while IFS=$'\t' read -r -a fields; do
 
     for file in "$clean_path"/*R2*.fastq.gz; do
       echo "  Running FastQC on: $file"
-      base=$(basename "$file" .fastq.gz)
+      original_base=$(basename "$file" .fastq.gz)
 
-      # Generate unique temp filename (used by FastQC for sample name)
-      unique_name="${sample}_rep${rep}"
-      temp_fastq="${base}_${unique_name}.fastq.gz"
+      # Generate unique FastQC sample name based on sample, replicate, and file basename
+      unique_name="${sample}_rep${rep}_${original_base}"
+      temp_fastq="temp_${unique_name}.fastq.gz"
 
-      # Create symbolic link to avoid modifying original file
+      # Create a symlink with a unique name
       ln -s "$file" "$temp_fastq"
 
-      # Run FastQC on the symlink to embed the correct sample name
+      # Run FastQC
       fastqc -o results/01-fastqc-reports "$temp_fastq" --threads 8
 
-      # Clean up the symlink
+      # Remove symlink
       rm "$temp_fastq"
     done
 

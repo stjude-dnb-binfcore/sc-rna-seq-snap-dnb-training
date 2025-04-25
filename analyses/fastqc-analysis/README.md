@@ -13,6 +13,20 @@ If the module needs to be run more than one time, user will need to remove the `
 rm -r 02-multiqc-reports
 ```
 
+### Handling Technical Replicates in FastQC 
+
+If a sample has multiple technical replicates (i.e., multiple sequencing runs of the same library), list all corresponding FASTQ file paths in the same row of the metadata file, separated by commas.
+
+For example:
+
+
+| ID | SAMPLE | FASTQ | 
+:----------|:----------|:----------|
+| DYE001 | seq_submission_code1_sample1 | /absolute_path/seq_submission_code1/replicate1,/absolute_path/seq_submission_code1/replicate2 | 
+
+
+FastQC module will automatically identify if there are multiple replicates and assign a `rep` value, analyze them separately and name the output files appropriately as: `_rep${rep}_fastqc.html` and `_rep${rep}_fastqc.zip`. There is no need to manually combine or rename the files—just list them correctly, and the pipeline takes care of the rest.
+
 
 ### Run module on an interactive session on HPC within the container
 

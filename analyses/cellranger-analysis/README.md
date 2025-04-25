@@ -73,7 +73,6 @@ The structure of this folder is as follows:
 |   └── 03_cellranger_count_summary
 ├── submit-multiple-jobs.sh
 ├── util
-|   ├── run_cellranger.py
 |   └── summarize_cellranger_results.py
 └── waiter.sh
 ```

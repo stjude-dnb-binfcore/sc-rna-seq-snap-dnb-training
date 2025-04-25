@@ -62,7 +62,7 @@ tail -n +2 "$metadata_file" | while IFS=$'\t' read -r -a fields; do
 
       # Generate unique FastQC sample name based on sample, replicate, and file basename
       unique_name="${sample}_rep${rep}_${original_base}"
-      temp_fastq="temp_${unique_name}.fastq.gz"
+      temp_fastq="${unique_name}.fastq.gz"
 
       # Create a symlink with a unique name
       ln -s "$file" "$temp_fastq"

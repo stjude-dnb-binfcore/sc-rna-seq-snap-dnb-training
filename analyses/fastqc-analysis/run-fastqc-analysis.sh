@@ -53,7 +53,8 @@ tail -n +2 "$metadata_file" | while IFS=$'\t' read -r -a fields; do
 
   rep=1
   for path in "${paths[@]}"; do
-    clean_path=$(echo "$path" | tr -d '\r' | xargs)
+    #clean_path=$(echo "$path" | tr -d '\r' | xargs)
+    clean_path=$(echo "$path" | tr -d '\r' | sed 's/^["'\'']//; s/["'\'']$//')
 
     echo "Processing sample: $sample, replicate: $rep"
     for file in "$clean_path"/*R2*.fastq.gz; do

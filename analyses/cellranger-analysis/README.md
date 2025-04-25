@@ -38,7 +38,7 @@ For example:
 | DYE001 | seq_submission_code1_sample1 | /absolute_path/seq_submission_code1/replicate1,/absolute_path/seq_submission_code1/replicate2 | 
 
 
-Cell Ranger will automatically treat these as technical replicates and merge the data into a single output for that sample during processing. There is no need to manually combine the files—just list them correctly, and the pipeline takes care of the rest.
+Cell Ranger will automatically treat these as technical replicates and merge the data into a single output for that sample during processing. There is no need to manually combine or rename the files—just list them correctly, and the pipeline takes care of the rest.
 
 
 ## Run module on HPC

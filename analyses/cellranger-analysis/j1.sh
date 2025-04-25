@@ -34,6 +34,10 @@ create_bam_value=$(cat ${rootdir}/project_parameters.Config.yaml | grep 'create_
 create_bam_value=${create_bam_value//\"/}  # Removes all double quotes
 echo "$create_bam_value"  # Output: This is a string with quotes.
 
+metadata_file=$(cat ${rootdir}/project_parameters.Config.yaml | grep 'metadata_file:' | awk '{print $2}')
+metadata_file=${metadata_file//\"/}  # Removes all double quotes
+echo "Metadata file: $metadata_file"  # Output 
+
 ########################################################################
 # Create directories to save output files to
 module_dir=$rootdir/analyses/cellranger-analysis
@@ -52,7 +56,7 @@ echo "$logs_dir"
 
 ########################################################################
 # Path to the TSV file
-SAMPLES_FILE="${metadata_dir}"/project_metadata.tsv
+SAMPLES_FILE="$metadata_dir/$metadata_file"
 
 # Check if the TSV file exists
 if [ ! -f "$SAMPLES_FILE" ]; then

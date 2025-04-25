@@ -32,6 +32,7 @@ fi
 
 ################################################################################################################
 # Extract sample names and fastq paths in parallel
+# Extract column numbers
 sample_column="ID"
 fastq_column="FASTQ"
 
@@ -40,40 +41,52 @@ fastq_col_num=$(head -n 1 "$metadata_file" | tr '\t' '\n' | grep -n "^$fastq_col
 
 echo "Sample column: $sample_col_num, FASTQ column: $fastq_col_num"
 
-# Create results dir
 mkdir -p results/01-fastqc-reports
 
-# Read metadata file line by line (excluding header)
+# Read each row and process all FASTQ paths per sample
 tail -n +2 "$metadata_file" | while IFS=$'\t' read -r -a fields; do
   sample="${fields[$((sample_col_num - 1))]}"
   fastq_field="${fields[$((fastq_col_num - 1))]}"
 
-  # Split fastq_field by comma
+  # Split on commas to handle technical replicates
   IFS=',' read -ra paths <<< "$fastq_field"
 
   rep=1
-  for path in "${paths[@]}"; do
-    #clean_path=$(echo "$path" | tr -d '\r' | xargs)
-    clean_path=$(echo "$path" | tr -d '\r' | sed 's/^["'\'']//; s/["'\'']$//')
+  for raw_path in "${paths[@]}"; do
+    clean_path=$(echo "$raw_path" | tr -d '\r' | sed 's/^["'\'']//; s/["'\'']$//')
 
     echo "Processing sample: $sample, replicate: $rep"
+
     for file in "$clean_path"/*R2*.fastq.gz; do
       echo "  Running FastQC on: $file"
-
       base=$(basename "$file" .fastq.gz)
-      
-      # Run FastQc
-      # FastQC doesn't scale linearly with thread count. After about 4–8 threads, the gains start to taper off.
-      fastqc -o results/01-fastqc-reports "$file" --threads 8
-      
-      # Rename files to avoid overwriting if there are multiple techincal replicates
-      mv "results/01-fastqc-reports/${base}_fastqc.html" "results/01-fastqc-reports/${base}_rep${rep}_fastqc.html"
-      mv "results/01-fastqc-reports/${base}_fastqc.zip" "results/01-fastqc-reports/${base}_rep${rep}_fastqc.zip"
+
+      # Generate unique temp filename (used by FastQC for sample name)
+      unique_name="${sample}_rep${rep}"
+      temp_fastq="${base}_${unique_name}.fastq.gz"
+
+      # Create symbolic link to avoid modifying original file
+      ln -s "$file" "$temp_fastq"
+
+      # Run FastQC on the symlink to embed the correct sample name
+      fastqc -o results/01-fastqc-reports "$temp_fastq" --threads 8
+
+      # Clean up the symlink
+      rm "$temp_fastq"
+
+      # No need to rename the output — FastQC already embedded the unique name
+      # But you can still rename the files for consistency or downstream compatibility
+      mv "results/01-fastqc-reports/${base}_${unique_name}_fastqc.html" \
+         "results/01-fastqc-reports/${base}_${unique_name}_fastqc.html"
+
+      mv "results/01-fastqc-reports/${base}_${unique_name}_fastqc.zip" \
+         "results/01-fastqc-reports/${base}_${unique_name}_fastqc.zip"
     done
 
     ((rep++))
   done
 done
+
 
 ################################################################################################################
 ###### STEP 2 ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### 

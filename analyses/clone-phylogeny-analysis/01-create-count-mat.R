@@ -25,6 +25,7 @@ yaml <- read_yaml(configFile)
 # Set up directories and paths to file Inputs/Outputs
 root_dir <- yaml$root_dir
 metadata_dir <- yaml$metadata_dir
+metadata_file <- yaml$metadata_file
 assay <- yaml$assay_annotation_module
 analysis_dir <- file.path(root_dir, "analyses", "clone-phylogeny-analysis") 
 annotation_results_dir <- file.path(root_dir, "analyses", "cell-types-annotation", "results") 
@@ -53,7 +54,7 @@ if (!dir.exists(step_results_dir)) {
 
 #######################################################
 # Read metadata file and define `sample_name`
-metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
+metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 
 # Read metadata file and define `sample_name`
 project_metadata <- read.csv(metadata_file, sep = "\t", header = TRUE)

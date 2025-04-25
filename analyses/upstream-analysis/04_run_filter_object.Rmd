@@ -55,6 +55,7 @@ params:
   PCA_Feature_List_value: "."
   root_dir: './'
   metadata_dir: './'
+  metadata_file: '.'
   PROJECT_NAME: '.'
   PI_NAME: '.'
   TASK_ID: '.'
@@ -189,7 +190,7 @@ module_plots_dir <- file.path(analysis_dir, "plots")
 seurat_results_file <- c(dir(path = seurat_results_dir,  pattern = "seurat_obj.rds", full.names = TRUE, recursive = TRUE))
 #SoupX_file <- file.path(SoupX_results_dir, "SoupX_corrected_mtx_merged.rds")
 scDblFinder_file <- file.path(scDblFinder_results_dir, "merged_seurat_obj_with_doublets.rds")
-metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
+metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 gradient_palette_file <- file.path(root_dir, "figures", "palettes", "gradient_color_palette.tsv")
 
 # Create results_dir

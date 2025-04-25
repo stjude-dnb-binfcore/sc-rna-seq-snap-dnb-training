@@ -41,6 +41,7 @@ params:
   cellranger_parameters: "."
   root_dir: './'
   metadata_dir: './'
+  metadata_file: '.'
   PROJECT_NAME: './'
   PI_NAME: './'
   TASK_ID: './'
@@ -181,7 +182,7 @@ SoupX_results_file <- file.path(SoupX_results_dir, "SoupX_contamination_summary.
 scDblFinder_results_file <- file.path(scDblFinder_results_dir, "doublets_metrics.tsv")
 cells_table_file <- file.path(Filter_object_results_dir, "number_of_cells_per_sample.tsv")
 
-metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
+metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 
 # Create plots directory
 plots_dir <- file.path(module_plots_dir, "05_Final_summary_report") 

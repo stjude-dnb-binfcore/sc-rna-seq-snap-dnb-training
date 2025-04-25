@@ -23,6 +23,7 @@ yaml <- read_yaml(configFile)
 # Set up directories and paths to file Inputs/Outputs
 root_dir <- yaml$root_dir
 metadata_dir <- yaml$metadata_dir
+metadata_file <- yaml$metadata_file
 analysis_dir <- file.path(root_dir, "analyses", "clone-phylogeny-analysis") 
 module_results_dir <- file.path(analysis_dir, "results")
 count_mat_results_dir <- file.path(analysis_dir, "results", "01-create-count-mat") 
@@ -51,7 +52,7 @@ df_allele_list <- list()
 
 #######################################################
 # Read metadata file and define `sample_name`
-metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
+metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 
 # Read metadata file and define `sample_name`
 project_metadata <- read.csv(metadata_file, sep = "\t", header = TRUE)

@@ -73,14 +73,6 @@ tail -n +2 "$metadata_file" | while IFS=$'\t' read -r -a fields; do
 
       # Clean up the symlink
       rm "$temp_fastq"
-
-      # No need to rename the output — FastQC already embedded the unique name
-      # But you can still rename the files for consistency or downstream compatibility
-      #mv "results/01-fastqc-reports/${base}_${unique_name}_fastqc.html" \
-      #   "results/01-fastqc-reports/${base}_${unique_name}_fastqc.html"
-
-      #mv "results/01-fastqc-reports/${base}_${unique_name}_fastqc.zip" \
-      #   "results/01-fastqc-reports/${base}_${unique_name}_fastqc.zip"
     done
 
     ((rep++))

@@ -47,7 +47,7 @@ if (!dir.exists(seurat_results_dir)) {
 metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 
 # Read metadata file and define `sample_name`
-project_metadata <- read.csv(metadata_file, sep = "\t", header = TRUE)
+project_metadata <- read.csv(project_metadata_file, sep = "\t", header = TRUE)
 sample_name <- unique(as.character(project_metadata$ID))
 sample_name <- sort(sample_name, decreasing = FALSE)
 print(sample_name)

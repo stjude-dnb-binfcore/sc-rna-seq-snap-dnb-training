@@ -43,7 +43,7 @@ echo "Sample column: $sample_col_num, FASTQ column: $fastq_col_num"
 mkdir -p results/01-fastqc-reports
 
 # Read each row and process all FASTQ paths per sample
-tail -n +2 "$metadata_file" | while IFS=$'\t' read -r -a fields; do
+tail -n +2 "$metadata_file" | sort -t$'\t' -k"$sample_col_num" | while IFS=$'\t' read -r -a fields; do
   sample="${fields[$((sample_col_num - 1))]}"
   fastq_field="${fields[$((fastq_col_num - 1))]}"
 

@@ -202,7 +202,7 @@ a4height <- 11.7
 # Read metadata file and define `sample_name`
 ```{r read-metadata-define-sample-name, echo=TRUE}
 # Read metadata
-project.metadata <- read.csv(metadata_file, sep = '\t', header = TRUE)
+project.metadata <- read.csv(project_metadata_file, sep = '\t', header = TRUE)
 sample_name <- unique(as.character(project.metadata$ID))
 sample_name <- sort(sample_name, decreasing = FALSE)
 print(sample_name)

@@ -189,7 +189,7 @@ palette_file <- file.path(root_dir, "figures", "palettes", "qc_color_palette.tsv
 gradient_palette_file <- file.path(root_dir, "figures", "palettes", "gradient_color_palette.tsv")
 
 # Read metadata file and define `sample_name`
-project_metadata <- read.csv(metadata_file, sep = "\t", header = TRUE)
+project_metadata <- read.csv(project_metadata_file, sep = "\t", header = TRUE)
 sample_name <- unique(as.character(project_metadata$ID))
 sample_name <- sort(sample_name, decreasing = FALSE)
 print(sample_name)

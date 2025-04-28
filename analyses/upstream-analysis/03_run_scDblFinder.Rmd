@@ -165,7 +165,7 @@ seurat_results_dir <- file.path(analysis_dir, "results", "02_Seurat_qc")
 
 # Input files
 seurat_results_file <- c(dir(path = seurat_results_dir,  pattern = "seurat_obj_raw.rds", full.names = TRUE, recursive = TRUE))
-metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
+project_metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 
 # Create ScDblFinder_results_dir
 ScDblFinder_results_dir <- file.path(paste0(results_dir, "/", "03_scDblFinder", "/"))
@@ -189,7 +189,7 @@ source(paste0(root_dir, "/figures/scripts/theme_plot.R"))
 
 ```{r read-metadata-define-sample-name, echo=TRUE}
 # Read metadata
-project.metadata <- read.csv(metadata_file, sep = '\t', header = TRUE)
+project.metadata <- read.csv(project_metadata_file, sep = '\t', header = TRUE)
 sample_name <- unique(as.character(project.metadata$ID))
 sample_name <- sort(sample_name, decreasing = FALSE)
 print(sample_name)

@@ -170,7 +170,7 @@ analysis_dir <- file.path(root_dir, "analyses", "upstream-analysis")
 module_results_dir <- file.path(analysis_dir, paste0("results"))
 
 # Input files
-metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
+project_metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 
 # Create SoupX_results_dir
 SoupX_results_dir <- file.path(module_results_dir, paste0("01_SoupX"))

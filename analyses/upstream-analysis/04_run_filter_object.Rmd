@@ -190,7 +190,7 @@ module_plots_dir <- file.path(analysis_dir, "plots")
 seurat_results_file <- c(dir(path = seurat_results_dir,  pattern = "seurat_obj.rds", full.names = TRUE, recursive = TRUE))
 #SoupX_file <- file.path(SoupX_results_dir, "SoupX_corrected_mtx_merged.rds")
 scDblFinder_file <- file.path(scDblFinder_results_dir, "merged_seurat_obj_with_doublets.rds")
-metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
+project_metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 gradient_palette_file <- file.path(root_dir, "figures", "palettes", "gradient_color_palette.tsv")
 
 # Create results_dir
@@ -211,7 +211,7 @@ source(paste0(analysis_dir, "/util/function-create-UMAP.R"))
 # Read metadata file and define `sample_name`
 ```{r read-metadata-define-sample-name, echo=TRUE}
 # Read metadata
-project.metadata <- read.csv(metadata_file, sep = '\t', header = TRUE)
+project.metadata <- read.csv(project_metadata_file, sep = '\t', header = TRUE)
 sample_name <- unique(as.character(project.metadata$ID))
 sample_name <- sort(sample_name, decreasing = FALSE)
 print(sample_name)

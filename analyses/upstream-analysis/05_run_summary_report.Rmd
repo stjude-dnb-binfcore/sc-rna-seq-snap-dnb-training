@@ -182,7 +182,7 @@ SoupX_results_file <- file.path(SoupX_results_dir, "SoupX_contamination_summary.
 scDblFinder_results_file <- file.path(scDblFinder_results_dir, "doublets_metrics.tsv")
 cells_table_file <- file.path(Filter_object_results_dir, "number_of_cells_per_sample.tsv")
 
-metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
+project_metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 
 # Create plots directory
 plots_dir <- file.path(module_plots_dir, "05_Final_summary_report") 
@@ -284,7 +284,7 @@ Results per QC method: <font size="3"><span style="color:blue">``r module_result
 
 ```{r read-metadata-define-sample-name, echo = FALSE}
 # Read metadata file and define `sample_name`
-project.metadata <- read.csv(metadata_file, sep = '\t', header = TRUE)
+project.metadata <- read.csv(project_metadata_file, sep = '\t', header = TRUE)
 sample_name <- unique(as.character(project.metadata$ID))
 sample_name <- sort(sample_name, decreasing = FALSE)
 print(sample_name)

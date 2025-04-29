@@ -60,6 +60,7 @@ params:
   use_SoupX_filtering: "."
   root_dir: "."
   metadata_dir: "."
+  metadata_file: '.'
   PROJECT_NAME: "."
   PI_NAME: "."
   TASK_ID: "."
@@ -183,12 +184,12 @@ module_results_dir <- file.path(analysis_dir, paste0("results"))
 SoupX_results_dir <- file.path(module_results_dir, paste0("01_SoupX"))
 
 # We will first read in metadata file as we need to define sample_name 
-metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
+project_metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 palette_file <- file.path(root_dir, "figures", "palettes", "qc_color_palette.tsv")
 gradient_palette_file <- file.path(root_dir, "figures", "palettes", "gradient_color_palette.tsv")
 
 # Read metadata file and define `sample_name`
-project_metadata <- read.csv(metadata_file, sep = "\t", header = TRUE)
+project_metadata <- read.csv(project_metadata_file, sep = "\t", header = TRUE)
 sample_name <- unique(as.character(project_metadata$ID))
 sample_name <- sort(sample_name, decreasing = FALSE)
 print(sample_name)

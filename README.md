@@ -147,6 +147,7 @@ Important Considerations:
 |  ├── cluster-cell-calling
 |  ├── fastqc-analysis
 |  ├── integrative-analysis
+|  ├── project-updates
 |  ├── README.md
 |  ├── rshiny-app
 |  └── upstream-analysis

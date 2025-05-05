@@ -6,14 +6,22 @@ set -o pipefail
 # set up running directory
 cd "$(dirname "${BASH_SOURCE[0]}")" 
 
+# Read root path
+rootdir=$(realpath "./../..")
+echo "$rootdir"
+
 ########################################################################
 # Read metadata_dir from YAML configuration file
-metadata_dir=$(grep 'metadata_dir:' ../../project_parameters.Config.yaml | awk '{print $2}')
+metadata_dir=$(cat ${rootdir}/project_parameters.Config.yaml | grep 'metadata_dir:' | awk '{print $2}')
 metadata_dir=${metadata_dir//\"/}  # Removes all double quotes
-echo "Metadata directory: $metadata_dir"  # Output the directory path
+echo "Metadata directory: $metadata_dir"  # Output 
+
+metadata_file=$(cat ${rootdir}/project_parameters.Config.yaml | grep 'metadata_file:' | awk '{print $2}')
+metadata_file=${metadata_file//\"/}  # Removes all double quotes
+echo "Metadata file: $metadata_file"  # Output 
 
 # Define the path to the metadata file (adjust to your actual file)
-metadata_file="$metadata_dir/project_metadata.tsv"
+metadata_file="$metadata_dir/$metadata_file"
 
 # Check if metadata file exists
 if [ ! -f "$metadata_file" ]; then
@@ -21,60 +29,55 @@ if [ ! -f "$metadata_file" ]; then
   exit 1
 fi
 
-########################################################################
-# Define the column name for FASTQ (adjust to your actual header name)
-fastq_column_name="FASTQ"
 
-# Extract the column number of FASTQ from the header (first line)
-column_number=$(head -n 1 "$metadata_file" | tr '\t' '\n' | grep -n "^$fastq_column_name$" | cut -d: -f1)
+################################################################################################################
+# Extract sample names and fastq paths in parallel
+sample_column="ID"
+fastq_column="FASTQ"
 
-# Check if the FASTQ column exists
-if [ -z "$column_number" ]; then
-  echo "Error: Column '$fastq_column_name' not found in the metadata file."
-  exit 1
-fi
+sample_col_num=$(head -n 1 "$metadata_file" | tr '\t' '\n' | grep -n "^$sample_column$" | cut -d: -f1)
+fastq_col_num=$(head -n 1 "$metadata_file" | tr '\t' '\n' | grep -n "^$fastq_column$" | cut -d: -f1)
 
-########################################################################
-# Declare an array to store the FASTQ values
-declare -a fastqc_dir
+echo "Sample column: $sample_col_num, FASTQ column: $fastq_col_num"
 
-# Use awk to extract the FASTQ column values (skip the header)
-# Adjust delimiter (tab or comma) based on your file format
-while IFS= read -r fastq_value; do
-  fastqc_dir+=("$fastq_value")
-done < <(awk -F'\t' -v col="$column_number" 'NR > 1 {print $col}' "$metadata_file")
-
-# Check if the array has values
-if [ "${#fastqc_dir[@]}" -gt 0 ]; then
-  echo "fastqc_dir is an array with ${#fastqc_dir[@]} elements."
-else
-  echo "fastqc_dir is empty or failed to extract values."
-fi
-
-# Optionally print the FASTQ values for verification
-echo "FASTQ values extracted:"
-for dir in "${fastqc_dir[@]}"; do
-  echo "$dir"
-done
-
-########################################################################
-# Create results dir
-mkdir -p results
 mkdir -p results/01-fastqc-reports
 
-########################################################################
-################################################################################################################
-###### STEP 1 ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### 
-################################################################################################################
-# Run FastQC per library
+# Read each row and process all FASTQ paths per sample
+tail -n +2 "$metadata_file" | sort -t$'\t' -k"$sample_col_num" | while IFS=$'\t' read -r -a fields; do
+  sample="${fields[$((sample_col_num - 1))]}"
+  fastq_field="${fields[$((fastq_col_num - 1))]}"
 
-# Loop through the array and echo each element
-#for dir in "${fastqc_dir_array[@]}"; 
-for dir in $(echo "${fastqc_dir[@]}" | tr ' ' '\n' | sort); 
-  do
-  echo "Processing directory: ${dir}"
-  fastqc -o results/01-fastqc-reports ${dir}/*R2*.fastq.gz
+  # Split on commas to handle technical replicates
+  IFS=',' read -ra paths <<< "$fastq_field"
+
+  rep=1
+  for raw_path in "${paths[@]}"; do
+    clean_path=$(echo "$raw_path" | tr -d '\r' | sed 's/^["'\'']//; s/["'\'']$//')
+
+    echo "Processing sample: $sample, replicate: $rep"
+
+    for file in "$clean_path"/*R2*.fastq.gz; do
+      echo "  Running FastQC on: $file"
+      original_base=$(basename "$file" .fastq.gz)
+
+      # Generate unique FastQC sample name based on sample, replicate, and file basename
+      unique_name="${sample}_rep${rep}_${original_base}"
+      temp_fastq="${unique_name}.fastq.gz"
+
+      # Create a symlink with a unique name
+      ln -s "$file" "$temp_fastq"
+
+      # Run FastQC
+      fastqc -o results/01-fastqc-reports "$temp_fastq" --threads 8
+
+      # Remove symlink
+      rm "$temp_fastq"
+    done
+
+    ((rep++))
+  done
 done
+
 
 ################################################################################################################
 ###### STEP 2 ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### ###### 

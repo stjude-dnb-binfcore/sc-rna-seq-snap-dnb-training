@@ -53,7 +53,6 @@ params:
   future_globals_value: '.'
   assay: '.'
   root_dir: './'
-  metadata_dir: './'
   PROJECT_NAME: '.'
   PI_NAME: '.'
   TASK_ID: '.'

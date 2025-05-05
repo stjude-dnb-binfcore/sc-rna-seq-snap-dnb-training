@@ -185,6 +185,7 @@ analysis_dir <- file.path(root_dir, "analyses", "cell-contamination-removal-anal
 data_dir <- file.path(root_dir, "analyses", "cluster-cell-calling", "results", glue::glue("01_cluster_cell_calling_{resolution}"))
 upstream_analysis_dir <- file.path(root_dir, "analyses", "upstream-analysis")
 metadata_dir <- yaml$metadata_dir
+metadata_file <- yaml$metadata_file
 
 # Input files
 data_file <- file.path(data_dir, glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))
@@ -247,10 +248,10 @@ Next, we will plot distribution of the number of genes, UMI, and percent mitocho
 ```{r plot-data-before-removing-contamination, fig.width = 14, fig.height = 8, fig.fullwidth = TRUE, echo=TRUE}
 #######################################################
 # Read metadata file and define `sample_name`
-metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
+project_metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 
 # Read metadata file and define `sample_name`
-project_metadata <- read.csv(metadata_file, sep = "\t", header = TRUE)
+project_metadata <- read.csv(project_metadata_file, sep = "\t", header = TRUE)
 sample_name <- unique(as.character(project_metadata$ID))
 sample_name <- sort(sample_name, decreasing = FALSE)
 print(sample_name)

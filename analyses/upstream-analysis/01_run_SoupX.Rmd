@@ -37,6 +37,7 @@ header-includes:
 params:
   root_dir: './'
   metadata_dir: './'
+  metadata_file: '.'
   PROJECT_NAME: '.'
   PI_NAME: '.'
   TASK_ID: '.'
@@ -169,7 +170,7 @@ analysis_dir <- file.path(root_dir, "analyses", "upstream-analysis")
 module_results_dir <- file.path(analysis_dir, paste0("results"))
 
 # Input files
-metadata_file <- file.path(metadata_dir, "project_metadata.tsv") # metadata input file
+project_metadata_file <- file.path(metadata_dir, metadata_file) # metadata input file
 
 # Create SoupX_results_dir
 SoupX_results_dir <- file.path(module_results_dir, paste0("01_SoupX"))
@@ -201,7 +202,7 @@ a4height <- 11.7
 # Read metadata file and define `sample_name`
 ```{r read-metadata-define-sample-name, echo=TRUE}
 # Read metadata
-project.metadata <- read.csv(metadata_file, sep = '\t', header = TRUE)
+project.metadata <- read.csv(project_metadata_file, sep = '\t', header = TRUE)
 sample_name <- unique(as.character(project.metadata$ID))
 sample_name <- sort(sample_name, decreasing = FALSE)
 print(sample_name)

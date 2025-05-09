@@ -6,7 +6,7 @@
     <img src="https://www.repostatus.org/badges/latest/active.svg?style=for-the-badge" alt="The project has reached a stable, usable state and is being actively developed." />
   </a>
   <a href="https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap">
-    <img src="https://img.shields.io/badge/version-1.0.0.beta.4-brightgreen" alt="Version" />
+    <img src="https://img.shields.io/badge/version-1.0.0.beta.5-brightgreen" alt="Version" />
   </a>
 </p>
 
@@ -147,6 +147,7 @@ Important Considerations:
 |  ├── cluster-cell-calling
 |  ├── fastqc-analysis
 |  ├── integrative-analysis
+|  ├── project-updates
 |  ├── README.md
 |  ├── rshiny-app
 |  └── upstream-analysis

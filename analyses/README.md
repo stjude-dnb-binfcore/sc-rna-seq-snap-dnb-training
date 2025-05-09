@@ -13,6 +13,7 @@ Each module is self-contained and can be executed independently or as part of a 
 7. `cell-types-annotation` module (description="Pipeline for annotating cell types.", required=True)
 8. `rshiny-app` module (description="Pipeline for generating an R shiny app for the project.", required=False)
 9. `clone-phylogeny-analysis` module (description="Pipeline for Clone phylogeny analysis tool. This is currently available for human data only", required=False)
+10. `project-updates` module (description="Pipeline for summarizing results from all modules and generating project reports.", required=False)
 
 ## Contact
 

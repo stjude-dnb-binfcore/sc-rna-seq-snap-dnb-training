@@ -71,45 +71,46 @@ fi
 # Using `cut` to extract the first three columns (ID, SAMPLE, FASTQ)
 # This assumes your TSV is tab-separated. If it's space-separated, adjust the delimiter accordingly.
 # Sort the samples by the second column (SAMPLE) alphabetically, and process
-tail -n +2 "$SAMPLES_FILE" | sort -t$'\t' -k2,2 | cut -f 1-3 | while IFS=$'\t' read -r ID SAMPLE FASTQ; do
-  # Skip the header row by checking if SAMPLE is "SAMPLE"
-  if [ "$SAMPLE" == "SAMPLE" ]; then
-    continue
-  fi
+declare -A sample_map
+declare -A fastq_map
 
-  # Process each sample here
-  echo "Processing Sample ID: $ID, Sample: $SAMPLE, FASTQ: $FASTQ"
+# Read the file without using a pipe (to avoid a subshell)
+while IFS=$'\t' read -r ID SAMPLE FASTQ; do
+  # Skip empty or malformed lines
+  [ -z "$ID" ] && continue
+  [ "$ID" == "ID" ] && continue  # skip header just in case
 
-  # Handle comma-separated FASTQ paths
-  # Ensure that FASTQ paths are properly formatted
-  fastq_list=($(echo $FASTQ | tr ',' '\n'))  # Convert comma-separated values to a list
-  fastq_str=$(IFS=,; echo "${fastq_list[*]}")  # Join the list back into a comma-separated string
-  
-  #echo "Using FASTQ paths: $FASTQ"
-  echo "Using FASTQ paths: $fastq_str"
+  sample_map["$ID"]+="${SAMPLE},"
+  fastq_map["$ID"]+="${FASTQ},"
+done < <(tail -n +2 "$SAMPLES_FILE" | cut -f1-3)
 
-  # Run cellranger count for each sample
-  echo "Running cellranger count for sample $SAMPLE..."
-  
-  # Submit job to LSF with appropriate options
-  # Avoid setting too many cores – 6 is a sweet spot; higher doesn’t scale linearly and may delay scheduling.
-  bsub -J "RNA_${ID}" -n 6 -M 48000 -R "rusage[mem=8000]" -o "${logs_dir}/${ID}.out" -e "${logs_dir}/${ID}.err" \
+# Iterate over each unique ID
+for ID in "${!sample_map[@]}"; do
+  SAMPLE_str="${sample_map[$ID]%,}"     # Remove trailing comma
+  FASTQ_str="${fastq_map[$ID]%,}"       # Remove trailing comma
+
+  echo "Processing Sample ID: $ID"
+  echo "  Samples: $SAMPLE_str"
+  echo "  FASTQ paths: $FASTQ_str"
+
+  # Submit job to LSF
+  bsub -J "RNA_${ID}" -n 6 -M 48000 -R "rusage[mem=8000]" \
+    -o "${logs_dir}/${ID}.out" -e "${logs_dir}/${ID}.err" \
   "cellranger count --id=${ID} \
-      --sample=${SAMPLE} \
-      --fastqs=${fastq_str} \
-      --transcriptome=${genome_reference_path}  \
+      --sample=${SAMPLE_str} \
+      --fastqs=${FASTQ_str} \
+      --transcriptome=${genome_reference_path} \
       --create-bam=${create_bam_value} \
       --output-dir=./$results_dir/02_cellranger_count/${cellranger_parameters}/${ID} \
       --localcores=6 \
       --localmem=48 \
       --jobmode=lsf"
 
-  # Check if the command was successful
   if [ $? -eq 0 ]; then
-    echo "Cellranger count completed successfully for sample $SAMPLE."
+    echo "Cellranger count submitted successfully for ID: $ID"
   else
-    echo "Error: cellranger count failed for sample $SAMPLE."
+    echo "Error submitting cellranger count for ID: $ID"
   fi
-
 done
-########################################################################
+
+################################

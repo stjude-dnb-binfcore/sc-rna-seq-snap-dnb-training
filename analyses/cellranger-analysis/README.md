@@ -13,7 +13,7 @@ Parameters according to the project and analysis strategy will need to be specif
 
 Moreover, for non-human experiments, we recommend setting `create_bam_value` to `false` to reduce memory usage per project. 
 
-User also need to define `sample_prefix` with the Sample ID used for the samples of the project. Sample IDs should follow a format like: PREFIX001 (e.g., DYE001, ABC002). You can specify multiple prefixes if your project uses more than one.
+User also need to define `sample_prefix` with the Sample ID used for the samples of the project. Sample IDs should follow a format like: PREFIX001 (e.g., DYE001, ABC-002, XYZ_003). You can specify multiple prefixes if your project uses more than one.
 
 - `j1.sh`: 
   - `--force_cells`: User can add flags as necessary for their analyses and compare alignments with CellRanger, e.g., by using `--force_cells=8000` to constraint the number of cells to be used for alignment. We recommend to run by default, and after careful assessment to edit parameters. We have found that the default parameters set up here work well for most of the cases.

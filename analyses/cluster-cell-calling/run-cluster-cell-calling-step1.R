@@ -24,6 +24,8 @@ yaml <- read_yaml(configFile)
 root_dir <- yaml$root_dir
 analysis_dir <- file.path(root_dir, "analyses", "cluster-cell-calling") 
 report_dir <- file.path(analysis_dir, "plots") 
+data_dir_module <- yaml$data_dir_module_name
+umap_value <- yaml$umap_value
 
 ################################################################################################################
 # Run Rmd scripts 
@@ -56,3 +58,4 @@ rmarkdown::render('01-cluster-cell-calling.Rmd', clean = TRUE,
                                 COMPLETION_DATE = yaml$COMPLETION_DATE))
 
 ################################################################################################################
+

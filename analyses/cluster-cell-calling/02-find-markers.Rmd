@@ -155,7 +155,7 @@ module_results_dir <- file.path(analysis_dir, "results")
 module_plots_dir <- file.path(analysis_dir, "plots")
 
 # Input files
-data_file <- file.path(data_dir, glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))
+data_file <- file.path(data_dir, glue::glue("seurat_obj_clusters_all.rds"))
 
 # Create results_dir
 results_dir <- file.path(module_results_dir, "02_find_markers")

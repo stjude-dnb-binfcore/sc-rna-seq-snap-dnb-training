@@ -27,7 +27,9 @@ bsub < lsf-script.txt
 
 
 ## Folder content
-This folder contains a script tasked to integrate the samples across the project.
+
+This folder contains a script tasked to integrate the samples across the project. For single-sample cohorts, however, this module should be skipped. 
+
 
 The script named `custom-seurat-functions.R` is from [CellGen Programme Template Notebooks](https://github.com/cellgeni/notebooks).
 

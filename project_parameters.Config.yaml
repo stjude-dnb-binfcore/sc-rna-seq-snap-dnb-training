@@ -86,10 +86,12 @@ reference_list_value: NULL
 PCA_Feature_List_value: NULL
 
 # `./analyses/cluster-cell-calling`
+data_dir_module_name: "integrative-analysis" # Options:: "integrative-analysis" (default), "upstream-analysis" (for cohorts with a single sample)
+umap_value: "umap" # Options: "umap" (default) or "umapndim30nn30" (for cohorts with a single sample)
 resolution_clustering_module: "default_multiple" # Options: "custom_multiple", "default_multiple" or define value of resolution, e.g., "0.5"
-integration_method_clustering_module: "harmony" # Options:: "seurat", "harmony", "inmf"
+integration_method_clustering_module: "harmony" # Options:: "seurat", "harmony", "inmf" and "not_integrated" (for cohorts with a single sample)
 num_dim_clustering_module: 30 
-reduction_value_clustering_module: "harmony" # Options: For seurat: "pca"; For harmony: "harmony"; For liger: "inmf"
+reduction_value_clustering_module: "harmony" # Options: For seurat: "pca"; For harmony: "harmony"; For liger: "inmf"; For cohorts with a single sample: "pca"
 assay_clustering_module: "RNA"  # Options: "RNA" (default) or "RNA_SoupX"
 
 # Initially, we use a list of multiple resolutions and then we run the module again with the single resolution that fits the data best. 

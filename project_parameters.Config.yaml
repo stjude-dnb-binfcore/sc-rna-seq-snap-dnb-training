@@ -75,7 +75,7 @@ use_scDblFinder_filtering_summary_report: "NO" # Options: "YES" or "NO" (default
 use_seurat_integration: "NO" # Options: "YES" or "NO"
 use_harmony_integration: "YES" # Options: "YES" or "NO"
 use_liger_integration: "NO" # Options: "YES" or "NO"
-integration_method: "harmony" # Options: "seurat", "harmony", "inmf"
+integration_method: "harmony" # Options: "seurat", "harmony", "inmf", "not_integrated" (for cohorts with a single sample)
 num_dim_seurat: 30
 num_dim_seurat_integration: 50
 big_data_value: FALSE # Options: "TRUE" or "FALSE"

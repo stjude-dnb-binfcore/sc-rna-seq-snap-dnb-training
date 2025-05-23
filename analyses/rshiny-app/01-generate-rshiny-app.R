@@ -87,7 +87,10 @@ source(paste0(module_dir, "/util/makeShinyFiles_assay.R"))
 
 cat("Beginning to process results from", "annotations_file", "\n")
 seu1 <- readRDS(annotations_all_file)
-scConf1 <- createConfig(seu1)
+scConf1 <- createConfig(seu1, 
+                        meta.to.include = NA, # Include all metadata (or specify if you want a subset)
+                        maxLevels = 150)     # Use the number of unique levels
+
 makeShinyFiles_assay(seu1, 
                      scConf1, 
                      shiny.prefix = "sc1", 

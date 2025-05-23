@@ -47,7 +47,7 @@ input_data_folder= yaml$input_data_folder_name
 # Caution! Sometimes this file will be located in the `cluster-cell-calling` module
 # BUT if we had to remove contamination, then it will be located in the `cell-contamination-removal-analysis` module
 data_dir_annotation_module <- file.path(root_dir, "analyses", input_data, "results", glue::glue("{input_data_folder}_{resolution_for_input_data}"))
-input_data_file <- file.path(data_dir_annotation_module, glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))
+input_data_file <- file.path(data_dir_annotation_module, glue::glue("seurat_obj_clusters_all.rds"))
 
 ################################################################################################################
 # Gene score cell type annotation

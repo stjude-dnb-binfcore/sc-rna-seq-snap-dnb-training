@@ -87,7 +87,7 @@ PCA_Feature_List_value: NULL
 
 # `./analyses/cluster-cell-calling`
 data_dir_module_name: "integrative-analysis" # Options:: "integrative-analysis" (default), "upstream-analysis" (for cohorts with a single sample)
-umap_value: "umap" # Options: "umap" (default) or "umapndim30nn30" (for cohorts with a single sample)
+umap_value: "umap" # Options: "umap" (default) or "umapndim30nn30" (for cohorts with a single sample or any other name based on the values used for `num_dim_seurat_qc` and `num_neighbors_seurat_qc`
 resolution_clustering_module: "default_multiple" # Options: "custom_multiple", "default_multiple" or define value of resolution, e.g., "0.5"
 integration_method_clustering_module: "harmony" # Options:: "seurat", "harmony", "inmf" and "not_integrated" (for cohorts with a single sample)
 num_dim_clustering_module: 30 
@@ -113,7 +113,7 @@ assay_contamination_module: "RNA" # Options: "RNA" (default) or "RNA_SoupX"
 # `./analyses/cell-types-annotation`
 module_with_input_data: "cluster-cell-calling" # Options: "cluster-cell-calling" or "cell-contamination-removal-analysis"
 input_data_folder_name: "01_cluster_cell_calling" # Options: "01_cluster_cell_calling" or "03_cluster_cell_calling" if the data are coming from the `cell-contamination-removal-analysis` module
-redution_value_annotation_module: "umap" # Options: For seurat and harmony use: "umap"; For Liger: "glue::glue("{integration_method}")"
+redution_value_annotation_module: "umap" # Options: For seurat and harmony use: "umap"; For Liger: "glue::glue("{integration_method}")" or "umapndim30nn30" (for cohorts with a single sample or any other name based on the values used for `num_dim_seurat_qc` and `num_neighbors_seurat_qc`
 min.diff.med_value_annotation_module: 0.1 # Higher thresholds for pruning labels correspond to greater assignment certainty
 use_min.diff.med_annotation_module: "NO" # Options: "YES" or "NO" (default)
 assay_annotation_module: "RNA"  # Options: "RNA" (default) or "RNA_SoupX"

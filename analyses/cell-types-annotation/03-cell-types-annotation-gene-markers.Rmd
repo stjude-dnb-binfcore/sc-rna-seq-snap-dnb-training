@@ -192,7 +192,7 @@ a4height <- 11.7
 
 # Read seurat object
 
-First, we will use the object as generated from the pipeline in the `input_data` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params` and the clusters. 
+First, we will use the object as generated from the pipeline in the `input_data` module. 
 
 ```{r read-object, echo=TRUE}
 seurat_obj <- readRDS(data_file)

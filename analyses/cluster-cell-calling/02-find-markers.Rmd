@@ -181,7 +181,7 @@ a4height <- 11.7
 
 # Read seurat object
 
-First, we will use the seurat object.
+First, we will use the seurat object as generated from the pipeline in the `r data_dir_module` module. 
 
 ```{r read-object, echo=TRUE}
 seurat_obj <- readRDS(data_file)

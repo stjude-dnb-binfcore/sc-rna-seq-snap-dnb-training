@@ -190,7 +190,7 @@ run_numbat_file <- file.path(run_numbat_results_dir, sample_name[i])
   
 # Check if the directory exists and summarize the output into a Numbat object
 numbat_obj <- Numbat$new(out_dir = run_numbat_file)
-#saveRDS(numbat_obj, file.path(numbat_results_dir, sample_name[i], "nb_object.rds")) # Save object
+#saveRDS(numbat_obj, file.path(samples_results_dir, "nb_object.rds")) # Save object
 cat("Successfully created Numbat object for sample:", sample_name[i], "\n")
 
 # Input files
@@ -467,6 +467,12 @@ The mutational history can also be represented on the clone level, where cells w
 fname <- paste0(numbat_plots_dir, "/", sample_name[i], "/", "plot10.png")
 p <- print(numbat_obj$plot_mut_history(pal = palette_clones))
 ggsave(file = fname, p, width = 6, height = 5, device = "png")
+```
+
+# Save output files
+
+```{r save-output, echo=TRUE}
+write_tsv(metadata_table, file = paste0(numbat_results_dir, "/", sample_name[i], "/", "metadata", ".tsv")) # Save metadata
 ```
 
 ```{r echo=FALSE}

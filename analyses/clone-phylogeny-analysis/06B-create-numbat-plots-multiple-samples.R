@@ -51,11 +51,11 @@ if (!dir.exists(numbat_plots_dir)) {
 
 
 # Create numbat_dir
-#numbat_results_dir <- 
-#  file.path(module_results_dir, paste0("06-create-numbat-plots"))
-#if (!dir.exists(numbat_results_dir)) {
-#  dir.create(numbat_results_dir)
-#}
+numbat_results_dir <- 
+  file.path(module_results_dir, paste0("06-create-numbat-plots"))
+if (!dir.exists(numbat_results_dir)) {
+  dir.create(numbat_results_dir)
+}
 
 
 #######################################################
@@ -139,9 +139,9 @@ for (i in seq_along(sample_name)){
     dir.create(samples_plots_dir)}
   
   # Create results_dir per sample
-  #results_dir <- file.path(numbat_results_dir, sample_name[i])
-  #if (!dir.exists(results_dir)) {
-  #  dir.create(results_dir)}
+  samples_results_dir <- file.path(numbat_results_dir, sample_name[i])
+  if (!dir.exists(samples_results_dir)) {
+    dir.create(samples_results_dir)}
   
   
   rmarkdown::render('06A-create-numbat-plots.Rmd', clean = TRUE,

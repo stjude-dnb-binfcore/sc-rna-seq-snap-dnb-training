@@ -42,6 +42,7 @@ condition_value <- yaml$condition_value
 assay <- yaml$assay_filter_object
 annotations_dir <- yaml$annotations_dir_rshiny_app
 annotations_filename <- yaml$annotations_filename_rshiny_app
+redution_value <- yaml$redution_value_annotation_module
 
 
 # Set up directories and paths to root_dir and analysis_dir
@@ -87,6 +88,24 @@ source(paste0(module_dir, "/util/makeShinyFiles_assay.R"))
 
 cat("Beginning to process results from", "annotations_file", "\n")
 seu1 <- readRDS(annotations_all_file)
+
+# Check if umap1 and umap2 already exist in metadata
+if (!all(c("umap1", "umap2") %in% colnames(seu1@meta.data))) {
+  message("umap1 and umap2 not found in metadata. Extracting and adding from reduction: ", redution_value)
+  
+  # Extract embeddings from the reduction
+  emb <- Embeddings(seu1, redution_value)
+  
+  # Add to metadata with exact column names
+  seu1$umap1 <- emb[, 1]
+  seu1$umap2 <- emb[, 2]
+  
+  message("umap1 and umap2 successfully added to metadata.")
+} else {
+  message("umap1 and umap2 already exist in metadata. Skipping extraction.")
+}
+
+
 scConf1 <- createConfig(seu1, 
                         meta.to.include = NA, # Include all metadata (or specify if you want a subset)
                         maxLevels = 150)     # Use the number of unique levels
@@ -94,7 +113,7 @@ scConf1 <- createConfig(seu1,
 makeShinyFiles_assay(seu1, 
                      scConf1, 
                      shiny.prefix = "sc1", 
-                     default.dimred = c("UMAP1", "UMAP2"),
+                     default.dimred = c("umap1", "umap1"),
                      shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
 
 cat("Make R shiny app for all files", "\n")

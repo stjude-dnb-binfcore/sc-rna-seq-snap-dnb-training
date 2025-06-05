@@ -23,6 +23,8 @@ yaml <- read_yaml(configFile)
 root_dir <- yaml$root_dir
 metadata_dir <- yaml$metadata_dir
 metadata_file <- yaml$metadata_file
+redution_value <- yaml$redution_value_annotation_module
+
 analysis_dir <- file.path(root_dir, "analyses", "clone-phylogeny-analysis") 
 module_results_dir <- file.path(analysis_dir, "results")
 annotation_results_dir <- file.path(root_dir, "analyses", "cell-types-annotation", "results") 
@@ -88,6 +90,27 @@ print(sample_name)
 ##########################################################################################################
 # Read the Seurat object
 seurat_obj <- readRDS(seurat_obj_file)
+
+
+# Check if UMAP_1 and UMAP_2 already exist in metadata
+if (!all(c("UMAP_1", "UMAP_2") %in% colnames(seurat_obj@meta.data))) {
+  message("UMAP_1 and UMAP_2 not found in metadata. Extracting and adding from reduction: ", redution_value)
+  
+  # Extract embeddings from the reduction
+  emb <- Embeddings(seurat_obj, redution_value)
+  
+  # Add to metadata with exact column names
+  seurat_obj$UMAP_1 <- emb[, 1]
+  seurat_obj$UMAP_2 <- emb[, 2]
+  
+  message("UMAP_1 and UMAP_2 successfully added to metadata.")
+} else {
+  message("UMAP_1 and UMAP_2 already exist in metadata. Skipping extraction.")
+}
+
+
+# Preview metadata
+print(head(seurat_obj@meta.data))
 
 # Split the Seurat object by the 'orig.ident' in the metadata
 # You do not need to repeat normalization or UMAP after splitting the Seurat object by sample. 

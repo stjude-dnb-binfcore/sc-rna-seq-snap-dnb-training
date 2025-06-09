@@ -113,7 +113,7 @@ scConf1 <- createConfig(seu1,
 makeShinyFiles_assay(seu1, 
                      scConf1, 
                      shiny.prefix = "sc1", 
-                     default.dimred = c("umap1", "umap1"),
+                     default.dimred = c("umap1", "umap2"),
                      shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
 
 cat("Make R shiny app for all files", "\n")

@@ -89,22 +89,28 @@ source(paste0(module_dir, "/util/makeShinyFiles_assay.R"))
 cat("Beginning to process results from", "annotations_file", "\n")
 seu1 <- readRDS(annotations_all_file)
 
-# Check if umap1 and umap2 already exist in metadata
-if (!all(c("umap1", "umap2") %in% colnames(seu1@meta.data))) {
-  message("umap1 and umap2 not found in metadata. Extracting and adding from reduction: ", redution_value)
-  
-  # Extract embeddings from the reduction
-  emb <- Embeddings(seu1, redution_value)
-  
-  # Add to metadata with exact column names
-  seu1$umap1 <- emb[, 1]
-  seu1$umap2 <- emb[, 2]
-  
-  message("umap1 and umap2 successfully added to metadata.")
-} else {
-  message("umap1 and umap2 already exist in metadata. Skipping extraction.")
-}
 
+# Check if the specified dimensionality reduction exists in the Seurat object
+if (redution_value %in% names(seu1@reductions)) {
+  
+  # Retrieve the key prefix for the specified reduction (e.g., "PC_", "UMAP_")
+  reduc_key <- seu1[[redution_value]]@key
+  message("Setting default reduction to ", redution_value)
+  
+  # Construct names for dimension 1 and 2 (e.g., "PC_1", "PC_2")
+  dim_1 <- paste0(reduc_key, "1")
+  dim_2 <- paste0(reduc_key, "2")
+  
+  # Identify all metadata columns associated with the specified reduction
+  cols_to_remove <- grep(reduc_key, colnames(seu1@meta.data), value = TRUE)
+  
+  # Remove the identified columns from the metadata
+  seu1@meta.data <- seu1@meta.data[, !colnames(seu1@meta.data) %in% cols_to_remove]
+  
+} else {
+  # If the reduction is not present, notify that the default will be set automatically
+  message(redution_value, " not found in Seurat object, default reduction will be determined by the function")
+}
 
 scConf1 <- createConfig(seu1, 
                         meta.to.include = NA, # Include all metadata (or specify if you want a subset)
@@ -113,7 +119,8 @@ scConf1 <- createConfig(seu1,
 makeShinyFiles_assay(seu1, 
                      scConf1, 
                      shiny.prefix = "sc1", 
-                     default.dimred = c("umap1", "umap2"),
+                     #default.dimred = c("umap1", "umap2"),
+                     default.dimred = c(dim_1, dim_2),
                      shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
 
 cat("Make R shiny app for all files", "\n")

@@ -8,6 +8,8 @@ Parameters according to the project and analysis strategy will need to be specif
 - `project_parameters.Config.yaml` located at the `root_dir`.
 - `future_globals_value` is hardwired coded in the `run-integrative-analysis.R`. If necessary, user can increase/decrease resources.
 
+The `integrative-analysis` module is intended for use with multi-sample cohorts. It should be excluded when analyzing single-sample cohorts, as it relies on data integration across multiple samples.
+
 
 ### Run module on an interactive session on HPC within the container
 
@@ -28,8 +30,7 @@ bsub < lsf-script.txt
 
 ## Folder content
 
-This folder contains a script tasked to integrate the samples across the project. For single-sample cohorts, however, this module should be skipped. 
-
+This folder contains a script tasked to integrate the samples across the project. 
 
 The script named `custom-seurat-functions.R` is from [CellGen Programme Template Notebooks](https://github.com/cellgeni/notebooks).
 

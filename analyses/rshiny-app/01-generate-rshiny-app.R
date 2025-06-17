@@ -42,6 +42,7 @@ condition_value <- yaml$condition_value
 assay <- yaml$assay_filter_object
 annotations_dir <- yaml$annotations_dir_rshiny_app
 annotations_filename <- yaml$annotations_filename_rshiny_app
+redution_value <- yaml$redution_value_annotation_module
 
 
 # Set up directories and paths to root_dir and analysis_dir
@@ -87,11 +88,39 @@ source(paste0(module_dir, "/util/makeShinyFiles_assay.R"))
 
 cat("Beginning to process results from", "annotations_file", "\n")
 seu1 <- readRDS(annotations_all_file)
-scConf1 <- createConfig(seu1)
+
+
+# Check if the specified dimensionality reduction exists in the Seurat object
+if (redution_value %in% names(seu1@reductions)) {
+  
+  # Retrieve the key prefix for the specified reduction (e.g., "PC_", "UMAP_")
+  reduc_key <- seu1[[redution_value]]@key
+  message("Setting default reduction to ", redution_value)
+  
+  # Construct names for dimension 1 and 2 (e.g., "PC_1", "PC_2")
+  dim_1 <- paste0(reduc_key, "1")
+  dim_2 <- paste0(reduc_key, "2")
+  
+  # Identify all metadata columns associated with the specified reduction
+  cols_to_remove <- grep(reduc_key, colnames(seu1@meta.data), value = TRUE)
+  
+  # Remove the identified columns from the metadata
+  seu1@meta.data <- seu1@meta.data[, !colnames(seu1@meta.data) %in% cols_to_remove]
+  
+} else {
+  # If the reduction is not present, notify that the default will be set automatically
+  message(redution_value, " not found in Seurat object, default reduction will be determined by the function")
+}
+
+scConf1 <- createConfig(seu1, 
+                        meta.to.include = NA, # Include all metadata (or specify if you want a subset)
+                        maxLevels = 150)     # Use the number of unique levels
+
 makeShinyFiles_assay(seu1, 
                      scConf1, 
                      shiny.prefix = "sc1", 
-                     default.dimred = c("UMAP1", "UMAP2"),
+                     #default.dimred = c("umap1", "umap2"),
+                     default.dimred = c(dim_1, dim_2),
                      shiny.dir = paste(results_dir, "shinyApp", sep = "/"))
 
 cat("Make R shiny app for all files", "\n")

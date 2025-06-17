@@ -103,10 +103,10 @@ calculate_cell_type_signature <- function(seurat_obj, results_dir, plots_dir, ge
     seurat_obj$predicted.cell.signature.ident <- sub(".score1", "", colnames(cell_cluster_scores)[max.col(cell_cluster_scores, ties.method = "first")])
   
     # Print plots
-    print(DimPlot(seurat_obj, reduction = "umap", group.by = "predicted.cell.signature.ident") + theme(aspect.ratio = 1))
-    print(DimPlot(seurat_obj, reduction = "umap", group.by = "Phase") + theme(aspect.ratio = 1))
-    print(DimPlot(seurat_obj, reduction = "umap", group.by = "ID") + theme(aspect.ratio = 1))
-    print(DimPlot(seurat_obj, reduction = "umap", split.by = "predicted.cell.signature.ident") + theme(aspect.ratio = 1))
+    print(DimPlot(seurat_obj, reduction = reduction_value, group.by = "predicted.cell.signature.ident") + theme(aspect.ratio = 1))
+    print(DimPlot(seurat_obj, reduction = reduction_value, group.by = "Phase") + theme(aspect.ratio = 1))
+    print(DimPlot(seurat_obj, reduction = reduction_value, group.by = "ID") + theme(aspect.ratio = 1))
+    print(DimPlot(seurat_obj, reduction = reduction_value, split.by = "predicted.cell.signature.ident") + theme(aspect.ratio = 1))
     print(ggplot(data = data.frame(table(seurat_obj$predicted.cell.signature.ident)), aes(x = Var1, y = Freq)) + geom_bar(stat = "identity") + geom_text(aes(label = Freq)))
     
     dev.off()

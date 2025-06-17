@@ -155,7 +155,7 @@ module_results_dir <- file.path(analysis_dir, "results")
 module_plots_dir <- file.path(analysis_dir, "plots")
 
 # Input files
-data_file <- file.path(data_dir, glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))
+data_file <- file.path(data_dir, glue::glue("seurat_obj_clusters_all.rds"))
 
 # Create results_dir
 results_dir <- file.path(module_results_dir, "02_find_markers")
@@ -181,7 +181,7 @@ a4height <- 11.7
 
 # Read seurat object
 
-First, we will use the seurat_obj_integrated_`r {integration_method}`_clusters_`r {resolution_list}`.rds object as generated from the first step of the pipeline in the `cluster-cell-calling` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params` along with the clusters after the final selection of the granularity (defined as `resolution_list` in the `params`).
+First, we will use the seurat object as generated from the pipeline in the `r data_dir_module` module. 
 
 ```{r read-object, echo=TRUE}
 seurat_obj <- readRDS(data_file)

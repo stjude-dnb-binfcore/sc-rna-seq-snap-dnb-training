@@ -49,7 +49,8 @@ df_allele_list <- list()
 
 for (i in seq_along(input_file)) {
   
-  sample_name <- gsub("Create-", "", str_split_fixed(input_file[i], "/", 16)[,15])
+  path_length <- length(str_split(input_file[i], "/")[[1]])
+  sample_name <- str_split(input_file[i], "/")[[1]][path_length-1]
   print(sample_name)
   
   # Create results_dir per sample

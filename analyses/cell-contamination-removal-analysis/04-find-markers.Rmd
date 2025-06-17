@@ -165,7 +165,7 @@ module_results_dir <- file.path(analysis_dir, "results")
 module_plots_dir <- file.path(analysis_dir, "plots")
 
 # Input files
-data_file <- file.path(data_dir, glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))
+data_file <- file.path(data_dir, glue::glue("seurat_obj_clusters_all.rds"))
 
 # Create results_dir
 results_dir <- file.path(module_results_dir, "04_find_markers")
@@ -180,7 +180,7 @@ if (!dir.exists(plots_dir)) {
 
 # Read seurat object
 
-First, we will use the seurat_obj_integrated_`r {integration_method}`_clusters_`r {resolution_list}`.rds object as generated from the third step of the pipeline in the `cell-contamination-removal-analysis` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params` along with the clusters remaining after contamination clusters are removed and the final selection of the granularity (defined as `resolution_list` in the `params`).
+First, we will use the seurat object. 
 
 ```{r read-object, echo=TRUE}
 seurat_obj <- readRDS(data_file)

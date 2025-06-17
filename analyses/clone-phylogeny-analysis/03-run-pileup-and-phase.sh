@@ -69,8 +69,12 @@ for i in "${!sample[@]}"; do
   # To copy and unzip the barcodes file from the alignment folder for each sample
   cd ..
     
-  cp ${sample_data_dir}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz ${input_dir}/sample_barcode/${sample[i]}
-  gunzip ${input_dir}/sample_barcode/${sample[i]}/barcodes.tsv.gz
+  if [ ! -f "${input_dir}/sample_barcode/${sample[i]}/barcodes.tsv" ]; then
+      cp ${sample_data_dir}/outs/filtered_feature_bc_matrix/barcodes.tsv.gz ${input_dir}/sample_barcode/${sample[i]}
+      gunzip ${input_dir}/sample_barcode/${sample[i]}/barcodes.tsv.gz
+      else
+          echo "File already exists for sample ${sample[i]}, skipping."
+  fi
   
   # Run pileup_and_phase.R (installed in the container)
   Rscript --vanilla /numbat/inst/bin/pileup_and_phase.R \

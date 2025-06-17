@@ -73,7 +73,7 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
       message("DimPlot is being created for resolution: ", res, "\n")
       
       name <- paste0(plots_dir, "/", "Cluster_resolutions_", res, ".png", sep = "")
-      print(DimPlot(seurat_obj, reduction = "umap", label = TRUE) + ggtitle(paste("Resolution: ", res)))
+      print(DimPlot(seurat_obj, reduction = umap_value, label = TRUE) + ggtitle(paste("Resolution: ", res)))
       ggsave(file = name, width = 12, height = 6, device = "png")
       }
 
@@ -91,10 +91,10 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
     
     #### #### ####
     metadata <- as_data_frame_seurat(seurat_obj, metadata = TRUE)
-    write_tsv(metadata, file = paste0(results_dir, "/", glue::glue("metadata_integrated_{integration_method}_clusters_all.tsv")))
+    write_tsv(metadata, file = paste0(results_dir, "/", glue::glue("metadata_clusters_all.tsv")))
     #### #### ####
     
-    saveRDS(seurat_obj, file = paste0(results_dir, "/", glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))) # save object
+    saveRDS(seurat_obj, file = paste0(results_dir, "/", glue::glue("seurat_obj_clusters_all.rds"))) # save object
     
     # If resolution_list is provided, only generate clustering and figures for those resolutions
     } else if (length(resolution_list) > 1) {
@@ -104,7 +104,7 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
         seurat_obj <- FindClusters(seurat_obj, resolution = res, algorithm = algorithm_value, method = "igraph", random.seed = 0)
         message("DimPlot is being created for resolution: ", res, "\n")
         name <- paste0(plots_dir, "/", "Cluster_resolutions_", res, ".png", sep = "")
-        print(DimPlot(seurat_obj, reduction = "umap", label = TRUE) + ggtitle(paste("Resolution: ", res)))
+        print(DimPlot(seurat_obj, reduction = umap_value, label = TRUE) + ggtitle(paste("Resolution: ", res)))
         ggsave(file = name, width = 12, height = 6, device = "png")
       }
       #dev.off()
@@ -126,10 +126,10 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
         
       #### #### ####
       metadata <- as_data_frame_seurat(seurat_obj, metadata = TRUE)
-      write_tsv(metadata, file = paste0(results_dir, "/", glue::glue("metadata_integrated_{integration_method}_clusters_all.tsv")))
+      write_tsv(metadata, file = paste0(results_dir, "/", glue::glue("metadata_clusters_all.tsv")))
       #### #### ####
         
-        saveRDS(seurat_obj, file = paste0(results_dir, "/", glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))) # save object
+        saveRDS(seurat_obj, file = paste0(results_dir, "/", glue::glue("seurat_obj_clusters_all.rds"))) # save object
         
       # If a single resolution is provided, only use that resolution to generate clustering and figure
       # Don't generate cluster tree
@@ -140,7 +140,7 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
           seurat_obj <- FindClusters(seurat_obj, resolution = res, algorithm = algorithm_value, method = "igraph", random.seed = 0)
           message("DimPlot is being created for resolution: ", res, "\n")
           name <- paste0(plots_dir, "/", "Cluster_resolutions_", res, ".png", sep = "")
-          print(DimPlot(seurat_obj, reduction = "umap", label = TRUE) + ggtitle(paste("Resolution: ", res)))
+          print(DimPlot(seurat_obj, reduction = umap_value, label = TRUE) + ggtitle(paste("Resolution: ", res)))
           ggsave(file = name, width = 12, height = 6, device = "png")
         }
         #dev.off()
@@ -155,10 +155,10 @@ cluster_cell_calling <- function(seurat_obj, reduction_value, num_dim, plots_dir
                                              resolution_list = resolution_list)
         write_tsv(avg_res, file = paste0(results_dir, "/", glue::glue("{assay}_snn_res.{resolution_list}-avg.tsv"))) 
         #### #### ####
-        write_tsv(metadata, file = paste0(results_dir, "/", glue::glue("metadata_integrated_{integration_method}_clusters_{resolution_list}.tsv")))
+        write_tsv(metadata, file = paste0(results_dir, "/", glue::glue("metadata_clusters_{resolution_list}.tsv")))
         #### #### ####
         
-        saveRDS(seurat_obj, file = paste0(results_dir, "/", glue::glue("seurat_obj_integrated_{integration_method}_clusters_{resolution_list}.rds"))) # save object
+        saveRDS(seurat_obj, file = paste0(results_dir, "/", glue::glue("seurat_obj_clusters_{resolution_list}.rds"))) # save object
         }
   
   return(seurat_obj) }

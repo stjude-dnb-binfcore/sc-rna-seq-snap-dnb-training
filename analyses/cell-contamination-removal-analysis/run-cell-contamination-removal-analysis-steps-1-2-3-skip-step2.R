@@ -34,14 +34,14 @@ report_dir <- file.path(analysis_dir, "plots")
 ################################################################################################################
 future_globals_value = 214748364800 # 200*1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 resolution = yaml$resolution_clustering_module
-integration_method = yaml$integration_method
+#integration_method = yaml$integration_method
 
 # STEP 1 - Remove contamination
 rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
                   output_dir = file.path(report_dir),
                   output_file = c(paste('Report-', 'cell-contamination-removal', '-', Sys.Date(), sep = '')),
                   output_format = 'all',
-                  params = list(integration_method = yaml$integration_method,
+                  params = list(integration_method = yaml$integration_method_clustering_module,
                                 # this will be the single resolution that fits the data the best
                                 resolution_list = yaml$resolution_list_find_markers, 
                                 # number of clusters to keep
@@ -84,42 +84,7 @@ rmarkdown::render('01-cell-contamination-removal.Rmd', clean = TRUE,
 
 ################################################################################################################
 # STEP 2 - Integration
-rmarkdown::render('02-integrative-analysis.Rmd', clean = TRUE,
-                  output_dir = file.path(report_dir),
-                  output_file = c(paste('Report-', glue::glue('integrative-analysis-{integration_method}'), '-', Sys.Date(), sep = '')),
-                  output_format = 'all',
-                  params = list(
-                    # the following parameters are defined in the `yaml` file
-                    use_seurat_integration = yaml$use_seurat_integration,
-                    use_harmony_integration = yaml$use_harmony_integration,
-                    use_liger_integration = yaml$use_liger_integration,
-                    integration_method = yaml$integration_method,
-                    num_dim_seurat =yaml$num_dim_seurat,
-                    num_dim_seurat_integration = yaml$num_dim_seurat_integration,
-                    big_data_value = yaml$big_data_value, 
-                    num_dim_harmony = yaml$num_dim_harmony,
-                    n_neighbors_value = yaml$n_neighbors_value,
-                    variable_value = yaml$variable_value,
-                    reference_list_value = yaml$reference_list_value, 
-                    PCA_Feature_List_value = yaml$PCA_Feature_List_value,       
-                    genome_name = yaml$genome_name_upstream,
-                    nfeatures_value = yaml$nfeatures_value,
-                    Regress_Cell_Cycle_value = yaml$Regress_Cell_Cycle_value,
-                    assay = yaml$assay_contamination_module,
-                    
-                    root_dir = yaml$root_dir,
-                    metadata_dir = yaml$metadata_dir,
-                    PROJECT_NAME = yaml$PROJECT_NAME,
-                    PI_NAME = yaml$PI_NAME,
-                    TASK_ID = yaml$TASK_ID,
-                    PROJECT_LEAD_NAME = yaml$PROJECT_LEAD_NAME,
-                    DEPARTMENT = yaml$DEPARTMENT,
-                    LEAD_ANALYSTS = yaml$LEAD_ANALYSTS,
-                    GROUP_LEAD = yaml$GROUP_LEAD,
-                    CONTACT_EMAIL = yaml$CONTACT_EMAIL,
-                    PIPELINE = yaml$PIPELINE, 
-                    START_DATE = yaml$START_DATE,
-                    COMPLETION_DATE = yaml$COMPLETION_DATE))
+# skip step 2 - single-sample cohort
 
 ################################################################################################################
 # step 3 - Clustering
@@ -149,3 +114,12 @@ rmarkdown::render('03-cluster-cell-calling.Rmd', clean = TRUE,
                                 START_DATE = yaml$START_DATE,
                                 COMPLETION_DATE = yaml$COMPLETION_DATE))
 ################################################################################################################
+
+integration_method = yaml$integration_method_clustering_module
+num_dim = yaml$num_dim_clustering_module
+reduction_value = yaml$reduction_value_clustering_module
+resolution_list = yaml$resolution_list_clustering_module
+resolution_list_default = yaml$resolution_list_default_clustering_module
+algorithm_value = yaml$algorithm_value_clustering_module
+assay = yaml$assay_contamination_module
+root_dir = yaml$root_dir

@@ -171,11 +171,15 @@ a4height <- 11.7
 
 ```{r set-dir-and-file-names, echo=TRUE}
 analysis_dir <- file.path(root_dir, "analyses", "cell-contamination-removal-analysis") 
-data_dir <- file.path(analysis_dir, "results", glue::glue("02_integration_{integration_method}"))
 clustering_analysis_functions_dir <- file.path(root_dir, "analyses", "cluster-cell-calling")
 
-# Input files
-data_file <- file.path(data_dir, glue::glue("seurat_obj_integrated_{integration_method}.rds"))
+if (integration_method == "not_integrated"){
+  data_dir <- file.path(analysis_dir, "results", "01_cell_contamination_removal")
+  data_file <- file.path(data_dir, glue::glue("seurat_obj_cell_contamination_rm.rds"))
+  } else {
+    data_dir <- file.path(analysis_dir, "results", glue::glue("02_integration_{integration_method}"))
+    data_file <- file.path(data_dir, glue::glue("seurat_obj_integrated_{integration_method}.rds"))
+}
 
 # Create results_dir
 module_results_dir <- file.path(analysis_dir, "results")
@@ -197,7 +201,8 @@ source(paste0(clustering_analysis_functions_dir, "/util/function-cluster-cell-ca
 
 
 # Read seurat object
-First, we will use the `seurat_obj_integrated_{integration_method}.rds` object as generated from the pipeline in the `integrative-analysis` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params`. There we have already applied the `FindClusters` function but here we will explore and expand the cell clustering further.
+
+First, we will use the seurat object as generated from the pipeline in the `r data_dir_module` module. 
 
 ```{r read-object, echo=TRUE}
 seurat_obj <- readRDS(data_file)
@@ -250,9 +255,19 @@ Apart from information in the dataset itself it can useful to display measures o
 One way to think of clustering trees is that they add an extra dimension to the data that shows how clusters "evolve" over time (increasing resolution). Sometimes it can be useful to overlay this dimension on other dimensions in the data, particularly those that come from dimensionality reduction techniques. We can do this using the `clustree_overlay` function:
 
 ```{r nba-overlay, fig.width = 15, fig.height = 20, fig.fullwidth = TRUE, echo=TRUE}
+if (integration_method == "not_integrated"){
+  # Extract embeddings from the umap.rpca reduction
+  emb <- Embeddings(seurat_obj, "pca")
+  
+  # Add to metadata with exact column names
+  seurat_obj@meta.data$PC_1 <- emb[, 1]
+  seurat_obj@meta.data$PC_2 <- emb[, 2]
+  } else {}
+  
+
 # Plot overlaying only if there are >1 resolutions
 if (length(resolution_list) > 1 | is.null(resolution_list)) {
-  name <- paste0(plots_dir, "/", glue::glue("plot_clustree_overlay_{integration_method}.png"))
+  name <- paste0(plots_dir, "/", glue::glue("plot_clustree_overlay.png"))
   print(clustree_overlay(seurat_obj, prefix = glue::glue("{assay}_snn_res."), x_value = "PC_1", y_value = "PC_2",
                          use_colour = "points", alt_colour = "blue", plot_sides = TRUE))
 } else {}

@@ -71,7 +71,7 @@ input_data_folder= yaml$input_data_folder_name
 # Caution! Sometimes this file will be located in the `cluster-cell-calling` module
 # BUT if we had to remove contamination, then it will be located in the `cell-contamination-removal-analysis` module
 data_dir_annotation_module <- file.path(root_dir, "analyses", input_data, "results", glue::glue("{input_data_folder}_{resolution_for_input_data}"))
-input_data_file <- file.path(data_dir_annotation_module, glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))
+input_data_file <- file.path(data_dir_annotation_module, glue::glue("seurat_obj_clusters_all.rds"))
 
 ################################################################################################################
 # Broad cell type annotation
@@ -80,7 +80,7 @@ rmarkdown::render('01-cell-types-annotation-SingleR-broad.Rmd', clean = TRUE,
                   output_file = c(paste('Report-', 'cell-types-annotation-SingleR-broad', '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(integration_method = yaml$integration_method_clustering_module,
-                                redution_value = yaml$redution_value_annotation_module,
+                                reduction_value = yaml$reduction_value_annotation_module,
                                 condition_value1 = yaml$condition_value1,
                                 condition_value2 = yaml$condition_value2,
                                 condition_value3 = yaml$condition_value3,
@@ -109,7 +109,7 @@ rmarkdown::render('02-cell-types-annotation-SingleR-fine.Rmd', clean = TRUE,
                   output_file = c(paste('Report-', 'cell-types-annotation-SingleR-fine', '-', Sys.Date(), sep = '')),
                   output_format = 'all',
                   params = list(integration_method = yaml$integration_method_clustering_module,
-                                redution_value = yaml$redution_value_annotation_module,
+                                reduction_value = yaml$reduction_value_annotation_module,
                                 condition_value1 = yaml$condition_value1,
                                 condition_value2 = yaml$condition_value2,
                                 condition_value3 = yaml$condition_value3,

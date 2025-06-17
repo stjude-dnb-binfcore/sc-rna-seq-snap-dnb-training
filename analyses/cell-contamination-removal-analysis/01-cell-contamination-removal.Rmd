@@ -188,7 +188,7 @@ metadata_dir <- yaml$metadata_dir
 metadata_file <- yaml$metadata_file
 
 # Input files
-data_file <- file.path(data_dir, glue::glue("seurat_obj_integrated_{integration_method}_clusters_all.rds"))
+data_file <- file.path(data_dir, glue::glue("seurat_obj_clusters_all.rds"))
 palette_file <- file.path(root_dir, "figures", "palettes", "qc_color_palette.tsv")
 gradient_palette_file <- file.path(root_dir, "figures", "palettes", "gradient_color_palette.tsv")
 
@@ -218,7 +218,7 @@ source(paste0(upstream_analysis_dir, "/util/function-calculate-qc-metrics.R"))
 
 # Read seurat object
 
-First, we will use the `seurat_obj_integrated_{integration_method}_clusters_all.rds` object as generated from the first step of the pipeline in the `cluster-cell-calling` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params` along with the clusters after the final selection of the granularity (defined as `resolution_list` in the `params`).
+First, we will use the seurat object as generated from the first step of the pipeline in the `cluster-cell-calling` module. This object contains all samples of the project integrated by the integration method of choice as defined in the `params` along with the clusters after the final selection of the granularity (defined as `resolution_list` in the `params`).
 
 ```{r read-object, echo=TRUE}
 seurat_obj <- readRDS(data_file)
@@ -325,7 +325,7 @@ print(table(seurat_obj@meta.data[use_res_col]))
 
 ```{r plot-clusters, fig.width = 8, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", "Cluster_resolutions_", resolution_list, ".png", sep = "")
-print(DimPlot(seurat_obj, reduction = "umap", label = TRUE) + ggtitle(paste("Resolution: ", resolution_list)))
+print(DimPlot(seurat_obj, reduction = umap_value, label = TRUE) + ggtitle(paste("Resolution: ", resolution_list)))
 ggsave(file = name, width = 8, height = 6, device = "png")
 ```
 

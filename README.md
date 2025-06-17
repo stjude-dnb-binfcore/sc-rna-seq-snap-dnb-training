@@ -6,7 +6,7 @@
     <img src="https://www.repostatus.org/badges/latest/active.svg?style=for-the-badge" alt="The project has reached a stable, usable state and is being actively developed." />
   </a>
   <a href="https://github.com/stjude-dnb-binfcore/sc-rna-seq-snap">
-    <img src="https://img.shields.io/badge/version-1.0.0.beta.4-brightgreen" alt="Version" />
+    <img src="https://img.shields.io/badge/version-1.0.0.beta.5-brightgreen" alt="Version" />
   </a>
 </p>
 
@@ -16,6 +16,7 @@ Snap is a comprehensive suite of tools and workflows for analyzing single-cell a
 
 
 ## Table of Contents
+
 1. [Getting Started](#getting-started)
 2. [Installation](#installation)
 3. [Tutorial and Documentation](#tutorial-and-documentation)
@@ -40,6 +41,8 @@ For best practices and detailed guidelines on effectively using the Snap pipelin
 ### Preparing project metadata
 
 The pipeline requires a TSV file containing essential metadata for cohort analysis. The file must be named `project_metadata.tsv`. It can include one or more samples, as long as it contains at least the following columns in this exact order: `ID`, `SAMPLE`, and `FASTQ`. The `ID` column must contain unique values. The `SAMPLE` column must contain the `seq_submission_code` along with the ID, e.g., `seq_submission_code1_sample1` or the corresponding library name. The `FASTQ` column must contain the file path to the fastq files. For samples with top-ups or multiple technical replicates, list all associated library names and FASTQ file paths in the same row, using commas to separate each path. Additional metadata columns can be added and arranged as needed by the user (though not required).
+
+The pipeline can be run on both single-sample and multi-sample cohorts.
 
 The file can be stored anywhere, but its filepath must be specified in the `project_parameters.Config.yaml` file.
 

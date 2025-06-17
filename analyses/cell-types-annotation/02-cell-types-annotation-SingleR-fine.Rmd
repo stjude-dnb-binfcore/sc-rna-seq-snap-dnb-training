@@ -38,7 +38,7 @@ params:
   data_file: '.'
   input_data: '.'
   integration_method: '.'
-  redution_value: '.' 
+  reduction_value: '.' 
   condition_value1: '.'
   condition_value2: '.'
   condition_value3: '.'
@@ -320,7 +320,7 @@ names(palette) <- palette_df$cell_type_names
 ```{r plot-singler-comparison-before-vs-after-integration, fig.width = 35, fig.height = 12, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", glue::glue("plot-singler-comparison-fine-before-vs-after-integration.png"))
 p1.before <- DimPlot(seurat_obj, group.by = 'singler.fine', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle("Fine cell type annotations: merged") 
-p1.after <- DimPlot(seurat_obj, reduction = redution_value, group.by = 'singler.fine', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle(glue::glue("Fine cell type annotations: {integration_method} integration")) 
+p1.after <- DimPlot(seurat_obj, reduction = reduction_value, group.by = 'singler.fine', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + ggtitle(glue::glue("Fine cell type annotations: {integration_method} integration")) 
 print(p1.before + p1.after)
 ggsave(file = name, width = 35, height = 12, device = "png")
 ```
@@ -350,7 +350,7 @@ ncol_plots <- max(1, min(max_plots_per_row, unique_ids))
 
 ```{r plot-cell-types-ID, fig.width = 25, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-ID.png"))
-p1.after <- print(DimPlot(seurat_obj, reduction = redution_value, split.by = "ID", group.by = 'singler.fine', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + 
+p1.after <- print(DimPlot(seurat_obj, reduction = reduction_value, split.by = "ID", group.by = 'singler.fine', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + 
                     ggtitle(glue::glue("Fine cell type annotations: {integration_method} integration")) +
                     facet_wrap(~ ID, ncol = ncol_plots, scales = "free")) # Limit the number of columns per row
 ggsave(file = name, width = 25, height = 6, device = "png")
@@ -381,7 +381,7 @@ ncol_plots <- max(1, min(max_plots_per_row, unique_ids))
 
 ```{r plot-cell-types-condition1, fig.width = 18, fig.height = 6, fig.fullwidth = TRUE, echo=TRUE}
 name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-condition1.png"))
-p1.after <- print(DimPlot(seurat_obj, reduction = redution_value, split.by = condition_value1, group.by = 'singler.fine', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + 
+p1.after <- print(DimPlot(seurat_obj, reduction = reduction_value, split.by = condition_value1, group.by = 'singler.fine', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + 
                     ggtitle(glue::glue("Fine cell type annotations: {integration_method} integration")) +
                     facet_wrap(as.formula(paste("~", condition_value1)), ncol = ncol_plots, scales = "free")) # Limit the number of columns per row)
 ggsave(file = name, width = 18, height = 6, device = "png")
@@ -412,7 +412,7 @@ if (!is.null(condition_value2)) {
   ncol_plots <- max(1, min(max_plots_per_row, unique_ids))
   
   name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-condition2.png"))
-  p1.after <- print(DimPlot(seurat_obj, reduction = redution_value, split.by = condition_value2, group.by = 'singler.fine', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + 
+  p1.after <- print(DimPlot(seurat_obj, reduction = reduction_value, split.by = condition_value2, group.by = 'singler.fine', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + 
                     ggtitle(glue::glue("Fine cell type annotations: {integration_method} integration")) +
                     facet_wrap(as.formula(paste("~", condition_value2)), ncol = ncol_plots, scales = "free")) # Limit the number of columns per row)
   ggsave(file = name, width = 18, height = 6, device = "png")
@@ -446,7 +446,7 @@ if (!is.null(condition_value3)) {
   ncol_plots <- max(1, min(max_plots_per_row, unique_ids))
   
   name <- paste0(plots_dir, "/", glue::glue("plot-singler-fine-condition3.png"))
-  p1.after <- print(DimPlot(seurat_obj, reduction = redution_value, split.by = condition_value3, group.by = 'singler.fine', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + 
+  p1.after <- print(DimPlot(seurat_obj, reduction = reduction_value, split.by = condition_value3, group.by = 'singler.fine', label = TRUE, repel = TRUE, label.size = 2.5, cols = palette) + 
                     ggtitle(glue::glue("Fine cell type annotations: {integration_method} integration")) +
                     facet_wrap(as.formula(paste("~", condition_value3)), ncol = ncol_plots, scales = "free")) # Limit the number of columns per row)
   ggsave(file = name, width = 18, height = 6, device = "png")

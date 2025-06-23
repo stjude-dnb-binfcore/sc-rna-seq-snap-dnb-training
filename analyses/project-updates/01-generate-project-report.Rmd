@@ -389,8 +389,8 @@ For more information, please see: `r results_filepath`/`r cohort_value`/analyses
 
 For more information, please see: `r results_filepath`/`r cohort_value`/analyses/cluster-cell-calling/plots
 
-   - We used the **`r resolution_clustering_module`** resolution for calling clusters. That included the following number of resolutions: **`r resolution_values`**.
-   - We used the **`r resolution_list_find_markers`** resolution for finding markers and explored the **`r n_value_find_markers`** of top genes.
+   - We used the **`r resolution_clustering_module`** resolution list for calling clusters. That included the following number of resolutions: **`r resolution_values`**.
+   - We used the **`r resolution_list_find_markers`** resolution for finding markers and explored the first **`r n_value_find_markers`** of top genes.
    
 ## cell-contamination-removal-analysis
 

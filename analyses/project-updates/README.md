@@ -9,7 +9,7 @@ Parameters according to the project and analysis strategy will need to be specif
 
 The user should edit the last section of the report, labeled `# Future Directions`, in the `01-generate-project-report.Rmd` script after reviewing the results and adding their recommendations for next steps. 
 
-Links are provided in each analysis section. If the module has been run and results are available in the folder, the link will work. However, if the analysis module hasn't been run, attempting to access the link will result in an error.
+Links are provided in each analysis section. If the module has been run and results are available in the folder, the link will work. However, if the analysis module hasn't been run, attempting to access the link will result in an error. Users are encouraged to add or remove sections as needed to suit the specific requirements of their project analysis.
 
 
 ### Run module on an interactive session on HPC within the container

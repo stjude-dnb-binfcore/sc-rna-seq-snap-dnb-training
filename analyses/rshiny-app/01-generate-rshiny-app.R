@@ -42,7 +42,7 @@ condition_value <- yaml$condition_value
 assay <- yaml$assay_filter_object
 annotations_dir <- yaml$annotations_dir_rshiny_app
 annotations_filename <- yaml$annotations_filename_rshiny_app
-redution_value <- yaml$redution_value_annotation_module
+reduction_value <- yaml$reduction_value_annotation_module
 
 
 # Set up directories and paths to root_dir and analysis_dir
@@ -91,11 +91,11 @@ seu1 <- readRDS(annotations_all_file)
 
 
 # Check if the specified dimensionality reduction exists in the Seurat object
-if (redution_value %in% names(seu1@reductions)) {
+if (reduction_value %in% names(seu1@reductions)) {
   
   # Retrieve the key prefix for the specified reduction (e.g., "PC_", "UMAP_")
-  reduc_key <- seu1[[redution_value]]@key
-  message("Setting default reduction to ", redution_value)
+  reduc_key <- seu1[[reduction_value]]@key
+  message("Setting default reduction to ", reduction_value)
   
   # Construct names for dimension 1 and 2 (e.g., "PC_1", "PC_2")
   dim_1 <- paste0(reduc_key, "1")
@@ -109,7 +109,7 @@ if (redution_value %in% names(seu1@reductions)) {
   
 } else {
   # If the reduction is not present, notify that the default will be set automatically
-  message(redution_value, " not found in Seurat object, default reduction will be determined by the function")
+  message(reduction_value, " not found in Seurat object, default reduction will be determined by the function")
 }
 
 scConf1 <- createConfig(seu1, 

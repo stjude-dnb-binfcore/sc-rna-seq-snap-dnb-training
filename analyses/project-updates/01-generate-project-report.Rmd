@@ -227,11 +227,11 @@ fastqc_overrepresented_df <- read.table(fastqc_overrepresented_results_file, hea
 ```
 
 #### Sequence Quality Histograms
-- The results are within the expected range.
+- This graph indicates the overall quality scores for the sequences. If a large proportion of sequences have lower scores this can indicated a general quality issue with the sequencing run
 
 #### Per Base Sequence Content
 - Non-greyish bars (i.e. bars with sections of distinct colors) indicates a **Non-Uniform Distribution** with one or more nucleotides dominating at specific positions.
-- SSharp spikes in specific nucleotides can indicate **adapter contamination** or other sources of bias.
+- Sharp spikes in specific nucleotides can indicate **adapter contamination** or other sources of bias.
 
 #### Per Sequence GC Content
 - If there is **no bell-shaped curve** (normal distribution), which can be caused by:

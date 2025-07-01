@@ -412,7 +412,7 @@ For more information, please see: `r results_filepath`/`r cohort_value`/analyses
 
 ## rshiny-app
 
-For more information, please see: `r results_filepath`/`r cohort_value`/analyses/rshiny-app-analysis/plots
+For more information, please see: `r results_filepath`/`r cohort_value`/analyses/rshiny-app/results
 
 
 # Future directions

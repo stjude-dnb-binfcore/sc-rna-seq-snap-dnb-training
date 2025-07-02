@@ -205,7 +205,7 @@ We used FastQC (v0.11.9) and multiqc (v1.25) to perform quality control tool for
 
 ## fastqc-analysis
 
-FastQC metrics such as per-base sequence quality, GC content, and adapter contamination were within expected thresholds, ensuring that the data is suitable for downstream analyses. Further validation steps, such as alignment or feature counting, will help confirm that the data is suitable for further processing and analysis.
+FastQC metrics such as per-base sequence quality, GC content, and adapter contamination can indicate the quality of the sequencing data and contribute to determining if the data is suitable for downstream analyses. Further validation steps, such as alignment or feature counting, will also help confirm if the data is suitable for further processing and analysis.
 
 For more information, please see: `r results_filepath`/`r cohort_value`/analyses/fastqc-analysis/results
 

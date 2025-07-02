@@ -23,7 +23,7 @@ yaml <- read_yaml(configFile)
 root_dir <- yaml$root_dir
 metadata_dir <- yaml$metadata_dir
 metadata_file <- yaml$metadata_file
-redution_value <- yaml$redution_value_annotation_module
+reduction_value <- yaml$reduction_value_annotation_module
 
 analysis_dir <- file.path(root_dir, "analyses", "clone-phylogeny-analysis") 
 module_results_dir <- file.path(analysis_dir, "results")
@@ -94,10 +94,10 @@ seurat_obj <- readRDS(seurat_obj_file)
 
 # Check if UMAP_1 and UMAP_2 already exist in metadata
 if (!all(c("UMAP_1", "UMAP_2") %in% colnames(seurat_obj@meta.data))) {
-  message("UMAP_1 and UMAP_2 not found in metadata. Extracting and adding from reduction: ", redution_value)
+  message("UMAP_1 and UMAP_2 not found in metadata. Extracting and adding from reduction: ", reduction_value)
   
   # Extract embeddings from the reduction
-  emb <- Embeddings(seurat_obj, redution_value)
+  emb <- Embeddings(seurat_obj, reduction_value)
   
   # Add to metadata with exact column names
   seurat_obj$UMAP_1 <- emb[, 1]

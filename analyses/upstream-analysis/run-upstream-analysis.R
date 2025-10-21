@@ -46,28 +46,28 @@ Final_summary_report_dir <- file.path(analysis_dir, "plots", "05_Final_summary_r
 future_globals_value = 214748364800 #200 * 1024^3; # 150 * 1024^3; other options: 1000 * 1024^2 = 1048576000; 8000 * 1024^2 =8388608000
 ################################################################################################################
 # (1) Estimating and filtering out ambient mRNA (`empty droplets`)
-rmarkdown::render('01_run_SoupX.Rmd', 
-                   clean = FALSE,
-                   output_dir = file.path(SoupX_dir),
-                   output_file = paste('Report-', 'SoupX', '-', Sys.Date(), sep = ''),
-                   output_format = 'all',
-                   params = list(
-                    data_dir = yaml$data_dir,
-                    soup_fraction_value_default = yaml$soup_fraction_value_default,
-                    root_dir = yaml$root_dir,
-                    metadata_dir = yaml$metadata_dir,
-                    metadata_file = yaml$metadata_file,
-                    PROJECT_NAME = yaml$PROJECT_NAME,
-                    PI_NAME = yaml$PI_NAME,
-                    TASK_ID = yaml$TASK_ID,
-                    PROJECT_LEAD_NAME = yaml$PROJECT_LEAD_NAME,
-                    DEPARTMENT = yaml$DEPARTMENT,
-                    LEAD_ANALYSTS = yaml$LEAD_ANALYSTS,
-                    GROUP_LEAD = yaml$GROUP_LEAD,
-                    CONTACT_EMAIL = yaml$CONTACT_EMAIL,
-                    PIPELINE = yaml$PIPELINE, 
-                    START_DATE = yaml$START_DATE,
-                    COMPLETION_DATE = yaml$COMPLETION_DATE))
+# rmarkdown::render('01_run_SoupX.Rmd', 
+#                    clean = FALSE,
+#                    output_dir = file.path(SoupX_dir),
+#                    output_file = paste('Report-', 'SoupX', '-', Sys.Date(), sep = ''),
+#                    output_format = 'all',
+#                    params = list(
+#                     data_dir = yaml$data_dir,
+#                     soup_fraction_value_default = yaml$soup_fraction_value_default,
+#                     root_dir = yaml$root_dir,
+#                     metadata_dir = yaml$metadata_dir,
+#                     metadata_file = yaml$metadata_file,
+#                     PROJECT_NAME = yaml$PROJECT_NAME,
+#                     PI_NAME = yaml$PI_NAME,
+#                     TASK_ID = yaml$TASK_ID,
+#                     PROJECT_LEAD_NAME = yaml$PROJECT_LEAD_NAME,
+#                     DEPARTMENT = yaml$DEPARTMENT,
+#                     LEAD_ANALYSTS = yaml$LEAD_ANALYSTS,
+#                     GROUP_LEAD = yaml$GROUP_LEAD,
+#                     CONTACT_EMAIL = yaml$CONTACT_EMAIL,
+#                     PIPELINE = yaml$PIPELINE, 
+#                     START_DATE = yaml$START_DATE,
+#                     COMPLETION_DATE = yaml$COMPLETION_DATE))
 
 ###############################################################################################################
 # (2) Seurat QC metrics
